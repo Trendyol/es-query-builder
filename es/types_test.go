@@ -45,7 +45,7 @@ func Test_New_should_creates_empty_Object(t *testing.T) {
 	assertEqual(t, bodyJSON, "{}")
 }
 
-// Testing functions
+// Testing Functions
 
 func assertMarshalWithoutError(t *testing.T, body any) string {
 	marshal, err := json.Marshal(body)

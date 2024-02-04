@@ -3,6 +3,6 @@ Simple Query builder for Elasticsearch
 
 # TODO
 - [x] range
-- [ ] sort
+- [x] sort
 - [ ] nested
 - [ ] aggs

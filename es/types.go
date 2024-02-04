@@ -1,5 +1,10 @@
 package es
 
+import (
+	Mode "github.com/GokselKUCUKSAHIN/es-query-builder/es/mode"
+	Order "github.com/GokselKUCUKSAHIN/es-query-builder/es/order"
+)
+
 type Object map[string]any
 
 type Array []any
@@ -23,6 +28,8 @@ type termsType Object
 type existsType Object
 
 type rangeType Object
+
+type sortType Object
 
 type sourceType Object
 
@@ -143,6 +150,28 @@ func (o Object) Size(size int) Object {
 
 func (o Object) From(from int) Object {
 	o["from"] = from
+	return o
+}
+
+func SortAdvanced(field string, order Order.Order, mode Mode.Mode) sortType {
+	o := Object{}
+	if order != Order.Default {
+		o["order"] = order
+	}
+	if mode != Mode.Default {
+		o["mode"] = mode
+	}
+	return sortType{
+		field: o,
+	}
+}
+
+func Sort(field string, order Order.Order) sortType {
+	return SortAdvanced(field, order, Mode.Default)
+}
+
+func (o Object) Sort(sorts ...sortType) Object {
+	o["sort"] = sorts
 	return o
 }
 
