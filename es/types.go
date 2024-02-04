@@ -22,35 +22,13 @@ type termsType Object
 
 type existsType Object
 
+type rangeType Object
+
 type sourceType Object
 
 type includesType Array
 
 type excludesType Array
-
-func (s sourceType) Includes(fields ...string) sourceType {
-	includes, exists := s["includes"]
-	if !exists {
-		includes = includesType{}
-	}
-	for _, field := range fields {
-		includes = append(includes.(includesType), field)
-	}
-	s["includes"] = includes
-	return s
-}
-
-func (s sourceType) Excludes(fields ...string) sourceType {
-	excludes, exists := s["excludes"]
-	if !exists {
-		excludes = excludesType{}
-	}
-	for _, field := range fields {
-		excludes = append(excludes.(excludesType), field)
-	}
-	s["excludes"] = excludes
-	return s
-}
 
 func New() Object {
 	return Object{}
@@ -60,17 +38,6 @@ func (o Object) Query() queryType {
 	q := queryType{}
 	o["query"] = q
 	return q
-}
-
-func (o Object) SetTrackTotalHits(value bool) Object {
-	o["tract_total_hits"] = value
-	return o
-}
-
-func (o Object) Source() sourceType {
-	s := sourceType{}
-	o["_source"] = s
-	return s
 }
 
 func (q queryType) Bool() boolType {
@@ -108,6 +75,19 @@ func Exists(key string) existsType {
 		"exists": Object{
 			"field": key,
 		},
+	}
+}
+
+func Range(key string, lte any, gte any) rangeType {
+	o := Object{}
+	if lte != nil {
+		o["lte"] = lte
+	}
+	if gte != nil {
+		o["gte"] = gte
+	}
+	return rangeType{
+		key: o,
 	}
 }
 
@@ -149,4 +129,54 @@ func (b boolType) Should(items ...any) boolType {
 	should = append(should.(shouldType), items...)
 	b["should"] = should
 	return b
+}
+
+func (o Object) SetTrackTotalHits(value bool) Object {
+	o["track_total_hits"] = value
+	return o
+}
+
+func (o Object) Size(size int) Object {
+	o["size"] = size
+	return o
+}
+
+func (o Object) From(from int) Object {
+	o["from"] = from
+	return o
+}
+
+func (o Object) Source() sourceType {
+	s := sourceType{}
+	o["_source"] = s
+	return s
+}
+
+func (o Object) SourceFalse() Object {
+	o["_source"] = false
+	return o
+}
+
+func (s sourceType) Includes(fields ...string) sourceType {
+	includes, exists := s["includes"]
+	if !exists {
+		includes = includesType{}
+	}
+	for _, field := range fields {
+		includes = append(includes.(includesType), field)
+	}
+	s["includes"] = includes
+	return s
+}
+
+func (s sourceType) Excludes(fields ...string) sourceType {
+	excludes, exists := s["excludes"]
+	if !exists {
+		excludes = excludesType{}
+	}
+	for _, field := range fields {
+		excludes = append(excludes.(excludesType), field)
+	}
+	s["excludes"] = excludes
+	return s
 }
