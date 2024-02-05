@@ -10,6 +10,8 @@ Simple Query builder for Elasticsearch
   - [ ] add `go get` command
 - [ ] add benchmark
 - [ ] add missing tests
+- [x] add makefile
+- [x] setup linter
 
 ## Builder fields
 - [x] range
