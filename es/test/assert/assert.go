@@ -65,6 +65,15 @@ func NotNil(t *testing.T, value any, messages ...string) {
 	}
 }
 
+func IsType(t *testing.T, expected, actual any, messages ...string) {
+	message := getMessage(messages)
+	expectedType := reflect.TypeOf(expected)
+	actualValue := reflect.TypeOf(actual)
+	if expectedType != actualValue {
+		t.Errorf("Expected type '%v', but got type '%v'. %s", expectedType, actualValue, message)
+	}
+}
+
 func getMessage(messages []string) string {
 	if len(messages) > 0 {
 		return messages[0]
