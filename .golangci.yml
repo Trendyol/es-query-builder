@@ -1,0 +1,37 @@
+linters-settings:
+  lll:
+    line-length: 140
+  funlen:
+    lines: 70
+
+linters:
+  disable-all: true
+  enable:
+    - bodyclose
+    - errcheck
+    - dupl
+    - exhaustive
+    - funlen
+    - goconst
+    - gocritic
+    - gocyclo
+    - gosimple
+    - govet
+    - gosec
+    - ineffassign
+    - lll
+    - misspell
+    - nakedret
+    - gofumpt
+    - staticcheck
+    - stylecheck
+    - typecheck
+    - unconvert
+    - unparam
+    - unused
+    - whitespace
+
+service:
+  golangci-lint-version: 1.50.x # use the fixed version to not introduce new linters unexpectedly
+  prepare:
+    - echo "here I can run custom commands, but no preparation needed for this repo"

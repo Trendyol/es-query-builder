@@ -2,9 +2,10 @@ package es_test
 
 import (
 	"encoding/json"
-	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
 	"reflect"
 	"testing"
+
+	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
 )
 
 func Test_New_should_creates_a_new_Object(t *testing.T) {

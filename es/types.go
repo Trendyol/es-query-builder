@@ -1,8 +1,8 @@
 package es
 
 import (
-	Mode "github.com/GokselKUCUKSAHIN/es-query-builder/es/mode"
-	Order "github.com/GokselKUCUKSAHIN/es-query-builder/es/order"
+	Mode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/mode"
+	Order "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
 )
 
 type Object map[string]any
@@ -153,7 +153,7 @@ func (o Object) From(from int) Object {
 	return o
 }
 
-func SortAdvanced(field string, order Order.Order, mode Mode.Mode) sortType {
+func SortWithMode(field string, order Order.Order, mode Mode.Mode) sortType {
 	o := Object{}
 	if order != Order.Default {
 		o["order"] = order
@@ -167,7 +167,7 @@ func SortAdvanced(field string, order Order.Order, mode Mode.Mode) sortType {
 }
 
 func Sort(field string, order Order.Order) sortType {
-	return SortAdvanced(field, order, Mode.Default)
+	return SortWithMode(field, order, Mode.Default)
 }
 
 func (o Object) Sort(sorts ...sortType) Object {
