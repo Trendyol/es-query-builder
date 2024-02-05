@@ -104,6 +104,17 @@ func Test_Query_should_has_Bool_method(t *testing.T) {
 	assert.NotNil(t, query.Bool)
 }
 
+func Test_Query_should_creates_json_with_query_field(t *testing.T) {
+	// Given
+	body := es.New()
+	query := body.Query()
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.Equal(t, bodyJSON, "{\"query\":{}}")
+}
+
 func Test_Bool_method_should_create_boolType(t *testing.T) {
 	// Given
 	body := es.New()
@@ -148,4 +159,16 @@ func Test_Bool_should_replace_existing_bool_when_it_called_twice(t *testing.T) {
 	assert.NotNil(t, b)
 	assert.NotEqualReference(t, b1, b)
 	assert.EqualReference(t, b2, b)
+}
+
+func Test_Bool_should_creates_json_with_bool_field(t *testing.T) {
+	// Given
+	body := es.New()
+	query := body.Query()
+	b := query.Bool()
+
+	// When Then
+	assert.NotNil(t, b)
+	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.Equal(t, bodyJSON, "{\"query\":{\"bool\":{}}}")
 }
