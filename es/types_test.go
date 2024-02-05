@@ -59,7 +59,7 @@ func Test_Query_method_should_create_queryType(t *testing.T) {
 	// When
 	query := body.Query()
 
-	//Then
+	// Then
 	assert.NotNil(t, query)
 	assert.IsTypeString(t, "es.queryType", query)
 }
@@ -70,9 +70,9 @@ func Test_Query_should_add_query_field_onto_Object(t *testing.T) {
 
 	// When
 	query := body.Query()
-
-	//Then
 	q, exists := body["query"]
+
+	// Then
 	assert.True(t, exists)
 	assert.NotNil(t, q)
 	assert.EqualReference(t, query, q)
@@ -85,10 +85,10 @@ func Test_Query_should_replace_existing_query_when_it_called_twice(t *testing.T)
 	// When
 	q1 := body.Query()
 	q2 := body.Query()
-
-	//Then
-	assert.IsType(t, q1, q2)
 	q, exists := body["query"]
+
+	// Then
+	assert.IsType(t, q1, q2)
 	assert.True(t, exists)
 	assert.NotNil(t, q)
 	assert.NotEqualReference(t, q1, q)
@@ -112,7 +112,7 @@ func Test_Bool_method_should_create_boolType(t *testing.T) {
 	query := body.Query()
 	b := query.Bool()
 
-	//Then
+	// Then
 	assert.NotNil(t, b)
 	assert.IsTypeString(t, "es.boolType", b)
 }
@@ -124,9 +124,9 @@ func Test_Bool_should_add_bool_field_onto_Query(t *testing.T) {
 
 	// When
 	b := query.Bool()
-
-	//Then
 	b1, exists := query["bool"]
+
+	// Then
 	assert.True(t, exists)
 	assert.NotNil(t, b1)
 	assert.EqualReference(t, b, b1)
@@ -140,10 +140,10 @@ func Test_Bool_should_replace_existing_bool_when_it_called_twice(t *testing.T) {
 	// When
 	b1 := query.Bool()
 	b2 := query.Bool()
-
-	//Then
-	assert.IsType(t, b1, b2)
 	b, exists := query["bool"]
+
+	// Then
+	assert.IsType(t, b1, b2)
 	assert.True(t, exists)
 	assert.NotNil(t, b)
 	assert.NotEqualReference(t, b1, b)
