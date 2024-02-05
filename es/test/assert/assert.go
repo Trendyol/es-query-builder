@@ -74,6 +74,14 @@ func IsType(t *testing.T, expected, actual any, messages ...string) {
 	}
 }
 
+func IsTypeString(t *testing.T, expectedType string, actual any, messages ...string) {
+	message := getMessage(messages)
+	actualValue := reflect.TypeOf(actual)
+	if expectedType != actualValue.String() {
+		t.Errorf("Expected type '%v', but got type '%v'. %s", expectedType, actualValue, message)
+	}
+}
+
 func getMessage(messages []string) string {
 	if len(messages) > 0 {
 		return messages[0]
