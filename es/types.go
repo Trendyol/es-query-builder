@@ -53,6 +53,16 @@ func (q queryType) Bool() boolType {
 	return b
 }
 
+func Bool() boolType {
+	return boolType{}
+}
+
+func (b boolType) Build() Object {
+	return Object{
+		"bool": b,
+	}
+}
+
 func Term(key string, value any) termType {
 	return termType{
 		"term": Object{
