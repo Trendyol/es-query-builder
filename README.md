@@ -18,6 +18,11 @@ Simple Query builder for Elasticsearch
 - [x] sort
 - [ ] nested
 - [ ] aggs
+- [ ] match
+- [ ] match_all
+- [ ] match_none
+- [x] minimum_should_match
+- [x] boost
 
 
 ### Examples 
