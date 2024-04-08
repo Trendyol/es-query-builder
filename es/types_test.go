@@ -60,7 +60,7 @@ func Test_NewQuery_should_creates_json_with_query_field(t *testing.T) {
 	// When Then
 	assert.NotNil(t, body)
 	bodyJSON := assert.MarshalWithoutError(t, body)
-	assert.Equal(t, bodyJSON, "{\"query\":{}}")
+	assert.Equal(t, "{\"query\":{}}", bodyJSON)
 }
 
 func Test_NewQuery_Bool_should_create_json_with_bool_field_inside_query(t *testing.T) {
@@ -72,7 +72,7 @@ func Test_NewQuery_Bool_should_create_json_with_bool_field_inside_query(t *testi
 	// When Then
 	assert.NotNil(t, body)
 	bodyJSON := assert.MarshalWithoutError(t, body)
-	assert.Equal(t, bodyJSON, "{\"query\":{\"bool\":{}}}")
+	assert.Equal(t, "{\"query\":{\"bool\":{}}}", bodyJSON)
 }
 
 ////   Bool   ////
@@ -109,7 +109,7 @@ func Test_Bool_SetMinimumShouldMatch_should_create_json_with_minimum_should_matc
 	// When Then
 	assert.NotNil(t, body)
 	bodyJSON := assert.MarshalWithoutError(t, body)
-	assert.Equal(t, bodyJSON, "{\"query\":{\"bool\":{\"minimum_should_match\":7}}}")
+	assert.Equal(t, "{\"query\":{\"bool\":{\"minimum_should_match\":7}}}", bodyJSON)
 }
 
 func Test_Bool_should_has_SetBoost_method(t *testing.T) {
@@ -130,7 +130,7 @@ func Test_Bool_SetBoost_should_create_json_with_minimum_should_match_field_insid
 	// When Then
 	assert.NotNil(t, body)
 	bodyJSON := assert.MarshalWithoutError(t, body)
-	assert.Equal(t, bodyJSON, "{\"query\":{\"bool\":{\"boost\":3.1415}}}")
+	assert.Equal(t, "{\"query\":{\"bool\":{\"boost\":3.1415}}}", bodyJSON)
 }
 
 func Test_Bool_should_have_Filter_method(t *testing.T) {
@@ -181,7 +181,7 @@ func Test_Term_should_create_json_with_term_field_inside_query(t *testing.T) {
 	// When Then
 	assert.NotNil(t, body)
 	bodyJSON := assert.MarshalWithoutError(t, body)
-	assert.Equal(t, bodyJSON, "{\"query\":{\"term\":{\"key\":\"value\"}}}")
+	assert.Equal(t, "{\"query\":{\"term\":{\"key\":\"value\"}}}", bodyJSON)
 }
 
 func Test_Term_method_should_create_termType(t *testing.T) {
@@ -209,7 +209,7 @@ func Test_Terms_should_create_json_with_terms_field_inside_query(t *testing.T) {
 	// When Then
 	assert.NotNil(t, body)
 	bodyJSON := assert.MarshalWithoutError(t, body)
-	assert.Equal(t, bodyJSON, "{\"query\":{\"terms\":{\"key\":[\"value1\",\"value2\",\"value3\"]}}}")
+	assert.Equal(t, "{\"query\":{\"terms\":{\"key\":[\"value1\",\"value2\",\"value3\"]}}}", bodyJSON)
 }
 
 func Test_Terms_method_should_create_termsType(t *testing.T) {
@@ -237,7 +237,7 @@ func Test_TermsArray_should_create_json_with_terms_field_inside_query(t *testing
 	// When Then
 	assert.NotNil(t, body)
 	bodyJSON := assert.MarshalWithoutError(t, body)
-	assert.Equal(t, bodyJSON, "{\"query\":{\"terms\":{\"key\":[\"value1\",\"value2\",\"value3\"]}}}")
+	assert.Equal(t, "{\"query\":{\"terms\":{\"key\":[\"value1\",\"value2\",\"value3\"]}}}", bodyJSON)
 }
 
 func Test_TermsArray_method_should_create_termsType(t *testing.T) {
@@ -265,7 +265,7 @@ func Test_Exists_should_create_json_with_exists_field_inside_query(t *testing.T)
 	// When Then
 	assert.NotNil(t, body)
 	bodyJSON := assert.MarshalWithoutError(t, body)
-	assert.Equal(t, bodyJSON, "{\"query\":{\"exists\":{\"field\":\"key\"}}}")
+	assert.Equal(t, "{\"query\":{\"exists\":{\"field\":\"key\"}}}", bodyJSON)
 }
 
 func Test_Exists_method_should_create_existsType(t *testing.T) {
@@ -293,7 +293,7 @@ func Test_Range_should_create_json_with_range_field_inside_query(t *testing.T) {
 	// When Then
 	assert.NotNil(t, body)
 	bodyJSON := assert.MarshalWithoutError(t, body)
-	assert.Equal(t, bodyJSON, "{\"query\":{\"range\":{\"age\":{\"gte\":10,\"lte\":20}}}}")
+	assert.Equal(t, "{\"query\":{\"range\":{\"age\":{\"gte\":10,\"lte\":20}}}}", bodyJSON)
 }
 
 func Test_Range_method_should_create_rangeType(t *testing.T) {
@@ -319,6 +319,39 @@ func Test_Filter_method_should_return_boolType(t *testing.T) {
 	assert.IsTypeString(t, "es.boolType", filter)
 }
 
+func Test_Filter_method_should_add_filter_if_doesnt_exists_before(t *testing.T) {
+	// Given
+	b := es.Bool()
+
+	// When
+	_, beforeExists := b["filter"]
+	filter := b.Filter()
+	_, afterExists := b["filter"]
+
+	// Then
+	assert.NotNil(t, filter)
+	assert.False(t, beforeExists)
+	assert.True(t, afterExists)
+}
+
+func Test_Filter_method_should_hold_items(t *testing.T) {
+	// Given
+	b := es.Bool().
+		Filter(
+			es.Term("id", 12345),
+		)
+
+	// When
+	filter, exists := b["filter"]
+
+	// Then
+	assert.True(t, exists)
+	assert.IsTypeString(t, "es.filterType", filter)
+
+	bodyJSON := assert.MarshalWithoutError(t, b)
+	assert.Equal(t, "{\"filter\":[{\"term\":{\"id\":12345}}]}", bodyJSON)
+}
+
 ////   Bool.Must   ////
 
 func Test_Must_method_should_return_boolType(t *testing.T) {
@@ -331,6 +364,39 @@ func Test_Must_method_should_return_boolType(t *testing.T) {
 	// Then
 	assert.NotNil(t, must)
 	assert.IsTypeString(t, "es.boolType", must)
+}
+
+func Test_Must_method_should_add_must_if_doesnt_exists_before(t *testing.T) {
+	// Given
+	b := es.Bool()
+
+	// When
+	_, beforeExists := b["must"]
+	filter := b.Must()
+	_, afterExists := b["must"]
+
+	// Then
+	assert.NotNil(t, filter)
+	assert.False(t, beforeExists)
+	assert.True(t, afterExists)
+}
+
+func Test_Must_method_should_hold_items(t *testing.T) {
+	// Given
+	b := es.Bool().
+		Must(
+			es.Term("id", 12345),
+		)
+
+	// When
+	must, exists := b["must"]
+
+	// Then
+	assert.True(t, exists)
+	assert.IsTypeString(t, "es.mustType", must)
+
+	bodyJSON := assert.MarshalWithoutError(t, b)
+	assert.Equal(t, "{\"must\":[{\"term\":{\"id\":12345}}]}", bodyJSON)
 }
 
 ////   Bool.MustNot   ////
@@ -347,6 +413,39 @@ func Test_MustNot_method_should_return_boolType(t *testing.T) {
 	assert.IsTypeString(t, "es.boolType", mustNot)
 }
 
+func Test_MustNot_method_should_add_must_not_if_doesnt_exists_before(t *testing.T) {
+	// Given
+	b := es.Bool()
+
+	// When
+	_, beforeExists := b["must_not"]
+	filter := b.MustNot()
+	_, afterExists := b["must_not"]
+
+	// Then
+	assert.NotNil(t, filter)
+	assert.False(t, beforeExists)
+	assert.True(t, afterExists)
+}
+
+func Test_MustNot_method_should_hold_items(t *testing.T) {
+	// Given
+	b := es.Bool().
+		MustNot(
+			es.Term("id", 12345),
+		)
+
+	// When
+	mustNot, exists := b["must_not"]
+
+	// Then
+	assert.True(t, exists)
+	assert.IsTypeString(t, "es.mustNotType", mustNot)
+
+	bodyJSON := assert.MarshalWithoutError(t, b)
+	assert.Equal(t, "{\"must_not\":[{\"term\":{\"id\":12345}}]}", bodyJSON)
+}
+
 ////   Bool.Should   ////
 
 func Test_Should_method_should_return_boolType(t *testing.T) {
@@ -359,4 +458,37 @@ func Test_Should_method_should_return_boolType(t *testing.T) {
 	// Then
 	assert.NotNil(t, should)
 	assert.IsTypeString(t, "es.boolType", should)
+}
+
+func Test_Should_method_should_add_should_if_doesnt_exists_before(t *testing.T) {
+	// Given
+	b := es.Bool()
+
+	// When
+	_, beforeExists := b["should"]
+	filter := b.Should()
+	_, afterExists := b["should"]
+
+	// Then
+	assert.NotNil(t, filter)
+	assert.False(t, beforeExists)
+	assert.True(t, afterExists)
+}
+
+func Test_Should_method_should_hold_items(t *testing.T) {
+	// Given
+	b := es.Bool().
+		Should(
+			es.Term("id", 12345),
+		)
+
+	// When
+	should, exists := b["should"]
+
+	// Then
+	assert.True(t, exists)
+	assert.IsTypeString(t, "es.shouldType", should)
+
+	bodyJSON := assert.MarshalWithoutError(t, b)
+	assert.Equal(t, "{\"should\":[{\"term\":{\"id\":12345}}]}", bodyJSON)
 }
