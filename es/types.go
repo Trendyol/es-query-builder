@@ -9,8 +9,6 @@ type Object map[string]any
 
 type Array []any
 
-type queryType Object
-
 type boolType Object
 
 type filterType Array
@@ -37,31 +35,28 @@ type includesType Array
 
 type excludesType Array
 
-func New() Object {
-	return Object{}
+func correctType(b any) any {
+	switch b.(type) {
+	case boolType:
+		return Object{"bool": b}
+	case nil:
+		return Object{}
+	default:
+		return b
+	}
 }
 
-func (o Object) Query() queryType {
-	q := queryType{}
-	o["query"] = q
-	return q
-}
-
-func (q queryType) Bool() boolType {
-	b := boolType{}
-	q["bool"] = b
-	return b
+func NewQuery(c any) Object {
+	return Object{
+		"query": correctType(c),
+	}
 }
 
 func Bool() boolType {
 	return boolType{}
 }
 
-func (b boolType) Build() Object {
-	return Object{
-		"bool": b,
-	}
-}
+// Conditional Term (with callbacks)
 
 func Term(key string, value any) termType {
 	return termType{
@@ -71,6 +66,8 @@ func Term(key string, value any) termType {
 	}
 }
 
+// Conditional Terms (with callbacks)
+
 func Terms(key string, values ...any) termsType {
 	return termsType{
 		"terms": Object{
@@ -78,6 +75,8 @@ func Terms(key string, values ...any) termsType {
 		},
 	}
 }
+
+// Conditional TermsArray (with callbacks)
 
 func TermsArray(key string, values Array) termsType {
 	return termsType{
@@ -87,6 +86,8 @@ func TermsArray(key string, values Array) termsType {
 	}
 }
 
+// Conditional Exists (with callbacks)
+
 func Exists(key string) existsType {
 	return existsType{
 		"exists": Object{
@@ -95,6 +96,7 @@ func Exists(key string) existsType {
 	}
 }
 
+// Burayı geliştirmek gerekiyor
 func Range(key string, lte any, gte any) rangeType {
 	o := Object{}
 	if lte != nil {
@@ -104,8 +106,20 @@ func Range(key string, lte any, gte any) rangeType {
 		o["gte"] = gte
 	}
 	return rangeType{
-		key: o,
+		"range": Object{
+			key: o,
+		},
 	}
+}
+
+func (b boolType) SetMinimumShouldMatch(minimumShouldMatch int) boolType {
+	b["minimum_should_match"] = minimumShouldMatch
+	return b
+}
+
+func (b boolType) SetBoost(boost float64) boolType {
+	b["boost"] = boost
+	return b
 }
 
 func (b boolType) Filter(items ...any) boolType {
@@ -113,7 +127,9 @@ func (b boolType) Filter(items ...any) boolType {
 	if !exists {
 		filter = filterType{}
 	}
-	filter = append(filter.(filterType), items...)
+	for _, item := range items {
+		filter = append(filter.(filterType), correctType(item))
+	}
 	b["filter"] = filter
 	return b
 }
@@ -123,7 +139,9 @@ func (b boolType) Must(items ...any) boolType {
 	if !exists {
 		must = mustType{}
 	}
-	must = append(must.(mustType), items...)
+	for _, item := range items {
+		must = append(must.(mustType), correctType(item))
+	}
 	b["must"] = must
 	return b
 }
@@ -133,7 +151,9 @@ func (b boolType) MustNot(items ...any) boolType {
 	if !exists {
 		mustNot = mustNotType{}
 	}
-	mustNot = append(mustNot.(mustNotType), items...)
+	for _, item := range items {
+		mustNot = append(mustNot.(mustNotType), correctType(item))
+	}
 	b["must_not"] = mustNot
 	return b
 }
@@ -143,7 +163,9 @@ func (b boolType) Should(items ...any) boolType {
 	if !exists {
 		should = shouldType{}
 	}
-	should = append(should.(shouldType), items...)
+	for _, item := range items {
+		should = append(should.(shouldType), correctType(item))
+	}
 	b["should"] = should
 	return b
 }

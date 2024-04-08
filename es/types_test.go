@@ -1,17 +1,23 @@
 package es_test
 
 import (
-	"fmt"
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es/test/assert"
 	"reflect"
 	"testing"
 )
 
-func Test_New_should_creates_a_new_Object(t *testing.T) {
+////   NewQuery   ////
+
+func Test_NewQuery_should_exist_on_es_package(t *testing.T) {
+	// Given When Then
+	assert.NotNil(t, es.NewQuery)
+}
+
+func Test_NewQuery_should_creates_a_new_Object(t *testing.T) {
 	// Given When
-	bodyA := es.New()
-	bodyB := es.New()
+	bodyA := es.NewQuery(nil)
+	bodyB := es.NewQuery(nil)
 
 	// Then
 	assert.NotNil(t, bodyA)
@@ -22,9 +28,9 @@ func Test_New_should_creates_a_new_Object(t *testing.T) {
 	assert.MarshalWithoutError(t, bodyB)
 }
 
-func Test_New_should_return_type_of_Object(t *testing.T) {
+func Test_NewQuery_should_return_type_of_Object(t *testing.T) {
 	// Given
-	body := es.New()
+	body := es.NewQuery(nil)
 
 	// When
 	bodyType := reflect.TypeOf(body).String()
@@ -35,320 +41,322 @@ func Test_New_should_return_type_of_Object(t *testing.T) {
 	assert.MarshalWithoutError(t, body)
 }
 
-func Test_New_should_creates_empty_Object(t *testing.T) {
+func Test_NewQuery_should_add_query_field_into_Object(t *testing.T) {
 	// Given
-	body := es.New()
+	body := es.NewQuery(nil)
+
+	// When
+	q, exists := body["query"]
+
+	// Then
+	assert.True(t, exists)
+	assert.NotNil(t, q)
+}
+
+func Test_NewQuery_should_creates_json_with_query_field(t *testing.T) {
+	// Given
+	body := es.NewQuery(nil)
 
 	// When Then
 	assert.NotNil(t, body)
 	bodyJSON := assert.MarshalWithoutError(t, body)
-	assert.Equal(t, bodyJSON, "{}")
-}
-
-func Test_Object_should_has_Query_method(t *testing.T) {
-	// Given
-	body := es.New()
-
-	// When Then
-	assert.NotNil(t, body.Query)
-}
-
-func Test_Query_method_should_create_queryType(t *testing.T) {
-	// Given
-	body := es.New()
-
-	// When
-	query := body.Query()
-
-	// Then
-	assert.NotNil(t, query)
-	assert.IsTypeString(t, "es.queryType", query)
-}
-
-func Test_Query_should_add_query_field_onto_Object(t *testing.T) {
-	// Given
-	body := es.New()
-
-	// When
-	query := body.Query()
-	q, exists := body["query"]
-
-	// Then
-	assert.True(t, exists)
-	assert.NotNil(t, q)
-	assert.EqualReference(t, query, q)
-}
-
-func Test_Query_should_replace_existing_query_when_it_called_twice(t *testing.T) {
-	// Given
-	body := es.New()
-
-	// When
-	q1 := body.Query()
-	q2 := body.Query()
-	q, exists := body["query"]
-
-	// Then
-	assert.IsType(t, q1, q2)
-	assert.True(t, exists)
-	assert.NotNil(t, q)
-	assert.NotEqualReference(t, q1, q)
-	assert.EqualReference(t, q2, q)
-}
-
-func Test_Query_should_has_Bool_method(t *testing.T) {
-	// Given
-	body := es.New()
-	query := body.Query()
-
-	// When Then
-	assert.NotNil(t, query.Bool)
-}
-
-func Test_Query_should_creates_json_with_query_field(t *testing.T) {
-	// Given
-	body := es.New()
-	query := body.Query()
-
-	// When Then
-	assert.NotNil(t, query)
-	bodyJSON := assert.MarshalWithoutError(t, body)
 	assert.Equal(t, bodyJSON, "{\"query\":{}}")
+}
+
+func Test_NewQuery_Bool_should_create_json_with_bool_field_inside_query(t *testing.T) {
+	// Given
+	body := es.NewQuery(
+		es.Bool(),
+	)
+
+	// When Then
+	assert.NotNil(t, body)
+	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.Equal(t, bodyJSON, "{\"query\":{\"bool\":{}}}")
+}
+
+////   Bool   ////
+
+func Test_Bool_should_exist_on_es_package(t *testing.T) {
+	// Given When Then
+	assert.NotNil(t, es.Bool)
 }
 
 func Test_Bool_method_should_create_boolType(t *testing.T) {
 	// Given
-	body := es.New()
-
-	// When
-	query := body.Query()
-	b := query.Bool()
+	b := es.Bool()
 
 	// Then
 	assert.NotNil(t, b)
 	assert.IsTypeString(t, "es.boolType", b)
 }
 
-func Test_Bool_should_add_bool_field_onto_Query(t *testing.T) {
+func Test_Bool_should_has_SetMinimumShouldMatch_method(t *testing.T) {
 	// Given
-	body := es.New()
-	query := body.Query()
-
-	// When
-	b := query.Bool()
-	b1, exists := query["bool"]
-
-	// Then
-	assert.True(t, exists)
-	assert.NotNil(t, b1)
-	assert.EqualReference(t, b, b1)
-}
-
-func Test_Bool_should_replace_existing_bool_when_it_called_twice(t *testing.T) {
-	// Given
-	body := es.New()
-	query := body.Query()
-
-	// When
-	b1 := query.Bool()
-	b2 := query.Bool()
-	b, exists := query["bool"]
-
-	// Then
-	assert.IsType(t, b1, b2)
-	assert.True(t, exists)
-	assert.NotNil(t, b)
-	assert.NotEqualReference(t, b1, b)
-	assert.EqualReference(t, b2, b)
-}
-
-func Test_Bool_should_creates_json_with_bool_field(t *testing.T) {
-	// Given
-	body := es.New()
-	query := body.Query()
-	b := query.Bool()
+	b := es.Bool()
 
 	// When Then
-	assert.NotNil(t, b)
+	assert.NotNil(t, b.SetMinimumShouldMatch)
+}
+
+func Test_Bool_SetMinimumShouldMatch_should_create_json_with_minimum_should_match_field_inside_bool(t *testing.T) {
+	// Given
+	body := es.NewQuery(
+		es.Bool().
+			SetMinimumShouldMatch(7),
+	)
+
+	// When Then
+	assert.NotNil(t, body)
 	bodyJSON := assert.MarshalWithoutError(t, body)
-	assert.Equal(t, bodyJSON, "{\"query\":{\"bool\":{}}}")
+	assert.Equal(t, bodyJSON, "{\"query\":{\"bool\":{\"minimum_should_match\":7}}}")
+}
+
+func Test_Bool_should_has_SetBoost_method(t *testing.T) {
+	// Given
+	b := es.Bool()
+
+	// When Then
+	assert.NotNil(t, b.SetBoost)
+}
+
+func Test_Bool_SetBoost_should_create_json_with_minimum_should_match_field_inside_bool(t *testing.T) {
+	// Given
+	body := es.NewQuery(
+		es.Bool().
+			SetBoost(3.1415),
+	)
+
+	// When Then
+	assert.NotNil(t, body)
+	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.Equal(t, bodyJSON, "{\"query\":{\"bool\":{\"boost\":3.1415}}}")
 }
 
 func Test_Bool_should_have_Filter_method(t *testing.T) {
 	// Given
-	body := es.New()
-	query := body.Query()
-	_bool := query.Bool()
+	b := es.Bool()
 
 	// When Then
-	assert.NotNil(t, _bool.Filter)
-}
-
-func Test_Filter_method_should_return_boolType(t *testing.T) {
-	// Given
-	body := es.New()
-	query := body.Query()
-	_bool := query.Bool()
-
-	// When
-	filter := _bool.Filter()
-
-	// Then
-	assert.NotNil(t, filter)
-	assert.IsTypeString(t, "es.boolType", filter)
+	assert.NotNil(t, b.Filter)
 }
 
 func Test_Bool_should_have_Must_method(t *testing.T) {
 	// Given
-	body := es.New()
-	query := body.Query()
-	_bool := query.Bool()
+	b := es.Bool()
 
 	// When Then
-	assert.NotNil(t, _bool.Must)
-}
-
-func Test_Must_method_should_return_boolType(t *testing.T) {
-	// Given
-	body := es.New()
-	query := body.Query()
-	_bool := query.Bool()
-
-	// When
-	must := _bool.Must()
-
-	// Then
-	assert.NotNil(t, must)
-	assert.IsTypeString(t, "es.boolType", must)
-}
-
-func Test_Bool_should_have_Should_method(t *testing.T) {
-	// Given
-	body := es.New()
-	query := body.Query()
-	_bool := query.Bool()
-
-	// When Then
-	assert.NotNil(t, _bool.Should)
-}
-
-func Test_Should_method_should_return_boolType(t *testing.T) {
-	// Given
-	body := es.New()
-	query := body.Query()
-	_bool := query.Bool()
-
-	// When
-	should := _bool.Should()
-
-	// Then
-	assert.NotNil(t, should)
-	assert.IsTypeString(t, "es.boolType", should)
+	assert.NotNil(t, b.Must)
 }
 
 func Test_Bool_should_have_MustNot_method(t *testing.T) {
 	// Given
-	body := es.New()
-	query := body.Query()
-	_bool := query.Bool()
+	b := es.Bool()
 
 	// When Then
-	assert.NotNil(t, _bool.MustNot)
+	assert.NotNil(t, b.MustNot)
 }
 
-func Test_MustNot_method_should_return_boolType(t *testing.T) {
+func Test_Bool_should_have_Should_method(t *testing.T) {
 	// Given
-	body := es.New()
-	query := body.Query()
-	_bool := query.Bool()
+	b := es.Bool()
 
-	// When
-	mustNot := _bool.MustNot()
-
-	// Then
-	assert.NotNil(t, mustNot)
-	assert.IsTypeString(t, "es.boolType", mustNot)
+	// When Then
+	assert.NotNil(t, b.Should)
 }
+
+////   Term   ////
 
 func Test_Term_should_exist_on_es_package(t *testing.T) {
 	// Given When Then
 	assert.NotNil(t, es.Term)
 }
 
-func Test_Term_method_should_create_termType(t *testing.T) {
+func Test_Term_should_create_json_with_term_field_inside_query(t *testing.T) {
 	// Given
-	term := es.Term("test", 123)
+	body := es.NewQuery(
+		es.Term("key", "value"),
+	)
 
 	// When Then
-	assert.NotNil(t, term)
-	assert.IsTypeString(t, "es.termType", term)
+	assert.NotNil(t, body)
+	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.Equal(t, bodyJSON, "{\"query\":{\"term\":{\"key\":\"value\"}}}")
 }
 
-func Test_Term_method_should_create_termType_with_term_Object(t *testing.T) {
+func Test_Term_method_should_create_termType(t *testing.T) {
 	// Given
-	key := "test"
-	value := 123
-	term := es.Term(key, value)
-
-	// When
-	termObject, exists := term["term"]
-
-	// Then
-	assert.True(t, exists)
-	assert.NotNil(t, termObject)
-	assert.IsTypeString(t, "es.Object", termObject)
-}
-
-func Test_Term_method_should_create_termType_with_given_key_value(t *testing.T) {
-	// Given
-	key := "test"
-	value := 123
-	term := es.Term(key, value)
-
-	// When
-	termObject, termExists := term["term"]
-	termObject, ok := termObject.(es.Object)
-	termValue, keyExists := termObject.(es.Object)[key]
-
-	// Then
-	assert.True(t, termExists)
-	assert.True(t, ok)
-	assert.NotNil(t, termObject)
-	assert.True(t, keyExists)
-	assert.NotNil(t, termValue)
-	assert.Equal(t, value, termValue)
-}
-
-func Test_Term_should_add_into_Bool_with_no_errors(t *testing.T) {
-	// Given
-	body := es.New()
-	b := body.
-		Query().
-		Bool()
-
-	key := "test"
-	value := 123
-	term := es.Term(key, value)
-
-	// When
-	b2 := b.Filter(term)
+	b := es.Term("key", "value")
 
 	// Then
 	assert.NotNil(t, b)
-	assert.NotNil(t, b2)
-	assert.EqualReference(t, b, b2)
-	bodyJSON := assert.MarshalWithoutError(t, body)
-	assert.Equal(t, bodyJSON, fmt.Sprintf("{\"query\":{\"bool\":{\"filter\":[{\"term\":{\"%s\":%d}}]}}}", key, value))
+	assert.IsTypeString(t, "es.termType", b)
 }
 
-func Test_Term_should_creates_json_with_key_value(t *testing.T) {
+////   Terms   ////
+
+func Test_Terms_should_exist_on_es_package(t *testing.T) {
+	// Given When Then
+	assert.NotNil(t, es.Terms)
+}
+
+func Test_Terms_should_create_json_with_terms_field_inside_query(t *testing.T) {
 	// Given
-	key := "test"
-	value := 123
-	term := es.Term(key, value)
+	body := es.NewQuery(
+		es.Terms("key", "value1", "value2", "value3"),
+	)
 
 	// When Then
-	assert.NotNil(t, term)
-	termJSON := assert.MarshalWithoutError(t, term)
-	assert.Equal(t, termJSON, "{\"term\":{\"test\":123}}")
+	assert.NotNil(t, body)
+	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.Equal(t, bodyJSON, "{\"query\":{\"terms\":{\"key\":[\"value1\",\"value2\",\"value3\"]}}}")
+}
+
+func Test_Terms_method_should_create_termsType(t *testing.T) {
+	// Given
+	b := es.Terms("key", "value1", "value2", "value3")
+
+	// Then
+	assert.NotNil(t, b)
+	assert.IsTypeString(t, "es.termsType", b)
+}
+
+////   TermsArray   ////
+
+func Test_TermsArray_should_exist_on_es_package(t *testing.T) {
+	// Given When Then
+	assert.NotNil(t, es.TermsArray)
+}
+
+func Test_TermsArray_should_create_json_with_terms_field_inside_query(t *testing.T) {
+	// Given
+	body := es.NewQuery(
+		es.TermsArray("key", []any{"value1", "value2", "value3"}),
+	)
+
+	// When Then
+	assert.NotNil(t, body)
+	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.Equal(t, bodyJSON, "{\"query\":{\"terms\":{\"key\":[\"value1\",\"value2\",\"value3\"]}}}")
+}
+
+func Test_TermsArray_method_should_create_termsType(t *testing.T) {
+	// Given
+	b := es.TermsArray("key", []any{"value1", "value2", "value3"})
+
+	// Then
+	assert.NotNil(t, b)
+	assert.IsTypeString(t, "es.termsType", b)
+}
+
+////   Exists   ////
+
+func Test_Exists_should_exist_on_es_package(t *testing.T) {
+	// Given When Then
+	assert.NotNil(t, es.Exists)
+}
+
+func Test_Exists_should_create_json_with_exists_field_inside_query(t *testing.T) {
+	// Given
+	body := es.NewQuery(
+		es.Exists("key"),
+	)
+
+	// When Then
+	assert.NotNil(t, body)
+	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.Equal(t, bodyJSON, "{\"query\":{\"exists\":{\"field\":\"key\"}}}")
+}
+
+func Test_Exists_method_should_create_existsType(t *testing.T) {
+	// Given
+	b := es.Exists("key")
+
+	// Then
+	assert.NotNil(t, b)
+	assert.IsTypeString(t, "es.existsType", b)
+}
+
+////   Range   ////
+
+func Test_Range_should_exist_on_es_package(t *testing.T) {
+	// Given When Then
+	assert.NotNil(t, es.Range)
+}
+
+func Test_Range_should_create_json_with_range_field_inside_query(t *testing.T) {
+	// Given
+	body := es.NewQuery(
+		es.Range("age", 20, 10),
+	)
+
+	// When Then
+	assert.NotNil(t, body)
+	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.Equal(t, bodyJSON, "{\"query\":{\"range\":{\"age\":{\"gte\":10,\"lte\":20}}}}")
+}
+
+func Test_Range_method_should_create_rangeType(t *testing.T) {
+	// Given
+	b := es.Range("age", 20, 10)
+
+	// Then
+	assert.NotNil(t, b)
+	assert.IsTypeString(t, "es.rangeType", b)
+}
+
+////   Bool.Filter   ////
+
+func Test_Filter_method_should_return_boolType(t *testing.T) {
+	// Given
+	b := es.Bool()
+
+	// When
+	filter := b.Filter()
+
+	// Then
+	assert.NotNil(t, filter)
+	assert.IsTypeString(t, "es.boolType", filter)
+}
+
+////   Bool.Must   ////
+
+func Test_Must_method_should_return_boolType(t *testing.T) {
+	// Given
+	b := es.Bool()
+
+	// When
+	must := b.Must()
+
+	// Then
+	assert.NotNil(t, must)
+	assert.IsTypeString(t, "es.boolType", must)
+}
+
+////   Bool.MustNot   ////
+
+func Test_MustNot_method_should_return_boolType(t *testing.T) {
+	// Given
+	b := es.Bool()
+
+	// When
+	mustNot := b.MustNot()
+
+	// Then
+	assert.NotNil(t, mustNot)
+	assert.IsTypeString(t, "es.boolType", mustNot)
+}
+
+////   Bool.Should   ////
+
+func Test_Should_method_should_return_boolType(t *testing.T) {
+	// Given
+	b := es.Bool()
+
+	// When
+	should := b.Should()
+
+	// Then
+	assert.NotNil(t, should)
+	assert.IsTypeString(t, "es.boolType", should)
 }
