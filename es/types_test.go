@@ -2,6 +2,8 @@ package es_test
 
 import (
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
+	Mode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/mode"
+	Order "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es/test/assert"
 	"reflect"
 	"testing"
@@ -14,7 +16,7 @@ func Test_NewQuery_should_exist_on_es_package(t *testing.T) {
 	assert.NotNil(t, es.NewQuery)
 }
 
-func Test_NewQuery_should_creates_a_new_Object(t *testing.T) {
+func Test_NewQuery_should_create_a_new_Object(t *testing.T) {
 	// Given When
 	bodyA := es.NewQuery(nil)
 	bodyB := es.NewQuery(nil)
@@ -53,7 +55,7 @@ func Test_NewQuery_should_add_query_field_into_Object(t *testing.T) {
 	assert.NotNil(t, q)
 }
 
-func Test_NewQuery_should_creates_json_with_query_field(t *testing.T) {
+func Test_NewQuery_should_create_json_with_query_field(t *testing.T) {
 	// Given
 	body := es.NewQuery(nil)
 
@@ -91,7 +93,7 @@ func Test_Bool_method_should_create_boolType(t *testing.T) {
 	assert.IsTypeString(t, "es.boolType", b)
 }
 
-func Test_Bool_should_has_SetMinimumShouldMatch_method(t *testing.T) {
+func Test_Bool_should_have_SetMinimumShouldMatch_method(t *testing.T) {
 	// Given
 	b := es.Bool()
 
@@ -112,7 +114,7 @@ func Test_Bool_SetMinimumShouldMatch_should_create_json_with_minimum_should_matc
 	assert.Equal(t, "{\"query\":{\"bool\":{\"minimum_should_match\":7}}}", bodyJSON)
 }
 
-func Test_Bool_should_has_SetBoost_method(t *testing.T) {
+func Test_Bool_should_have_SetBoost_method(t *testing.T) {
 	// Given
 	b := es.Bool()
 
@@ -163,6 +165,161 @@ func Test_Bool_should_have_Should_method(t *testing.T) {
 
 	// When Then
 	assert.NotNil(t, b.Should)
+}
+
+////   Object   ////
+
+func Test_Object_should_have_SetTrackTotalHits_method(t *testing.T) {
+	// Given
+	b := es.NewQuery(nil)
+
+	//When Then
+	assert.NotNil(t, b.SetTrackTotalHits)
+}
+
+func Test_SetTrackTotalHits_should_add_track_total_hits_field_into_Object(t *testing.T) {
+	// Given
+	body := es.NewQuery(nil)
+
+	// When
+	_, beforeExists := body["track_total_hits"]
+	object := body.SetTrackTotalHits(true)
+	trackTotalHits, afterExists := body["track_total_hits"]
+
+	// Then
+	assert.NotNil(t, object)
+	assert.False(t, beforeExists)
+	assert.True(t, afterExists)
+	assert.True(t, trackTotalHits.(bool))
+}
+
+func Test_Object_should_have_Size_method(t *testing.T) {
+	// Given
+	b := es.NewQuery(nil)
+
+	//When Then
+	assert.NotNil(t, b.Size)
+}
+
+func Test_Size_should_add_size_field_into_Object(t *testing.T) {
+	// Given
+	body := es.NewQuery(nil)
+
+	// When
+	_, beforeExists := body["size"]
+	object := body.Size(123)
+	size, afterExists := body["size"]
+
+	// Then
+	assert.NotNil(t, object)
+	assert.False(t, beforeExists)
+	assert.True(t, afterExists)
+	assert.Equal(t, 123, size.(int))
+}
+
+func Test_Object_should_have_From_method(t *testing.T) {
+	// Given
+	b := es.NewQuery(nil)
+
+	//When Then
+	assert.NotNil(t, b.From)
+}
+
+func Test_From_should_add_from_field_into_Object(t *testing.T) {
+	// Given
+	body := es.NewQuery(nil)
+
+	// When
+	_, beforeExists := body["from"]
+	object := body.From(1500)
+	from, afterExists := body["from"]
+
+	// Then
+	assert.NotNil(t, object)
+	assert.False(t, beforeExists)
+	assert.True(t, afterExists)
+	assert.Equal(t, 1500, from.(int))
+}
+
+func Test_Object_should_have_Sort_method(t *testing.T) {
+	// Given
+	b := es.NewQuery(nil)
+
+	//When Then
+	assert.NotNil(t, b.Sort)
+}
+
+func Test_Sort_should_exist_on_es_package(t *testing.T) {
+	// Given When Then
+	assert.NotNil(t, es.Sort)
+}
+
+func Test_Sort_should_return_sortType(t *testing.T) {
+	// Given
+	sort := es.Sort("name", Order.Asc)
+
+	// When
+	bodyType := reflect.TypeOf(sort).String()
+
+	// Then
+	assert.NotNil(t, sort)
+	assert.Equal(t, "es.sortType", bodyType)
+	bodyJSON := assert.MarshalWithoutError(t, sort)
+	assert.Equal(t, "{\"name\":{\"order\":\"asc\"}}", bodyJSON)
+}
+
+func Test_SortWithMode_should_exist_on_es_package(t *testing.T) {
+	// Given When Then
+	assert.NotNil(t, es.SortWithMode)
+}
+
+func Test_SortWithMode_should_return_sortType(t *testing.T) {
+	// Given
+	sort := es.SortWithMode("name", Order.Asc, Mode.Sum)
+
+	// When
+	bodyType := reflect.TypeOf(sort).String()
+
+	// Then
+	assert.NotNil(t, sort)
+	assert.Equal(t, "es.sortType", bodyType)
+	bodyJSON := assert.MarshalWithoutError(t, sort)
+	assert.Equal(t, "{\"name\":{\"mode\":\"sum\",\"order\":\"asc\"}}", bodyJSON)
+}
+
+func Test_Sort_should_add_sort_field_into_Object(t *testing.T) {
+	// Given
+	body := es.NewQuery(nil)
+
+	// When
+	_, beforeExists := body["sort"]
+	body.Sort(es.Sort("name", Order.Desc))
+	sort, afterExists := body["sort"]
+
+	// Then
+	assert.NotNil(t, sort)
+	assert.False(t, beforeExists)
+	assert.True(t, afterExists)
+	assert.NotNil(t, sort)
+	assert.IsTypeString(t, "[]es.sortType", sort)
+	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.Equal(t, "{\"query\":{},\"sort\":[{\"name\":{\"order\":\"desc\"}}]}", bodyJSON)
+}
+
+func Test_Object_should_have_Source_method(t *testing.T) {
+	// Given
+	b := es.NewQuery(nil)
+
+	//When Then
+	assert.NotNil(t, b.Source)
+}
+
+func Test_Object_should_have_SourceFalse_method(t *testing.T) {
+	// Given
+	b := es.NewQuery(nil)
+
+	//When Then
+	assert.NotNil(t, b.SourceFalse)
 }
 
 ////   Term   ////
@@ -319,7 +476,7 @@ func Test_Filter_method_should_return_boolType(t *testing.T) {
 	assert.IsTypeString(t, "es.boolType", filter)
 }
 
-func Test_Filter_method_should_add_filter_if_doesnt_exists_before(t *testing.T) {
+func Test_Filter_method_should_add_filter_if_doesnt_exist_before(t *testing.T) {
 	// Given
 	b := es.Bool()
 
@@ -366,7 +523,7 @@ func Test_Must_method_should_return_boolType(t *testing.T) {
 	assert.IsTypeString(t, "es.boolType", must)
 }
 
-func Test_Must_method_should_add_must_if_doesnt_exists_before(t *testing.T) {
+func Test_Must_method_should_add_must_if_doesnt_exist_before(t *testing.T) {
 	// Given
 	b := es.Bool()
 
@@ -413,7 +570,7 @@ func Test_MustNot_method_should_return_boolType(t *testing.T) {
 	assert.IsTypeString(t, "es.boolType", mustNot)
 }
 
-func Test_MustNot_method_should_add_must_not_if_doesnt_exists_before(t *testing.T) {
+func Test_MustNot_method_should_add_must_not_if_doesnt_exist_before(t *testing.T) {
 	// Given
 	b := es.Bool()
 
@@ -460,7 +617,7 @@ func Test_Should_method_should_return_boolType(t *testing.T) {
 	assert.IsTypeString(t, "es.boolType", should)
 }
 
-func Test_Should_method_should_add_should_if_doesnt_exists_before(t *testing.T) {
+func Test_Should_method_should_add_should_if_doesnt_exist_before(t *testing.T) {
 	// Given
 	b := es.Bool()
 
