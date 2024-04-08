@@ -113,7 +113,7 @@ body := es.NewQuery(
                     es.Term("file.fileId", id),
                 ), 
 	    ).
-	    Filter(
+        Filter(
             es.Terms("type", "DOC", "FILE"),
         ),
 )
