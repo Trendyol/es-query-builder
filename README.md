@@ -104,18 +104,17 @@ query := map[string]interface{}{
 ```
 
 ```go
-body := es.New()
-body.
-  Query().
-  Bool().
-  Must(
+body := es.NewQuery(
     es.Bool().
-      Should(
-        es.Term("doc.id", id),
-        es.Term("file.fileId", id),
-      ).Build(),
-  ).
-  Filter(
-    es.Terms("type", "DOC", "FILE"),
-  )
+        Must(
+            es.Bool().
+                Should(
+                    es.Term("doc.id", id),
+                    es.Term("file.fileId", id),
+                ), 
+	    ).
+	    Filter(
+            es.Terms("type", "DOC", "FILE"),
+        ),
+)
 ```
