@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestModeString(t *testing.T) {
+func Test_ModeString(t *testing.T) {
 	tests := []struct {
 		mode   Mode.Mode
 		result string

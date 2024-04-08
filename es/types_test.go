@@ -300,7 +300,6 @@ func Test_Sort_should_add_sort_field_into_Object(t *testing.T) {
 	assert.NotNil(t, sort)
 	assert.False(t, beforeExists)
 	assert.True(t, afterExists)
-	assert.NotNil(t, sort)
 	assert.IsTypeString(t, "[]es.sortType", sort)
 	bodyJSON := assert.MarshalWithoutError(t, body)
 	assert.Equal(t, "{\"query\":{},\"sort\":[{\"name\":{\"order\":\"desc\"}}]}", bodyJSON)
@@ -314,12 +313,102 @@ func Test_Object_should_have_Source_method(t *testing.T) {
 	assert.NotNil(t, b.Source)
 }
 
+func Test_Source_should_add_source_field_into_Object(t *testing.T) {
+	// Given
+	body := es.NewQuery(nil)
+
+	// When
+	_, beforeExists := body["_source"]
+	body.Source()
+	source, afterExists := body["_source"]
+
+	// Then
+	assert.NotNil(t, source)
+	assert.False(t, beforeExists)
+	assert.True(t, afterExists)
+	assert.IsTypeString(t, "es.sourceType", source)
+	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.Equal(t, "{\"_source\":{},\"query\":{}}", bodyJSON)
+}
+
+func Test_Source_should_have_Includes_method(t *testing.T) {
+	// Given
+	body := es.NewQuery(nil)
+
+	// When
+	source := body.Source()
+
+	// Then
+	assert.NotNil(t, source)
+	assert.IsTypeString(t, "es.sourceType", source)
+	assert.NotNil(t, source.Includes)
+}
+
+func Test_Source_should_have_Excludes_method(t *testing.T) {
+	// Given
+	body := es.NewQuery(nil)
+
+	// When
+	source := body.Source()
+
+	// Then
+	assert.NotNil(t, source)
+	assert.IsTypeString(t, "es.sourceType", source)
+	assert.NotNil(t, source.Excludes)
+}
+
+func Test_Source_should_create_json_with_source_field(t *testing.T) {
+	// Given
+	body := es.NewQuery(nil)
+
+	// When
+	body.Source().
+		Includes("hello", "world").
+		Excludes("Lorem", "Ipsum")
+
+	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.Equal(t, "{\"_source\":{\"excludes\":[\"Lorem\",\"Ipsum\"],\"includes\":[\"hello\",\"world\"]},\"query\":{}}", bodyJSON)
+}
+
+func Test_Source_should_append_existing_fields(t *testing.T) {
+	// Given
+	body := es.NewQuery(nil)
+
+	// When
+	body.Source().
+		Includes("hello", "world").
+		Excludes("Lorem", "Ipsum").
+		Includes("golang", "gopher").
+		Excludes("Metallica", "Iron Maiden")
+
+	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.Equal(t, "{\"_source\":{\"excludes\":[\"Lorem\",\"Ipsum\",\"Metallica\",\"Iron Maiden\"],\"includes\":[\"hello\",\"world\",\"golang\",\"gopher\"]},\"query\":{}}", bodyJSON)
+}
+
 func Test_Object_should_have_SourceFalse_method(t *testing.T) {
 	// Given
 	b := es.NewQuery(nil)
 
 	//When Then
 	assert.NotNil(t, b.SourceFalse)
+}
+
+func Test_SourceFalse_should_set_source_field_as_false(t *testing.T) {
+	// Given
+	body := es.NewQuery(nil)
+
+	// When
+	_, beforeExists := body["_source"]
+	body.SourceFalse()
+	source, afterExists := body["_source"]
+
+	// Then
+	assert.NotNil(t, source)
+	assert.False(t, beforeExists)
+	assert.True(t, afterExists)
+	assert.False(t, source.(bool))
+	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.Equal(t, "{\"_source\":false,\"query\":{}}", bodyJSON)
 }
 
 ////   Term   ////
