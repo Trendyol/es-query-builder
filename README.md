@@ -11,7 +11,7 @@ go get github.com/GokselKUCUKSAHIN/es-query-builder
 - [ ] improve README
   - [ ] add examples
   - [ ] add benchmark results
-  - [ ] add `go get` command
+  - [x] add `go get` command
 - [x] add benchmark
 - [x] add missing tests
 - [x] add makefile
