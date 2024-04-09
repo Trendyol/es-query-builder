@@ -3,6 +3,7 @@ package es
 import (
 	Mode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/mode"
 	Order "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
+	"unsafe"
 )
 
 type Object map[string]any
@@ -35,12 +36,17 @@ type includesType Array
 
 type excludesType Array
 
+func unsafeIsNil(x any) bool {
+	return (*[2]uintptr)(unsafe.Pointer(&x))[1] == 0
+}
+
 func correctType(b any) (any, bool) {
+	if b == nil || unsafeIsNil(b) {
+		return Object{}, false
+	}
 	switch b.(type) {
 	case boolType:
 		return Object{"bool": b}, true
-	case nil:
-		return Object{}, false
 	default:
 		return b, true
 	}
