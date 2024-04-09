@@ -411,11 +411,19 @@ func Test_SourceFalse_should_set_source_field_as_false(t *testing.T) {
 	assert.Equal(t, "{\"_source\":false,\"query\":{}}", bodyJSON)
 }
 
+func Test_Object_should_have_Range_method(t *testing.T) {
+	// Given
+	b := es.NewQuery(nil)
+
+	//When Then
+	assert.NotNil(t, b.Range)
+}
+
 ////   Term   ////
 
 func Test_Term_should_exist_on_es_package(t *testing.T) {
 	// Given When Then
-	assert.NotNil(t, es.Term)
+	assert.NotNil(t, es.Term[any])
 }
 
 func Test_Term_should_create_json_with_term_field_inside_query(t *testing.T) {
@@ -525,16 +533,22 @@ func Test_Exists_method_should_create_existsType(t *testing.T) {
 
 ////   Range   ////
 
-func Test_Range_should_exist_on_es_package(t *testing.T) {
-	// Given When Then
-	assert.NotNil(t, es.Range)
+func Test_Range_method_should_create_rangeType(t *testing.T) {
+	// Given
+	body := es.NewQuery(nil)
+	b := body.Range("age")
+
+	// Then
+	assert.NotNil(t, b)
+	assert.IsTypeString(t, "es.rangeType", b)
 }
 
 func Test_Range_should_create_json_with_range_field_inside_query(t *testing.T) {
 	// Given
-	body := es.NewQuery(
-		es.Range("age", 20, 10),
-	)
+	body := es.NewQuery(nil)
+	body.Range("age").
+		GreaterThanOrEqual(10).
+		LesserThanOrEqual(20)
 
 	// When Then
 	assert.NotNil(t, body)
@@ -542,13 +556,43 @@ func Test_Range_should_create_json_with_range_field_inside_query(t *testing.T) {
 	assert.Equal(t, "{\"query\":{\"range\":{\"age\":{\"gte\":10,\"lte\":20}}}}", bodyJSON)
 }
 
-func Test_Range_method_should_create_rangeType(t *testing.T) {
+func Test_Range_gte_should_override_gt_and_vise_versa(t *testing.T) {
 	// Given
-	b := es.Range("age", 20, 10)
+	body := es.NewQuery(nil)
+	body.Range("age").
+		GreaterThanOrEqual(10).
+		GreaterThan(20)
 
-	// Then
-	assert.NotNil(t, b)
-	assert.IsTypeString(t, "es.rangeType", b)
+	// When Then
+	assert.NotNil(t, body)
+	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.Equal(t, "{\"query\":{\"range\":{\"age\":{\"gt\":20}}}}", bodyJSON)
+}
+
+func Test_Range_lte_should_override_lt_and_vise_versa(t *testing.T) {
+	// Given
+	body := es.NewQuery(nil)
+	body.Range("age").
+		LesserThan(11).
+		LesserThanOrEqual(23)
+
+	// When Then
+	assert.NotNil(t, body)
+	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.Equal(t, "{\"query\":{\"range\":{\"age\":{\"lte\":23}}}}", bodyJSON)
+}
+
+func Test_Range_should_not_range_field_when_no_query_field_in_Object(t *testing.T) {
+	// Given
+	body := es.Object{}
+	body.Range("age").
+		GreaterThanOrEqual(10).
+		LesserThanOrEqual(20)
+
+	// When Then
+	assert.NotNil(t, body)
+	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.Equal(t, "{}", bodyJSON)
 }
 
 ////   Bool.Filter   ////

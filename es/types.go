@@ -35,20 +35,25 @@ type includesType Array
 
 type excludesType Array
 
-func correctType(b any) any {
+func correctType(b any) (any, bool) {
 	switch b.(type) {
 	case boolType:
-		return Object{"bool": b}
+		return Object{"bool": b}, true
 	case nil:
-		return Object{}
+		return Object{}, false
 	default:
-		return b
+		return b, true
 	}
 }
 
 func NewQuery(c any) Object {
+	if field, ok := correctType(c); ok {
+		return Object{
+			"query": field,
+		}
+	}
 	return Object{
-		"query": correctType(c),
+		"query": Object{},
 	}
 }
 
@@ -56,9 +61,7 @@ func Bool() boolType {
 	return boolType{}
 }
 
-// Conditional Term (with callbacks)
-
-func Term(key string, value any) termType {
+func Term[T any](key string, value T) termType {
 	return termType{
 		"term": Object{
 			key: value,
@@ -66,7 +69,12 @@ func Term(key string, value any) termType {
 	}
 }
 
-// Conditional Terms (with callbacks)
+func TermFunc[T any](key string, value T, f func(key string, value T) bool) termType {
+	if !f(key, value) {
+		return nil
+	}
+	return Term(key, value)
+}
 
 func Terms(key string, values ...any) termsType {
 	return termsType{
@@ -76,8 +84,6 @@ func Terms(key string, values ...any) termsType {
 	}
 }
 
-// Conditional TermsArray (with callbacks)
-
 func TermsArray(key string, values Array) termsType {
 	return termsType{
 		"terms": Object{
@@ -86,7 +92,12 @@ func TermsArray(key string, values Array) termsType {
 	}
 }
 
-// Conditional Exists (with callbacks)
+func TermsArrayFunc(key string, values Array, f func(key string, values Array) bool) termsType {
+	if !f(key, values) {
+		return nil
+	}
+	return TermsArray(key, values)
+}
 
 func Exists(key string) existsType {
 	return existsType{
@@ -96,20 +107,11 @@ func Exists(key string) existsType {
 	}
 }
 
-// Burayı geliştirmek gerekiyor
-func Range(key string, lte any, gte any) rangeType {
-	o := Object{}
-	if lte != nil {
-		o["lte"] = lte
+func ExistsFunc(key string, f func(key string) bool) existsType {
+	if !f(key) {
+		return nil
 	}
-	if gte != nil {
-		o["gte"] = gte
-	}
-	return rangeType{
-		"range": Object{
-			key: o,
-		},
-	}
+	return Exists(key)
 }
 
 func (b boolType) SetMinimumShouldMatch(minimumShouldMatch int) boolType {
@@ -128,7 +130,9 @@ func (b boolType) Filter(items ...any) boolType {
 		filter = filterType{}
 	}
 	for _, item := range items {
-		filter = append(filter.(filterType), correctType(item))
+		if field, ok := correctType(item); ok {
+			filter = append(filter.(filterType), field)
+		}
 	}
 	b["filter"] = filter
 	return b
@@ -140,7 +144,9 @@ func (b boolType) Must(items ...any) boolType {
 		must = mustType{}
 	}
 	for _, item := range items {
-		must = append(must.(mustType), correctType(item))
+		if field, ok := correctType(item); ok {
+			must = append(must.(mustType), field)
+		}
 	}
 	b["must"] = must
 	return b
@@ -152,7 +158,9 @@ func (b boolType) MustNot(items ...any) boolType {
 		mustNot = mustNotType{}
 	}
 	for _, item := range items {
-		mustNot = append(mustNot.(mustNotType), correctType(item))
+		if field, ok := correctType(item); ok {
+			mustNot = append(mustNot.(mustNotType), field)
+		}
 	}
 	b["must_not"] = mustNot
 	return b
@@ -164,7 +172,9 @@ func (b boolType) Should(items ...any) boolType {
 		should = shouldType{}
 	}
 	for _, item := range items {
-		should = append(should.(shouldType), correctType(item))
+		if field, ok := correctType(item); ok {
+			should = append(should.(shouldType), field)
+		}
 	}
 	b["should"] = should
 	return b
@@ -240,4 +250,56 @@ func (s sourceType) Excludes(fields ...string) sourceType {
 	}
 	s["excludes"] = excludes
 	return s
+}
+
+func (o Object) Range(key string) rangeType {
+	r := rangeType{
+		key: Object{},
+	}
+	if query, exists := o["query"]; exists {
+		if queryObject, ok := query.(Object); ok {
+			queryObject["range"] = r
+		}
+	}
+	return r
+}
+
+func (r rangeType) LesserThan(lt any) rangeType {
+	for key := range r {
+		if rangeObject, ok := r[key].(Object); ok {
+			rangeObject["lt"] = lt
+			delete(rangeObject, "lte")
+		}
+	}
+	return r
+}
+
+func (r rangeType) LesserThanOrEqual(lte any) rangeType {
+	for key := range r {
+		if rangeObject, ok := r[key].(Object); ok {
+			rangeObject["lte"] = lte
+			delete(rangeObject, "lt")
+		}
+	}
+	return r
+}
+
+func (r rangeType) GreaterThan(gt any) rangeType {
+	for key := range r {
+		if rangeObject, ok := r[key].(Object); ok {
+			rangeObject["gt"] = gt
+			delete(rangeObject, "gte")
+		}
+	}
+	return r
+}
+
+func (r rangeType) GreaterThanOrEqual(gte any) rangeType {
+	for key := range r {
+		if rangeObject, ok := r[key].(Object); ok {
+			rangeObject["gte"] = gte
+			delete(rangeObject, "gt")
+		}
+	}
+	return r
 }
