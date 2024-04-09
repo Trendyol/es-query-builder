@@ -1,12 +1,13 @@
 package es_test
 
 import (
+	"reflect"
+	"testing"
+
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
 	Mode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/mode"
 	Order "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
 	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
-	"reflect"
-	"testing"
 )
 
 ////   NewQuery   ////
@@ -173,7 +174,7 @@ func Test_Object_should_have_SetTrackTotalHits_method(t *testing.T) {
 	// Given
 	b := es.NewQuery(nil)
 
-	//When Then
+	// When Then
 	assert.NotNil(t, b.SetTrackTotalHits)
 }
 
@@ -197,7 +198,7 @@ func Test_Object_should_have_Size_method(t *testing.T) {
 	// Given
 	b := es.NewQuery(nil)
 
-	//When Then
+	// When Then
 	assert.NotNil(t, b.Size)
 }
 
@@ -221,7 +222,7 @@ func Test_Object_should_have_From_method(t *testing.T) {
 	// Given
 	b := es.NewQuery(nil)
 
-	//When Then
+	// When Then
 	assert.NotNil(t, b.From)
 }
 
@@ -245,7 +246,7 @@ func Test_Object_should_have_Sort_method(t *testing.T) {
 	// Given
 	b := es.NewQuery(nil)
 
-	//When Then
+	// When Then
 	assert.NotNil(t, b.Sort)
 }
 
@@ -309,7 +310,7 @@ func Test_Object_should_have_Source_method(t *testing.T) {
 	// Given
 	b := es.NewQuery(nil)
 
-	//When Then
+	// When Then
 	assert.NotNil(t, b.Source)
 }
 
@@ -382,6 +383,7 @@ func Test_Source_should_append_existing_fields(t *testing.T) {
 		Excludes("Metallica", "Iron Maiden")
 
 	bodyJSON := assert.MarshalWithoutError(t, body)
+	//nolint:golint,lll
 	assert.Equal(t, "{\"_source\":{\"excludes\":[\"Lorem\",\"Ipsum\",\"Metallica\",\"Iron Maiden\"],\"includes\":[\"hello\",\"world\",\"golang\",\"gopher\"]},\"query\":{}}", bodyJSON)
 }
 
@@ -389,7 +391,7 @@ func Test_Object_should_have_SourceFalse_method(t *testing.T) {
 	// Given
 	b := es.NewQuery(nil)
 
-	//When Then
+	// When Then
 	assert.NotNil(t, b.SourceFalse)
 }
 
@@ -415,7 +417,7 @@ func Test_Object_should_have_Range_method(t *testing.T) {
 	// Given
 	b := es.NewQuery(nil)
 
-	//When Then
+	// When Then
 	assert.NotNil(t, b.Range)
 }
 

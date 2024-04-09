@@ -2,7 +2,7 @@ linters-settings:
   lll:
     line-length: 140
   funlen:
-    lines: 70
+    lines: 100
 
 linters:
   disable-all: true

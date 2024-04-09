@@ -17,7 +17,8 @@ func MarshalWithoutError(t *testing.T, body any) string {
 func Equal(t *testing.T, expected, actual any, messages ...string) {
 	message := getMessage(messages)
 	if !reflect.DeepEqual(expected, actual) {
-		t.Errorf("Expected: '%v' type: <%s>, Actual: '%v' type: <%s>. %s", expected, reflect.TypeOf(expected).String(), actual, reflect.TypeOf(actual).String(), message)
+		t.Errorf("Expected: '%v' type: <%s>, Actual: '%v' type: <%s>. %s",
+			expected, reflect.TypeOf(expected).String(), actual, reflect.TypeOf(actual).String(), message)
 	}
 }
 

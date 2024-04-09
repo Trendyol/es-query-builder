@@ -1,9 +1,10 @@
 package mode_test
 
 import (
+	"testing"
+
 	Mode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/mode"
 	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
-	"testing"
 )
 
 func Test_ModeString(t *testing.T) {

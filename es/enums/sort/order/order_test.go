@@ -1,9 +1,10 @@
 package order_test
 
 import (
+	"testing"
+
 	Order "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
 	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
-	"testing"
 )
 
 func TestOrderString(t *testing.T) {

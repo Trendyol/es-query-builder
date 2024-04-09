@@ -1,6 +1,10 @@
 # es-query-builder
 Simple Query builder for Elasticsearch
 
+```bash
+go get github.com/GokselKUCUKSAHIN/es-query-builder
+```
+
 # TODOs
 
 ## Project
@@ -8,8 +12,8 @@ Simple Query builder for Elasticsearch
   - [ ] add examples
   - [ ] add benchmark results
   - [ ] add `go get` command
-- [ ] add benchmark
-- [ ] add missing tests
+- [x] add benchmark
+- [x] add missing tests
 - [x] add makefile
 - [x] setup linter
 
