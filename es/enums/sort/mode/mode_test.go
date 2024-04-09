@@ -2,7 +2,7 @@ package mode_test
 
 import (
 	Mode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/mode"
-	"github.com/GokselKUCUKSAHIN/es-query-builder/es/test/assert"
+	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
 	"testing"
 )
 

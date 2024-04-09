@@ -2,7 +2,7 @@ package order_test
 
 import (
 	Order "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
-	"github.com/GokselKUCUKSAHIN/es-query-builder/es/test/assert"
+	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
 	"testing"
 )
 

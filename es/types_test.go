@@ -4,7 +4,7 @@ import (
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
 	Mode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/mode"
 	Order "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
-	"github.com/GokselKUCUKSAHIN/es-query-builder/es/test/assert"
+	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
 	"reflect"
 	"testing"
 )
@@ -548,7 +548,7 @@ func Test_Terms_method_should_create_termsType(t *testing.T) {
 
 func Test_TermsArray_should_exist_on_es_package(t *testing.T) {
 	// Given When Then
-	assert.NotNil(t, es.TermsArray)
+	assert.NotNil(t, es.TermsArray[string])
 }
 
 func Test_TermsArray_should_create_json_with_terms_field_inside_query(t *testing.T) {
@@ -576,13 +576,13 @@ func Test_TermsArray_method_should_create_termsType(t *testing.T) {
 
 func Test_TermsArrayFunc_should_exist_on_es_package(t *testing.T) {
 	// Given When Then
-	assert.NotNil(t, es.TermsArrayFunc)
+	assert.NotNil(t, es.TermsArrayFunc[string])
 }
 
 func Test_TermsArrayFunc_should_create_json_with_terms_field_inside_query(t *testing.T) {
 	// Given
 	body := es.NewQuery(
-		es.TermsArrayFunc("key", es.Array{"a", "b", "c"}, func(key string, values es.Array) bool {
+		es.TermsArrayFunc("key", []string{"a", "b", "c"}, func(key string, values []string) bool {
 			return true
 		}),
 	)
@@ -596,7 +596,7 @@ func Test_TermsArrayFunc_should_create_json_with_terms_field_inside_query(t *tes
 func Test_TermsArrayFunc_should_not_add_terms_field_inside_query_when_callback_result_is_false(t *testing.T) {
 	// Given
 	body := es.NewQuery(
-		es.TermsArrayFunc("key", es.Array{"a", "b", "c"}, func(key string, value es.Array) bool {
+		es.TermsArrayFunc("key", []string{"a", "b", "c"}, func(key string, value []string) bool {
 			return false
 		}),
 	)
@@ -612,13 +612,13 @@ func Test_TermsArrayFunc_should_add_only_terms_fields_inside_the_query_when_call
 	body := es.NewQuery(
 		es.Bool().
 			Filter(
-				es.TermsArrayFunc("a", es.Array{"10", "11", "12"}, func(key string, value es.Array) bool {
+				es.TermsArrayFunc("a", []string{"10", "11", "12"}, func(key string, value []string) bool {
 					return false
 				}),
-				es.TermsArrayFunc("c", es.Array{"20", "21", "22"}, func(key string, value es.Array) bool {
+				es.TermsArrayFunc("c", []string{"20", "21", "22"}, func(key string, value []string) bool {
 					return false
 				}),
-				es.TermsArrayFunc("e", es.Array{"30", "31", "32"}, func(key string, value es.Array) bool {
+				es.TermsArrayFunc("e", []string{"30", "31", "32"}, func(key string, value []string) bool {
 					return true
 				}),
 			),
@@ -632,7 +632,7 @@ func Test_TermsArrayFunc_should_add_only_terms_fields_inside_the_query_when_call
 
 func Test_TermsArrayFunc_method_should_create_termType(t *testing.T) {
 	// Given
-	b := es.TermsArrayFunc("key", es.Array{"a", "b", "c"}, func(key string, value es.Array) bool {
+	b := es.TermsArrayFunc("key", []string{"a", "b", "c"}, func(key string, value []string) bool {
 		return true
 	})
 

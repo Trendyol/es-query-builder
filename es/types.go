@@ -90,7 +90,7 @@ func Terms(key string, values ...any) termsType {
 	}
 }
 
-func TermsArray(key string, values Array) termsType {
+func TermsArray[T any](key string, values []T) termsType {
 	return termsType{
 		"terms": Object{
 			key: values,
@@ -98,7 +98,7 @@ func TermsArray(key string, values Array) termsType {
 	}
 }
 
-func TermsArrayFunc(key string, values Array, f func(key string, values Array) bool) termsType {
+func TermsArrayFunc[T any](key string, values []T, f func(key string, values []T) bool) termsType {
 	if !f(key, values) {
 		return nil
 	}
