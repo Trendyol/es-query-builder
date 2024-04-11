@@ -1,13 +1,15 @@
 package es_test
 
 import (
+	"encoding/json"
 	"reflect"
 	"testing"
+
+	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
 
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
 	Mode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/mode"
 	Order "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
-	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
 )
 
 ////   NewQuery   ////
@@ -990,4 +992,25 @@ func Test_Should_method_should_hold_items(t *testing.T) {
 
 	bodyJSON := assert.MarshalWithoutError(t, b)
 	assert.Equal(t, "{\"should\":[{\"term\":{\"id\":12345}}]}", bodyJSON)
+}
+
+// CTE
+
+func Test_It_Runs(t *testing.T) {
+	query := es.NewQuery(
+		es.Bool().Filter(
+			es.Term("content.culture", "tr-TR"),
+			es.Nested("listings", func() any {
+				return es.Bool().
+					Filter(
+						es.Term("listings.supplierId", 73),
+						es.Term("listings.statusTypes", "ALL"),
+					)
+			}).SetInnerHits(es.Object{"size": 10000}),
+		),
+	)
+
+	marshal, _ := json.Marshal(query)
+
+	print(string(marshal))
 }

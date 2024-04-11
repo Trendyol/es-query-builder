@@ -37,6 +37,8 @@ type includesType Array
 
 type excludesType Array
 
+type nestedType Object
+
 func unsafeIsNil(x any) bool {
 	return (*[2]uintptr)(unsafe.Pointer(&x))[1] == 0
 }
@@ -51,6 +53,16 @@ func correctType(b any) (any, bool) {
 	default:
 		return b, true
 	}
+}
+
+func (o Object) Get(key string) (any, bool) {
+	item, exists := o[key]
+	return item, exists
+}
+
+func (o Object) Put(key string, value any) Object {
+	o[key] = value
+	return o
 }
 
 func NewQuery(c any) Object {
@@ -309,4 +321,18 @@ func (r rangeType) GreaterThanOrEqual(gte any) rangeType {
 		}
 	}
 	return r
+}
+
+func Nested(path string, nestedQuery func() any) nestedType {
+	o := NewQuery(nestedQuery()).Put("path", path)
+	return nestedType{
+		"nested": o,
+	}
+}
+
+func (n nestedType) SetInnerHits(innerHits Object) nestedType {
+	if nested, exists := n["nested"]; exists {
+		nested.(Object)["inner_hits"] = innerHits
+	}
+	return n
 }
