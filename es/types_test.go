@@ -1,7 +1,6 @@
 package es_test
 
 import (
-	"encoding/json"
 	"reflect"
 	"testing"
 
@@ -994,23 +993,52 @@ func Test_Should_method_should_hold_items(t *testing.T) {
 	assert.Equal(t, "{\"should\":[{\"term\":{\"id\":12345}}]}", bodyJSON)
 }
 
-// CTE
+////    Nested    ////
 
-func Test_It_Runs(t *testing.T) {
+func Test_Nested_should_exist_on_es_package(t *testing.T) {
+	// Given When Then
+	assert.NotNil(t, es.Nested[any])
+}
+
+func Test_Nested_method_should_create_nestedType(t *testing.T) {
+	// Given
+	n := es.Nested("path", es.Object{})
+
+	// Then
+	assert.NotNil(t, n)
+	assert.IsTypeString(t, "es.nestedType", n)
+}
+
+func Test_Nested_should_create_query_json_with_nested_field_inside(t *testing.T) {
+	// Given
 	query := es.NewQuery(
-		es.Bool().Filter(
-			es.Term("content.culture", "tr-TR"),
-			es.Nested("listings", func() any {
-				return es.Bool().
-					Filter(
-						es.Term("listings.supplierId", 73),
-						es.Term("listings.statusTypes", "ALL"),
-					)
-			}).SetInnerHits(es.Object{"size": 10000}),
+		es.Nested("nested.path",
+			es.Object{},
 		),
 	)
 
-	marshal, _ := json.Marshal(query)
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"nested\":{\"path\":\"nested.path\",\"query\":{}}}}", bodyJSON)
+}
 
-	print(string(marshal))
+func Test_Nested_should_have_SetInnerHits_method(t *testing.T) {
+	// Given
+	n := es.Nested("path", es.Object{})
+
+	// When Then
+	assert.NotNil(t, n.SetInnerHits)
+}
+
+func Test_SetInnerHits_should_add_inner_hits_field_into_Nested(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.Nested("nested.path", es.Object{}).SetInnerHits(es.Object{"inner": "hits"}),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"nested\":{\"inner_hits\":{\"inner\":\"hits\"},\"path\":\"nested.path\",\"query\":{}}}}", bodyJSON)
 }
