@@ -55,16 +55,6 @@ func correctType(b any) (any, bool) {
 	}
 }
 
-func (o Object) Get(key string) (any, bool) {
-	item, exists := o[key]
-	return item, exists
-}
-
-func (o Object) Put(key string, value any) Object {
-	o[key] = value
-	return o
-}
-
 func NewQuery(c any) Object {
 	if field, ok := correctType(c); ok {
 		return Object{
@@ -323,8 +313,9 @@ func (r rangeType) GreaterThanOrEqual(gte any) rangeType {
 	return r
 }
 
-func Nested(path string, nestedQuery func() any) nestedType {
-	o := NewQuery(nestedQuery()).Put("path", path)
+func Nested[T any](path string, nestedQuery T) nestedType {
+	o := NewQuery(nestedQuery)
+	o["path"] = path
 	return nestedType{
 		"nested": o,
 	}
