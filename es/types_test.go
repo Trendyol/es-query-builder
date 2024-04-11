@@ -1,6 +1,7 @@
 package es_test
 
 import (
+	ScoreMode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/nested/score-mode"
 	"reflect"
 	"testing"
 
@@ -34,23 +35,23 @@ func Test_NewQuery_should_create_a_new_Object(t *testing.T) {
 
 func Test_NewQuery_should_return_type_of_Object(t *testing.T) {
 	// Given
-	body := es.NewQuery(nil)
+	query := es.NewQuery(nil)
 
 	// When
-	bodyType := reflect.TypeOf(body).String()
+	bodyType := reflect.TypeOf(query).String()
 
 	// Then
-	assert.NotNil(t, body)
+	assert.NotNil(t, query)
 	assert.Equal(t, "es.Object", bodyType)
-	assert.MarshalWithoutError(t, body)
+	assert.MarshalWithoutError(t, query)
 }
 
 func Test_NewQuery_should_add_query_field_into_Object(t *testing.T) {
 	// Given
-	body := es.NewQuery(nil)
+	query := es.NewQuery(nil)
 
 	// When
-	q, exists := body["query"]
+	q, exists := query["query"]
 
 	// Then
 	assert.True(t, exists)
@@ -59,23 +60,23 @@ func Test_NewQuery_should_add_query_field_into_Object(t *testing.T) {
 
 func Test_NewQuery_should_create_json_with_query_field(t *testing.T) {
 	// Given
-	body := es.NewQuery(nil)
+	query := es.NewQuery(nil)
 
 	// When Then
-	assert.NotNil(t, body)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{}}", bodyJSON)
 }
 
 func Test_NewQuery_Bool_should_create_json_with_bool_field_inside_query(t *testing.T) {
 	// Given
-	body := es.NewQuery(
+	query := es.NewQuery(
 		es.Bool(),
 	)
 
 	// When Then
-	assert.NotNil(t, body)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{\"bool\":{}}}", bodyJSON)
 }
 
@@ -105,14 +106,14 @@ func Test_Bool_should_have_SetMinimumShouldMatch_method(t *testing.T) {
 
 func Test_Bool_SetMinimumShouldMatch_should_create_json_with_minimum_should_match_field_inside_bool(t *testing.T) {
 	// Given
-	body := es.NewQuery(
+	query := es.NewQuery(
 		es.Bool().
 			SetMinimumShouldMatch(7),
 	)
 
 	// When Then
-	assert.NotNil(t, body)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{\"bool\":{\"minimum_should_match\":7}}}", bodyJSON)
 }
 
@@ -126,14 +127,14 @@ func Test_Bool_should_have_SetBoost_method(t *testing.T) {
 
 func Test_Bool_SetBoost_should_create_json_with_minimum_should_match_field_inside_bool(t *testing.T) {
 	// Given
-	body := es.NewQuery(
+	query := es.NewQuery(
 		es.Bool().
 			SetBoost(3.1415),
 	)
 
 	// When Then
-	assert.NotNil(t, body)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{\"bool\":{\"boost\":3.1415}}}", bodyJSON)
 }
 
@@ -181,12 +182,12 @@ func Test_Object_should_have_SetTrackTotalHits_method(t *testing.T) {
 
 func Test_SetTrackTotalHits_should_add_track_total_hits_field_into_Object(t *testing.T) {
 	// Given
-	body := es.NewQuery(nil)
+	query := es.NewQuery(nil)
 
 	// When
-	_, beforeExists := body["track_total_hits"]
-	object := body.SetTrackTotalHits(true)
-	trackTotalHits, afterExists := body["track_total_hits"]
+	_, beforeExists := query["track_total_hits"]
+	object := query.SetTrackTotalHits(true)
+	trackTotalHits, afterExists := query["track_total_hits"]
 
 	// Then
 	assert.NotNil(t, object)
@@ -205,12 +206,12 @@ func Test_Object_should_have_Size_method(t *testing.T) {
 
 func Test_Size_should_add_size_field_into_Object(t *testing.T) {
 	// Given
-	body := es.NewQuery(nil)
+	query := es.NewQuery(nil)
 
 	// When
-	_, beforeExists := body["size"]
-	object := body.Size(123)
-	size, afterExists := body["size"]
+	_, beforeExists := query["size"]
+	object := query.Size(123)
+	size, afterExists := query["size"]
 
 	// Then
 	assert.NotNil(t, object)
@@ -229,12 +230,12 @@ func Test_Object_should_have_From_method(t *testing.T) {
 
 func Test_From_should_add_from_field_into_Object(t *testing.T) {
 	// Given
-	body := es.NewQuery(nil)
+	query := es.NewQuery(nil)
 
 	// When
-	_, beforeExists := body["from"]
-	object := body.From(1500)
-	from, afterExists := body["from"]
+	_, beforeExists := query["from"]
+	object := query.From(1500)
+	from, afterExists := query["from"]
 
 	// Then
 	assert.NotNil(t, object)
@@ -291,19 +292,19 @@ func Test_SortWithMode_should_return_sortType(t *testing.T) {
 
 func Test_Sort_should_add_sort_field_into_Object(t *testing.T) {
 	// Given
-	body := es.NewQuery(nil)
+	query := es.NewQuery(nil)
 
 	// When
-	_, beforeExists := body["sort"]
-	body.Sort(es.Sort("name", Order.Desc))
-	sort, afterExists := body["sort"]
+	_, beforeExists := query["sort"]
+	query.Sort(es.Sort("name", Order.Desc))
+	sort, afterExists := query["sort"]
 
 	// Then
 	assert.NotNil(t, sort)
 	assert.False(t, beforeExists)
 	assert.True(t, afterExists)
 	assert.IsTypeString(t, "[]es.sortType", sort)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{},\"sort\":[{\"name\":{\"order\":\"desc\"}}]}", bodyJSON)
 }
 
@@ -317,28 +318,28 @@ func Test_Object_should_have_Source_method(t *testing.T) {
 
 func Test_Source_should_add_source_field_into_Object(t *testing.T) {
 	// Given
-	body := es.NewQuery(nil)
+	query := es.NewQuery(nil)
 
 	// When
-	_, beforeExists := body["_source"]
-	body.Source()
-	source, afterExists := body["_source"]
+	_, beforeExists := query["_source"]
+	query.Source()
+	source, afterExists := query["_source"]
 
 	// Then
 	assert.NotNil(t, source)
 	assert.False(t, beforeExists)
 	assert.True(t, afterExists)
 	assert.IsTypeString(t, "es.sourceType", source)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"_source\":{},\"query\":{}}", bodyJSON)
 }
 
 func Test_Source_should_have_Includes_method(t *testing.T) {
 	// Given
-	body := es.NewQuery(nil)
+	query := es.NewQuery(nil)
 
 	// When
-	source := body.Source()
+	source := query.Source()
 
 	// Then
 	assert.NotNil(t, source)
@@ -348,10 +349,10 @@ func Test_Source_should_have_Includes_method(t *testing.T) {
 
 func Test_Source_should_have_Excludes_method(t *testing.T) {
 	// Given
-	body := es.NewQuery(nil)
+	query := es.NewQuery(nil)
 
 	// When
-	source := body.Source()
+	source := query.Source()
 
 	// Then
 	assert.NotNil(t, source)
@@ -361,29 +362,29 @@ func Test_Source_should_have_Excludes_method(t *testing.T) {
 
 func Test_Source_should_create_json_with_source_field(t *testing.T) {
 	// Given
-	body := es.NewQuery(nil)
+	query := es.NewQuery(nil)
 
 	// When
-	body.Source().
+	query.Source().
 		Includes("hello", "world").
 		Excludes("Lorem", "Ipsum")
 
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"_source\":{\"excludes\":[\"Lorem\",\"Ipsum\"],\"includes\":[\"hello\",\"world\"]},\"query\":{}}", bodyJSON)
 }
 
 func Test_Source_should_append_existing_fields(t *testing.T) {
 	// Given
-	body := es.NewQuery(nil)
+	query := es.NewQuery(nil)
 
 	// When
-	body.Source().
+	query.Source().
 		Includes("hello", "world").
 		Excludes("Lorem", "Ipsum").
 		Includes("golang", "gopher").
 		Excludes("Metallica", "Iron Maiden")
 
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	//nolint:golint,lll
 	assert.Equal(t, "{\"_source\":{\"excludes\":[\"Lorem\",\"Ipsum\",\"Metallica\",\"Iron Maiden\"],\"includes\":[\"hello\",\"world\",\"golang\",\"gopher\"]},\"query\":{}}", bodyJSON)
 }
@@ -398,19 +399,19 @@ func Test_Object_should_have_SourceFalse_method(t *testing.T) {
 
 func Test_SourceFalse_should_set_source_field_as_false(t *testing.T) {
 	// Given
-	body := es.NewQuery(nil)
+	query := es.NewQuery(nil)
 
 	// When
-	_, beforeExists := body["_source"]
-	body.SourceFalse()
-	source, afterExists := body["_source"]
+	_, beforeExists := query["_source"]
+	query.SourceFalse()
+	source, afterExists := query["_source"]
 
 	// Then
 	assert.NotNil(t, source)
 	assert.False(t, beforeExists)
 	assert.True(t, afterExists)
 	assert.False(t, source.(bool))
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"_source\":false,\"query\":{}}", bodyJSON)
 }
 
@@ -431,13 +432,13 @@ func Test_Term_should_exist_on_es_package(t *testing.T) {
 
 func Test_Term_should_create_json_with_term_field_inside_query(t *testing.T) {
 	// Given
-	body := es.NewQuery(
+	query := es.NewQuery(
 		es.Term("key", "value"),
 	)
 
 	// When Then
-	assert.NotNil(t, body)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{\"term\":{\"key\":\"value\"}}}", bodyJSON)
 }
 
@@ -459,35 +460,35 @@ func Test_TermFunc_should_exist_on_es_package(t *testing.T) {
 
 func Test_TermFunc_should_create_json_with_term_field_inside_query(t *testing.T) {
 	// Given
-	body := es.NewQuery(
+	query := es.NewQuery(
 		es.TermFunc("key", "value", func(key string, value string) bool {
 			return true
 		}),
 	)
 
 	// When Then
-	assert.NotNil(t, body)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{\"term\":{\"key\":\"value\"}}}", bodyJSON)
 }
 
 func Test_TermFunc_should_not_add_term_field_inside_query_when_callback_result_is_false(t *testing.T) {
 	// Given
-	body := es.NewQuery(
+	query := es.NewQuery(
 		es.TermFunc("key", "value", func(key string, value string) bool {
 			return false
 		}),
 	)
 
 	// When Then
-	assert.NotNil(t, body)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{}}", bodyJSON)
 }
 
 func Test_TermFunc_should_add_only_term_fields_inside_the_query_when_callback_result_is_true(t *testing.T) {
 	// Given
-	body := es.NewQuery(
+	query := es.NewQuery(
 		es.Bool().
 			Filter(
 				es.TermFunc("a", "b", func(key string, value string) bool {
@@ -503,8 +504,8 @@ func Test_TermFunc_should_add_only_term_fields_inside_the_query_when_callback_re
 	)
 
 	// When Then
-	assert.NotNil(t, body)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{\"bool\":{\"filter\":[{\"term\":{\"a\":\"b\"}},{\"term\":{\"e\":\"f\"}}]}}}", bodyJSON)
 }
 
@@ -528,13 +529,13 @@ func Test_Terms_should_exist_on_es_package(t *testing.T) {
 
 func Test_Terms_should_create_json_with_terms_field_inside_query(t *testing.T) {
 	// Given
-	body := es.NewQuery(
+	query := es.NewQuery(
 		es.Terms("key", "value1", "value2", "value3"),
 	)
 
 	// When Then
-	assert.NotNil(t, body)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{\"terms\":{\"key\":[\"value1\",\"value2\",\"value3\"]}}}", bodyJSON)
 }
 
@@ -556,13 +557,13 @@ func Test_TermsArray_should_exist_on_es_package(t *testing.T) {
 
 func Test_TermsArray_should_create_json_with_terms_field_inside_query(t *testing.T) {
 	// Given
-	body := es.NewQuery(
+	query := es.NewQuery(
 		es.TermsArray("key", []any{"value1", "value2", "value3"}),
 	)
 
 	// When Then
-	assert.NotNil(t, body)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{\"terms\":{\"key\":[\"value1\",\"value2\",\"value3\"]}}}", bodyJSON)
 }
 
@@ -584,35 +585,35 @@ func Test_TermsArrayFunc_should_exist_on_es_package(t *testing.T) {
 
 func Test_TermsArrayFunc_should_create_json_with_terms_field_inside_query(t *testing.T) {
 	// Given
-	body := es.NewQuery(
+	query := es.NewQuery(
 		es.TermsArrayFunc("key", []string{"a", "b", "c"}, func(key string, values []string) bool {
 			return true
 		}),
 	)
 
 	// When Then
-	assert.NotNil(t, body)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{\"terms\":{\"key\":[\"a\",\"b\",\"c\"]}}}", bodyJSON)
 }
 
 func Test_TermsArrayFunc_should_not_add_terms_field_inside_query_when_callback_result_is_false(t *testing.T) {
 	// Given
-	body := es.NewQuery(
+	query := es.NewQuery(
 		es.TermsArrayFunc("key", []string{"a", "b", "c"}, func(key string, value []string) bool {
 			return false
 		}),
 	)
 
 	// When Then
-	assert.NotNil(t, body)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{}}", bodyJSON)
 }
 
 func Test_TermsArrayFunc_should_add_only_terms_fields_inside_the_query_when_callback_result_is_true(t *testing.T) {
 	// Given
-	body := es.NewQuery(
+	query := es.NewQuery(
 		es.Bool().
 			Filter(
 				es.TermsArrayFunc("a", []string{"10", "11", "12"}, func(key string, value []string) bool {
@@ -628,8 +629,8 @@ func Test_TermsArrayFunc_should_add_only_terms_fields_inside_the_query_when_call
 	)
 
 	// When Then
-	assert.NotNil(t, body)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{\"bool\":{\"filter\":[{\"terms\":{\"e\":[\"30\",\"31\",\"32\"]}}]}}}", bodyJSON)
 }
 
@@ -653,13 +654,13 @@ func Test_Exists_should_exist_on_es_package(t *testing.T) {
 
 func Test_Exists_should_create_json_with_exists_field_inside_query(t *testing.T) {
 	// Given
-	body := es.NewQuery(
+	query := es.NewQuery(
 		es.Exists("key"),
 	)
 
 	// When Then
-	assert.NotNil(t, body)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{\"exists\":{\"field\":\"key\"}}}", bodyJSON)
 }
 
@@ -681,35 +682,35 @@ func Test_ExistsFunc_should_exist_on_es_package(t *testing.T) {
 
 func Test_ExistsFunc_should_create_json_with_exists_field_inside_query(t *testing.T) {
 	// Given
-	body := es.NewQuery(
+	query := es.NewQuery(
 		es.ExistsFunc("key", func(key string) bool {
 			return true
 		}),
 	)
 
 	// When Then
-	assert.NotNil(t, body)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{\"exists\":{\"field\":\"key\"}}}", bodyJSON)
 }
 
 func Test_ExistsFunc_should_not_add_exists_field_inside_query_when_callback_result_is_false(t *testing.T) {
 	// Given
-	body := es.NewQuery(
+	query := es.NewQuery(
 		es.ExistsFunc("key", func(key string) bool {
 			return false
 		}),
 	)
 
 	// When Then
-	assert.NotNil(t, body)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{}}", bodyJSON)
 }
 
 func Test_ExistsFunc_should_add_only_exists_fields_inside_the_query_when_callback_result_is_true(t *testing.T) {
 	// Given
-	body := es.NewQuery(
+	query := es.NewQuery(
 		es.Bool().
 			Filter(
 				es.ExistsFunc("a", func(key string) bool {
@@ -725,8 +726,8 @@ func Test_ExistsFunc_should_add_only_exists_fields_inside_the_query_when_callbac
 	)
 
 	// When Then
-	assert.NotNil(t, body)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{\"bool\":{\"filter\":[{\"exists\":{\"field\":\"c\"}},{\"exists\":{\"field\":\"e\"}}]}}}", bodyJSON)
 }
 
@@ -745,8 +746,8 @@ func Test_ExistsFunc_method_should_create_existsType(t *testing.T) {
 
 func Test_Range_method_should_create_rangeType(t *testing.T) {
 	// Given
-	body := es.NewQuery(nil)
-	b := body.Range("age")
+	query := es.NewQuery(nil)
+	b := query.Range("age")
 
 	// Then
 	assert.NotNil(t, b)
@@ -755,53 +756,53 @@ func Test_Range_method_should_create_rangeType(t *testing.T) {
 
 func Test_Range_should_create_json_with_range_field_inside_query(t *testing.T) {
 	// Given
-	body := es.NewQuery(nil)
-	body.Range("age").
+	query := es.NewQuery(nil)
+	query.Range("age").
 		GreaterThanOrEqual(10).
 		LesserThanOrEqual(20)
 
 	// When Then
-	assert.NotNil(t, body)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{\"range\":{\"age\":{\"gte\":10,\"lte\":20}}}}", bodyJSON)
 }
 
 func Test_Range_gte_should_override_gt_and_vise_versa(t *testing.T) {
 	// Given
-	body := es.NewQuery(nil)
-	body.Range("age").
+	query := es.NewQuery(nil)
+	query.Range("age").
 		GreaterThanOrEqual(10).
 		GreaterThan(20)
 
 	// When Then
-	assert.NotNil(t, body)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{\"range\":{\"age\":{\"gt\":20}}}}", bodyJSON)
 }
 
 func Test_Range_lte_should_override_lt_and_vise_versa(t *testing.T) {
 	// Given
-	body := es.NewQuery(nil)
-	body.Range("age").
+	query := es.NewQuery(nil)
+	query.Range("age").
 		LesserThan(11).
 		LesserThanOrEqual(23)
 
 	// When Then
-	assert.NotNil(t, body)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{\"range\":{\"age\":{\"lte\":23}}}}", bodyJSON)
 }
 
 func Test_Range_should_not_range_field_when_no_query_field_in_Object(t *testing.T) {
 	// Given
-	body := es.Object{}
-	body.Range("age").
+	object := es.Object{}
+	object.Range("age").
 		GreaterThanOrEqual(10).
 		LesserThanOrEqual(20)
 
 	// When Then
-	assert.NotNil(t, body)
-	bodyJSON := assert.MarshalWithoutError(t, body)
+	assert.NotNil(t, object)
+	bodyJSON := assert.MarshalWithoutError(t, object)
 	assert.Equal(t, "{}", bodyJSON)
 }
 
@@ -1041,4 +1042,24 @@ func Test_SetInnerHits_should_add_inner_hits_field_into_Nested(t *testing.T) {
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{\"nested\":{\"inner_hits\":{\"inner\":\"hits\"},\"path\":\"nested.path\",\"query\":{}}}}", bodyJSON)
+}
+
+func Test_Nested_should_have_SetScoreMode_method(t *testing.T) {
+	// Given
+	n := es.Nested("path", es.Object{})
+
+	// When Then
+	assert.NotNil(t, n.SetScoreMode)
+}
+
+func Test_SetScoreMod_should_add_score_mode_field_into_Nested(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.Nested("nested.path", es.Object{}).SetScoreMode(ScoreMode.Sum),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"nested\":{\"path\":\"nested.path\",\"query\":{},\"score_mode\":\"sum\"}}}", bodyJSON)
 }

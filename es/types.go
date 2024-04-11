@@ -3,6 +3,7 @@ package es
 import (
 	"unsafe"
 
+	ScoreMode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/nested/score-mode"
 	Mode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/mode"
 	Order "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
 )
@@ -324,6 +325,13 @@ func Nested[T any](path string, nestedQuery T) nestedType {
 func (n nestedType) SetInnerHits(innerHits Object) nestedType {
 	if nested, exists := n["nested"]; exists {
 		nested.(Object)["inner_hits"] = innerHits
+	}
+	return n
+}
+
+func (n nestedType) SetScoreMode(scoreMode ScoreMode.ScoreMode) nestedType {
+	if nested, exists := n["nested"]; exists {
+		nested.(Object)["score_mode"] = scoreMode
 	}
 	return n
 }
