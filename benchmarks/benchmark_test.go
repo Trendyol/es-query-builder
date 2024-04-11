@@ -601,3 +601,15 @@ func Test_Nested_Queries_are_equal(t *testing.T) {
 	pure := createNestedQueryPureGo()
 	assert.Equal(t, pure, build)
 }
+
+func Benchmark_Nested_Example_Builder(b *testing.B) {
+	for i := 0; i <= b.N; i++ {
+		createNestedQuery()
+	}
+}
+
+func Benchmark_Nested_Example_PureGo(b *testing.B) {
+	for i := 0; i <= b.N; i++ {
+		createNestedQueryPureGo()
+	}
+}

@@ -21,7 +21,7 @@ go get github.com/GokselKUCUKSAHIN/es-query-builder
 ## Builder fields
 - [x] range
 - [x] sort
-- [ ] nested
+- [x] nested
 - [ ] aggs
 - [ ] match
 - [ ] match_all
