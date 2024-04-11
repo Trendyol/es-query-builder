@@ -1,9 +1,10 @@
 package es
 
 import (
+	"unsafe"
+
 	Mode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/mode"
 	Order "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
-	"unsafe"
 )
 
 type Object map[string]any
