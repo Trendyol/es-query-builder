@@ -39,7 +39,7 @@ jobs:
         run: go build -v ./...
 
       - name: Test
-        run: go test ./... -v -race -coverprofile=coverage.txt -covermode=atomic
+        run: go test ./es/... -v -race -coverprofile=coverage.txt -covermode=atomic
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.0.1
