@@ -4,10 +4,11 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
+
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
 	Mode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/mode"
 	Order "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
-	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
 )
 
 ////   NewQuery   ////
@@ -990,4 +991,54 @@ func Test_Should_method_should_hold_items(t *testing.T) {
 
 	bodyJSON := assert.MarshalWithoutError(t, b)
 	assert.Equal(t, "{\"should\":[{\"term\":{\"id\":12345}}]}", bodyJSON)
+}
+
+////    Nested    ////
+
+func Test_Nested_should_exist_on_es_package(t *testing.T) {
+	// Given When Then
+	assert.NotNil(t, es.Nested[any])
+}
+
+func Test_Nested_method_should_create_nestedType(t *testing.T) {
+	// Given
+	n := es.Nested("path", es.Object{})
+
+	// Then
+	assert.NotNil(t, n)
+	assert.IsTypeString(t, "es.nestedType", n)
+}
+
+func Test_Nested_should_create_query_json_with_nested_field_inside(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.Nested("nested.path",
+			es.Object{},
+		),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"nested\":{\"path\":\"nested.path\",\"query\":{}}}}", bodyJSON)
+}
+
+func Test_Nested_should_have_SetInnerHits_method(t *testing.T) {
+	// Given
+	n := es.Nested("path", es.Object{})
+
+	// When Then
+	assert.NotNil(t, n.SetInnerHits)
+}
+
+func Test_SetInnerHits_should_add_inner_hits_field_into_Nested(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.Nested("nested.path", es.Object{}).SetInnerHits(es.Object{"inner": "hits"}),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"nested\":{\"inner_hits\":{\"inner\":\"hits\"},\"path\":\"nested.path\",\"query\":{}}}}", bodyJSON)
 }
