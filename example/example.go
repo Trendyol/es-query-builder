@@ -4,17 +4,18 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
+
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
-	"log"
 )
 
 func mockGetDocumentsEs(ctx context.Context, query string) (string, error) {
+	context.WithValue(ctx, "query", query)
 	return fmt.Sprintf("query result for '%v'", query), nil
 }
 
 func main() {
-
 	ctx := context.Background()
 
 	id := 42
