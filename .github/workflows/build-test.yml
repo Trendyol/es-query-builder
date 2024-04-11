@@ -21,7 +21,13 @@ jobs:
           go-version: 1.18
 
       - name: Install dependencies
-        run: go get .
+        run: |
+          if grep -q "require" go.mod; then
+            echo "Dependencies found, installing..."
+            go get .
+          else
+            echo "No dependencies found, skipping dependency installation."
+          fi
 
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
