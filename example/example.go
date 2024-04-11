@@ -2,7 +2,6 @@
 package main
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -11,25 +10,77 @@ import (
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
 )
 
-func mockGetDocumentsEs(ctx context.Context, query string) (string, error) {
-	context.WithValue(ctx, "query", query)
+func mockGetDocumentsEs(query string) (string, error) {
 	return fmt.Sprintf("query result for '%v'", query), nil
 }
 
 func main() {
-	ctx := context.Background()
-
 	id := 42
 	queryString, err := json.Marshal(buildQuery(id))
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
-	documentsEs, err := mockGetDocumentsEs(ctx, string(queryString))
+	documentsEs, err := mockGetDocumentsEs(string(queryString))
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 	fmt.Printf("query result: %s\n", documentsEs)
+
+	// Output:
+	// query result for '{"_source":{"includes":["id","type","indexedAt","chapters"]},"query":{"bool":{"filter":[{"terms":{"type":["DOC","FILE"]}}],"must":[{"bool":{"should":[{"term":{"doc.id":42}},{"term":{"file.fileId":42}}]}}]}},"size":45,"sort":[{"name":{"order":"asc"}}]}'
+
+	// Formatted query string:
+	// {
+	//   "_source": {
+	//     "includes": [
+	//       "id",
+	//       "type",
+	//       "indexedAt",
+	//       "chapters"
+	//     ]
+	//   },
+	//   "query": {
+	//     "bool": {
+	//       "filter": [
+	//         {
+	//           "terms": {
+	//             "type": [
+	//               "DOC",
+	//               "FILE"
+	//             ]
+	//           }
+	//         }
+	//       ],
+	//       "must": [
+	//         {
+	//           "bool": {
+	//             "should": [
+	//               {
+	//                 "term": {
+	//                   "doc.id": 42
+	//                 }
+	//               },
+	//               {
+	//                 "term": {
+	//                   "file.fileId": 42
+	//                 }
+	//               }
+	//             ]
+	//           }
+	//         }
+	//       ]
+	//     }
+	//   },
+	//   "size": 45,
+	//   "sort": [
+	//     {
+	//       "name": {
+	//         "order": "asc"
+	//       }
+	//     }
+	//   ]
+	// }
 }
 
 func buildQuery(id int) es.Object {
