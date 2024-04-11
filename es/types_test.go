@@ -1,13 +1,13 @@
 package es_test
 
 import (
-	ScoreMode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/nested/score-mode"
 	"reflect"
 	"testing"
 
 	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
 
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
+	ScoreMode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/nested/score-mode"
 	Mode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/mode"
 	Order "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
 )
