@@ -1,4 +1,4 @@
-# es-query-builder
+# es-query-builder [![GoDoc][doc-img]][doc] [![Go Report Card][go-report-img]][go-report]
 Simple Query builder for Elasticsearch
 
 ```bash
@@ -122,3 +122,13 @@ body := es.NewQuery(
         ),
 )
 ```
+
+[//]: # ([![Coverage Status][cov-img]][cov])
+
+[doc-img]: https://godoc.org/github.com/GokselKUCUKSAHIN/es-query-builder?status.svg
+[doc]: https://godoc.org/github.com/GokselKUCUKSAHIN/es-query-builder
+[go-report-img]: https://goreportcard.com/badge/github.com/GokselKUCUKSAHIN/es-query-builder
+[go-report]: https://goreportcard.com/report/github.com/GokselKUCUKSAHIN/es-query-builder
+
+[cov-img]: https://codecov.io/gh/GokselKUCUKSAHIN/es-query-builder/branch/main/graph/badge.svg
+[cov]: https://codecov.io/gh/GokselKUCUKSAHIN/es-query-builder
