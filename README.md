@@ -1,5 +1,5 @@
 # es-query-builder [![GoDoc][doc-img]][doc] [![Build Status][ci-img]][ci] [![Go Report Card][go-report-img]][go-report] [![Coverage Status][cov-img]][cov]
-Simple Query builder for Elasticsearch
+A Simple query builder for Elasticsearch
 
 ```bash
 go get github.com/GokselKUCUKSAHIN/es-query-builder
@@ -9,9 +9,10 @@ go get github.com/GokselKUCUKSAHIN/es-query-builder
 
 ## Project
 - [ ] improve README
-  - [ ] add examples
+  - [x] add examples
   - [ ] add benchmark results
   - [x] add `go get` command
+  - [x] setup github workflow 
 - [x] add benchmark
 - [x] add missing tests
 - [x] add makefile
