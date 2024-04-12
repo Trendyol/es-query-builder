@@ -23,7 +23,7 @@ go get github.com/GokselKUCUKSAHIN/es-query-builder
 - [x] sort
 - [x] nested
 - [ ] aggs
-- [ ] match
+- [x] match
 - [ ] match_all
 - [ ] match_none
 - [x] minimum_should_match
@@ -109,7 +109,7 @@ query := map[string]interface{}{
 ```
 
 ```go
-body := es.NewQuery(
+query := es.NewQuery(
     es.Bool().
         Must(
             es.Bool().

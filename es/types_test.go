@@ -4,9 +4,10 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
 	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
 
-	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
+	Operator "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/match/operator"
 	ScoreMode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/nested/score-mode"
 	Mode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/mode"
 	Order "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
@@ -96,19 +97,19 @@ func Test_Bool_method_should_create_boolType(t *testing.T) {
 	assert.IsTypeString(t, "es.boolType", b)
 }
 
-func Test_Bool_should_have_SetMinimumShouldMatch_method(t *testing.T) {
+func Test_Bool_should_have_MinimumShouldMatch_method(t *testing.T) {
 	// Given
 	b := es.Bool()
 
 	// When Then
-	assert.NotNil(t, b.SetMinimumShouldMatch)
+	assert.NotNil(t, b.MinimumShouldMatch)
 }
 
-func Test_Bool_SetMinimumShouldMatch_should_create_json_with_minimum_should_match_field_inside_bool(t *testing.T) {
+func Test_Bool_MinimumShouldMatch_should_create_json_with_minimum_should_match_field_inside_bool(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.Bool().
-			SetMinimumShouldMatch(7),
+			MinimumShouldMatch(7),
 	)
 
 	// When Then
@@ -117,19 +118,19 @@ func Test_Bool_SetMinimumShouldMatch_should_create_json_with_minimum_should_matc
 	assert.Equal(t, "{\"query\":{\"bool\":{\"minimum_should_match\":7}}}", bodyJSON)
 }
 
-func Test_Bool_should_have_SetBoost_method(t *testing.T) {
+func Test_Bool_should_have_Boost_method(t *testing.T) {
 	// Given
 	b := es.Bool()
 
 	// When Then
-	assert.NotNil(t, b.SetBoost)
+	assert.NotNil(t, b.Boost)
 }
 
-func Test_Bool_SetBoost_should_create_json_with_minimum_should_match_field_inside_bool(t *testing.T) {
+func Test_Bool_Boost_should_create_json_with_minimum_should_match_field_inside_bool(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.Bool().
-			SetBoost(3.1415),
+			Boost(3.1415),
 	)
 
 	// When Then
@@ -172,21 +173,21 @@ func Test_Bool_should_have_Should_method(t *testing.T) {
 
 ////   Object   ////
 
-func Test_Object_should_have_SetTrackTotalHits_method(t *testing.T) {
+func Test_Object_should_have_TrackTotalHits_method(t *testing.T) {
 	// Given
 	b := es.NewQuery(nil)
 
 	// When Then
-	assert.NotNil(t, b.SetTrackTotalHits)
+	assert.NotNil(t, b.TrackTotalHits)
 }
 
-func Test_SetTrackTotalHits_should_add_track_total_hits_field_into_Object(t *testing.T) {
+func Test_TrackTotalHits_should_add_track_total_hits_field_into_Object(t *testing.T) {
 	// Given
 	query := es.NewQuery(nil)
 
 	// When
 	_, beforeExists := query["track_total_hits"]
-	object := query.SetTrackTotalHits(true)
+	object := query.TrackTotalHits(true)
 	trackTotalHits, afterExists := query["track_total_hits"]
 
 	// Then
@@ -742,6 +743,37 @@ func Test_ExistsFunc_method_should_create_existsType(t *testing.T) {
 	assert.IsTypeString(t, "es.existsType", b)
 }
 
+////   Match   ////
+
+func Test_Match_should_exist_on_es_package(t *testing.T) {
+	// Given When Then
+	assert.NotNil(t, es.Match[any])
+}
+
+func Test_Match_method_should_create_matchType(t *testing.T) {
+	// Given
+	b := es.Match("key", "value")
+
+	// Then
+	assert.NotNil(t, b)
+	assert.IsTypeString(t, "es.matchType", b)
+}
+
+func Test_Match_should_create_json_with_match_field_inside_query(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.Match("message", "this is a test").
+			Boost(2.14).
+			Operator(Operator.Or),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t,
+		"{\"query\":{\"match\":{\"boost\":2.14,\"message\":{\"query\":\"this is a test\"},\"operator\":\"or\"}}}", bodyJSON)
+}
+
 ////   Range   ////
 
 func Test_Range_should_exist_on_es_package(t *testing.T) {
@@ -791,6 +823,42 @@ func Test_Range_should_create_json_with_range_field_inside_query(t *testing.T) {
 	assert.Equal(t, "{\"query\":{\"range\":{\"age\":{\"gte\":10,\"lte\":20}}}}", bodyJSON)
 }
 
+func Test_Range_should_have_LesserThan_method(t *testing.T) {
+	// Given
+	r := es.Range("age")
+
+	// When Then
+	assert.NotNil(t, r)
+	assert.NotNil(t, r.LesserThan)
+}
+
+func Test_Range_should_have_LesserThanOrEqual_method(t *testing.T) {
+	// Given
+	r := es.Range("age")
+
+	// When Then
+	assert.NotNil(t, r)
+	assert.NotNil(t, r.LesserThanOrEqual)
+}
+
+func Test_Range_should_have_GreaterThan_method(t *testing.T) {
+	// Given
+	r := es.Range("age")
+
+	// When Then
+	assert.NotNil(t, r)
+	assert.NotNil(t, r.GreaterThan)
+}
+
+func Test_Range_should_have_GreaterThanOrEqual_method(t *testing.T) {
+	// Given
+	r := es.Range("age")
+
+	// When Then
+	assert.NotNil(t, r)
+	assert.NotNil(t, r.GreaterThanOrEqual)
+}
+
 func Test_Range_gte_should_override_gt_and_vise_versa(t *testing.T) {
 	// Given
 	query := es.NewQuery(nil)
@@ -815,6 +883,54 @@ func Test_Range_lte_should_override_lt_and_vise_versa(t *testing.T) {
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{\"range\":{\"age\":{\"lte\":23}}}}", bodyJSON)
+}
+
+func Test_Range_should_have_Format_method(t *testing.T) {
+	// Given
+	r := es.Range("age")
+
+	// When Then
+	assert.NotNil(t, r)
+	assert.NotNil(t, r.Format)
+}
+
+func Test_Range_Format_should_create_json_with_range_field_inside_query(t *testing.T) {
+	// Given
+	query := es.NewQuery(nil)
+	query.Range("birth-date").
+		GreaterThanOrEqual("1990-01-01").
+		LesserThanOrEqual("2024-04-12").
+		Format("yyyy-MM-dd")
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t,
+		"{\"query\":{\"range\":{\"birth-date\":{\"format\":\"yyyy-MM-dd\",\"gte\":\"1990-01-01\",\"lte\":\"2024-04-12\"}}}}", bodyJSON)
+}
+
+func Test_Range_should_have_Boost_method(t *testing.T) {
+	// Given
+	r := es.Range("age")
+
+	// When Then
+	assert.NotNil(t, r)
+	assert.NotNil(t, r.Boost)
+}
+
+func Test_Range_Boost_should_create_json_with_range_field_inside_query(t *testing.T) {
+	// Given
+	query := es.NewQuery(nil)
+	query.Range("partition").
+		GreaterThan(112).
+		LesserThan(765).
+		Boost(3.2)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t,
+		"{\"query\":{\"range\":{\"partition\":{\"boost\":3.2,\"gt\":112,\"lt\":765}}}}", bodyJSON)
 }
 
 func Test_Range_should_not_range_field_when_no_query_field_in_Object(t *testing.T) {
@@ -1048,18 +1164,18 @@ func Test_Nested_should_create_query_json_with_nested_field_inside(t *testing.T)
 	assert.Equal(t, "{\"query\":{\"nested\":{\"path\":\"nested.path\",\"query\":{}}}}", bodyJSON)
 }
 
-func Test_Nested_should_have_SetInnerHits_method(t *testing.T) {
+func Test_Nested_should_have_InnerHits_method(t *testing.T) {
 	// Given
 	n := es.Nested("path", es.Object{})
 
 	// When Then
-	assert.NotNil(t, n.SetInnerHits)
+	assert.NotNil(t, n.InnerHits)
 }
 
-func Test_SetInnerHits_should_add_inner_hits_field_into_Nested(t *testing.T) {
+func Test_InnerHits_should_add_inner_hits_field_into_Nested(t *testing.T) {
 	// Given
 	query := es.NewQuery(
-		es.Nested("nested.path", es.Object{}).SetInnerHits(es.Object{"inner": "hits"}),
+		es.Nested("nested.path", es.Object{}).InnerHits(es.Object{"inner": "hits"}),
 	)
 
 	// When Then
@@ -1068,18 +1184,18 @@ func Test_SetInnerHits_should_add_inner_hits_field_into_Nested(t *testing.T) {
 	assert.Equal(t, "{\"query\":{\"nested\":{\"inner_hits\":{\"inner\":\"hits\"},\"path\":\"nested.path\",\"query\":{}}}}", bodyJSON)
 }
 
-func Test_Nested_should_have_SetScoreMode_method(t *testing.T) {
+func Test_Nested_should_have_ScoreMode_method(t *testing.T) {
 	// Given
 	n := es.Nested("path", es.Object{})
 
 	// When Then
-	assert.NotNil(t, n.SetScoreMode)
+	assert.NotNil(t, n.ScoreMode)
 }
 
-func Test_SetScoreMod_should_add_score_mode_field_into_Nested(t *testing.T) {
+func Test_ScoreMod_should_add_score_mode_field_into_Nested(t *testing.T) {
 	// Given
 	query := es.NewQuery(
-		es.Nested("nested.path", es.Object{}).SetScoreMode(ScoreMode.Sum),
+		es.Nested("nested.path", es.Object{}).ScoreMode(ScoreMode.Sum),
 	)
 
 	// When Then
