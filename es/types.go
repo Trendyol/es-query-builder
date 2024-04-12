@@ -286,21 +286,25 @@ func Match[T any](key string, query T) matchType {
 	}
 }
 
-func (m matchType) putInField(key string, value any) matchType {
-	for field := range m {
-		if matchObject, ok := m[field].(Object); ok {
-			matchObject[key] = value
+func (m matchType) putInTheField(key string, value any) matchType {
+	if match, exists := m["match"]; exists {
+		if matchObject, moOk := match.(Object); moOk {
+			for field := range matchObject {
+				if fieldObject, foOk := matchObject[field].(Object); foOk {
+					fieldObject[key] = value
+				}
+			}
 		}
 	}
 	return m
 }
 
 func (m matchType) Operator(operator Operator.Operator) matchType {
-	return m.putInField("operator", operator)
+	return m.putInTheField("operator", operator)
 }
 
 func (m matchType) Boost(boost float64) matchType {
-	return m.putInField("boost", boost)
+	return m.putInTheField("boost", boost)
 }
 
 func MatchAll() matchAllType {
@@ -309,7 +313,7 @@ func MatchAll() matchAllType {
 	}
 }
 
-func (m matchAllType) putInField(key string, value any) matchAllType {
+func (m matchAllType) putInTheField(key string, value any) matchAllType {
 	if matchAll, exists := m["match_all"]; exists {
 		matchAll.(Object)[key] = value
 	}
@@ -317,7 +321,7 @@ func (m matchAllType) putInField(key string, value any) matchAllType {
 }
 
 func (m matchAllType) Boost(boost float64) matchAllType {
-	return m.putInField("boost", boost)
+	return m.putInTheField("boost", boost)
 }
 
 func Range(key string) rangeType {
