@@ -27,6 +27,8 @@ type matchType Object
 
 type matchAllType Object
 
+type matchNoneType Object
+
 type termType Object
 
 type termsType Object
@@ -304,6 +306,37 @@ func (m matchType) Operator(operator Operator.Operator) matchType {
 }
 
 func (m matchType) Boost(boost float64) matchType {
+	return m.putInTheField("boost", boost)
+}
+
+func MatchNone[T any](key string, query T) matchNoneType {
+	return matchNoneType{
+		"match_none": Object{
+			key: Object{
+				"query": query,
+			},
+		},
+	}
+}
+
+func (m matchNoneType) putInTheField(key string, value any) matchNoneType {
+	if matchNone, exists := m["match_none"]; exists {
+		if matchNoneObject, mnoOk := matchNone.(Object); mnoOk {
+			for field := range matchNoneObject {
+				if fieldObject, foOk := matchNoneObject[field].(Object); foOk {
+					fieldObject[key] = value
+				}
+			}
+		}
+	}
+	return m
+}
+
+func (m matchNoneType) Operator(operator Operator.Operator) matchNoneType {
+	return m.putInTheField("operator", operator)
+}
+
+func (m matchNoneType) Boost(boost float64) matchNoneType {
 	return m.putInTheField("boost", boost)
 }
 

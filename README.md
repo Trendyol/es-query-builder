@@ -25,7 +25,7 @@ go get github.com/GokselKUCUKSAHIN/es-query-builder
 - [ ] aggs
 - [x] match
 - [x] match_all
-- [ ] match_none
+- [x] match_none
 - [x] minimum_should_match
 - [x] boost
 
