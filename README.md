@@ -109,7 +109,7 @@ query := map[string]interface{}{
 ```
 
 ```go
-body := es.NewQuery(
+query := es.NewQuery(
     es.Bool().
         Must(
             es.Bool().
