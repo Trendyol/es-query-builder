@@ -274,27 +274,31 @@ func ExistsFunc(key string, f func(key string) bool) existsType {
 	return Exists(key)
 }
 
-func Match[T any](query T) matchType {
+func Match[T any](key string, query T) matchType {
 	return matchType{
 		"match": Object{
-			"query": query,
+			key: Object{
+				"query": query,
+			},
 		},
 	}
 }
 
-func (m matchType) putInQuery(key string, value any) matchType {
-	if query, exists := m["query"]; exists {
-		query.(Object)[key] = value
+func (m matchType) putInField(key string, value any) matchType {
+	for field := range m {
+		if matchObject, ok := m[field].(Object); ok {
+			matchObject[key] = value
+		}
 	}
 	return m
 }
 
 func (m matchType) Operator(operator Operator.Operator) matchType {
-	return m.putInQuery("operator", operator)
+	return m.putInField("operator", operator)
 }
 
 func (m matchType) Boost(boost float64) matchType {
-	return m.putInQuery("boost", boost)
+	return m.putInField("boost", boost)
 }
 
 func Range(key string) rangeType {
