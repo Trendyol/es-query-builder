@@ -83,82 +83,6 @@ func Bool() boolType {
 	return boolType{}
 }
 
-func Term[T any](key string, value T) termType {
-	return termType{
-		"term": Object{
-			key: value,
-		},
-	}
-}
-
-func TermFunc[T any](key string, value T, f func(key string, value T) bool) termType {
-	if !f(key, value) {
-		return nil
-	}
-	return Term(key, value)
-}
-
-func Terms(key string, values ...any) termsType {
-	return termsType{
-		"terms": Object{
-			key: values,
-		},
-	}
-}
-
-func TermsArray[T any](key string, values []T) termsType {
-	return termsType{
-		"terms": Object{
-			key: values,
-		},
-	}
-}
-
-func TermsArrayFunc[T any](key string, values []T, f func(key string, values []T) bool) termsType {
-	if !f(key, values) {
-		return nil
-	}
-	return TermsArray(key, values)
-}
-
-func Exists(key string) existsType {
-	return existsType{
-		"exists": Object{
-			"field": key,
-		},
-	}
-}
-
-func ExistsFunc(key string, f func(key string) bool) existsType {
-	if !f(key) {
-		return nil
-	}
-	return Exists(key)
-}
-
-func Match[T any](query T) matchType {
-	return matchType{
-		"match": Object{
-			"query": query,
-		},
-	}
-}
-
-func (m matchType) putInQuery(key string, value any) matchType {
-	if query, exists := m["query"]; exists {
-		query.(Object)[key] = value
-	}
-	return m
-}
-
-func (m matchType) Operator(operator Operator.Operator) matchType {
-	return m.putInQuery("operator", operator)
-}
-
-func (m matchType) Boost(boost float64) matchType {
-	return m.putInQuery("boost", boost)
-}
-
 func (b boolType) MinimumShouldMatch(minimumShouldMatch int) boolType {
 	b["minimum_should_match"] = minimumShouldMatch
 	return b
@@ -295,6 +219,82 @@ func (s sourceType) Excludes(fields ...string) sourceType {
 	}
 	s["excludes"] = excludes
 	return s
+}
+
+func Term[T any](key string, value T) termType {
+	return termType{
+		"term": Object{
+			key: value,
+		},
+	}
+}
+
+func TermFunc[T any](key string, value T, f func(key string, value T) bool) termType {
+	if !f(key, value) {
+		return nil
+	}
+	return Term(key, value)
+}
+
+func Terms(key string, values ...any) termsType {
+	return termsType{
+		"terms": Object{
+			key: values,
+		},
+	}
+}
+
+func TermsArray[T any](key string, values []T) termsType {
+	return termsType{
+		"terms": Object{
+			key: values,
+		},
+	}
+}
+
+func TermsArrayFunc[T any](key string, values []T, f func(key string, values []T) bool) termsType {
+	if !f(key, values) {
+		return nil
+	}
+	return TermsArray(key, values)
+}
+
+func Exists(key string) existsType {
+	return existsType{
+		"exists": Object{
+			"field": key,
+		},
+	}
+}
+
+func ExistsFunc(key string, f func(key string) bool) existsType {
+	if !f(key) {
+		return nil
+	}
+	return Exists(key)
+}
+
+func Match[T any](query T) matchType {
+	return matchType{
+		"match": Object{
+			"query": query,
+		},
+	}
+}
+
+func (m matchType) putInQuery(key string, value any) matchType {
+	if query, exists := m["query"]; exists {
+		query.(Object)[key] = value
+	}
+	return m
+}
+
+func (m matchType) Operator(operator Operator.Operator) matchType {
+	return m.putInQuery("operator", operator)
+}
+
+func (m matchType) Boost(boost float64) matchType {
+	return m.putInQuery("boost", boost)
 }
 
 func Range(key string) rangeType {
