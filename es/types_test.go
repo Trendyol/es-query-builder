@@ -1,8 +1,6 @@
 package es_test
 
 import (
-	"encoding/json"
-	"fmt"
 	"reflect"
 	"testing"
 
@@ -1088,43 +1086,4 @@ func Test_SetScoreMod_should_add_score_mode_field_into_Nested(t *testing.T) {
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{\"nested\":{\"path\":\"nested.path\",\"query\":{},\"score_mode\":\"sum\"}}}", bodyJSON)
-}
-
-func TestRuns(t *testing.T) {
-	query := es.NewQuery(
-		es.Bool().
-			Must(
-				es.Range("date_field_name").
-					GreaterThanOrEqual("2019-09-23 18:30:00").
-					LesserThanOrEqual("2019-09-24 18:30:00"),
-			),
-	)
-	query.Size(10)
-
-	marshal, err := json.Marshal(query)
-	if err != nil {
-		return
-	}
-	fmt.Println(string(marshal))
-	assert.True(t, true)
-}
-
-func TestRuns2(t *testing.T) {
-	query := es.NewQuery(
-		es.Nested("obj1",
-			es.Bool().
-				Must(
-					es.Term("obj1.name", "blue"),
-					es.Range("obj1.count").
-						GreaterThan(5),
-				),
-		).SetScoreMode(ScoreMode.Avg),
-	)
-
-	marshal, err := json.Marshal(query)
-	if err != nil {
-		return
-	}
-	fmt.Println(string(marshal))
-	assert.True(t, true)
 }
