@@ -51,6 +51,8 @@ func correctType(b any) (any, bool) {
 	switch b.(type) {
 	case boolType:
 		return Object{"bool": b}, true
+	case rangeType:
+		return Object{"range": b}, true
 	default:
 		return b, true
 	}
@@ -262,10 +264,14 @@ func (s sourceType) Excludes(fields ...string) sourceType {
 	return s
 }
 
-func (o Object) Range(key string) rangeType {
-	r := rangeType{
+func Range(key string) rangeType {
+	return rangeType{
 		key: Object{},
 	}
+}
+
+func (o Object) Range(key string) rangeType {
+	r := Range(key)
 	if query, exists := o["query"]; exists {
 		if queryObject, ok := query.(Object); ok {
 			queryObject["range"] = r
