@@ -771,7 +771,7 @@ func Test_Match_should_create_json_with_match_field_inside_query(t *testing.T) {
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t,
-		"{\"query\":{\"match\":{\"boost\":2.14,\"message\":{\"query\":\"this is a test\"},\"operator\":\"or\"}}}", bodyJSON)
+		"{\"query\":{\"match\":{\"message\":{\"boost\":2.14,\"operator\":\"or\",\"query\":\"this is a test\"}}}}", bodyJSON)
 }
 
 ////    MatchAll    ////
