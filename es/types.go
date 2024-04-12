@@ -131,7 +131,7 @@ func (b boolType) SetMinimumShouldMatch(minimumShouldMatch int) boolType {
 	return b
 }
 
-func (b boolType) SetBoost(boost float64) boolType {
+func (b boolType) Boost(boost float64) boolType {
 	b["boost"] = boost
 	return b
 }
@@ -192,7 +192,7 @@ func (b boolType) Should(items ...any) boolType {
 	return b
 }
 
-func (o Object) SetTrackTotalHits(value bool) Object {
+func (o Object) TrackTotalHits(value bool) Object {
 	o["track_total_hits"] = value
 	return o
 }
@@ -328,16 +328,17 @@ func Nested[T any](path string, nestedQuery T) nestedType {
 	}
 }
 
-func (n nestedType) SetInnerHits(innerHits Object) nestedType {
+func (n nestedType) putInNested(key string, value any) nestedType {
 	if nested, exists := n["nested"]; exists {
-		nested.(Object)["inner_hits"] = innerHits
+		nested.(Object)[key] = value
 	}
 	return n
 }
 
-func (n nestedType) SetScoreMode(scoreMode ScoreMode.ScoreMode) nestedType {
-	if nested, exists := n["nested"]; exists {
-		nested.(Object)["score_mode"] = scoreMode
-	}
-	return n
+func (n nestedType) InnerHits(innerHits Object) nestedType {
+	return n.putInNested("inner_hits", innerHits)
+}
+
+func (n nestedType) ScoreMode(scoreMode ScoreMode.ScoreMode) nestedType {
+	return n.putInNested("score_mode", scoreMode)
 }

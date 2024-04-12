@@ -195,7 +195,7 @@ func createConditionalQuery(items []int) string {
 	query.Source().
 		Includes("id", "type", "indexedAt", "chapters").
 		Excludes("private.key")
-	query.SetTrackTotalHits(true)
+	query.TrackTotalHits(true)
 	query.Range("indexedAt").
 		GreaterThan("2021-01-01").
 		LesserThanOrEqual("now")
@@ -320,10 +320,10 @@ func createComplexQuery(id int) string {
 			MustNot(
 				es.Exists("blocks.reason.id"),
 			).
-			SetMinimumShouldMatch(1).
-			SetBoost(3.14),
+			MinimumShouldMatch(1).
+			Boost(3.14),
 	)
-	query.SetTrackTotalHits(true)
+	query.TrackTotalHits(true)
 	query.Size(100)
 	query.From(5000)
 	query.Sort(
