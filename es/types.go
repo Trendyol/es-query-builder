@@ -3,6 +3,7 @@ package es
 import (
 	"unsafe"
 
+	Operator "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/match/operator"
 	ScoreMode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/nested/score-mode"
 	Mode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/mode"
 	Order "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
@@ -21,6 +22,8 @@ type mustType Array
 type mustNotType Array
 
 type shouldType Array
+
+type matchType Object
 
 type termType Object
 
@@ -67,6 +70,13 @@ func NewQuery(c any) Object {
 	return Object{
 		"query": Object{},
 	}
+}
+
+func (o Object) putInQuery(key string, value any) Object {
+	if query, exists := o["query"]; exists {
+		query.(Object)[key] = value
+	}
+	return o
 }
 
 func Bool() boolType {
@@ -126,7 +136,30 @@ func ExistsFunc(key string, f func(key string) bool) existsType {
 	return Exists(key)
 }
 
-func (b boolType) SetMinimumShouldMatch(minimumShouldMatch int) boolType {
+func Match[T any](query T) matchType {
+	return matchType{
+		"match": Object{
+			"query": query,
+		},
+	}
+}
+
+func (m matchType) putInQuery(key string, value any) matchType {
+	if query, exists := m["query"]; exists {
+		query.(Object)[key] = value
+	}
+	return m
+}
+
+func (m matchType) Operator(operator Operator.Operator) matchType {
+	return m.putInQuery("operator", operator)
+}
+
+func (m matchType) Boost(boost float64) matchType {
+	return m.putInQuery("boost", boost)
+}
+
+func (b boolType) MinimumShouldMatch(minimumShouldMatch int) boolType {
 	b["minimum_should_match"] = minimumShouldMatch
 	return b
 }
@@ -272,11 +305,7 @@ func Range(key string) rangeType {
 
 func (o Object) Range(key string) rangeType {
 	r := Range(key)
-	if query, exists := o["query"]; exists {
-		if queryObject, ok := query.(Object); ok {
-			queryObject["range"] = r
-		}
-	}
+	o.putInQuery("range", r)
 	return r
 }
 
@@ -315,6 +344,24 @@ func (r rangeType) GreaterThanOrEqual(gte any) rangeType {
 		if rangeObject, ok := r[key].(Object); ok {
 			rangeObject["gte"] = gte
 			delete(rangeObject, "gt")
+		}
+	}
+	return r
+}
+
+func (r rangeType) Format(format string) rangeType {
+	for key := range r {
+		if rangeObject, ok := r[key].(Object); ok {
+			rangeObject["format"] = format
+		}
+	}
+	return r
+}
+
+func (r rangeType) Boost(boost float64) rangeType {
+	for key := range r {
+		if rangeObject, ok := r[key].(Object); ok {
+			rangeObject["boost"] = boost
 		}
 	}
 	return r
