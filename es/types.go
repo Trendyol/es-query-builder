@@ -25,6 +25,8 @@ type shouldType Array
 
 type matchType Object
 
+type matchAllType Object
+
 type termType Object
 
 type termsType Object
@@ -298,6 +300,23 @@ func (m matchType) Operator(operator Operator.Operator) matchType {
 }
 
 func (m matchType) Boost(boost float64) matchType {
+	return m.putInField("boost", boost)
+}
+
+func MatchAll() matchAllType {
+	return matchAllType{
+		"match_all": Object{},
+	}
+}
+
+func (m matchAllType) putInField(key string, value any) matchAllType {
+	if matchAll, exists := m["match_all"]; exists {
+		matchAll.(Object)[key] = value
+	}
+	return m
+}
+
+func (m matchAllType) Boost(boost float64) matchAllType {
 	return m.putInField("boost", boost)
 }
 
