@@ -47,6 +47,8 @@ type excludesType Array
 
 type nestedType Object
 
+type aggsType Object
+
 func unsafeIsNil(x any) bool {
 	return (*[2]uintptr)(unsafe.Pointer(&x))[1] == 0
 }
@@ -448,4 +450,24 @@ func (n nestedType) InnerHits(innerHits Object) nestedType {
 
 func (n nestedType) ScoreMode(scoreMode ScoreMode.ScoreMode) nestedType {
 	return n.putInNested("score_mode", scoreMode)
+}
+
+// AGGS
+
+func Agg() aggsType {
+	return aggsType{
+		"terms": Object{
+			"field": "my-field",
+		},
+	}
+}
+
+func (o Object) AddAggs(aggName string, agg aggsType) Object {
+	aggs, exists := o["aggs"]
+	if !exists {
+		aggs = Object{}
+	}
+	aggs.(Object)[aggName] = agg
+	o["aggs"] = aggs
+	return o
 }

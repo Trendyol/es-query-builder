@@ -1,6 +1,7 @@
 package es_test
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 
@@ -1263,4 +1264,14 @@ func Test_ScoreMod_should_add_score_mode_field_into_Nested(t *testing.T) {
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{\"nested\":{\"path\":\"nested.path\",\"query\":{},\"score_mode\":\"sum\"}}}", bodyJSON)
+}
+
+func TestItRuns(t *testing.T) {
+	query := es.NewQuery(nil)
+	query.
+		AddAggs("my-first-agg-name", es.Agg()).
+		AddAggs("my-sencond agg-name", es.Agg())
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	fmt.Println(bodyJSON)
+	assert.NotNil(t, bodyJSON)
 }
