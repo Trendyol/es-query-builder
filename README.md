@@ -12,7 +12,8 @@ go get github.com/GokselKUCUKSAHIN/es-query-builder
   - [x] add examples
   - [ ] add benchmark results
   - [x] add `go get` command
-  - [x] setup github workflow 
+  - [x] add badges
+- [x] setup github workflow  
 - [x] add benchmark
 - [x] add missing tests
 - [x] add makefile
@@ -23,12 +24,21 @@ go get github.com/GokselKUCUKSAHIN/es-query-builder
 - [x] sort
 - [x] nested
 - [ ] aggs
+  - [ ] terms
+  - [ ] multi_terms
+  - [ ] nested
+  - [ ] min (later TBD)
+  - [ ] max (later TBD)
+  - [ ] avg (later TBD)
+  - [ ] sum (later TBD)
+  - [ ] range (later TBD)
+  - [ ] filter (later TBD)
+  - [ ] filters (later TBD)
 - [x] match
 - [x] match_all
 - [x] match_none
 - [x] minimum_should_match
 - [x] boost
-
 
 ### Examples 
 
