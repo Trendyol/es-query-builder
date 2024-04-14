@@ -47,6 +47,10 @@ type excludesType Array
 
 type nestedType Object
 
+type aggsType Object
+
+type aggTermType Object
+
 func unsafeIsNil(x any) bool {
 	return (*[2]uintptr)(unsafe.Pointer(&x))[1] == 0
 }
@@ -448,4 +452,85 @@ func (n nestedType) InnerHits(innerHits Object) nestedType {
 
 func (n nestedType) ScoreMode(scoreMode ScoreMode.ScoreMode) nestedType {
 	return n.putInNested("score_mode", scoreMode)
+}
+
+func AggTerm(field string) aggTermType {
+	return aggTermType{
+		"field": field,
+	}
+}
+
+func (aggTerm aggTermType) Missing(missing string) aggTermType {
+	aggTerm["missing"] = missing
+	return aggTerm
+}
+
+func AggTerms() aggsType {
+	return aggsType{
+		"terms": Object{},
+	}
+}
+
+func AggMultiTerms() aggsType {
+	return aggsType{
+		"multi_terms": Object{},
+	}
+}
+
+func AggCustom(agg Object) aggsType {
+	return aggsType(agg)
+}
+
+func (agg aggsType) putInTheField(key string, value any) aggsType {
+	for field := range agg {
+		if fieldObject, ok := agg[field].(Object); ok {
+			fieldObject[key] = value
+		}
+	}
+	return agg
+}
+
+func (agg aggsType) Aggs(name string, nestedAgg aggsType) aggsType {
+	agg["aggs"] = Object{
+		name: nestedAgg,
+	}
+	return agg
+}
+
+func (agg aggsType) Field(field string) aggsType {
+	return agg.putInTheField("field", field)
+}
+
+func (agg aggsType) Size(size int) aggsType {
+	return agg.putInTheField("size", size)
+}
+
+func (agg aggsType) Order(field string, order Order.Order) aggsType {
+	return agg.putInTheField("order",
+		Object{
+			field: order,
+		},
+	)
+}
+
+func (agg aggsType) Include(include string) aggsType {
+	return agg.putInTheField("include", include)
+}
+
+func (agg aggsType) Exclude(exclude string) aggsType {
+	return agg.putInTheField("exclude", exclude)
+}
+
+func (agg aggsType) Terms(terms ...aggTermType) aggsType {
+	return agg.putInTheField("terms", terms)
+}
+
+func (o Object) Aggs(name string, agg aggsType) Object {
+	aggs, exists := o["aggs"]
+	if !exists {
+		aggs = Object{}
+	}
+	aggs.(Object)[name] = agg
+	o["aggs"] = aggs
+	return o
 }
