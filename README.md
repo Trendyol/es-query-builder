@@ -23,10 +23,10 @@ go get github.com/GokselKUCUKSAHIN/es-query-builder
 - [x] range
 - [x] sort
 - [x] nested
-- [ ] aggs
-  - [ ] terms
-  - [ ] multi_terms
-  - [ ] nested
+- [x] aggs
+  - [x] terms
+  - [x] multi_terms
+  - [x] nested
   - [ ] min (later TBD)
   - [ ] max (later TBD)
   - [ ] avg (later TBD)
