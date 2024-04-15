@@ -56,13 +56,17 @@ func Test_Simple_Queries_are_equal(t *testing.T) {
 }
 
 func Benchmark_Simple_Builder(b *testing.B) {
-	for i := 0; i <= b.N; i++ {
+	createSimpleQuery()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
 		createSimpleQuery()
 	}
 }
 
 func Benchmark_Simple_PureGo(b *testing.B) {
-	for i := 0; i <= b.N; i++ {
+	createSimpleQueryPureGo()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
 		createSimpleQueryPureGo()
 	}
 }
@@ -157,14 +161,18 @@ func Test_Intermediate_Queries_are_equal(t *testing.T) {
 
 func Benchmark_Intermediate_Builder(b *testing.B) {
 	id := 42
-	for i := 0; i <= b.N; i++ {
+	createIntermediateQuery(id)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
 		createIntermediateQuery(id)
 	}
 }
 
 func Benchmark_Intermediate_PureGo(b *testing.B) {
 	id := 42
-	for i := 0; i <= b.N; i++ {
+	createIntermediateQueryPureGo(id)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
 		createIntermediateQueryPureGo(id)
 	}
 }
@@ -280,7 +288,6 @@ func createConditionalQueryPureGo(items []int) string {
 
 func Test_Conditional_Queries_are_equal(t *testing.T) {
 	items := []int{1, 1, 2, 3, 5, 8, 13, 21, 34, 55}
-
 	build := createConditionalQuery(items)
 	pure := createConditionalQueryPureGo(items)
 	assert.Equal(t, pure, build)
@@ -288,14 +295,18 @@ func Test_Conditional_Queries_are_equal(t *testing.T) {
 
 func Benchmark_Conditional_Builder(b *testing.B) {
 	items := []int{1, 1, 2, 3, 5, 8, 13, 21, 34, 55}
-	for i := 0; i <= b.N; i++ {
+	createConditionalQuery(items)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
 		createConditionalQuery(items)
 	}
 }
 
 func Benchmark_Conditional_PureGo(b *testing.B) {
 	items := []int{1, 1, 2, 3, 5, 8, 13, 21, 34, 55}
-	for i := 0; i <= b.N; i++ {
+	createConditionalQueryPureGo(items)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
 		createConditionalQueryPureGo(items)
 	}
 }
@@ -446,14 +457,18 @@ func Test_Complex_Queries_are_equal(t *testing.T) {
 
 func Benchmark_Complex_Builder(b *testing.B) {
 	id := 76
-	for i := 0; i <= b.N; i++ {
+	createComplexQuery(id)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
 		createComplexQuery(id)
 	}
 }
 
 func Benchmark_Complex_PureGo(b *testing.B) {
 	id := 76
-	for i := 0; i <= b.N; i++ {
+	createComplexQueryPureGo(id)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
 		createComplexQueryPureGo(id)
 	}
 }
@@ -524,7 +539,9 @@ func Test_TyExample_Queries_are_equal(t *testing.T) {
 func Benchmark_Ty_Example_Builder(b *testing.B) {
 	brandIds := []int64{11, 22, 33, 44}
 	storefrontIds := []string{"35", "36", "43", "48", "49", "50"}
-	for i := 0; i <= b.N; i++ {
+	createTyExampleQuery(brandIds, storefrontIds)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
 		createTyExampleQuery(brandIds, storefrontIds)
 	}
 }
@@ -532,7 +549,9 @@ func Benchmark_Ty_Example_Builder(b *testing.B) {
 func Benchmark_Ty_Example_PureGo(b *testing.B) {
 	brandIds := []int64{11, 22, 33, 44}
 	storefrontIds := []string{"35", "36", "43", "48", "49", "50"}
-	for i := 0; i <= b.N; i++ {
+	createTyExampleQueryPureGo(brandIds, storefrontIds)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
 		createTyExampleQueryPureGo(brandIds, storefrontIds)
 	}
 }
@@ -603,13 +622,17 @@ func Test_Nested_Queries_are_equal(t *testing.T) {
 }
 
 func Benchmark_Nested_Example_Builder(b *testing.B) {
-	for i := 0; i <= b.N; i++ {
+	createNestedQuery()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
 		createNestedQuery()
 	}
 }
 
 func Benchmark_Nested_Example_PureGo(b *testing.B) {
-	for i := 0; i <= b.N; i++ {
+	createNestedQueryPureGo()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
 		createNestedQueryPureGo()
 	}
 }
@@ -738,13 +761,17 @@ func Test_Aggs_Queries_are_equal(t *testing.T) {
 }
 
 func Benchmark_Aggs_Example_Builder(b *testing.B) {
-	for i := 0; i <= b.N; i++ {
+	createAggsQuery()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
 		createAggsQuery()
 	}
 }
 
 func Benchmark_Aggs_Example_PureGo(b *testing.B) {
-	for i := 0; i <= b.N; i++ {
+	createAggsQueryPureGo()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
 		createAggsQueryPureGo()
 	}
 }
