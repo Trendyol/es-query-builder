@@ -5,8 +5,6 @@ A Simple query builder for Elasticsearch
 go get github.com/GokselKUCUKSAHIN/es-query-builder
 ```
 
-# TODOs
-
 ## Project
 - [ ] improve README
   - [x] add examples

@@ -172,21 +172,27 @@ func (o Object) From(from int) Object {
 	return o
 }
 
-func SortWithMode(field string, order Order.Order, mode Mode.Mode) sortType {
-	o := Object{}
-	if order != Order.Default {
-		o["order"] = order
-	}
-	if mode != Mode.Default {
-		o["mode"] = mode
-	}
+func Sort(field string) sortType {
 	return sortType{
-		field: o,
+		field: Object{},
 	}
 }
 
-func Sort(field string, order Order.Order) sortType {
-	return SortWithMode(field, order, Mode.Default)
+func (s sortType) putInTheField(key string, value any) sortType {
+	for field := range s {
+		if fieldObject, ok := s[field].(Object); ok {
+			fieldObject[key] = value
+		}
+	}
+	return s
+}
+
+func (s sortType) Order(order Order.Order) sortType {
+	return s.putInTheField("order", order)
+}
+
+func (s sortType) Mode(mode Mode.Mode) sortType {
+	return s.putInTheField("mode", mode)
 }
 
 func (o Object) Sort(sorts ...sortType) Object {

@@ -258,9 +258,9 @@ func Test_Sort_should_exist_on_es_package(t *testing.T) {
 	assert.NotNil(t, es.Sort)
 }
 
-func Test_Sort_should_return_sortType(t *testing.T) {
+func Test_Sort_should_return_sortType_with_order(t *testing.T) {
 	// Given
-	sort := es.Sort("name", Order.Asc)
+	sort := es.Sort("name").Order(Order.Asc)
 
 	// When
 	bodyType := reflect.TypeOf(sort).String()
@@ -272,14 +272,9 @@ func Test_Sort_should_return_sortType(t *testing.T) {
 	assert.Equal(t, "{\"name\":{\"order\":\"asc\"}}", bodyJSON)
 }
 
-func Test_SortWithMode_should_exist_on_es_package(t *testing.T) {
-	// Given When Then
-	assert.NotNil(t, es.SortWithMode)
-}
-
-func Test_SortWithMode_should_return_sortType(t *testing.T) {
+func Test_Sort_should_return_sortType_with_mode(t *testing.T) {
 	// Given
-	sort := es.SortWithMode("name", Order.Asc, Mode.Sum)
+	sort := es.Sort("age").Mode(Mode.Median)
 
 	// When
 	bodyType := reflect.TypeOf(sort).String()
@@ -288,7 +283,21 @@ func Test_SortWithMode_should_return_sortType(t *testing.T) {
 	assert.NotNil(t, sort)
 	assert.Equal(t, "es.sortType", bodyType)
 	bodyJSON := assert.MarshalWithoutError(t, sort)
-	assert.Equal(t, "{\"name\":{\"mode\":\"sum\",\"order\":\"asc\"}}", bodyJSON)
+	assert.Equal(t, "{\"age\":{\"mode\":\"median\"}}", bodyJSON)
+}
+
+func Test_Sort_should_return_sortType_with_order_and_mode(t *testing.T) {
+	// Given
+	sort := es.Sort("salary").Order(Order.Desc).Mode(Mode.Sum)
+
+	// When
+	bodyType := reflect.TypeOf(sort).String()
+
+	// Then
+	assert.NotNil(t, sort)
+	assert.Equal(t, "es.sortType", bodyType)
+	bodyJSON := assert.MarshalWithoutError(t, sort)
+	assert.Equal(t, "{\"salary\":{\"mode\":\"sum\",\"order\":\"desc\"}}", bodyJSON)
 }
 
 func Test_Sort_should_add_sort_field_into_Object(t *testing.T) {
@@ -297,7 +306,7 @@ func Test_Sort_should_add_sort_field_into_Object(t *testing.T) {
 
 	// When
 	_, beforeExists := query["sort"]
-	query.Sort(es.Sort("name", Order.Desc))
+	query.Sort(es.Sort("name").Order(Order.Desc))
 	sort, afterExists := query["sort"]
 
 	// Then

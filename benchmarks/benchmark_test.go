@@ -27,7 +27,7 @@ func createSimpleQuery() string {
 	return string(marshal)
 }
 
-func createSimpleQueryPureGo() string {
+func createSimpleQueryVanillaGo() string {
 	query := map[string]interface{}{
 		"query": map[string]interface{}{
 			"bool": map[string]interface{}{
@@ -51,7 +51,7 @@ func createSimpleQueryPureGo() string {
 
 func Test_Simple_Queries_are_equal(t *testing.T) {
 	build := createSimpleQuery()
-	pure := createSimpleQueryPureGo()
+	pure := createSimpleQueryVanillaGo()
 	assert.Equal(t, pure, build)
 }
 
@@ -63,11 +63,11 @@ func Benchmark_Simple_Builder(b *testing.B) {
 	}
 }
 
-func Benchmark_Simple_PureGo(b *testing.B) {
-	createSimpleQueryPureGo()
+func Benchmark_Simple_VanillaGo(b *testing.B) {
+	createSimpleQueryVanillaGo()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		createSimpleQueryPureGo()
+		createSimpleQueryVanillaGo()
 	}
 }
 
@@ -88,7 +88,9 @@ func createIntermediateQuery(id int) string {
 			),
 	)
 	query.Size(45)
-	query.Sort(es.Sort("name", order.Asc))
+	query.Sort(
+		es.Sort("name").Order(order.Asc),
+	)
 	query.Source().
 		Includes("id", "type", "indexedAt", "chapters")
 
@@ -99,7 +101,7 @@ func createIntermediateQuery(id int) string {
 	return string(marshal)
 }
 
-func createIntermediateQueryPureGo(id int) string {
+func createIntermediateQueryVanillaGo(id int) string {
 	query := map[string]interface{}{
 		"_source": map[string]interface{}{
 			"includes": []interface{}{"id", "type", "indexedAt", "chapters"},
@@ -155,7 +157,7 @@ func createIntermediateQueryPureGo(id int) string {
 func Test_Intermediate_Queries_are_equal(t *testing.T) {
 	id := 42
 	build := createIntermediateQuery(id)
-	pure := createIntermediateQueryPureGo(id)
+	pure := createIntermediateQueryVanillaGo(id)
 	assert.Equal(t, pure, build)
 }
 
@@ -168,12 +170,12 @@ func Benchmark_Intermediate_Builder(b *testing.B) {
 	}
 }
 
-func Benchmark_Intermediate_PureGo(b *testing.B) {
+func Benchmark_Intermediate_VanillaGo(b *testing.B) {
 	id := 42
-	createIntermediateQueryPureGo(id)
+	createIntermediateQueryVanillaGo(id)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		createIntermediateQueryPureGo(id)
+		createIntermediateQueryVanillaGo(id)
 	}
 }
 
@@ -199,7 +201,9 @@ func createConditionalQuery(items []int) string {
 			),
 	)
 	query.Size(100)
-	query.Sort(es.Sort("modifiedDate", order.Desc))
+	query.Sort(
+		es.Sort("modifiedDate").Order(order.Desc),
+	)
 	query.Source().
 		Includes("id", "type", "indexedAt", "chapters").
 		Excludes("private.key")
@@ -215,7 +219,7 @@ func createConditionalQuery(items []int) string {
 	return string(marshal)
 }
 
-func createConditionalQueryPureGo(items []int) string {
+func createConditionalQueryVanillaGo(items []int) string {
 	var flag bool
 	for _, item := range items {
 		if item == 21 {
@@ -289,7 +293,7 @@ func createConditionalQueryPureGo(items []int) string {
 func Test_Conditional_Queries_are_equal(t *testing.T) {
 	items := []int{1, 1, 2, 3, 5, 8, 13, 21, 34, 55}
 	build := createConditionalQuery(items)
-	pure := createConditionalQueryPureGo(items)
+	pure := createConditionalQueryVanillaGo(items)
 	assert.Equal(t, pure, build)
 }
 
@@ -302,12 +306,12 @@ func Benchmark_Conditional_Builder(b *testing.B) {
 	}
 }
 
-func Benchmark_Conditional_PureGo(b *testing.B) {
+func Benchmark_Conditional_VanillaGo(b *testing.B) {
 	items := []int{1, 1, 2, 3, 5, 8, 13, 21, 34, 55}
-	createConditionalQueryPureGo(items)
+	createConditionalQueryVanillaGo(items)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		createConditionalQueryPureGo(items)
+		createConditionalQueryVanillaGo(items)
 	}
 }
 
@@ -338,9 +342,9 @@ func createComplexQuery(id int) string {
 	query.Size(100)
 	query.From(5000)
 	query.Sort(
-		es.Sort("modifiedDate", order.Desc),
-		es.SortWithMode("name", order.Asc, mode.Median),
-		es.Sort("indexedAt", order.Asc),
+		es.Sort("modifiedDate").Order(order.Desc),
+		es.Sort("name").Order(order.Asc).Mode(mode.Median),
+		es.Sort("indexedAt").Order(order.Asc),
 	)
 	query.Source().
 		Includes("id", "type", "indexedAt", "chapters").
@@ -356,7 +360,7 @@ func createComplexQuery(id int) string {
 	return string(marshal)
 }
 
-func createComplexQueryPureGo(id int) string {
+func createComplexQueryVanillaGo(id int) string {
 	query := map[string]interface{}{
 		"_source": map[string]interface{}{
 			"includes": []interface{}{"id", "type", "indexedAt", "chapters"},
@@ -451,7 +455,7 @@ func createComplexQueryPureGo(id int) string {
 func Test_Complex_Queries_are_equal(t *testing.T) {
 	id := 76
 	build := createComplexQuery(id)
-	pure := createComplexQueryPureGo(id)
+	pure := createComplexQueryVanillaGo(id)
 	assert.Equal(t, pure, build)
 }
 
@@ -464,12 +468,12 @@ func Benchmark_Complex_Builder(b *testing.B) {
 	}
 }
 
-func Benchmark_Complex_PureGo(b *testing.B) {
+func Benchmark_Complex_VanillaGo(b *testing.B) {
 	id := 76
-	createComplexQueryPureGo(id)
+	createComplexQueryVanillaGo(id)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		createComplexQueryPureGo(id)
+		createComplexQueryVanillaGo(id)
 	}
 }
 
@@ -494,7 +498,7 @@ func createTyExampleQuery(brandIds []int64, storefrontIds []string) string {
 	return string(marshal)
 }
 
-func createTyExampleQueryPureGo(brandIds []int64, storefrontIds []string) string {
+func createTyExampleQueryVanillaGo(brandIds []int64, storefrontIds []string) string {
 	query := map[string]interface{}{
 		"size": 1,
 		"query": map[string]interface{}{
@@ -532,7 +536,7 @@ func Test_TyExample_Queries_are_equal(t *testing.T) {
 	brandIds := []int64{11, 22, 33, 44}
 	storefrontIds := []string{"35", "36", "43", "48", "49", "50"}
 	build := createTyExampleQuery(brandIds, storefrontIds)
-	pure := createTyExampleQueryPureGo(brandIds, storefrontIds)
+	pure := createTyExampleQueryVanillaGo(brandIds, storefrontIds)
 	assert.Equal(t, pure, build)
 }
 
@@ -546,13 +550,13 @@ func Benchmark_Ty_Example_Builder(b *testing.B) {
 	}
 }
 
-func Benchmark_Ty_Example_PureGo(b *testing.B) {
+func Benchmark_Ty_Example_VanillaGo(b *testing.B) {
 	brandIds := []int64{11, 22, 33, 44}
 	storefrontIds := []string{"35", "36", "43", "48", "49", "50"}
-	createTyExampleQueryPureGo(brandIds, storefrontIds)
+	createTyExampleQueryVanillaGo(brandIds, storefrontIds)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		createTyExampleQueryPureGo(brandIds, storefrontIds)
+		createTyExampleQueryVanillaGo(brandIds, storefrontIds)
 	}
 }
 
@@ -578,7 +582,7 @@ func createNestedQuery() string {
 	return string(marshal)
 }
 
-func createNestedQueryPureGo() string {
+func createNestedQueryVanillaGo() string {
 	query := map[string]interface{}{
 		"query": map[string]interface{}{
 			"nested": map[string]interface{}{
@@ -617,7 +621,7 @@ func createNestedQueryPureGo() string {
 
 func Test_Nested_Queries_are_equal(t *testing.T) {
 	build := createNestedQuery()
-	pure := createNestedQueryPureGo()
+	pure := createNestedQueryVanillaGo()
 	assert.Equal(t, pure, build)
 }
 
@@ -629,11 +633,11 @@ func Benchmark_Nested_Example_Builder(b *testing.B) {
 	}
 }
 
-func Benchmark_Nested_Example_PureGo(b *testing.B) {
-	createNestedQueryPureGo()
+func Benchmark_Nested_Example_VanillaGo(b *testing.B) {
+	createNestedQueryVanillaGo()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		createNestedQueryPureGo()
+		createNestedQueryVanillaGo()
 	}
 }
 
@@ -653,8 +657,8 @@ func createAggsQuery() string {
 	query.
 		Size(5_000).
 		Sort(
-			es.Sort("modifiedDate", order.Desc),
-			es.Sort("indexedAt", order.Desc),
+			es.Sort("modifiedDate").Order(order.Desc),
+			es.Sort("indexedAt").Order(order.Desc),
 		)
 
 	query.
@@ -683,7 +687,7 @@ func createAggsQuery() string {
 	return string(marshal)
 }
 
-func createAggsQueryPureGo() string {
+func createAggsQueryVanillaGo() string {
 	query := map[string]interface{}{
 		"size": 5000,
 		"sort": []map[string]interface{}{
@@ -756,7 +760,7 @@ func createAggsQueryPureGo() string {
 
 func Test_Aggs_Queries_are_equal(t *testing.T) {
 	build := createAggsQuery()
-	pure := createAggsQueryPureGo()
+	pure := createAggsQueryVanillaGo()
 	assert.Equal(t, pure, build)
 }
 
@@ -768,10 +772,10 @@ func Benchmark_Aggs_Example_Builder(b *testing.B) {
 	}
 }
 
-func Benchmark_Aggs_Example_PureGo(b *testing.B) {
-	createAggsQueryPureGo()
+func Benchmark_Aggs_Example_VanillaGo(b *testing.B) {
+	createAggsQueryVanillaGo()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		createAggsQueryPureGo()
+		createAggsQueryVanillaGo()
 	}
 }

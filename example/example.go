@@ -98,7 +98,7 @@ func buildQuery(id int) es.Object {
 			),
 	)
 	query.Size(45)
-	query.Sort(es.Sort("name", order.Asc))
+	query.Sort(es.Sort("name").Order(order.Asc))
 	query.Source().
 		Includes("id", "type", "indexedAt", "chapters")
 	return query
