@@ -1,7 +1,6 @@
 package es_test
 
 import (
-	Mode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/mode"
 	"reflect"
 	"testing"
 
@@ -10,6 +9,7 @@ import (
 
 	Operator "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/match/operator"
 	ScoreMode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/nested/score-mode"
+	Mode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/mode"
 	Order "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
 )
 
