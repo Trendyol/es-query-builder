@@ -64,9 +64,8 @@ func correctType(b any) (any, bool) {
 		return Object{"bool": b}, true
 	case rangeType:
 		return Object{"range": b}, true
-	default:
-		return b, true
 	}
+	return b, true
 }
 
 func NewQuery(c any) Object {
@@ -106,8 +105,8 @@ func (b boolType) Filter(items ...any) boolType {
 	if !exists {
 		filter = filterType{}
 	}
-	for _, item := range items {
-		if field, ok := correctType(item); ok {
+	for i := 0; i < len(items); i++ {
+		if field, ok := correctType(items[i]); ok {
 			filter = append(filter.(filterType), field)
 		}
 	}
@@ -120,8 +119,8 @@ func (b boolType) Must(items ...any) boolType {
 	if !exists {
 		must = mustType{}
 	}
-	for _, item := range items {
-		if field, ok := correctType(item); ok {
+	for i := 0; i < len(items); i++ {
+		if field, ok := correctType(items[i]); ok {
 			must = append(must.(mustType), field)
 		}
 	}
@@ -134,8 +133,8 @@ func (b boolType) MustNot(items ...any) boolType {
 	if !exists {
 		mustNot = mustNotType{}
 	}
-	for _, item := range items {
-		if field, ok := correctType(item); ok {
+	for i := 0; i < len(items); i++ {
+		if field, ok := correctType(items[i]); ok {
 			mustNot = append(mustNot.(mustNotType), field)
 		}
 	}
@@ -148,8 +147,8 @@ func (b boolType) Should(items ...any) boolType {
 	if !exists {
 		should = shouldType{}
 	}
-	for _, item := range items {
-		if field, ok := correctType(item); ok {
+	for i := 0; i < len(items); i++ {
+		if field, ok := correctType(items[i]); ok {
 			should = append(should.(shouldType), field)
 		}
 	}
@@ -216,8 +215,8 @@ func (s sourceType) Includes(fields ...string) sourceType {
 	if !exists {
 		includes = includesType{}
 	}
-	for _, field := range fields {
-		includes = append(includes.(includesType), field)
+	for i := 0; i < len(fields); i++ {
+		includes = append(includes.(includesType), fields[i])
 	}
 	s["includes"] = includes
 	return s
@@ -228,8 +227,8 @@ func (s sourceType) Excludes(fields ...string) sourceType {
 	if !exists {
 		excludes = excludesType{}
 	}
-	for _, field := range fields {
-		excludes = append(excludes.(excludesType), field)
+	for i := 0; i < len(fields); i++ {
+		excludes = append(excludes.(excludesType), fields[i])
 	}
 	s["excludes"] = excludes
 	return s
