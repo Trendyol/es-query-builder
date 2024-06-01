@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-////    Conditional Complex   ////
+////    Conditional Complex Example  ////
 
 func createConditionalQuery(items []int) string {
 	query := es.NewQuery(

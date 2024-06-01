@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-////    Complex    ////
+////    Complex Example   ////
 
 func createComplexQuery(id int) string {
 	query := es.NewQuery(

@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-////    Intermediate    ////
+////    Intermediate Example   ////
 
 func createIntermediateQuery(id int) string {
 	query := es.NewQuery(

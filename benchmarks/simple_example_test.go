@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-////    Simple    ////
+////    Simple Example   ////
 
 func createSimpleQuery() string {
 	query := es.NewQuery(
