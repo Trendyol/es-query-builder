@@ -2,11 +2,12 @@ package benchmarks_test
 
 import (
 	"encoding/json"
+	"testing"
+
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/mode"
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
 	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
-	"testing"
 )
 
 ////    Complex Example   ////
