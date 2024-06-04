@@ -135,7 +135,7 @@ query := es.NewQuery(
 You can check and run [benchmarks](./benchmarks) on your machine.
 
 ### ARMv6l
-- **Device** Raspberry Pi Zero W
+- **Device**: Raspberry Pi Zero W
 - **CPU**: Broadcom BCM2835 1GHz 1 Core
 - **Arch**: ARM v6 32 bit
 - **Memory**: 512MB LPDDR2
@@ -144,7 +144,7 @@ You can check and run [benchmarks](./benchmarks) on your machine.
 ![armv6l](https://github.com/GokselKUCUKSAHIN/es-query-builder/assets/33639948/8972003d-9b00-4021-9f69-347723ac59de)
 
 ### ARM64
-- **Device** MacBook Pro 16" 2021
+- **Device**: MacBook Pro 16" 2021
 - **CPU**: Apple Silicon M1 Pro 10 Core
 - **Arch**: ARM64
 - **Memory**: 32GB LPDDR5
