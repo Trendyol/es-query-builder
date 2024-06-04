@@ -1,43 +1,11 @@
 # es-query-builder [![GoDoc][doc-img]][doc] [![Build Status][ci-img]][ci] [![Go Report Card][go-report-img]][go-report] [![Coverage Status][cov-img]][cov]
-A Simple query builder for Elasticsearch
+A simple, user-friendly, and streamlined library for programmatically building Elasticsearch DSL queries in Go, designed for low overhead and minimal memory usage.
 
-## How to get?
+## How to Get
+To install the es-query-builder library, run the following command:
 ```bash
 go get github.com/GokselKUCUKSAHIN/es-query-builder
 ```
-
-## Project
-- [ ] improve README
-  - [x] add examples
-  - [x] add benchmark results
-  - [x] add `go get` command
-  - [x] add badges
-- [x] setup github workflow  
-- [x] add benchmark
-- [x] add missing tests
-- [x] add makefile
-- [x] setup linter
-
-## Builder fields
-- [x] range
-- [x] sort
-- [x] nested
-- [x] aggs
-  - [x] terms
-  - [x] multi_terms
-  - [x] nested
-  - [ ] min (later TBD)
-  - [ ] max (later TBD)
-  - [ ] avg (later TBD)
-  - [ ] sum (later TBD)
-  - [ ] range (later TBD)
-  - [ ] filter (later TBD)
-  - [ ] filters (later TBD)
-- [x] match
-- [x] match_all
-- [x] match_none
-- [x] minimum_should_match
-- [x] boost
 
 ### Examples 
 
