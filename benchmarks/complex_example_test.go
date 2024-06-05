@@ -150,8 +150,8 @@ func createComplexQueryVanillaGo(id int) string {
 func Test_Complex_Queries_are_equal(t *testing.T) {
 	id := 76
 	build := createComplexQuery(id)
-	pure := createComplexQueryVanillaGo(id)
-	assert.Equal(t, pure, build)
+	vanilla := createComplexQueryVanillaGo(id)
+	assert.Equal(t, vanilla, build)
 }
 
 func Benchmark_Complex_Builder(b *testing.B) {

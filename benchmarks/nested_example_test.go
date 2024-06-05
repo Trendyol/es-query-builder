@@ -69,8 +69,8 @@ func createNestedQueryVanillaGo() string {
 
 func Test_Nested_Queries_are_equal(t *testing.T) {
 	build := createNestedQuery()
-	pure := createNestedQueryVanillaGo()
-	assert.Equal(t, pure, build)
+	vanilla := createNestedQueryVanillaGo()
+	assert.Equal(t, vanilla, build)
 }
 
 func Benchmark_Nested_Example_Builder(b *testing.B) {

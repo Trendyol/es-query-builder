@@ -95,8 +95,8 @@ func createIntermediateQueryVanillaGo(id int) string {
 func Test_Intermediate_Queries_are_equal(t *testing.T) {
 	id := 42
 	build := createIntermediateQuery(id)
-	pure := createIntermediateQueryVanillaGo(id)
-	assert.Equal(t, pure, build)
+	vanilla := createIntermediateQueryVanillaGo(id)
+	assert.Equal(t, vanilla, build)
 }
 
 func Benchmark_Intermediate_Builder(b *testing.B) {

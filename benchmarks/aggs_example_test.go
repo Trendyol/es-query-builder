@@ -128,8 +128,8 @@ func createAggsQueryVanillaGo() string {
 
 func Test_Aggs_Queries_are_equal(t *testing.T) {
 	build := createAggsQuery()
-	pure := createAggsQueryVanillaGo()
-	assert.Equal(t, pure, build)
+	vanilla := createAggsQueryVanillaGo()
+	assert.Equal(t, vanilla, build)
 }
 
 func Benchmark_Aggs_Example_Builder(b *testing.B) {

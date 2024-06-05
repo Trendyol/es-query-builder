@@ -123,8 +123,8 @@ func createConditionalQueryVanillaGo(items []int) string {
 func Test_Conditional_Queries_are_equal(t *testing.T) {
 	items := []int{1, 1, 2, 3, 5, 8, 13, 21, 34, 55}
 	build := createConditionalQuery(items)
-	pure := createConditionalQueryVanillaGo(items)
-	assert.Equal(t, pure, build)
+	vanilla := createConditionalQueryVanillaGo(items)
+	assert.Equal(t, vanilla, build)
 }
 
 func Benchmark_Conditional_Builder(b *testing.B) {

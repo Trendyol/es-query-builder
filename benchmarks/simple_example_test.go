@@ -49,8 +49,8 @@ func createSimpleQueryVanillaGo() string {
 
 func Test_Simple_Queries_are_equal(t *testing.T) {
 	build := createSimpleQuery()
-	pure := createSimpleQueryVanillaGo()
-	assert.Equal(t, pure, build)
+	vanilla := createSimpleQueryVanillaGo()
+	assert.Equal(t, vanilla, build)
 }
 
 func Benchmark_Simple_Builder(b *testing.B) {

@@ -67,8 +67,8 @@ func Test_TyExample_Queries_are_equal(t *testing.T) {
 	brandIds := []int64{11, 22, 33, 44}
 	storefrontIds := []string{"35", "36", "43", "48", "49", "50"}
 	build := createTyExampleQuery(brandIds, storefrontIds)
-	pure := createTyExampleQueryVanillaGo(brandIds, storefrontIds)
-	assert.Equal(t, pure, build)
+	vanilla := createTyExampleQueryVanillaGo(brandIds, storefrontIds)
+	assert.Equal(t, vanilla, build)
 }
 
 func Benchmark_Ty_Example_Builder(b *testing.B) {
