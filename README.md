@@ -11,8 +11,7 @@ To install the es-query-builder library, run the following command:
 go get github.com/GokselKUCUKSAHIN/es-query-builder
 ```
 
-### Examples
-
+### Example
 ```json
 {
   "query": {
@@ -73,7 +72,35 @@ go get github.com/GokselKUCUKSAHIN/es-query-builder
 }
 ```
 
-With vanilla Go
+### With es-query-builder
+
+```go
+query := es.NewQuery(
+    es.Bool().
+      Must(
+          es.Term("author", "George Orwell"),
+      ).
+      MustNot(
+          es.Terms("genre", "Fantasy", "Science Fiction"),
+          es.Exists("out_of_print"),
+      ).
+      Should(
+          es.Terms("title", "1984", "Animal Farm"),
+      ),
+).Aggs("genres_count",
+    es.AggTerms().
+        Field("genre"),
+).Aggs("authors_and_genres",
+    es.AggTerms().
+        Field("author").
+        Aggs("genres",
+            es.AggTerms().
+                Field("genre"),
+        ),
+)
+```
+
+#### With vanilla Go
 
 ```go
 query := map[string]interface{}{
@@ -135,31 +162,7 @@ query := map[string]interface{}{
 }
 ```
 
-```go
-query := es.NewQuery(
-    es.Bool().
-      Must(
-          es.Term("author", "George Orwell"),
-      ).
-      MustNot(
-          es.Terms("genre", "Fantasy", "Science Fiction"),
-          es.Exists("out_of_print"),
-      ).
-      Should(
-          es.Terms("title", "1984", "Animal Farm"),
-      ),
-).Aggs("genres_count",
-    es.AggTerms().
-        Field("genre"),
-).Aggs("authors_and_genres",
-    es.AggTerms().
-        Field("author").
-        Aggs("genres",
-            es.AggTerms().
-                Field("genre"),
-        ),
-)
-```
+
 
 # Benchmarks
 
@@ -184,6 +187,27 @@ You can check and run [benchmarks](./benchmarks) on your machine.
 - **Go Version**: go1.22.1
 
 ![arm64](https://github.com/GokselKUCUKSAHIN/es-query-builder/assets/33639948/ca9e2603-ebcd-4dec-92f4-e501ddcc4abe)
+
+# Want to Contribute?
+
+<details>
+  <summary><b>Join Us</b></summary>
+  <img src="https://github.com/GokselKUCUKSAHIN/es-query-builder/assets/33639948/bc696d14-a55d-4ec4-9cb4-021cc4128760" width="400px" alt="join us"/>
+</details>
+
+###  Contribute to Our Project
+
+Want to help out? Awesome! Here’s how you can contribute:
+
+1. **Report Issues:** Got a suggestion, recommendation, or found a bug? Head over to the [Issues](https://github.com/GokselKUCUKSAHIN/es-query-builder/issues) section and let us know.
+
+2. **Make Changes:** Want to improve the code?
+   - Fork the repo
+   - Create a new branch
+   - Make your changes
+   - Open a Merge Request (MR) to merge into the main repo
+
+We’re excited to see your contributions. Thanks for helping make this project better!
 
 # License
 
