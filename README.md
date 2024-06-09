@@ -77,16 +77,16 @@ go get github.com/GokselKUCUKSAHIN/es-query-builder
 ```go
 query := es.NewQuery(
     es.Bool().
-      Must(
-          es.Term("author", "George Orwell"),
-      ).
-      MustNot(
-          es.Terms("genre", "Fantasy", "Science Fiction"),
-          es.Exists("out_of_print"),
-      ).
-      Should(
-          es.Terms("title", "1984", "Animal Farm"),
-      ),
+        Must(
+            es.Term("author", "George Orwell"),
+        ).
+        MustNot(
+            es.Terms("genre", "Fantasy", "Science Fiction"),
+            es.Exists("out_of_print"),
+        ).
+        Should(
+            es.Terms("title", "1984", "Animal Farm"),
+        ),
 ).Aggs("genres_count",
     es.AggTerms().
         Field("genre"),
