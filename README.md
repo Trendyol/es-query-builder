@@ -100,7 +100,7 @@ query := es.NewQuery(
 )
 ```
 
-#### With vanilla Go
+### With vanilla Go
 
 ```go
 query := map[string]interface{}{
