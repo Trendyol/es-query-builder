@@ -19,32 +19,55 @@ go get github.com/GokselKUCUKSAHIN/es-query-builder
     "bool": {
       "must": [
         {
-          "bool": {
-            "should": [
-              {
-                "term": {
-                  "doc.id": "293"
-                }
-              },
-              {
-                "term": {
-                  "file.fileId": "293"
-                }
-              }
-            ]
+          "term": {
+            "author.keyword": "George Orwell"
           }
         }
       ],
-      "filter": [
+      "must_not": [
         {
           "terms": {
-            "type": [
-              "DOC",
-              "FILE"
+            "genre.keyword": [
+              "Fantasy",
+              "Science Fiction"
+            ]
+          }
+        },
+        {
+          "exists": {
+            "field": "out_of_print"
+          }
+        }
+      ],
+      "should": [
+        {
+          "terms": {
+            "title.keyword": [
+              "1984",
+              "Animal Farm"
             ]
           }
         }
       ]
+    }
+  },
+  "aggs": {
+    "genres_count": {
+      "terms": {
+        "field": "genre.keyword"
+      }
+    },
+    "authors_and_genres": {
+      "terms": {
+        "field": "author.keyword"
+      },
+      "aggs": {
+        "genres": {
+          "terms": {
+            "field": "genre.keyword"
+          }
+        }
+      }
     }
   }
 }
@@ -56,30 +79,54 @@ With vanilla Go
 query := map[string]interface{}{
   "query": map[string]interface{}{
     "bool": map[string]interface{}{
-      "must": []interface{}{
-        map[string]interface{}{
-          "bool": map[string]interface{}{
-            "should": []interface{}{
-              map[string]interface{}{
-                "term": map[string]interface{}{
-                  "doc.id": id,
-                },
-              },
-              map[string]interface{}{
-                "term": map[string]interface{}{
-                  "file.fileId": id,
-                },
-              },
+      "must": []map[string]interface{}{
+        {
+          "term": map[string]interface{}{
+            "author": "George Orwell",
+          },
+        },
+      },
+      "must_not": []map[string]interface{}{
+        {
+          "terms": map[string]interface{}{
+            "genre": []string{
+              "Fantasy",
+              "Science Fiction",
+            },
+          },
+        },
+        {
+          "exists": map[string]interface{}{
+            "field": "out_of_print",
+          },
+        },
+      },
+      "should": []map[string]interface{}{
+        {
+          "terms": map[string]interface{}{
+            "title": []string{
+              "1984",
+              "Animal Farm",
             },
           },
         },
       },
-      "filter": []interface{}{
-        map[string]interface{}{
+    },
+  },
+  "aggs": map[string]interface{}{
+    "genres_count": map[string]interface{}{
+      "terms": map[string]interface{}{
+        "field": "genre",
+      },
+    },
+    "authors_and_genres": map[string]interface{}{
+      "terms": map[string]interface{}{
+        "field": "author",
+      },
+      "aggs": map[string]interface{}{
+        "genres": map[string]interface{}{
           "terms": map[string]interface{}{
-            "type": []string{
-              "DOC", "FILE",
-            },
+            "field": "genre",
           },
         },
       },
@@ -91,15 +138,25 @@ query := map[string]interface{}{
 ```go
 query := es.NewQuery(
     es.Bool().
-        Must(
-            es.Bool().
-                Should(
-                    es.Term("doc.id", id),
-                    es.Term("file.fileId", id),
-                ), 
-        ).
-        Filter(
-            es.Terms("type", "DOC", "FILE"),
+      Must(
+          es.Term("author", "George Orwell"),
+      ).
+      MustNot(
+          es.Terms("genre", "Fantasy", "Science Fiction"),
+          es.Exists("out_of_print"),
+      ).
+      Should(
+          es.Terms("title", "1984", "Animal Farm"),
+      ),
+).Aggs("genres_count",
+    es.AggTerms().
+        Field("genre"),
+).Aggs("authors_and_genres",
+    es.AggTerms().
+        Field("author").
+        Aggs("genres",
+            es.AggTerms().
+                Field("genre"),
         ),
 )
 ```
@@ -111,7 +168,7 @@ You can check and run [benchmarks](./benchmarks) on your machine.
 ### ARMv6l
 
 - **Device**: Raspberry Pi Zero W
-- **CPU**: Broadcom BCM2835 1GHz 1 Core
+- **CPU**: Broadcom BCM2835 1GHz Single Core
 - **Arch**: ARM v6 32 bit
 - **Memory**: 512MB LPDDR2
 - **Go Version**: go1.22.3
