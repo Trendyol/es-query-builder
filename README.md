@@ -19,14 +19,14 @@ go get github.com/GokselKUCUKSAHIN/es-query-builder
       "must": [
         {
           "term": {
-            "author.keyword": "George Orwell"
+            "author": "George Orwell"
           }
         }
       ],
       "must_not": [
         {
           "terms": {
-            "genre.keyword": [
+            "genre": [
               "Fantasy",
               "Science Fiction"
             ]
@@ -41,7 +41,7 @@ go get github.com/GokselKUCUKSAHIN/es-query-builder
       "should": [
         {
           "terms": {
-            "title.keyword": [
+            "title": [
               "1984",
               "Animal Farm"
             ]
@@ -53,17 +53,17 @@ go get github.com/GokselKUCUKSAHIN/es-query-builder
   "aggs": {
     "genres_count": {
       "terms": {
-        "field": "genre.keyword"
+        "field": "genre"
       }
     },
     "authors_and_genres": {
       "terms": {
-        "field": "author.keyword"
+        "field": "author"
       },
       "aggs": {
         "genres": {
           "terms": {
-            "field": "genre.keyword"
+            "field": "genre"
           }
         }
       }
