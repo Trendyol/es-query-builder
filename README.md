@@ -205,7 +205,7 @@ Want to help out? Awesome! Here’s how you can contribute:
    - Fork the repo
    - Create a new branch
    - Make your changes
-   - Open a Merge Request (MR) to merge into the main repo
+   - Open a Pull Request (PR)
 
 We’re excited to see your contributions. Thanks for helping make this project better!
 
