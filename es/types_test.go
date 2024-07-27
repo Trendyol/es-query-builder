@@ -1500,6 +1500,78 @@ func Test_AggType_should_have_Terms_method(t *testing.T) {
 	assert.NotNil(t, a.Terms)
 }
 
+func Test_AggMax_should_exist_on_es_package(t *testing.T) {
+	// Given When Then
+	assert.NotNil(t, es.AggMax)
+}
+
+func Test_AggMax_method_should_create_aggType(t *testing.T) {
+	// Given
+	a := es.AggMax()
+
+	// Then
+	assert.NotNil(t, a)
+	assert.IsTypeString(t, "es.aggsType", a)
+}
+
+func Test_AggMax_should_create_json_with_terms_field_inside(t *testing.T) {
+	// Given
+	a := es.AggMax()
+
+	// When Then
+	assert.NotNil(t, a)
+	bodyJSON := assert.MarshalWithoutError(t, a)
+	assert.Equal(t, "{\"max\":{}}", bodyJSON)
+}
+
+func Test_AggMin_should_exist_on_es_package(t *testing.T) {
+	// Given When Then
+	assert.NotNil(t, es.AggMin)
+}
+
+func Test_AggMin_method_should_create_aggType(t *testing.T) {
+	// Given
+	a := es.AggMin()
+
+	// Then
+	assert.NotNil(t, a)
+	assert.IsTypeString(t, "es.aggsType", a)
+}
+
+func Test_AggMin_should_create_json_with_terms_field_inside(t *testing.T) {
+	// Given
+	a := es.AggMin()
+
+	// When Then
+	assert.NotNil(t, a)
+	bodyJSON := assert.MarshalWithoutError(t, a)
+	assert.Equal(t, "{\"min\":{}}", bodyJSON)
+}
+
+func Test_AggAvg_should_exist_on_es_package(t *testing.T) {
+	// Given When Then
+	assert.NotNil(t, es.AggAvg)
+}
+
+func Test_AggAvg_method_should_create_aggType(t *testing.T) {
+	// Given
+	a := es.AggAvg()
+
+	// Then
+	assert.NotNil(t, a)
+	assert.IsTypeString(t, "es.aggsType", a)
+}
+
+func Test_AggAvg_should_create_json_with_terms_field_inside(t *testing.T) {
+	// Given
+	a := es.AggAvg()
+
+	// When Then
+	assert.NotNil(t, a)
+	bodyJSON := assert.MarshalWithoutError(t, a)
+	assert.Equal(t, "{\"avg\":{}}", bodyJSON)
+}
+
 func Test_Terms_should_add_terms_field_into_AggType(t *testing.T) {
 	// Given
 	a := es.AggMultiTerms().
