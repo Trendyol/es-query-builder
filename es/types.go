@@ -482,6 +482,24 @@ func AggMultiTerms() aggsType {
 	}
 }
 
+func AggMax() aggsType {
+	return aggsType{
+		"max": Object{},
+	}
+}
+
+func AggMin() aggsType {
+	return aggsType{
+		"min": Object{},
+	}
+}
+
+func AggAvg() aggsType {
+	return aggsType{
+		"avg": Object{},
+	}
+}
+
 func AggCustom(agg Object) aggsType {
 	return aggsType(agg)
 }
