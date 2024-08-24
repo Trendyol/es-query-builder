@@ -2,10 +2,11 @@ package condition_test
 
 import (
 	"fmt"
+	"testing"
+
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es/condition"
 	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
-	"testing"
 )
 
 func Test_Condition_If_should_add_Term_When_condition_is_true(t *testing.T) {
