@@ -7,8 +7,7 @@ package operator
 //
 // Example usage:
 //
-//	match := Match("field", "value")
-//	match = match.Operator(Operator.And)
+//	match := Match("field", "value").Operator(Operator.And)
 //	// match now has the "operator" field set to "and" in the matchType object.
 //
 // Parameters:
