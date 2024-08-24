@@ -17,7 +17,7 @@ func createConditionalQuery(items []int) string {
 			Filter(
 				es.Term("type", "File"),
 				es.Terms("sector", 1, 2, 3),
-				es.TermsArrayFunc("id", items, func(key string, values []int) bool {
+				es.TermsFunc("id", items, func(key string, values []int) bool {
 					for _, value := range values {
 						if value == 21 {
 							return false

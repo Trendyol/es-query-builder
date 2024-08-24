@@ -538,6 +538,63 @@ func Test_TermFunc_method_should_create_termType(t *testing.T) {
 	assert.IsTypeString(t, "es.termType", b)
 }
 
+////   TermIf   ////
+
+func Test_TermIf_should_exist_on_es_package(t *testing.T) {
+	// Given When Then
+	assert.NotNil(t, es.TermIf[any])
+}
+
+func Test_TermIf_should_create_json_with_term_field_inside_query(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.TermIf("key", "value", true),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"term\":{\"key\":\"value\"}}}", bodyJSON)
+}
+
+func Test_TermIf_should_not_add_term_field_inside_query_when_condition_is_false(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.TermIf("key", "value", false),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{}}", bodyJSON)
+}
+
+func Test_TermIf_should_add_only_term_fields_inside_the_query_when_condition_is_true(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.Bool().
+			Filter(
+				es.TermIf("a", "b", true),
+				es.TermIf("c", "d", false),
+				es.TermIf("e", "f", true),
+			),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"bool\":{\"filter\":[{\"term\":{\"a\":\"b\"}},{\"term\":{\"e\":\"f\"}}]}}}", bodyJSON)
+}
+
+func Test_TermIf_method_should_create_termType(t *testing.T) {
+	// Given
+	b := es.TermIf("key", "value", true)
+
+	// Then
+	assert.NotNil(t, b)
+	assert.IsTypeString(t, "es.termType", b)
+}
+
 ////   Terms   ////
 
 func Test_Terms_should_exist_on_es_package(t *testing.T) {
@@ -594,17 +651,17 @@ func Test_TermsArray_method_should_create_termsType(t *testing.T) {
 	assert.IsTypeString(t, "es.termsType", b)
 }
 
-////   TermsArrayFunc   ////
+////   TermsFunc   ////
 
-func Test_TermsArrayFunc_should_exist_on_es_package(t *testing.T) {
+func Test_TermsFunc_should_exist_on_es_package(t *testing.T) {
 	// Given When Then
-	assert.NotNil(t, es.TermsArrayFunc[string])
+	assert.NotNil(t, es.TermsFunc[string])
 }
 
-func Test_TermsArrayFunc_should_create_json_with_terms_field_inside_query(t *testing.T) {
+func Test_TermsFunc_should_create_json_with_terms_field_inside_query(t *testing.T) {
 	// Given
 	query := es.NewQuery(
-		es.TermsArrayFunc("key", []string{"a", "b", "c"}, func(key string, values []string) bool {
+		es.TermsFunc("key", []string{"a", "b", "c"}, func(key string, values []string) bool {
 			return true
 		}),
 	)
@@ -615,10 +672,10 @@ func Test_TermsArrayFunc_should_create_json_with_terms_field_inside_query(t *tes
 	assert.Equal(t, "{\"query\":{\"terms\":{\"key\":[\"a\",\"b\",\"c\"]}}}", bodyJSON)
 }
 
-func Test_TermsArrayFunc_should_not_add_terms_field_inside_query_when_callback_result_is_false(t *testing.T) {
+func Test_TermsFunc_should_not_add_terms_field_inside_query_when_callback_result_is_false(t *testing.T) {
 	// Given
 	query := es.NewQuery(
-		es.TermsArrayFunc("key", []string{"a", "b", "c"}, func(key string, value []string) bool {
+		es.TermsFunc("key", []string{"a", "b", "c"}, func(key string, value []string) bool {
 			return false
 		}),
 	)
@@ -629,18 +686,18 @@ func Test_TermsArrayFunc_should_not_add_terms_field_inside_query_when_callback_r
 	assert.Equal(t, "{\"query\":{}}", bodyJSON)
 }
 
-func Test_TermsArrayFunc_should_add_only_terms_fields_inside_the_query_when_callback_result_is_true(t *testing.T) {
+func Test_TermsFunc_should_add_only_terms_fields_inside_the_query_when_callback_result_is_true(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.Bool().
 			Filter(
-				es.TermsArrayFunc("a", []string{"10", "11", "12"}, func(key string, value []string) bool {
+				es.TermsFunc("a", []string{"10", "11", "12"}, func(key string, value []string) bool {
 					return false
 				}),
-				es.TermsArrayFunc("c", []string{"20", "21", "22"}, func(key string, value []string) bool {
+				es.TermsFunc("c", []string{"20", "21", "22"}, func(key string, value []string) bool {
 					return false
 				}),
-				es.TermsArrayFunc("e", []string{"30", "31", "32"}, func(key string, value []string) bool {
+				es.TermsFunc("e", []string{"30", "31", "32"}, func(key string, value []string) bool {
 					return true
 				}),
 			),
@@ -652,11 +709,68 @@ func Test_TermsArrayFunc_should_add_only_terms_fields_inside_the_query_when_call
 	assert.Equal(t, "{\"query\":{\"bool\":{\"filter\":[{\"terms\":{\"e\":[\"30\",\"31\",\"32\"]}}]}}}", bodyJSON)
 }
 
-func Test_TermsArrayFunc_method_should_create_termType(t *testing.T) {
+func Test_TermsFunc_method_should_create_termType(t *testing.T) {
 	// Given
-	b := es.TermsArrayFunc("key", []string{"a", "b", "c"}, func(key string, value []string) bool {
+	b := es.TermsFunc("key", []string{"a", "b", "c"}, func(key string, value []string) bool {
 		return true
 	})
+
+	// Then
+	assert.NotNil(t, b)
+	assert.IsTypeString(t, "es.termsType", b)
+}
+
+////   TermsIf   ////
+
+func Test_TermsIf_should_exist_on_es_package(t *testing.T) {
+	// Given When Then
+	assert.NotNil(t, es.TermsIf[string])
+}
+
+func Test_TermsIf_should_create_json_with_terms_field_inside_query(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.TermsIf("key", []string{"a", "b", "c"}, true),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"terms\":{\"key\":[\"a\",\"b\",\"c\"]}}}", bodyJSON)
+}
+
+func Test_TermsIf_should_not_add_terms_field_inside_query_when_condition_is_false(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.TermsIf("key", []string{"a", "b", "c"}, false),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{}}", bodyJSON)
+}
+
+func Test_TermsIf_should_add_only_terms_fields_inside_the_query_when_condition_is_true(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.Bool().
+			Filter(
+				es.TermsIf("a", []string{"10", "11", "12"}, false),
+				es.TermsIf("c", []string{"20", "21", "22"}, false),
+				es.TermsIf("e", []string{"30", "31", "32"}, true),
+			),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"bool\":{\"filter\":[{\"terms\":{\"e\":[\"30\",\"31\",\"32\"]}}]}}}", bodyJSON)
+}
+
+func Test_TermsIf_method_should_create_termType(t *testing.T) {
+	// Given
+	b := es.TermsIf("key", []string{"a", "b", "c"}, true)
 
 	// Then
 	assert.NotNil(t, b)
@@ -750,6 +864,65 @@ func Test_ExistsFunc_should_add_only_exists_fields_inside_the_query_when_callbac
 }
 
 func Test_ExistsFunc_method_should_create_existsType(t *testing.T) {
+	// Given
+	b := es.ExistsFunc("key", func(key string) bool {
+		return true
+	})
+
+	// Then
+	assert.NotNil(t, b)
+	assert.IsTypeString(t, "es.existsType", b)
+}
+
+////   ExistsIF   ////
+
+func Test_ExistsIf_should_exist_on_es_package(t *testing.T) {
+	// Given When Then
+	assert.NotNil(t, es.ExistsIf)
+}
+
+func Test_ExistsIf_should_create_json_with_exists_field_inside_query(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.ExistsIf("key", true),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"exists\":{\"field\":\"key\"}}}", bodyJSON)
+}
+
+func Test_ExistsIf_should_not_add_exists_field_inside_query_when_condition_is_false(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.ExistsIf("key", false),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{}}", bodyJSON)
+}
+
+func Test_ExistsIf_should_add_only_exists_fields_inside_the_query_when_condition_is_true(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.Bool().
+			Filter(
+				es.ExistsIf("a", false),
+				es.ExistsIf("c", true),
+				es.ExistsIf("e", true),
+			),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"bool\":{\"filter\":[{\"exists\":{\"field\":\"c\"}},{\"exists\":{\"field\":\"e\"}}]}}}", bodyJSON)
+}
+
+func Test_ExistsIf_method_should_create_existsType(t *testing.T) {
 	// Given
 	b := es.ExistsFunc("key", func(key string) bool {
 		return true
