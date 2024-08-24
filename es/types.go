@@ -249,6 +249,13 @@ func TermFunc[T any](key string, value T, f func(key string, value T) bool) term
 	return Term(key, value)
 }
 
+func TermIf[T any](key string, value T, condition bool) termType {
+	if !condition {
+		return nil
+	}
+	return Term(key, value)
+}
+
 func Terms(key string, values ...any) termsType {
 	return termsType{
 		"terms": Object{
@@ -265,8 +272,15 @@ func TermsArray[T any](key string, values []T) termsType {
 	}
 }
 
-func TermsArrayFunc[T any](key string, values []T, f func(key string, values []T) bool) termsType {
+func TermsFunc[T any](key string, values []T, f func(key string, values []T) bool) termsType {
 	if !f(key, values) {
+		return nil
+	}
+	return TermsArray(key, values)
+}
+
+func TermsIf[T any](key string, values []T, condition bool) termsType {
+	if !condition {
 		return nil
 	}
 	return TermsArray(key, values)
@@ -282,6 +296,13 @@ func Exists(key string) existsType {
 
 func ExistsFunc(key string, f func(key string) bool) existsType {
 	if !f(key) {
+		return nil
+	}
+	return Exists(key)
+}
+
+func ExistsIf(key string, condition bool) existsType {
+	if !condition {
 		return nil
 	}
 	return Exists(key)
