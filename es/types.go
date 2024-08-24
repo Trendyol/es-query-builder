@@ -68,36 +68,24 @@ func correctType(b any) (any, bool) {
 	return b, true
 }
 
-// NewQuery constructs and returns an es.Object that represents a query.
+// NewQuery creates a new query es.Object with the provided query clause.
 //
-// The function takes an input `queryClause` of any type and attempts to convert it into
-// a specific query type based on its value. If the type of `queryClause` matches a
-// recognized query type (as determined by the correctType function), the
-// function returns an es.Object with the corresponding query type as its key.
-//
-// If `queryClause` is nil, unsafeIsNil returns true, or the type is not recognized,
-// NewQuery returns an es.Object with an empty query.
-//
-// Recognized types include:
-//   - boolType: Creates a "bool" query.
-//   - rangeType: Creates a "range" query.
+// This function takes any query clause as input and attempts to convert it into the correct internal type using the `correctType` function.
+// If the conversion is successful, the resulting field is stored under the "query" key in the returned es.Object.
+// If the conversion fails or the input is nil, an empty es.Object is returned under the "query" key.
 //
 // Example usage:
 //
-//	query := NewQuery(es.Bool())
-//	// query now holds an Object with a "bool" key.
-//
-// If the type of `queryClause` is not recognized:
-//
-//	query := NewQuery(nil)
-//	// query now holds an Object with an empty query.
+//	termQuery := es.Term("fieldName", "value")
+//	query := es.NewQuery(termQuery)
+//	// query now contains a "query" field with the term query.
 //
 // Parameters:
-//   - queryClause: An input of any type that may represent a specific query.
+//   - queryClause: The query clause to be converted and added to the "query" field. It can be of any type.
 //
 // Returns:
 //
-//	An Object containing the query or an empty query if `queryClause` is not recognized.
+//	An Object containing the "query" field with the processed query clause.
 func NewQuery(queryClause any) Object {
 	if field, ok := correctType(queryClause); ok {
 		return Object{
