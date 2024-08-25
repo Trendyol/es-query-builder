@@ -503,6 +503,12 @@ func AggMultiTerms() aggsType {
 	}
 }
 
+func AggNested() aggsType {
+	return aggsType{
+		"nested": Object{},
+	}
+}
+
 func AggMax() aggsType {
 	return aggsType{
 		"max": Object{},
@@ -535,9 +541,12 @@ func (agg aggsType) putInTheField(key string, value any) aggsType {
 }
 
 func (agg aggsType) Aggs(name string, nestedAgg aggsType) aggsType {
-	agg["aggs"] = Object{
-		name: nestedAgg,
+	aggs, exists := agg["aggs"]
+	if !exists {
+		aggs = Object{}
 	}
+	aggs.(Object)[name] = nestedAgg
+	agg["aggs"] = aggs
 	return agg
 }
 

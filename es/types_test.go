@@ -1547,6 +1547,30 @@ func Test_AggMultiTerms_should_create_json_with_multi_terms_field_inside(t *test
 	assert.Equal(t, "{\"multi_terms\":{}}", bodyJSON)
 }
 
+func Test_AggNested_should_exist_on_es_package(t *testing.T) {
+	// Given When Then
+	assert.NotNil(t, es.AggNested)
+}
+
+func Test_AggNested_method_should_create_aggType(t *testing.T) {
+	// Given
+	a := es.AggNested()
+
+	// Then
+	assert.NotNil(t, a)
+	assert.IsTypeString(t, "es.aggsType", a)
+}
+
+func Test_AggNested_should_create_json_with_nested_field_inside(t *testing.T) {
+	// Given
+	a := es.AggNested()
+
+	// When Then
+	assert.NotNil(t, a)
+	bodyJSON := assert.MarshalWithoutError(t, a)
+	assert.Equal(t, "{\"nested\":{}}", bodyJSON)
+}
+
 func Test_AggCustom_should_exist_on_es_package(t *testing.T) {
 	// Given When Then
 	assert.NotNil(t, es.AggCustom)
@@ -1808,4 +1832,25 @@ func Test_Aggs_should_create_json_with_aggs_field_inside_query(t *testing.T) {
 	assert.NotNil(t, query.Aggs)
 	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"aggs\":{\"types\":{\"terms\":{\"field\":\"type\",\"size\":100}}},\"query\":{}}", bodyJSON)
+}
+
+func Test_should_create_json_with_multiple_Aggs_inside_single_query(t *testing.T) {
+	// Given
+	query := es.NewQuery(nil).
+		Aggs("types",
+			es.AggTerms().
+				Field("type").
+				Size(100),
+		).
+		Aggs("average_review_score",
+			es.AggAvg().
+				Field("reviews.score"),
+		)
+
+	// When Then
+	assert.NotNil(t, query)
+	assert.NotNil(t, query.Aggs)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	// nolint:golint,lll
+	assert.Equal(t, "{\"aggs\":{\"average_review_score\":{\"avg\":{\"field\":\"reviews.score\"}},\"types\":{\"terms\":{\"field\":\"type\",\"size\":100}}},\"query\":{}}", bodyJSON)
 }
