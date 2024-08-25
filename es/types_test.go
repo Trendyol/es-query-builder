@@ -1617,12 +1617,30 @@ func Test_Field_should_add_field_field_into_AggTerm(t *testing.T) {
 	assert.Equal(t, "{\"terms\":{\"field\":\"path\"}}", bodyJSON)
 }
 
+func Test_AggType_should_have_Path_method(t *testing.T) {
+	// Given
+	a := es.AggTerms()
+
+	// When Then
+	assert.NotNil(t, a.Path)
+}
+
+func Test_Path_should_add_path_field_into_AggNested(t *testing.T) {
+	// Given
+	a := es.AggNested().Path("review")
+
+	// When Then
+	assert.NotNil(t, a)
+	bodyJSON := assert.MarshalWithoutError(t, a)
+	assert.Equal(t, "{\"nested\":{\"path\":\"review\"}}", bodyJSON)
+}
+
 func Test_AggType_should_have_Size_method(t *testing.T) {
 	// Given
 	a := es.AggTerms()
 
 	// When Then
-	assert.NotNil(t, a.Field)
+	assert.NotNil(t, a.Size)
 }
 
 func Test_Size_should_add_size_field_into_AggType(t *testing.T) {

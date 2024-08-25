@@ -1562,6 +1562,10 @@ func (agg aggsType) Field(field string) aggsType {
 	return agg.putInTheField("field", field)
 }
 
+func (agg aggsType) Path(field string) aggsType {
+	return agg.putInTheField("path", field)
+}
+
 // Size sets the "size" value in the aggsType object.
 //
 // This method specifies the number of terms to return in the aggregation result.
