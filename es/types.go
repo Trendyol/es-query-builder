@@ -391,7 +391,7 @@ func (o Object) From(from int) Object {
 // Example usage:
 //
 //	s := Sort("age")
-//	// s now includes a sortType with a "age" field that can be further configured.
+//	// s now includes a sortType with an "age" field that can be further configured.
 //
 // Parameters:
 //   - field: A string representing the field to sort by.
