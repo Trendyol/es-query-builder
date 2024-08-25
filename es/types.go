@@ -1562,6 +1562,21 @@ func (agg aggsType) Field(field string) aggsType {
 	return agg.putInTheField("field", field)
 }
 
+// Path sets the "path" value in the aggsType object.
+//
+// This method specifies the nested path for the aggregation in the aggsType object.
+//
+// Example usage:
+//
+//	agg := AggNested().Path("nestedField.path")
+//	// agg now has the "path" set to "nestedField.path".
+//
+// Parameters:
+//   - path: The nested path to use for the aggregation.
+//
+// Returns:
+//
+//	The updated aggsType object with the "path" set to the specified value.
 func (agg aggsType) Path(field string) aggsType {
 	return agg.putInTheField("path", field)
 }
