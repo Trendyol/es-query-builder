@@ -1415,6 +1415,19 @@ func AggMultiTerms() aggsType {
 	}
 }
 
+// AggNested creates a new "nested" aggregation.
+//
+// This function initializes an aggregation for nested fields. It can be used to
+// perform aggregations on fields that are within a nested object.
+//
+// Example usage:
+//
+//	nestedAgg := AggNested()
+//	// nestedAgg now has the "nested" field initialized.
+//
+// Returns:
+//
+//	An aggsType object with the "nested" field initialized.
 func AggNested() aggsType {
 	return aggsType{
 		"nested": Object{},
