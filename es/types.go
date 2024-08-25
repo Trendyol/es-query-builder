@@ -1415,6 +1415,12 @@ func AggMultiTerms() aggsType {
 	}
 }
 
+func AggNested() aggsType {
+	return aggsType{
+		"nested": Object{},
+	}
+}
+
 // AggMax creates a new "max" aggregation.
 //
 // This function initializes an aggregation to calculate the maximum value of a field.
@@ -1515,9 +1521,12 @@ func (agg aggsType) putInTheField(key string, value any) aggsType {
 //
 //	The updated aggsType object with the nested aggregation added.
 func (agg aggsType) Aggs(name string, nestedAgg aggsType) aggsType {
-	agg["aggs"] = Object{
-		name: nestedAgg,
+	aggs, exists := agg["aggs"]
+	if !exists {
+		aggs = Object{}
 	}
+	aggs.(Object)[name] = nestedAgg
+	agg["aggs"] = aggs
 	return agg
 }
 
