@@ -3,12 +3,17 @@
 A simple, user-friendly, and streamlined library for programmatically building Elasticsearch DSL queries in Go, designed
 for low overhead and minimal memory usage.
 
-## How to Get
+## Install
+With [Go's module support](https://go.dev/wiki/Modules#how-to-use-modules), `go [build|run|test]` automatically fetches the necessary dependencies when you add the import in your code:
 
-To install the es-query-builder library, run the following command:
+```sh
+import "github.com/GokselKUCUKSAHIN/es-query-builder"
+```
 
-```bash
-go get github.com/GokselKUCUKSAHIN/es-query-builder
+Alternatively, use `go get`:
+
+```sh
+go get -u github.com/GokselKUCUKSAHIN/es-query-builder
 ```
 
 ### Example
