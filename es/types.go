@@ -554,8 +554,8 @@ func (agg aggsType) Field(field string) aggsType {
 	return agg.putInTheField("field", field)
 }
 
-func (agg aggsType) Path(field string) aggsType {
-	return agg.putInTheField("path", field)
+func (agg aggsType) Path(path string) aggsType {
+	return agg.putInTheField("path", path)
 }
 
 func (agg aggsType) Size(size int) aggsType {
