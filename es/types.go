@@ -1577,8 +1577,8 @@ func (agg aggsType) Field(field string) aggsType {
 // Returns:
 //
 //	The updated aggsType object with the "path" set to the specified value.
-func (agg aggsType) Path(field string) aggsType {
-	return agg.putInTheField("path", field)
+func (agg aggsType) Path(path string) aggsType {
+	return agg.putInTheField("path", path)
 }
 
 // Size sets the "size" value in the aggsType object.
