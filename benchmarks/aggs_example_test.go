@@ -16,6 +16,9 @@ func createAggsQuery() string {
 		es.Bool().
 			Must(
 				es.Term("type", "File"),
+				es.Range("indexedAt").
+					GreaterThan("2020-06-01").
+					LesserThanOrEqual("now"),
 			).
 			MustNot(
 				es.Exists("file.name"),
@@ -28,11 +31,6 @@ func createAggsQuery() string {
 			es.Sort("modifiedDate").Order(order.Desc),
 			es.Sort("indexedAt").Order(order.Desc),
 		)
-
-	query.
-		Range("indexedAt").
-		GreaterThan("2020-06-01").
-		LesserThanOrEqual("now")
 
 	query.Aggs("DocumentIds",
 		es.AggTerms().
@@ -71,17 +69,19 @@ func createAggsQueryVanillaGo() string {
 			},
 		},
 		"query": map[string]interface{}{
-			"range": map[string]interface{}{
-				"indexedAt": map[string]interface{}{
-					"gt":  "2020-06-01",
-					"lte": "now",
-				},
-			},
 			"bool": map[string]interface{}{
 				"must": []map[string]interface{}{
 					{
 						"term": map[string]interface{}{
 							"type": "File",
+						},
+					},
+					{
+						"range": map[string]interface{}{
+							"indexedAt": map[string]interface{}{
+								"gt":  "2020-06-01",
+								"lte": "now",
+							},
 						},
 					},
 				},

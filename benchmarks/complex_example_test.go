@@ -26,6 +26,9 @@ func createComplexQuery(id int) string {
 			Filter(
 				es.Term("type", "File"),
 				es.Terms("sector", 1, 2, 3),
+				es.Range("partition").
+					GreaterThan(25).
+					LesserThanOrEqual(30),
 			).
 			MustNot(
 				es.Exists("blocks.reason.id"),
@@ -44,9 +47,6 @@ func createComplexQuery(id int) string {
 	query.Source().
 		Includes("id", "type", "indexedAt", "chapters").
 		Excludes("private.key", "cipher")
-	query.Range("partition").
-		GreaterThan(25).
-		LesserThanOrEqual(30)
 
 	marshal, err := json.Marshal(query)
 	if err != nil {
@@ -83,12 +83,6 @@ func createComplexQueryVanillaGo(id int) string {
 			},
 		},
 		"query": map[string]interface{}{
-			"range": map[string]interface{}{
-				"partition": map[string]interface{}{
-					"gt":  25,
-					"lte": 30,
-				},
-			},
 			"bool": map[string]interface{}{
 				"minimum_should_match": 1,
 				"boost":                3.14,
@@ -125,6 +119,14 @@ func createComplexQueryVanillaGo(id int) string {
 						"terms": map[string]interface{}{
 							"sector": []interface{}{
 								1, 2, 3,
+							},
+						},
+					},
+					{
+						"range": map[string]interface{}{
+							"partition": map[string]interface{}{
+								"gt":  25,
+								"lte": 30,
 							},
 						},
 					},

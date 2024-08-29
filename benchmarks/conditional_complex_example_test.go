@@ -15,6 +15,9 @@ func createConditionalQuery(items []int) string {
 	query := es.NewQuery(
 		es.Bool().
 			Filter(
+				es.Range("indexedAt").
+					GreaterThan("2021-01-01").
+					LesserThanOrEqual("now"),
 				es.Term("type", "File"),
 				es.Terms("sector", 1, 2, 3),
 				es.TermsFunc("id", items, func(key string, values []int) bool {
@@ -38,9 +41,6 @@ func createConditionalQuery(items []int) string {
 		Includes("id", "type", "indexedAt", "chapters").
 		Excludes("private.key")
 	query.TrackTotalHits(true)
-	query.Range("indexedAt").
-		GreaterThan("2021-01-01").
-		LesserThanOrEqual("now")
 
 	marshal, err := json.Marshal(query)
 	if err != nil {
@@ -60,6 +60,14 @@ func createConditionalQueryVanillaGo(items []int) string {
 	}
 
 	filter := []map[string]interface{}{
+		{
+			"range": map[string]interface{}{
+				"indexedAt": map[string]interface{}{
+					"gt":  "2021-01-01",
+					"lte": "now",
+				},
+			},
+		},
 		{
 			"term": map[string]interface{}{
 				"type": "File",
@@ -94,12 +102,6 @@ func createConditionalQueryVanillaGo(items []int) string {
 			},
 		},
 		"query": map[string]interface{}{
-			"range": map[string]interface{}{
-				"indexedAt": map[string]interface{}{
-					"gt":  "2021-01-01",
-					"lte": "now",
-				},
-			},
 			"bool": map[string]interface{}{
 				"filter": filter,
 				"must_not": []map[string]interface{}{
