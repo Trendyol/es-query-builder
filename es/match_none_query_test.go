@@ -36,6 +36,6 @@ func Test_MatchNone_should_create_json_with_match_none_field_inside_query(t *tes
 	// When Then
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
-	assert.Equal(t,
-		"{\"query\":{\"match_none\":{\"fooBar\":{\"boost\":6.19,\"operator\":\"and\",\"query\":\"lorem ipsum\"}}}}", bodyJSON)
+	// nolint:golint,lll
+	assert.Equal(t, "{\"query\":{\"match_none\":{\"fooBar\":{\"boost\":6.19,\"operator\":\"and\",\"query\":\"lorem ipsum\"}}}}", bodyJSON)
 }

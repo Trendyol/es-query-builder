@@ -33,6 +33,5 @@ func Test_MatchAll_should_create_json_with_match_all_field_inside_query(t *testi
 	// When Then
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
-	assert.Equal(t,
-		"{\"query\":{\"match_all\":{\"boost\":2.14}}}", bodyJSON)
+	assert.Equal(t, "{\"query\":{\"match_all\":{\"boost\":2.14}}}", bodyJSON)
 }
