@@ -1,7 +1,6 @@
 package condition_test
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
@@ -25,7 +24,6 @@ func Test_Condition_If_should_add_Term_When_condition_is_true(t *testing.T) {
 	// Then
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
-	fmt.Println(bodyJSON)
 	assert.Equal(t, "{\"query\":{\"bool\":{\"filter\":[{\"term\":{\"language\":\"en\"}},{\"exists\":{\"field\":\"brandId\"}}]}}}", bodyJSON)
 }
 
@@ -45,6 +43,5 @@ func Test_Condition_If_should_not_add_Term_When_condition_is_not_true(t *testing
 	// Then
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
-	fmt.Println(bodyJSON)
 	assert.Equal(t, "{\"query\":{\"bool\":{\"filter\":[{\"exists\":{\"field\":\"brandId\"}}]}}}", bodyJSON)
 }
