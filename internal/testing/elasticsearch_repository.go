@@ -11,7 +11,10 @@ import (
 	"strings"
 )
 
-const zero = 0
+const (
+	zero = 0
+	true = "true"
+)
 
 type elasticsearchRepository struct {
 	client *elasticsearch.Client
@@ -20,6 +23,7 @@ type elasticsearchRepository struct {
 type ElasticsearchRepository interface {
 	Search(index, query string) ([]FooDocument, error)
 	Insert(indexName, docId, document string) error
+	Delete(indexName, docId string) error
 }
 
 func NewElasticsearchRepository(client *elasticsearch.Client) ElasticsearchRepository {
@@ -61,9 +65,18 @@ func (e *elasticsearchRepository) Insert(indexName, docId, document string) erro
 		Index:      indexName,
 		DocumentID: docId,
 		Body:       strings.NewReader(document),
-		Refresh:    "true",
+		Refresh:    true,
 	}
 
 	_, err := request.Do(context.Background(), e.client)
+	return err
+}
+
+func (e *elasticsearchRepository) Delete(indexName, docId string) error {
+	req := esapi.DeleteRequest{
+		Index:      indexName,
+		DocumentID: docId,
+	}
+	_, err := req.Do(context.Background(), e.client)
 	return err
 }

@@ -6,6 +6,7 @@ replace github.com/GokselKUCUKSAHIN/es-query-builder => ./../..
 
 require (
 	github.com/GokselKUCUKSAHIN/es-query-builder v0.2.0
+	github.com/docker/go-connections v0.5.0
 	github.com/elastic/elastic-transport-go/v8 v8.6.0
 	github.com/elastic/go-elasticsearch/v8 v8.15.0
 	github.com/stretchr/testify v1.9.0
@@ -24,7 +25,6 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/distribution/reference v0.6.0 // indirect
 	github.com/docker/docker v27.1.1+incompatible // indirect
-	github.com/docker/go-connections v0.5.0 // indirect
 	github.com/docker/go-units v0.5.0 // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/go-logr/logr v1.4.1 // indirect

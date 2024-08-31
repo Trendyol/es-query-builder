@@ -40,9 +40,7 @@ func (s *testSuite) SetupSuite() {
 	cfg := elasticsearch.Config{
 		Addresses: []string{s.ElasticContainer.Host()},
 		Logger: &elastictransport.ColorLogger{
-			Output:             os.Stdout,
-			EnableRequestBody:  true,
-			EnableResponseBody: true,
+			Output: os.Stdout,
 		},
 		DiscoverNodesOnStart: false,
 	}
