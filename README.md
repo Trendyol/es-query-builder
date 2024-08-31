@@ -181,8 +181,66 @@ You can check and run [benchmarks](./benchmarks) on your machine.
 - **Memory**: 32GB LPDDR5
 - **Go Version**: go1.22.1
 
+![arm64 combined](https://github.com/user-attachments/assets/eade143d-c31c-4caf-96f4-8005fa1b11bc)
+
 <details>
-  <summary><b>ARM64 Benchmark Results</b></summary>
+  <summary><b>ARM64 Detailed Benchmark Results</b></summary>
+
+![arm64 simple](https://github.com/user-attachments/assets/818c1381-5a31-47ab-bc94-5133b1713c38)
+
+- **es-query-builder** is 23% less efficient than **vanilla Go**.
+- **[aquasecurity/esquery](https://github.com/aquasecurity/esquery)** is 84% less efficient than **es-query-builder**.
+
+Benchmark test file at [simple query benchmark](./benchmarks/simple_example_test.go)
+
+---
+
+![arm64 intermediate](https://github.com/user-attachments/assets/d2c72cc2-27d2-4e0d-908a-b49bf8fd7f9d)
+
+- **es-query-builder** is 24% less efficient than **vanilla Go**.
+- **[aquasecurity/esquery](https://github.com/aquasecurity/esquery)** is 75% less efficient than **es-query-builder**.
+
+Benchmark test file at [intermediate query benchmark](./benchmarks/intermediate_example_test.go)
+
+---
+
+![arm64 complex](https://github.com/user-attachments/assets/70dfff75-1e37-4c4f-b102-cc3a9900aa05)
+
+- **es-query-builder** is 29% less efficient than **vanilla Go**.
+- **[aquasecurity/esquery](https://github.com/aquasecurity/esquery)** is 71% less efficient than **es-query-builder**.
+
+Benchmark test file at [complex query benchmark](./benchmarks/complex_example_test.go)
+
+---
+
+![arm64 mixed](https://github.com/user-attachments/assets/2b3778ea-500b-421b-96cc-18d2425ef4ac)
+
+- **es-query-builder** is 19% less efficient than **vanilla Go**.
+- **[aquasecurity/esquery](https://github.com/aquasecurity/esquery)** is 64% less efficient than **es-query-builder**.
+
+Benchmark test file at [mixed query benchmark](./benchmarks/mixed_example_test.go)
+
+---
+
+![arm64 conditional](https://github.com/user-attachments/assets/d0dd2e69-4169-48a0-9e9b-5cd85e33ebe3)
+
+- **es-query-builder** is 32% less efficient than **vanilla Go**.
+- **[aquasecurity/esquery](https://github.com/aquasecurity/esquery)** is 69% less efficient than **es-query-builder**.
+
+Benchmark test file at [conditional query benchmark](./benchmarks/conditional_example_test.go)
+
+---
+
+![arm64 aggs](https://github.com/user-attachments/assets/c102d174-1b50-4b1c-91d2-d50f7ab2aed3)
+
+- **es-query-builder** is 23% less efficient than **vanilla Go**.
+- **[aquasecurity/esquery](https://github.com/aquasecurity/esquery)** is 69% less efficient than **es-query-builder**.
+
+Benchmark test file at [aggs query benchmark](./benchmarks/aggs_example_test.go)
+
+---
+
+### MacBook M1 Pro 10 Core Benchmark Result Table 
 
 |Benchmark Name      |vanilla go score    |vanilla go ns/op|aquasecurity/esquery score|aquasecurity/esquery ns/op|es-query-builder score|es-query-builder ns/op|
 |--------------------|--------------------|----------------|--------------------------|--------------------------|----------------------|----------------------|
@@ -271,46 +329,6 @@ You can check and run [benchmarks](./benchmarks) on your machine.
 |aggs stddev         |36779,07            |8,45            |3895,53                   |26,86                     |38193,95              |59,83                 |
 
 </details>
-
-![arm64 combined](https://github.com/user-attachments/assets/eade143d-c31c-4caf-96f4-8005fa1b11bc)
-
----
-
-![arm64 simple](https://github.com/user-attachments/assets/818c1381-5a31-47ab-bc94-5133b1713c38)
-
-Benchmark test file at [simple query benchmark](./benchmarks/simple_example_test.go)
-
----
-
-![arm64 intermediate](https://github.com/user-attachments/assets/d2c72cc2-27d2-4e0d-908a-b49bf8fd7f9d)
-
-Benchmark test file at [intermediate query benchmark](./benchmarks/intermediate_example_test.go)
-
----
-
-![arm64 complex](https://github.com/user-attachments/assets/70dfff75-1e37-4c4f-b102-cc3a9900aa05)
-
-Benchmark test file at [complex query benchmark](./benchmarks/complex_example_test.go)
-
----
-
-![arm64 mixed](https://github.com/user-attachments/assets/2b3778ea-500b-421b-96cc-18d2425ef4ac)
-
-Benchmark test file at [mixed query benchmark](./benchmarks/mixed_example_test.go)
-
----
-
-![arm64 conditional](https://github.com/user-attachments/assets/d0dd2e69-4169-48a0-9e9b-5cd85e33ebe3)
-
-Benchmark test file at [conditional query benchmark](./benchmarks/conditional_example_test.go)
-
----
-
-![arm64 aggs](https://github.com/user-attachments/assets/c102d174-1b50-4b1c-91d2-d50f7ab2aed3)
-
-Benchmark test file at [aggs query benchmark](./benchmarks/aggs_example_test.go)
-
----
 
 
 # Want to Contribute?
