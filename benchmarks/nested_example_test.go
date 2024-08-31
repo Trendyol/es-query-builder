@@ -1,16 +1,13 @@
 package benchmarks_test
 
 import (
-	"encoding/json"
+	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
 	"testing"
 
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
-	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
 )
 
-////    Nested Example    ////
-
-func createNestedQuery() string {
+func createNestedQuery() map[string]any {
 	query := es.NewQuery(
 		es.Nested("driver",
 			es.Nested("driver.vehicle",
@@ -23,14 +20,10 @@ func createNestedQuery() string {
 		),
 	)
 
-	marshal, err := json.Marshal(query)
-	if err != nil {
-		return ""
-	}
-	return string(marshal)
+	return query
 }
 
-func createNestedQueryVanillaGo() string {
+func createNestedQueryVanilla() map[string]any {
 	query := map[string]interface{}{
 		"query": map[string]interface{}{
 			"nested": map[string]interface{}{
@@ -59,18 +52,7 @@ func createNestedQueryVanillaGo() string {
 			},
 		},
 	}
-
-	marshal, err := json.Marshal(query)
-	if err != nil {
-		return ""
-	}
-	return string(marshal)
-}
-
-func Test_Nested_Queries_are_equal(t *testing.T) {
-	build := createNestedQuery()
-	vanilla := createNestedQueryVanillaGo()
-	assert.Equal(t, vanilla, build)
+	return query
 }
 
 func Benchmark_Nested_Example_Builder(b *testing.B) {
@@ -81,10 +63,16 @@ func Benchmark_Nested_Example_Builder(b *testing.B) {
 	}
 }
 
-func Benchmark_Nested_Example_VanillaGo(b *testing.B) {
-	createNestedQueryVanillaGo()
+func Benchmark_Nested_Example_Vanilla(b *testing.B) {
+	createNestedQueryVanilla()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		createNestedQueryVanillaGo()
+		createNestedQueryVanilla()
 	}
+}
+
+func Test_Nested_Queries_are_equal(t *testing.T) {
+	build := marshalString(t, createNestedQuery())
+	vanilla := marshalString(t, createNestedQueryVanilla())
+	assert.Equal(t, vanilla, build)
 }

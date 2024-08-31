@@ -1,16 +1,13 @@
-package benchmarks
+package benchmarks_test
 
 import (
-	"encoding/json"
 	"testing"
 
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
 	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
 )
 
-////    Readme Example    ////
-
-func createReadmeQuery() string {
+func createReadmeQuery() map[string]any {
 	query := es.NewQuery(
 		es.Bool().
 			Must(
@@ -34,14 +31,11 @@ func createReadmeQuery() string {
 					Field("genre"),
 			),
 	)
-	marshal, err := json.Marshal(query)
-	if err != nil {
-		return ""
-	}
-	return string(marshal)
+
+	return query
 }
 
-func createReadmeQueryVanillaGo() string {
+func createReadmeQueryVanilla() map[string]any {
 	query := map[string]interface{}{
 		"query": map[string]interface{}{
 			"bool": map[string]interface{}{
@@ -99,17 +93,7 @@ func createReadmeQueryVanillaGo() string {
 			},
 		},
 	}
-	marshal, err := json.Marshal(query)
-	if err != nil {
-		return ""
-	}
-	return string(marshal)
-}
-
-func Test_Readme_Queries_are_equal(t *testing.T) {
-	build := createReadmeQuery()
-	vanilla := createReadmeQueryVanillaGo()
-	assert.Equal(t, vanilla, build)
+	return query
 }
 
 func Benchmark_Readme_Example_Builder(b *testing.B) {
@@ -120,10 +104,16 @@ func Benchmark_Readme_Example_Builder(b *testing.B) {
 	}
 }
 
-func Benchmark_Readme_Example_VanillaGo(b *testing.B) {
-	createReadmeQueryVanillaGo()
+func Benchmark_Readme_Example_Vanilla(b *testing.B) {
+	createReadmeQueryVanilla()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		createReadmeQueryVanillaGo()
+		createReadmeQueryVanilla()
 	}
+}
+
+func Test_Readme_Queries_are_equal(t *testing.T) {
+	build := marshalString(t, createReadmeQuery())
+	vanilla := marshalString(t, createReadmeQueryVanilla())
+	assert.Equal(t, vanilla, build)
 }

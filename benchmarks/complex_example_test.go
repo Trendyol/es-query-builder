@@ -1,21 +1,20 @@
 package benchmarks_test
 
 import (
-	"encoding/json"
 	"testing"
 
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
-	"github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/mode"
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
 	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
 )
 
-////    Complex Example   ////
-
-func createComplexQuery(id int) string {
+func createComplexQuery(id int) map[string]any {
 	query := es.NewQuery(
 		es.Bool().
 			Must(
+				es.Range("partition").
+					GreaterThan(25).
+					LesserThanOrEqual(30),
 				es.Bool().
 					Should(
 						es.Term("doc.id", id),
@@ -26,9 +25,6 @@ func createComplexQuery(id int) string {
 			Filter(
 				es.Term("type", "File"),
 				es.Terms("sector", 1, 2, 3),
-				es.Range("partition").
-					GreaterThan(25).
-					LesserThanOrEqual(30),
 			).
 			MustNot(
 				es.Exists("blocks.reason.id"),
@@ -36,34 +32,28 @@ func createComplexQuery(id int) string {
 			MinimumShouldMatch(1).
 			Boost(3.14),
 	)
-	query.TrackTotalHits(true)
 	query.Size(100)
 	query.From(5000)
 	query.Sort(
 		es.Sort("modifiedDate").Order(order.Desc),
-		es.Sort("name").Order(order.Asc).Mode(mode.Median),
+		es.Sort("name").Order(order.Asc),
 		es.Sort("indexedAt").Order(order.Asc),
 	)
 	query.Source().
 		Includes("id", "type", "indexedAt", "chapters").
 		Excludes("private.key", "cipher")
 
-	marshal, err := json.Marshal(query)
-	if err != nil {
-		return ""
-	}
-	return string(marshal)
+	return query
 }
 
-func createComplexQueryVanillaGo(id int) string {
+func createComplexQueryVanilla(id int) map[string]any {
 	query := map[string]interface{}{
 		"_source": map[string]interface{}{
 			"includes": []interface{}{"id", "type", "indexedAt", "chapters"},
 			"excludes": []interface{}{"private.key", "cipher"},
 		},
-		"size":             100,
-		"from":             5000,
-		"track_total_hits": true,
+		"size": 100,
+		"from": 5000,
 		"sort": []map[string]interface{}{
 			{
 				"modifiedDate": map[string]interface{}{
@@ -73,7 +63,6 @@ func createComplexQueryVanillaGo(id int) string {
 			{
 				"name": map[string]interface{}{
 					"order": "asc",
-					"mode":  "median",
 				},
 			},
 			{
@@ -87,6 +76,14 @@ func createComplexQueryVanillaGo(id int) string {
 				"minimum_should_match": 1,
 				"boost":                3.14,
 				"must": []map[string]interface{}{
+					{
+						"range": map[string]interface{}{
+							"partition": map[string]interface{}{
+								"gt":  25,
+								"lte": 30,
+							},
+						},
+					},
 					{
 						"bool": map[string]interface{}{
 							"should": []map[string]interface{}{
@@ -122,14 +119,6 @@ func createComplexQueryVanillaGo(id int) string {
 							},
 						},
 					},
-					{
-						"range": map[string]interface{}{
-							"partition": map[string]interface{}{
-								"gt":  25,
-								"lte": 30,
-							},
-						},
-					},
 				},
 				"must_not": []map[string]interface{}{
 					{
@@ -141,19 +130,7 @@ func createComplexQueryVanillaGo(id int) string {
 			},
 		},
 	}
-
-	marshal, err := json.Marshal(query)
-	if err != nil {
-		return ""
-	}
-	return string(marshal)
-}
-
-func Test_Complex_Queries_are_equal(t *testing.T) {
-	id := 76
-	build := createComplexQuery(id)
-	vanilla := createComplexQueryVanillaGo(id)
-	assert.Equal(t, vanilla, build)
+	return query
 }
 
 func Benchmark_Complex_Builder(b *testing.B) {
@@ -165,11 +142,18 @@ func Benchmark_Complex_Builder(b *testing.B) {
 	}
 }
 
-func Benchmark_Complex_VanillaGo(b *testing.B) {
+func Benchmark_Complex_Vanilla(b *testing.B) {
 	id := 76
-	createComplexQueryVanillaGo(id)
+	createComplexQueryVanilla(id)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		createComplexQueryVanillaGo(id)
+		createComplexQueryVanilla(id)
 	}
+}
+
+func Test_Complex_Queries_are_equal(t *testing.T) {
+	id := 76
+	build := marshalString(t, createComplexQuery(id))
+	vanilla := marshalString(t, createComplexQueryVanilla(id))
+	assert.Equal(t, vanilla, build)
 }
