@@ -1,10 +1,10 @@
 package benchmarks_test
 
 import (
-	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
 	"testing"
 
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
+	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
 )
 
 func createTyExampleQuery(brandIds []int64, storefrontIds []string) map[string]any {
