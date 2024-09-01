@@ -1,4 +1,4 @@
-# es-query-builder [![GoDoc][doc-img]][doc] [![Build Status][ci-img]][ci] [![Go Report Card][go-report-img]][go-report] [![Coverage Status][cov-img]][cov]
+# es-query-builder [![GoDoc][doc-img]][doc] [![Release][release-img]][release] [![Build Status][ci-img]][ci] [![Go Report Card][go-report-img]][go-report] [![Coverage Status][cov-img]][cov]
 
 A simple, user-friendly, and streamlined library for programmatically building Elasticsearch DSL queries in Go, designed
 for low overhead and minimal memory usage.
@@ -221,6 +221,10 @@ MIT - Please check the [LICENSE](./LICENSE) file for full text.
 [doc-img]: https://godoc.org/github.com/GokselKUCUKSAHIN/es-query-builder?status.svg
 
 [doc]: https://godoc.org/github.com/GokselKUCUKSAHIN/es-query-builder
+
+[release]: https://github.com/GokselKUCUKSAHIN/es-query-builder/releases
+
+[release-img]: https://img.shields.io/github/v/release/GokselKUCUKSAHIN/es-query-builder.svg
 
 [go-report-img]: https://goreportcard.com/badge/github.com/GokselKUCUKSAHIN/es-query-builder
 
