@@ -9,7 +9,7 @@ import (
 )
 
 func (s *testSuite) Test_it_should_return_documents_that_filtered_by_term_query() {
-	//given
+	// Given
 	foo := FooDocument{
 		Foo: "foo",
 	}
@@ -31,10 +31,10 @@ func (s *testSuite) Test_it_should_return_documents_that_filtered_by_term_query(
 	)
 	bodyJSON, _ := json.Marshal(query)
 
-	//when
+	// When
 	result, err := s.ElasticsearchRepository.Search(testIndexName, string(bodyJSON))
 
-	//then
+	// Then
 	assert.Nil(s.T(), err)
 	assert.Equal(s.T(), len(result), 1)
 	assert.Equal(s.T(), result[0].Foo, "foo")
@@ -44,7 +44,7 @@ func (s *testSuite) Test_it_should_return_documents_that_filtered_by_term_query(
 }
 
 func (s *testSuite) Test_it_should_return_documents_that_filtered_by_terms_query() {
-	//given
+	// Given
 	doc1 := FooDocument{
 		Foo: "foo",
 	}
@@ -72,10 +72,10 @@ func (s *testSuite) Test_it_should_return_documents_that_filtered_by_terms_query
 	)
 	bodyJSON, _ := json.Marshal(query)
 
-	//when
+	// When
 	result, err := s.ElasticsearchRepository.Search(testIndexName, string(bodyJSON))
 
-	//then
+	// Then
 	assert.Nil(s.T(), err)
 	assert.Equal(s.T(), len(result), 2)
 	assert.Contains(s.T(), result, doc2)
