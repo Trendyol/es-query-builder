@@ -1,9 +1,10 @@
 package es_test
 
 import (
+	"testing"
+
 	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
 	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
-	"testing"
 )
 
 func Test_QueryString_should_exist_on_es_package(t *testing.T) {
