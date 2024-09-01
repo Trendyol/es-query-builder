@@ -24,6 +24,7 @@ type ElasticsearchRepository interface {
 	Search(index, query string) ([]FooDocument, error)
 	Insert(indexName, docId, document string) error
 	Delete(indexName, docId string) error
+	DeleteByQuery(indexName, query string) error
 }
 
 func NewElasticsearchRepository(client *elasticsearch.Client) ElasticsearchRepository {
@@ -77,6 +78,16 @@ func (e *elasticsearchRepository) Delete(indexName, docId string) error {
 		Index:      indexName,
 		DocumentID: docId,
 	}
+	_, err := req.Do(context.Background(), e.client)
+	return err
+}
+
+func (e *elasticsearchRepository) DeleteByQuery(indexName, query string) error {
+	req := esapi.DeleteByQueryRequest{
+		Index: []string{indexName},
+		Body:  strings.NewReader(query),
+	}
+
 	_, err := req.Do(context.Background(), e.client)
 	return err
 }
