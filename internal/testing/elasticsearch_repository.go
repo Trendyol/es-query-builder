@@ -3,17 +3,12 @@ package testing
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"github.com/elastic/go-elasticsearch/v8"
 	"github.com/elastic/go-elasticsearch/v8/esapi"
+	"integration-tests/constants"
 	"net/http"
 	"strings"
-)
-
-const (
-	zero = 0
-	true = "true"
 )
 
 type elasticsearchRepository struct {
@@ -37,20 +32,23 @@ func (e *elasticsearchRepository) Search(index, query string) ([]FooDocument, er
 		e.client.Search.WithBody(strings.NewReader(query)),
 	)
 	defer func() {
-		if err := res.Body.Close(); err != nil {
+		if err = res.Body.Close(); err != nil {
 			panic(err)
 		}
 	}()
-	if err != nil || res.StatusCode != http.StatusOK {
-		return []FooDocument{}, errors.New(fmt.Sprintf("error getting search response, status: %d err: %+v", res.StatusCode, err))
+	if err != nil {
+		return nil, fmt.Errorf("failed to execute search request: %w", err)
+	}
+	if res.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("unexpected status code %d: %s", res.StatusCode, res.String())
 	}
 
 	var searchResponse SearchResponse
-	if err := json.NewDecoder(res.Body).Decode(&searchResponse); err != nil {
-		return []FooDocument{}, err
+	if err = json.NewDecoder(res.Body).Decode(&searchResponse); err != nil {
+		return nil, fmt.Errorf("failed to decode search response: %w", err)
 	}
-	if len(searchResponse.Hits.Hits) == zero {
-		return []FooDocument{}, nil
+	if len(searchResponse.Hits.Hits) == constants.Zero {
+		return nil, nil
 	}
 
 	result := make([]FooDocument, 0)
@@ -66,28 +64,45 @@ func (e *elasticsearchRepository) Insert(indexName, docId, document string) erro
 		Index:      indexName,
 		DocumentID: docId,
 		Body:       strings.NewReader(document),
-		Refresh:    true,
+		Refresh:    constants.True,
 	}
 
-	_, err := request.Do(context.Background(), e.client)
+	res, err := request.Do(context.Background(), e.client)
+	if err != nil {
+		return fmt.Errorf("failed to execute insert request: %w", err)
+	}
+	if res.IsError() {
+		return fmt.Errorf("insert request returned error: %s", res.String())
+	}
 	return err
 }
 
 func (e *elasticsearchRepository) Delete(indexName, docId string) error {
-	req := esapi.DeleteRequest{
+	request := esapi.DeleteRequest{
 		Index:      indexName,
 		DocumentID: docId,
 	}
-	_, err := req.Do(context.Background(), e.client)
+	res, err := request.Do(context.Background(), e.client)
+	if err != nil {
+		return fmt.Errorf("failed to execute insert request: %w", err)
+	}
+	if res.IsError() {
+		return fmt.Errorf("insert request returned error: %s", res.String())
+	}
 	return err
 }
 
 func (e *elasticsearchRepository) DeleteByQuery(indexName, query string) error {
-	req := esapi.DeleteByQueryRequest{
+	request := esapi.DeleteByQueryRequest{
 		Index: []string{indexName},
 		Body:  strings.NewReader(query),
 	}
-
-	_, err := req.Do(context.Background(), e.client)
+	res, err := request.Do(context.Background(), e.client)
+	if err != nil {
+		return fmt.Errorf("failed to execute insert request: %w", err)
+	}
+	if res.IsError() {
+		return fmt.Errorf("insert request returned error: %s", res.String())
+	}
 	return err
 }
