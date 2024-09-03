@@ -1,16 +1,13 @@
 package benchmarks_test
 
 import (
-	"encoding/json"
 	"testing"
 
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
-////    TY Example    ////
-
-func createTyExampleQuery(brandIds []int64, storefrontIds []string) string {
+func createTyExampleQuery(brandIds []int64, storefrontIds []string) map[string]any {
 	query := es.NewQuery(
 		es.Bool().
 			Filter(
@@ -22,14 +19,10 @@ func createTyExampleQuery(brandIds []int64, storefrontIds []string) string {
 	query.Size(1)
 	query.SourceFalse()
 
-	marshal, err := json.Marshal(query)
-	if err != nil {
-		return ""
-	}
-	return string(marshal)
+	return query
 }
 
-func createTyExampleQueryVanillaGo(brandIds []int64, storefrontIds []string) string {
+func createTyExampleQueryVanilla(brandIds []int64, storefrontIds []string) map[string]any {
 	query := map[string]interface{}{
 		"size": 1,
 		"query": map[string]interface{}{
@@ -55,20 +48,7 @@ func createTyExampleQueryVanillaGo(brandIds []int64, storefrontIds []string) str
 		},
 		"_source": false,
 	}
-
-	marshal, err := json.Marshal(query)
-	if err != nil {
-		return ""
-	}
-	return string(marshal)
-}
-
-func Test_TyExample_Queries_are_equal(t *testing.T) {
-	brandIds := []int64{11, 22, 33, 44}
-	storefrontIds := []string{"35", "36", "43", "48", "49", "50"}
-	build := createTyExampleQuery(brandIds, storefrontIds)
-	vanilla := createTyExampleQueryVanillaGo(brandIds, storefrontIds)
-	assert.Equal(t, vanilla, build)
+	return query
 }
 
 func Benchmark_Ty_Example_Builder(b *testing.B) {
@@ -81,12 +61,20 @@ func Benchmark_Ty_Example_Builder(b *testing.B) {
 	}
 }
 
-func Benchmark_Ty_Example_VanillaGo(b *testing.B) {
+func Benchmark_Ty_Example_Vanilla(b *testing.B) {
 	brandIds := []int64{11, 22, 33, 44}
 	storefrontIds := []string{"35", "36", "43", "48", "49", "50"}
-	createTyExampleQueryVanillaGo(brandIds, storefrontIds)
+	createTyExampleQueryVanilla(brandIds, storefrontIds)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		createTyExampleQueryVanillaGo(brandIds, storefrontIds)
+		createTyExampleQueryVanilla(brandIds, storefrontIds)
 	}
+}
+
+func Test_Ty_Example_Queries_are_equal(t *testing.T) {
+	brandIds := []int64{11, 22, 33, 44}
+	storefrontIds := []string{"35", "36", "43", "48", "49", "50"}
+	build := marshalString(t, createTyExampleQuery(brandIds, storefrontIds))
+	vanilla := marshalString(t, createTyExampleQueryVanilla(brandIds, storefrontIds))
+	assert.Equal(t, vanilla, build)
 }

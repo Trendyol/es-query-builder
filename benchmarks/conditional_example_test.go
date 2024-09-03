@@ -1,7 +1,6 @@
 package benchmarks_test
 
 import (
-	"encoding/json"
 	"testing"
 
 	"github.com/Trendyol/es-query-builder/es"
@@ -9,9 +8,7 @@ import (
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
-////    Conditional Complex Example  ////
-
-func createConditionalQuery(items []int) string {
+func createConditionalQuery(items []int) map[string]any {
 	query := es.NewQuery(
 		es.Bool().
 			Filter(
@@ -32,24 +29,20 @@ func createConditionalQuery(items []int) string {
 			MustNot(
 				es.Exists("blocks.reason.id"),
 			),
-	)
-	query.Size(100)
-	query.Sort(
-		es.Sort("modifiedDate").Order(order.Desc),
-	)
+	).
+		Size(100).
+		Sort(
+			es.Sort("modifiedDate").Order(order.Desc),
+		)
+
 	query.Source().
 		Includes("id", "type", "indexedAt", "chapters").
 		Excludes("private.key")
-	query.TrackTotalHits(true)
 
-	marshal, err := json.Marshal(query)
-	if err != nil {
-		return ""
-	}
-	return string(marshal)
+	return query
 }
 
-func createConditionalQueryVanillaGo(items []int) string {
+func createConditionalQueryVanilla(items []int) map[string]any {
 	var flag bool
 	for _, item := range items {
 		if item == 21 {
@@ -92,8 +85,7 @@ func createConditionalQueryVanillaGo(items []int) string {
 			"includes": []interface{}{"id", "type", "indexedAt", "chapters"},
 			"excludes": []interface{}{"private.key"},
 		},
-		"size":             100,
-		"track_total_hits": true,
+		"size": 100,
 		"sort": []map[string]interface{}{
 			{
 				"modifiedDate": map[string]interface{}{
@@ -114,19 +106,7 @@ func createConditionalQueryVanillaGo(items []int) string {
 			},
 		},
 	}
-
-	marshal, err := json.Marshal(query)
-	if err != nil {
-		return ""
-	}
-	return string(marshal)
-}
-
-func Test_Conditional_Queries_are_equal(t *testing.T) {
-	items := []int{1, 1, 2, 3, 5, 8, 13, 21, 34, 55}
-	build := createConditionalQuery(items)
-	vanilla := createConditionalQueryVanillaGo(items)
-	assert.Equal(t, vanilla, build)
+	return query
 }
 
 func Benchmark_Conditional_Builder(b *testing.B) {
@@ -138,11 +118,18 @@ func Benchmark_Conditional_Builder(b *testing.B) {
 	}
 }
 
-func Benchmark_Conditional_VanillaGo(b *testing.B) {
+func Benchmark_Conditional_Vanilla(b *testing.B) {
 	items := []int{1, 1, 2, 3, 5, 8, 13, 21, 34, 55}
-	createConditionalQueryVanillaGo(items)
+	createConditionalQueryVanilla(items)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		createConditionalQueryVanillaGo(items)
+		createConditionalQueryVanilla(items)
 	}
+}
+
+func Test_Conditional_Queries_are_equal(t *testing.T) {
+	items := []int{1, 1, 2, 3, 5, 8, 13, 21, 34, 55}
+	build := marshalString(t, createConditionalQuery(items))
+	vanilla := marshalString(t, createConditionalQueryVanilla(items))
+	assert.Equal(t, vanilla, build)
 }

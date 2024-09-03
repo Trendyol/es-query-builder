@@ -1,16 +1,13 @@
-package benchmarks
+package benchmarks_test
 
 import (
-	"encoding/json"
 	"testing"
 
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
-////    Readme Example    ////
-
-func createReadmeQuery() string {
+func createMixedQuery() map[string]any {
 	query := es.NewQuery(
 		es.Bool().
 			Must(
@@ -34,14 +31,11 @@ func createReadmeQuery() string {
 					Field("genre"),
 			),
 	)
-	marshal, err := json.Marshal(query)
-	if err != nil {
-		return ""
-	}
-	return string(marshal)
+
+	return query
 }
 
-func createReadmeQueryVanillaGo() string {
+func createMixedQueryVanilla() map[string]any {
 	query := map[string]interface{}{
 		"query": map[string]interface{}{
 			"bool": map[string]interface{}{
@@ -99,31 +93,27 @@ func createReadmeQueryVanillaGo() string {
 			},
 		},
 	}
-	marshal, err := json.Marshal(query)
-	if err != nil {
-		return ""
-	}
-	return string(marshal)
+	return query
 }
 
-func Test_Readme_Queries_are_equal(t *testing.T) {
-	build := createReadmeQuery()
-	vanilla := createReadmeQueryVanillaGo()
+func Benchmark_Mixed_Example_Builder(b *testing.B) {
+	createMixedQuery()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		createMixedQuery()
+	}
+}
+
+func Benchmark_Mixed_Example_Vanilla(b *testing.B) {
+	createMixedQueryVanilla()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		createMixedQueryVanilla()
+	}
+}
+
+func Test_Mixed_Queries_are_equal(t *testing.T) {
+	build := marshalString(t, createMixedQuery())
+	vanilla := marshalString(t, createMixedQueryVanilla())
 	assert.Equal(t, vanilla, build)
-}
-
-func Benchmark_Readme_Example_Builder(b *testing.B) {
-	createReadmeQuery()
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		createReadmeQuery()
-	}
-}
-
-func Benchmark_Readme_Example_VanillaGo(b *testing.B) {
-	createReadmeQueryVanillaGo()
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		createReadmeQueryVanillaGo()
-	}
 }
