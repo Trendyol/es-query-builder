@@ -1,4 +1,4 @@
-# es-query-builder [![GoDoc][doc-img]][doc] [![Build Status][ci-img]][ci] [![Go Report Card][go-report-img]][go-report] [![Coverage Status][cov-img]][cov]
+# es-query-builder [![GoDoc][doc-img]][doc] [![Release][release-img]][release] [![Build Status][ci-img]][ci] [![Go Report Card][go-report-img]][go-report] [![Coverage Status][cov-img]][cov]
 
 A simple, user-friendly, and streamlined library for programmatically building Elasticsearch DSL queries in Go, designed
 for low overhead and minimal memory usage.
@@ -7,13 +7,13 @@ for low overhead and minimal memory usage.
 With [Go's module support](https://go.dev/wiki/Modules#how-to-use-modules), `go [build|run|test]` automatically fetches the necessary dependencies when you add the import in your code:
 
 ```sh
-import "github.com/GokselKUCUKSAHIN/es-query-builder"
+import "github.com/Trendyol/es-query-builder"
 ```
 
 Alternatively, use `go get`:
 
 ```sh
-go get -u github.com/GokselKUCUKSAHIN/es-query-builder
+go get -u github.com/Trendyol/es-query-builder
 ```
 
 ### Example
@@ -342,7 +342,7 @@ Benchmark test file at [aggs query benchmark](./benchmarks/aggs_example_test.go)
 
 Want to help out? Awesome! Here’s how you can contribute:
 
-1. **Report Issues:** Got a suggestion, recommendation, or found a bug? Head over to the [Issues](https://github.com/GokselKUCUKSAHIN/es-query-builder/issues) section and let us know.
+1. **Report Issues:** Got a suggestion, recommendation, or found a bug? Head over to the [Issues](https://github.com/Trendyol/es-query-builder/issues) section and let us know.
 
 2. **Make Changes:** Want to improve the code?
    - Fork the repo
@@ -356,18 +356,22 @@ We’re excited to see your contributions. Thanks for helping make this project 
 
 MIT - Please check the [LICENSE](./LICENSE) file for full text.
 
-[doc-img]: https://godoc.org/github.com/GokselKUCUKSAHIN/es-query-builder?status.svg
+[doc-img]: https://godoc.org/github.com/Trendyol/es-query-builder?status.svg
 
-[doc]: https://godoc.org/github.com/GokselKUCUKSAHIN/es-query-builder
+[doc]: https://godoc.org/github.com/Trendyol/es-query-builder
 
-[go-report-img]: https://goreportcard.com/badge/github.com/GokselKUCUKSAHIN/es-query-builder
+[release]: https://github.com/Trendyol/es-query-builder/releases
 
-[go-report]: https://goreportcard.com/report/github.com/GokselKUCUKSAHIN/es-query-builder
+[release-img]: https://img.shields.io/github/v/release/Trendyol/es-query-builder.svg
 
-[cov-img]: https://codecov.io/gh/GokselKUCUKSAHIN/es-query-builder/branch/main/graph/badge.svg
+[go-report-img]: https://goreportcard.com/badge/github.com/Trendyol/es-query-builder
 
-[cov]: https://codecov.io/gh/GokselKUCUKSAHIN/es-query-builder
+[go-report]: https://goreportcard.com/report/github.com/Trendyol/es-query-builder
 
-[ci-img]: https://github.com/GokselKUCUKSAHIN/es-query-builder/actions/workflows/build-test.yml/badge.svg
+[cov-img]: https://codecov.io/gh/Trendyol/es-query-builder/branch/main/graph/badge.svg
 
-[ci]: https://github.com/GokselKUCUKSAHIN/es-query-builder/actions/workflows/build-test.yml
+[cov]: https://codecov.io/gh/Trendyol/es-query-builder
+
+[ci-img]: https://github.com/Trendyol/es-query-builder/actions/workflows/build-test.yml/badge.svg
+
+[ci]: https://github.com/Trendyol/es-query-builder/actions/workflows/build-test.yml

@@ -1,4 +1,4 @@
-module github.com/GokselKUCUKSAHIN/es-query-builder
+module github.com/Trendyol/es-query-builder
 
 go 1.18
 

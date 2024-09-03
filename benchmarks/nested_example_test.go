@@ -3,8 +3,8 @@ package benchmarks_test
 import (
 	"testing"
 
-	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
-	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
+	"github.com/Trendyol/es-query-builder/es"
+	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
 func createNestedQuery() map[string]any {
