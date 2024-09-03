@@ -3,8 +3,8 @@ package operator_test
 import (
 	"testing"
 
-	Operator "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/match/operator"
-	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
+	Operator "github.com/Trendyol/es-query-builder/es/enums/match/operator"
+	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
 func Test_ScoreModeString(t *testing.T) {

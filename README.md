@@ -7,13 +7,13 @@ for low overhead and minimal memory usage.
 With [Go's module support](https://go.dev/wiki/Modules#how-to-use-modules), `go [build|run|test]` automatically fetches the necessary dependencies when you add the import in your code:
 
 ```sh
-import "github.com/GokselKUCUKSAHIN/es-query-builder"
+import "github.com/Trendyol/es-query-builder"
 ```
 
 Alternatively, use `go get`:
 
 ```sh
-go get -u github.com/GokselKUCUKSAHIN/es-query-builder
+go get -u github.com/Trendyol/es-query-builder
 ```
 
 ### Example
@@ -181,7 +181,7 @@ You can check and run [benchmarks](./benchmarks) on your machine.
 - **Memory**: 512MB LPDDR2
 - **Go Version**: go1.22.3
 
-![armv6l](https://github.com/GokselKUCUKSAHIN/es-query-builder/assets/33639948/8972003d-9b00-4021-9f69-347723ac59de)
+![armv6l](https://github.com/Trendyol/es-query-builder/assets/33639948/8972003d-9b00-4021-9f69-347723ac59de)
 
 ### ARM64
 
@@ -191,20 +191,20 @@ You can check and run [benchmarks](./benchmarks) on your machine.
 - **Memory**: 32GB LPDDR5
 - **Go Version**: go1.22.1
 
-![arm64](https://github.com/GokselKUCUKSAHIN/es-query-builder/assets/33639948/ca9e2603-ebcd-4dec-92f4-e501ddcc4abe)
+![arm64](https://github.com/Trendyol/es-query-builder/assets/33639948/ca9e2603-ebcd-4dec-92f4-e501ddcc4abe)
 
 # Want to Contribute?
 
 <details>
   <summary><b>Join Us</b></summary>
-  <img src="https://github.com/GokselKUCUKSAHIN/es-query-builder/assets/33639948/bc696d14-a55d-4ec4-9cb4-021cc4128760" width="400px" alt="join us"/>
+  <img src="https://github.com/Trendyol/es-query-builder/assets/33639948/bc696d14-a55d-4ec4-9cb4-021cc4128760" width="400px" alt="join us"/>
 </details>
 
 ###  Contribute to Our Project
 
 Want to help out? Awesome! Here’s how you can contribute:
 
-1. **Report Issues:** Got a suggestion, recommendation, or found a bug? Head over to the [Issues](https://github.com/GokselKUCUKSAHIN/es-query-builder/issues) section and let us know.
+1. **Report Issues:** Got a suggestion, recommendation, or found a bug? Head over to the [Issues](https://github.com/Trendyol/es-query-builder/issues) section and let us know.
 
 2. **Make Changes:** Want to improve the code?
    - Fork the repo
@@ -218,18 +218,18 @@ We’re excited to see your contributions. Thanks for helping make this project 
 
 MIT - Please check the [LICENSE](./LICENSE) file for full text.
 
-[doc-img]: https://godoc.org/github.com/GokselKUCUKSAHIN/es-query-builder?status.svg
+[doc-img]: https://godoc.org/github.com/Trendyol/es-query-builder?status.svg
 
-[doc]: https://godoc.org/github.com/GokselKUCUKSAHIN/es-query-builder
+[doc]: https://godoc.org/github.com/Trendyol/es-query-builder
 
-[go-report-img]: https://goreportcard.com/badge/github.com/GokselKUCUKSAHIN/es-query-builder
+[go-report-img]: https://goreportcard.com/badge/github.com/Trendyol/es-query-builder
 
-[go-report]: https://goreportcard.com/report/github.com/GokselKUCUKSAHIN/es-query-builder
+[go-report]: https://goreportcard.com/report/github.com/Trendyol/es-query-builder
 
-[cov-img]: https://codecov.io/gh/GokselKUCUKSAHIN/es-query-builder/branch/main/graph/badge.svg
+[cov-img]: https://codecov.io/gh/Trendyol/es-query-builder/branch/main/graph/badge.svg
 
-[cov]: https://codecov.io/gh/GokselKUCUKSAHIN/es-query-builder
+[cov]: https://codecov.io/gh/Trendyol/es-query-builder
 
-[ci-img]: https://github.com/GokselKUCUKSAHIN/es-query-builder/actions/workflows/build-test.yml/badge.svg
+[ci-img]: https://github.com/Trendyol/es-query-builder/actions/workflows/build-test.yml/badge.svg
 
-[ci]: https://github.com/GokselKUCUKSAHIN/es-query-builder/actions/workflows/build-test.yml
+[ci]: https://github.com/Trendyol/es-query-builder/actions/workflows/build-test.yml
