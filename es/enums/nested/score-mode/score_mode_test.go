@@ -3,8 +3,8 @@ package scoremode_test
 import (
 	"testing"
 
-	scoremode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/nested/score-mode"
-	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
+	scoremode "github.com/Trendyol/es-query-builder/es/enums/nested/score-mode"
+	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
 func Test_ScoreModeString(t *testing.T) {

@@ -3,9 +3,9 @@ package condition_test
 import (
 	"testing"
 
-	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
-	"github.com/GokselKUCUKSAHIN/es-query-builder/es/condition"
-	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
+	"github.com/Trendyol/es-query-builder/es"
+	"github.com/Trendyol/es-query-builder/es/condition"
+	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
 func Test_Condition_If_should_add_Term_When_condition_is_true(t *testing.T) {

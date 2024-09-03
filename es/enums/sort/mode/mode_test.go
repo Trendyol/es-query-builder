@@ -3,9 +3,9 @@ package mode_test
 import (
 	"testing"
 
-	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
+	"github.com/Trendyol/es-query-builder/test/assert"
 
-	Mode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/mode"
+	Mode "github.com/Trendyol/es-query-builder/es/enums/sort/mode"
 )
 
 func Test_ModeString(t *testing.T) {

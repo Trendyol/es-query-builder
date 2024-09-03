@@ -3,7 +3,7 @@ project_name: es-query-builder
 release:
   github:
     name: es-query-builder
-    owner: GokselKUCUKSAHIN
+    owner: Trendyol
 
 before:
   hooks:

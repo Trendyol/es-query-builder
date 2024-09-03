@@ -4,11 +4,11 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
-	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
+	"github.com/Trendyol/es-query-builder/es"
+	"github.com/Trendyol/es-query-builder/test/assert"
 
-	Mode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/mode"
-	Order "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
+	Mode "github.com/Trendyol/es-query-builder/es/enums/sort/mode"
+	Order "github.com/Trendyol/es-query-builder/es/enums/sort/order"
 )
 
 ////   NewQuery   ////

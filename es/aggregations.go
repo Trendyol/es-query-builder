@@ -1,6 +1,6 @@
 package es
 
-import Order "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
+import Order "github.com/Trendyol/es-query-builder/es/enums/sort/order"
 
 type aggsType Object
 
