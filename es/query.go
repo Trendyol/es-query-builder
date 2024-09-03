@@ -1,8 +1,8 @@
 package es
 
 import (
-	Mode "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/mode"
-	Order "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
+	Mode "github.com/Trendyol/es-query-builder/es/enums/sort/mode"
+	Order "github.com/Trendyol/es-query-builder/es/enums/sort/order"
 )
 
 type sortType Object

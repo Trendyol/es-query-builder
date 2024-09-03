@@ -1,6 +1,6 @@
 package es
 
-import Operator "github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/match/operator"
+import Operator "github.com/Trendyol/es-query-builder/es/enums/match/operator"
 
 type matchType Object
 

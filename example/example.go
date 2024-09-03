@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
-	"github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
+	"github.com/Trendyol/es-query-builder/es"
+	"github.com/Trendyol/es-query-builder/es/enums/sort/order"
 )
 
 func mockGetDocumentsEs(query string) (string, error) {

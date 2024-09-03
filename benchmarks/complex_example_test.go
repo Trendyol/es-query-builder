@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
-	"github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/mode"
-	"github.com/GokselKUCUKSAHIN/es-query-builder/es/enums/sort/order"
-	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
+	"github.com/Trendyol/es-query-builder/es"
+	"github.com/Trendyol/es-query-builder/es/enums/sort/mode"
+	"github.com/Trendyol/es-query-builder/es/enums/sort/order"
+	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
 ////    Complex Example   ////

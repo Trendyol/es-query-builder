@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/GokselKUCUKSAHIN/es-query-builder/es"
+	"github.com/Trendyol/es-query-builder/es"
 	"github.com/stretchr/testify/assert"
 )
 
