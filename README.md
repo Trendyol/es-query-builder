@@ -1,4 +1,4 @@
-# es-query-builder [![GoDoc][doc-img]][doc] [![Build Status][ci-img]][ci] [![Go Report Card][go-report-img]][go-report] [![Coverage Status][cov-img]][cov]
+# es-query-builder [![GoDoc][doc-img]][doc] [![Release][release-img]][release] [![Build Status][ci-img]][ci] [![Go Report Card][go-report-img]][go-report] [![Coverage Status][cov-img]][cov]
 
 A simple, user-friendly, and streamlined library for programmatically building Elasticsearch DSL queries in Go, designed
 for low overhead and minimal memory usage.
@@ -181,7 +181,7 @@ You can check and run [benchmarks](./benchmarks) on your machine.
 - **Memory**: 512MB LPDDR2
 - **Go Version**: go1.22.3
 
-![armv6l](https://github.com/Trendyol/es-query-builder/assets/33639948/8972003d-9b00-4021-9f69-347723ac59de)
+![armv6l](https://github.com/GokselKUCUKSAHIN/es-query-builder/assets/33639948/8972003d-9b00-4021-9f69-347723ac59de)
 
 ### ARM64
 
@@ -191,13 +191,13 @@ You can check and run [benchmarks](./benchmarks) on your machine.
 - **Memory**: 32GB LPDDR5
 - **Go Version**: go1.22.1
 
-![arm64](https://github.com/Trendyol/es-query-builder/assets/33639948/ca9e2603-ebcd-4dec-92f4-e501ddcc4abe)
+![arm64](https://github.com/GokselKUCUKSAHIN/es-query-builder/assets/33639948/ca9e2603-ebcd-4dec-92f4-e501ddcc4abe)
 
 # Want to Contribute?
 
 <details>
   <summary><b>Join Us</b></summary>
-  <img src="https://github.com/Trendyol/es-query-builder/assets/33639948/bc696d14-a55d-4ec4-9cb4-021cc4128760" width="400px" alt="join us"/>
+  <img src="https://github.com/GokselKUCUKSAHIN/es-query-builder/assets/33639948/bc696d14-a55d-4ec4-9cb4-021cc4128760" width="400px" alt="join us"/>
 </details>
 
 ###  Contribute to Our Project
@@ -221,6 +221,10 @@ MIT - Please check the [LICENSE](./LICENSE) file for full text.
 [doc-img]: https://godoc.org/github.com/Trendyol/es-query-builder?status.svg
 
 [doc]: https://godoc.org/github.com/Trendyol/es-query-builder
+
+[release]: https://github.com/Trendyol/es-query-builder/releases
+
+[release-img]: https://img.shields.io/github/v/release/Trendyol/es-query-builder.svg
 
 [go-report-img]: https://goreportcard.com/badge/github.com/Trendyol/es-query-builder
 
