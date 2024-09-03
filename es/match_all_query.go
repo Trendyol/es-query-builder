@@ -23,8 +23,8 @@ func MatchAll() matchAllType {
 }
 
 func (m matchAllType) putInTheField(key string, value any) matchAllType {
-	if matchAll, exists := m["match_all"]; exists {
-		matchAll.(Object)[key] = value
+	if matchAll, ok := m["match_all"].(Object); ok {
+		matchAll[key] = value
 	}
 	return m
 }

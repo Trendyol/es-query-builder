@@ -1,7 +1,6 @@
 package benchmarks_test
 
 import (
-	"encoding/json"
 	"testing"
 
 	"github.com/Trendyol/es-query-builder/es"
@@ -9,9 +8,7 @@ import (
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
-////    Aggs Example    ////
-
-func createAggsQuery() string {
+func createAggsQuery() map[string]any {
 	query := es.NewQuery(
 		es.Bool().
 			Must(
@@ -22,38 +19,32 @@ func createAggsQuery() string {
 			).
 			MustNot(
 				es.Exists("file.name"),
-			),
-	)
-
-	query.
+			)).
 		Size(5_000).
 		Sort(
 			es.Sort("modifiedDate").Order(order.Desc),
-			es.Sort("indexedAt").Order(order.Desc),
-		)
-
-	query.Aggs("DocumentIds",
-		es.AggTerms().
-			Field("document.id").
+			es.Sort("indexedAt").Order(order.Asc),
+		).
+		Aggs("by_category", es.AggTerms().
+			Field("category.keyword").
 			Size(250).
-			Aggs("OrderCounts",
-				es.AggMultiTerms().
-					Terms(
-						es.AggTerm("document.orders.count"),
-						es.AggTerm("files.order.count").
-							Missing("book.meta.author"),
+			Aggs("nested_reviews", es.AggNested().
+				Path("reviews").
+				Aggs("average_rating", es.AggAvg().
+					Field("reviews.rating"),
+				).
+				Aggs("by_reviewer", es.AggTerms().
+					Field("reviews.reviewer.keyword").
+					Aggs("max_reviewer_rating", es.AggMax().
+						Field("reviews.rating"),
 					),
+				),
 			),
-	)
-
-	marshal, err := json.Marshal(query)
-	if err != nil {
-		return ""
-	}
-	return string(marshal)
+		)
+	return query
 }
 
-func createAggsQueryVanillaGo() string {
+func createAggsQueryVanilla() map[string]any {
 	query := map[string]interface{}{
 		"size": 5000,
 		"sort": []map[string]interface{}{
@@ -64,7 +55,7 @@ func createAggsQueryVanillaGo() string {
 			},
 			{
 				"indexedAt": map[string]interface{}{
-					"order": "desc",
+					"order": "asc",
 				},
 			},
 		},
@@ -95,21 +86,32 @@ func createAggsQueryVanillaGo() string {
 			},
 		},
 		"aggs": map[string]interface{}{
-			"DocumentIds": map[string]interface{}{
+			"by_category": map[string]interface{}{
 				"terms": map[string]interface{}{
-					"field": "document.id",
+					"field": "category.keyword",
 					"size":  250,
 				},
 				"aggs": map[string]interface{}{
-					"OrderCounts": map[string]interface{}{
-						"multi_terms": map[string]interface{}{
-							"terms": []map[string]interface{}{
-								{
-									"field": "document.orders.count",
+					"nested_reviews": map[string]interface{}{
+						"nested": map[string]interface{}{
+							"path": "reviews",
+						},
+						"aggs": map[string]interface{}{
+							"average_rating": map[string]interface{}{
+								"avg": map[string]interface{}{
+									"field": "reviews.rating",
 								},
-								{
-									"field":   "files.order.count",
-									"missing": "book.meta.author",
+							},
+							"by_reviewer": map[string]interface{}{
+								"terms": map[string]interface{}{
+									"field": "reviews.reviewer.keyword",
+								},
+								"aggs": map[string]interface{}{
+									"max_reviewer_rating": map[string]interface{}{
+										"max": map[string]interface{}{
+											"field": "reviews.rating",
+										},
+									},
 								},
 							},
 						},
@@ -118,18 +120,7 @@ func createAggsQueryVanillaGo() string {
 			},
 		},
 	}
-
-	marshal, err := json.Marshal(query)
-	if err != nil {
-		return ""
-	}
-	return string(marshal)
-}
-
-func Test_Aggs_Queries_are_equal(t *testing.T) {
-	build := createAggsQuery()
-	vanilla := createAggsQueryVanillaGo()
-	assert.Equal(t, vanilla, build)
+	return query
 }
 
 func Benchmark_Aggs_Example_Builder(b *testing.B) {
@@ -140,10 +131,16 @@ func Benchmark_Aggs_Example_Builder(b *testing.B) {
 	}
 }
 
-func Benchmark_Aggs_Example_VanillaGo(b *testing.B) {
-	createAggsQueryVanillaGo()
+func Benchmark_Aggs_Example_Vanilla(b *testing.B) {
+	createAggsQueryVanilla()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		createAggsQueryVanillaGo()
+		createAggsQueryVanilla()
 	}
+}
+
+func Test_Aggs_Queries_are_equal(t *testing.T) {
+	builder := marshalString(t, createAggsQuery())
+	vanilla := marshalString(t, createAggsQueryVanilla())
+	assert.Equal(t, vanilla, builder)
 }

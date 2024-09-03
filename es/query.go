@@ -237,6 +237,7 @@ func (s sortType) putInTheField(key string, value any) sortType {
 	for field := range s {
 		if fieldObject, ok := s[field].(Object); ok {
 			fieldObject[key] = value
+			return s
 		}
 	}
 	return s

@@ -1,7 +1,6 @@
 package benchmarks_test
 
 import (
-	"encoding/json"
 	"testing"
 
 	"github.com/Trendyol/es-query-builder/es"
@@ -9,9 +8,7 @@ import (
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
-////    Intermediate Example   ////
-
-func createIntermediateQuery(id int) string {
+func createIntermediateQuery(id int) map[string]any {
 	query := es.NewQuery(
 		es.Bool().
 			Must(
@@ -32,14 +29,10 @@ func createIntermediateQuery(id int) string {
 	query.Source().
 		Includes("id", "type", "indexedAt", "chapters")
 
-	marshal, err := json.Marshal(query)
-	if err != nil {
-		return ""
-	}
-	return string(marshal)
+	return query
 }
 
-func createIntermediateQueryVanillaGo(id int) string {
+func createIntermediateQueryVanilla(id int) map[string]any {
 	query := map[string]interface{}{
 		"_source": map[string]interface{}{
 			"includes": []interface{}{"id", "type", "indexedAt", "chapters"},
@@ -84,19 +77,7 @@ func createIntermediateQueryVanillaGo(id int) string {
 			},
 		},
 	}
-
-	marshal, err := json.Marshal(query)
-	if err != nil {
-		return ""
-	}
-	return string(marshal)
-}
-
-func Test_Intermediate_Queries_are_equal(t *testing.T) {
-	id := 42
-	build := createIntermediateQuery(id)
-	vanilla := createIntermediateQueryVanillaGo(id)
-	assert.Equal(t, vanilla, build)
+	return query
 }
 
 func Benchmark_Intermediate_Builder(b *testing.B) {
@@ -108,11 +89,18 @@ func Benchmark_Intermediate_Builder(b *testing.B) {
 	}
 }
 
-func Benchmark_Intermediate_VanillaGo(b *testing.B) {
+func Benchmark_Intermediate_Vanilla(b *testing.B) {
 	id := 42
-	createIntermediateQueryVanillaGo(id)
+	createIntermediateQueryVanilla(id)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		createIntermediateQueryVanillaGo(id)
+		createIntermediateQueryVanilla(id)
 	}
+}
+
+func Test_Intermediate_Queries_are_equal(t *testing.T) {
+	id := 42
+	build := marshalString(t, createIntermediateQuery(id))
+	vanilla := marshalString(t, createIntermediateQueryVanilla(id))
+	assert.Equal(t, vanilla, build)
 }

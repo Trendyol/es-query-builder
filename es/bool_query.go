@@ -98,13 +98,13 @@ func (b boolType) Boost(boost float64) boolType {
 //
 //	The updated boolType object with the new filter conditions added.
 func (b boolType) Filter(items ...any) boolType {
-	filter, exists := b["filter"]
-	if !exists {
+	filter, ok := b["filter"].(filterType)
+	if !ok {
 		filter = filterType{}
 	}
 	for i := 0; i < len(items); i++ {
-		if field, ok := correctType(items[i]); ok {
-			filter = append(filter.(filterType), field)
+		if field, fOk := correctType(items[i]); fOk {
+			filter = append(filter, field)
 		}
 	}
 	b["filter"] = filter
@@ -133,13 +133,13 @@ func (b boolType) Filter(items ...any) boolType {
 //
 //	The updated boolType object with the new conditions added to the "must" section.
 func (b boolType) Must(items ...any) boolType {
-	must, exists := b["must"]
-	if !exists {
+	must, ok := b["must"].(mustType)
+	if !ok {
 		must = mustType{}
 	}
 	for i := 0; i < len(items); i++ {
-		if field, ok := correctType(items[i]); ok {
-			must = append(must.(mustType), field)
+		if field, fOk := correctType(items[i]); fOk {
+			must = append(must, field)
 		}
 	}
 	b["must"] = must
@@ -168,13 +168,13 @@ func (b boolType) Must(items ...any) boolType {
 //
 //	The updated boolType object with the new conditions added to the "must_not" section.
 func (b boolType) MustNot(items ...any) boolType {
-	mustNot, exists := b["must_not"]
-	if !exists {
+	mustNot, ok := b["must_not"].(mustNotType)
+	if !ok {
 		mustNot = mustNotType{}
 	}
 	for i := 0; i < len(items); i++ {
-		if field, ok := correctType(items[i]); ok {
-			mustNot = append(mustNot.(mustNotType), field)
+		if field, fOk := correctType(items[i]); fOk {
+			mustNot = append(mustNot, field)
 		}
 	}
 	b["must_not"] = mustNot
@@ -203,13 +203,13 @@ func (b boolType) MustNot(items ...any) boolType {
 //
 //	The updated boolType object with the new conditions added to the "should" section.
 func (b boolType) Should(items ...any) boolType {
-	should, exists := b["should"]
-	if !exists {
+	should, ok := b["should"].(shouldType)
+	if !ok {
 		should = shouldType{}
 	}
 	for i := 0; i < len(items); i++ {
-		if field, ok := correctType(items[i]); ok {
-			should = append(should.(shouldType), field)
+		if field, fOk := correctType(items[i]); fOk {
+			should = append(should, field)
 		}
 	}
 	b["should"] = should

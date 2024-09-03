@@ -46,6 +46,7 @@ func (r rangeType) LesserThan(lt any) rangeType {
 		if rangeObject, ok := r[key].(Object); ok {
 			rangeObject["lt"] = lt
 			delete(rangeObject, "lte")
+			return r
 		}
 	}
 	return r
@@ -73,6 +74,7 @@ func (r rangeType) LesserThanOrEqual(lte any) rangeType {
 		if rangeObject, ok := r[key].(Object); ok {
 			rangeObject["lte"] = lte
 			delete(rangeObject, "lt")
+			return r
 		}
 	}
 	return r
@@ -100,6 +102,7 @@ func (r rangeType) GreaterThan(gt any) rangeType {
 		if rangeObject, ok := r[key].(Object); ok {
 			rangeObject["gt"] = gt
 			delete(rangeObject, "gte")
+			return r
 		}
 	}
 	return r
@@ -127,6 +130,7 @@ func (r rangeType) GreaterThanOrEqual(gte any) rangeType {
 		if rangeObject, ok := r[key].(Object); ok {
 			rangeObject["gte"] = gte
 			delete(rangeObject, "gt")
+			return r
 		}
 	}
 	return r
@@ -153,6 +157,7 @@ func (r rangeType) Format(format string) rangeType {
 	for key := range r {
 		if rangeObject, ok := r[key].(Object); ok {
 			rangeObject["format"] = format
+			return r
 		}
 	}
 	return r
@@ -178,6 +183,7 @@ func (r rangeType) Boost(boost float64) rangeType {
 	for key := range r {
 		if rangeObject, ok := r[key].(Object); ok {
 			rangeObject["boost"] = boost
+			return r
 		}
 	}
 	return r

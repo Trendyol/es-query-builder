@@ -183,6 +183,7 @@ func (agg aggsType) putInTheField(key string, value any) aggsType {
 	for field := range agg {
 		if fieldObject, ok := agg[field].(Object); ok {
 			fieldObject[key] = value
+			return agg
 		}
 	}
 	return agg
@@ -206,11 +207,11 @@ func (agg aggsType) putInTheField(key string, value any) aggsType {
 //
 //	The updated aggsType object with the nested aggregation added.
 func (agg aggsType) Aggs(name string, nestedAgg aggsType) aggsType {
-	aggs, exists := agg["aggs"]
-	if !exists {
+	aggs, ok := agg["aggs"].(Object)
+	if !ok {
 		aggs = Object{}
 	}
-	aggs.(Object)[name] = nestedAgg
+	aggs[name] = nestedAgg
 	agg["aggs"] = aggs
 	return agg
 }
@@ -377,11 +378,11 @@ func (agg aggsType) Terms(terms ...aggTermType) aggsType {
 //
 //	The updated Object with the "aggs" field containing the new named aggregation.
 func (o Object) Aggs(name string, agg aggsType) Object {
-	aggs, exists := o["aggs"]
-	if !exists {
+	aggs, ok := o["aggs"].(Object)
+	if !ok {
 		aggs = Object{}
 	}
-	aggs.(Object)[name] = agg
+	aggs[name] = agg
 	o["aggs"] = aggs
 	return o
 }

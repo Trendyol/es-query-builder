@@ -1,31 +1,23 @@
 package benchmarks_test
 
 import (
-	"encoding/json"
 	"testing"
 
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
-////    Simple Example   ////
-
-func createSimpleQuery() string {
+func createSimpleQuery() map[string]any {
 	query := es.NewQuery(
 		es.Bool().
 			Filter(
 				es.Term("id", 123456),
 			),
 	)
-
-	marshal, err := json.Marshal(query)
-	if err != nil {
-		return ""
-	}
-	return string(marshal)
+	return query
 }
 
-func createSimpleQueryVanillaGo() string {
+func createSimpleQueryVanilla() map[string]any {
 	query := map[string]interface{}{
 		"query": map[string]interface{}{
 			"bool": map[string]interface{}{
@@ -39,18 +31,7 @@ func createSimpleQueryVanillaGo() string {
 			},
 		},
 	}
-
-	marshal, err := json.Marshal(query)
-	if err != nil {
-		return ""
-	}
-	return string(marshal)
-}
-
-func Test_Simple_Queries_are_equal(t *testing.T) {
-	build := createSimpleQuery()
-	vanilla := createSimpleQueryVanillaGo()
-	assert.Equal(t, vanilla, build)
+	return query
 }
 
 func Benchmark_Simple_Builder(b *testing.B) {
@@ -61,10 +42,16 @@ func Benchmark_Simple_Builder(b *testing.B) {
 	}
 }
 
-func Benchmark_Simple_VanillaGo(b *testing.B) {
-	createSimpleQueryVanillaGo()
+func Benchmark_Simple_Vanilla(b *testing.B) {
+	createSimpleQueryVanilla()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		createSimpleQueryVanillaGo()
+		createSimpleQueryVanilla()
 	}
+}
+
+func Test_Simple_Queries_are_equal(t *testing.T) {
+	build := marshalString(t, createSimpleQuery())
+	vanilla := marshalString(t, createSimpleQueryVanilla())
+	assert.Equal(t, vanilla, build)
 }
