@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/Trendyol/es-query-builder/es"
-	"github.com/Trendyol/es-query-builder/es/enums/sort/mode"
 	"github.com/Trendyol/es-query-builder/es/enums/sort/order"
 	"github.com/Trendyol/es-query-builder/test/assert"
 )

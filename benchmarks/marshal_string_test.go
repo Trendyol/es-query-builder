@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/GokselKUCUKSAHIN/es-query-builder/test/assert"
+	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
 func marshalString(t *testing.T, query map[string]any) string {

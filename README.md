@@ -335,7 +335,7 @@ Benchmark test file at [aggs query benchmark](./benchmarks/aggs_example_test.go)
 
 <details>
   <summary><b>Join Us</b></summary>
-  <img src="https://github.com/GokselKUCUKSAHIN/es-query-builder/assets/33639948/bc696d14-a55d-4ec4-9cb4-021cc4128760" width="400px" alt="join us"/>
+  <img src="https://github.com/user-attachments/assets/34bb6fc2-237b-49df-bae9-8ce2b14096ca" width="400px" alt="join us"/>
 </details>
 
 ###  Contribute to Our Project

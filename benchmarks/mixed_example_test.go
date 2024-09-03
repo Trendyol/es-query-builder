@@ -7,7 +7,7 @@ import (
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
-func createReadmeQuery() map[string]any {
+func createMixedQuery() map[string]any {
 	query := es.NewQuery(
 		es.Bool().
 			Must(
@@ -35,7 +35,7 @@ func createReadmeQuery() map[string]any {
 	return query
 }
 
-func createReadmeQueryVanilla() map[string]any {
+func createMixedQueryVanilla() map[string]any {
 	query := map[string]interface{}{
 		"query": map[string]interface{}{
 			"bool": map[string]interface{}{
@@ -96,24 +96,24 @@ func createReadmeQueryVanilla() map[string]any {
 	return query
 }
 
-func Benchmark_Readme_Example_Builder(b *testing.B) {
-	createReadmeQuery()
+func Benchmark_Mixed_Example_Builder(b *testing.B) {
+	createMixedQuery()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		createReadmeQuery()
+		createMixedQuery()
 	}
 }
 
-func Benchmark_Readme_Example_Vanilla(b *testing.B) {
-	createReadmeQueryVanilla()
+func Benchmark_Mixed_Example_Vanilla(b *testing.B) {
+	createMixedQueryVanilla()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		createReadmeQueryVanilla()
+		createMixedQueryVanilla()
 	}
 }
 
-func Test_Readme_Queries_are_equal(t *testing.T) {
-	build := marshalString(t, createReadmeQuery())
-	vanilla := marshalString(t, createReadmeQueryVanilla())
+func Test_Mixed_Queries_are_equal(t *testing.T) {
+	build := marshalString(t, createMixedQuery())
+	vanilla := marshalString(t, createMixedQueryVanilla())
 	assert.Equal(t, vanilla, build)
 }
