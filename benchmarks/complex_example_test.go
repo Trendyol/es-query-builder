@@ -30,18 +30,16 @@ func createComplexQuery(id int) map[string]any {
 				es.Exists("blocks.reason.id"),
 			).
 			MinimumShouldMatch(1).
-			Boost(3.14),
-	)
-	query.Size(100)
-	query.From(5000)
-	query.Sort(
-		es.Sort("modifiedDate").Order(order.Desc),
-		es.Sort("name").Order(order.Asc),
-		es.Sort("indexedAt").Order(order.Asc),
-	)
-	query.Source().
-		Includes("id", "type", "indexedAt", "chapters").
-		Excludes("private.key", "cipher")
+			Boost(3.14)).
+		Size(100).
+		From(5000).
+		Sort(
+			es.Sort("modifiedDate").Order(order.Desc),
+			es.Sort("name").Order(order.Asc),
+			es.Sort("indexedAt").Order(order.Asc),
+		).
+		SourceIncludes("id", "type", "indexedAt", "chapters").
+		SourceExcludes("private.key", "cipher")
 
 	return query
 }

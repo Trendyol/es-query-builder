@@ -20,14 +20,10 @@ func createIntermediateQuery(id int) map[string]any {
 			).
 			Filter(
 				es.Terms("type", "DOC", "FILE"),
-			),
-	)
-	query.Size(45)
-	query.Sort(
-		es.Sort("name").Order(order.Asc),
-	)
-	query.Source().
-		Includes("id", "type", "indexedAt", "chapters")
+			)).
+		Size(45).
+		Sort(es.Sort("name").Order(order.Asc)).
+		SourceIncludes("id", "type", "indexedAt", "chapters")
 
 	return query
 }
