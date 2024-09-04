@@ -20,6 +20,7 @@ type ElasticsearchRepository interface {
 	Insert(indexName, docId, document string) error
 	Delete(indexName, docId string) error
 	DeleteByQuery(indexName, query string) error
+	Exist(indexName, docId string) bool
 }
 
 func NewElasticsearchRepository(client *elasticsearch.Client) ElasticsearchRepository {
@@ -105,4 +106,13 @@ func (e *elasticsearchRepository) DeleteByQuery(indexName, query string) error {
 		return fmt.Errorf("insert request returned error: %s", res.String())
 	}
 	return err
+}
+
+func (e *elasticsearchRepository) Exist(indexName, docId string) bool {
+	request := esapi.ExistsRequest{
+		Index:      indexName,
+		DocumentID: docId,
+	}
+	res, _ := request.Do(context.Background(), e.client)
+	return res.StatusCode == constants.StatusOK
 }
