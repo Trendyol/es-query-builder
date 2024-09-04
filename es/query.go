@@ -7,8 +7,6 @@ import (
 
 type sortType Object
 
-type sourceType Object
-
 // NewQuery creates a new query es.Object with the provided query clause.
 //
 // This function takes any query clause as input and attempts to convert it into the correct internal type using the `correctType` function.
@@ -136,8 +134,8 @@ func (o Object) SourceFalse() Object {
 //
 // Example usage:
 //
-//	obj := es.NewQuery(...).SourceIncludes("title", "author")
-//	// obj now has a "_source" field with an "includes" key containing "title" and "author".
+//	query := es.NewQuery(...).SourceIncludes("title", "author")
+//	// query now has a "_source" field with an "includes" key containing "title" and "author".
 //
 // Parameters:
 //   - fields: A variadic list of strings specifying the fields to be included.
@@ -173,8 +171,8 @@ func (o Object) SourceIncludes(fields ...string) Object {
 //
 // Example usage:
 //
-//	obj := es.NewQuery(...).SourceExcludes("metadata", "private")
-//	// obj now has a "_source" field with an "excludes" key containing "metadata" and "private".
+//	query := es.NewQuery(...).SourceExcludes("metadata", "private")
+//	// query now has a "_source" field with an "excludes" key containing "metadata" and "private".
 //
 // Parameters:
 //   - fields: A variadic list of strings specifying the fields to be excluded.
