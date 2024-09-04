@@ -210,8 +210,6 @@ func (s sourceType) Excludes(fields ...string) sourceType {
 	return s
 }
 
-// Proposal A
-
 func (o Object) SourceIncludes(fields ...string) Object {
 	source, ok := o["_source"].(Object)
 	if !ok {
