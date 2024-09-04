@@ -22,8 +22,8 @@ func (s *testSuite) Test_it_should_return_documents_that_filtered_by_term_query(
 
 	s.ElasticsearchRepository.Insert(testIndexName, "10", string(fooDoc))
 	s.ElasticsearchRepository.Insert(testIndexName, "20", string(barDoc))
-	await.New().Await(func() bool { return s.ElasticsearchRepository.Exist(testIndexName, "10") })
-	await.New().Await(func() bool { return s.ElasticsearchRepository.Exist(testIndexName, "20") })
+	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(testIndexName, "10") })
+	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(testIndexName, "20") })
 
 	query := es.NewQuery(
 		es.Bool().Must(
@@ -62,9 +62,9 @@ func (s *testSuite) Test_it_should_return_documents_that_filtered_by_terms_query
 	s.ElasticsearchRepository.Insert(testIndexName, "10", string(testDoc1))
 	s.ElasticsearchRepository.Insert(testIndexName, "20", string(testDoc2))
 	s.ElasticsearchRepository.Insert(testIndexName, "30", string(testDoc3))
-	await.New().Await(func() bool { return s.ElasticsearchRepository.Exist(testIndexName, "10") })
-	await.New().Await(func() bool { return s.ElasticsearchRepository.Exist(testIndexName, "20") })
-	await.New().Await(func() bool { return s.ElasticsearchRepository.Exist(testIndexName, "30") })
+	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(testIndexName, "10") })
+	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(testIndexName, "20") })
+	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(testIndexName, "30") })
 
 	query := es.NewQuery(
 		es.Bool().Must(
@@ -105,9 +105,9 @@ func (s *testSuite) Test_it_should_return_documents_that_filtered_by_query_strin
 	s.ElasticsearchRepository.Insert(testIndexName, "10", string(fooDoc))
 	s.ElasticsearchRepository.Insert(testIndexName, "20", string(barDoc))
 	s.ElasticsearchRepository.Insert(testIndexName, "30", string(georgeDoc))
-	await.New().Await(func() bool { return s.ElasticsearchRepository.Exist(testIndexName, "10") })
-	await.New().Await(func() bool { return s.ElasticsearchRepository.Exist(testIndexName, "20") })
-	await.New().Await(func() bool { return s.ElasticsearchRepository.Exist(testIndexName, "30") })
+	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(testIndexName, "10") })
+	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(testIndexName, "20") })
+	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(testIndexName, "30") })
 	//f* OR bar
 	query := es.NewQuery(
 		es.Bool().Must(
