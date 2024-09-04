@@ -37,7 +37,6 @@ func (m matchNoneType) putInTheField(key string, value any) matchNoneType {
 		for field := range matchNone {
 			if fieldObject, foOk := matchNone[field].(Object); foOk {
 				fieldObject[key] = value
-				return m
 			}
 		}
 	}

@@ -183,7 +183,6 @@ func (agg aggsType) putInTheField(key string, value any) aggsType {
 	for field := range agg {
 		if fieldObject, ok := agg[field].(Object); ok {
 			fieldObject[key] = value
-			return agg
 		}
 	}
 	return agg

@@ -37,7 +37,6 @@ func (m matchType) putInTheField(key string, value any) matchType {
 		for field := range match {
 			if fieldObject, foOk := match[field].(Object); foOk {
 				fieldObject[key] = value
-				return m
 			}
 		}
 	}
