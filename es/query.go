@@ -210,6 +210,42 @@ func (s sourceType) Excludes(fields ...string) sourceType {
 	return s
 }
 
+// Proposal A
+
+func (o Object) SourceIncludes(fields ...string) Object {
+	source, ok := o["_source"].(Object)
+	if !ok {
+		source = Object{}
+	}
+	includes, ok := source["includes"].(Array)
+	if !ok {
+		includes = Array{}
+	}
+	for i := 0; i < len(fields); i++ {
+		includes = append(includes, fields[i])
+	}
+	source["includes"] = includes
+	o["_source"] = source
+	return o
+}
+
+func (o Object) SourceExcludes(fields ...string) Object {
+	source, ok := o["_source"].(Object)
+	if !ok {
+		source = Object{}
+	}
+	excludes, exists := source["excludes"].(Array)
+	if !exists {
+		excludes = Array{}
+	}
+	for i := 0; i < len(fields); i++ {
+		excludes = append(excludes, fields[i])
+	}
+	source["excludes"] = excludes
+	o["_source"] = source
+	return o
+}
+
 // Sort creates a new sortType object with the specified field.
 //
 // This function initializes a sortType object with a given field name. The
