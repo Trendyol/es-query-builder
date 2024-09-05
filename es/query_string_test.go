@@ -8,12 +8,12 @@ import (
 )
 
 func Test_QueryString_should_exist_on_es_package(t *testing.T) {
-	// Given When Then
+	// Given When
 	assert.NotNil(t, es.QueryString[any])
 }
 
 func Test_QueryString_method_should_create_queryStringType(t *testing.T) {
-	// Given
+	// Given When
 	b := es.QueryString("value")
 
 	// Then
@@ -22,7 +22,7 @@ func Test_QueryString_method_should_create_queryStringType(t *testing.T) {
 }
 
 func Test_QueryString_method_should_create_query_string_with_required_query(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value"),
 	)
@@ -34,7 +34,7 @@ func Test_QueryString_method_should_create_query_string_with_required_query(t *t
 }
 
 func Test_QueryString_method_should_create_query_string_with_default_field(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").DefaultField("defaultField"),
 	)
@@ -46,7 +46,7 @@ func Test_QueryString_method_should_create_query_string_with_default_field(t *te
 }
 
 func Test_QueryString_method_should_create_query_string_with_allow_leading_wildcard(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").AllowLeadingWildcard(false),
 	)
@@ -58,7 +58,7 @@ func Test_QueryString_method_should_create_query_string_with_allow_leading_wildc
 }
 
 func Test_QueryString_method_should_create_query_string_with_analyze_wildcard(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").AnalyzeWildcard(true),
 	)
@@ -70,7 +70,7 @@ func Test_QueryString_method_should_create_query_string_with_analyze_wildcard(t 
 }
 
 func Test_QueryString_method_should_create_query_string_with_analyzer(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").Analyzer("value"),
 	)
@@ -82,7 +82,7 @@ func Test_QueryString_method_should_create_query_string_with_analyzer(t *testing
 }
 
 func Test_QueryString_method_should_create_query_string_with_auto_generate_synonyms_phrase_query(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").AutoGenerateSynonymsPhraseQuery(false),
 	)
@@ -94,7 +94,7 @@ func Test_QueryString_method_should_create_query_string_with_auto_generate_synon
 }
 
 func Test_QueryString_method_should_create_query_string_with_boost(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").Boost(2.5),
 	)
@@ -106,7 +106,7 @@ func Test_QueryString_method_should_create_query_string_with_boost(t *testing.T)
 }
 
 func Test_QueryString_method_should_create_query_string_with_default_operator(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").DefaultOperator("value"),
 	)
@@ -118,7 +118,7 @@ func Test_QueryString_method_should_create_query_string_with_default_operator(t 
 }
 
 func Test_QueryString_method_should_create_query_string_with_enable_position_increments(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").EnablePositionIncrements(false),
 	)
@@ -130,7 +130,7 @@ func Test_QueryString_method_should_create_query_string_with_enable_position_inc
 }
 
 func Test_QueryString_method_should_create_query_string_with_fields(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").Fields([]string{"field1", "field2"}),
 	)
@@ -142,7 +142,7 @@ func Test_QueryString_method_should_create_query_string_with_fields(t *testing.T
 }
 
 func Test_QueryString_method_should_create_query_string_with_fuzziness(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").Fuzziness("value"),
 	)
@@ -154,7 +154,7 @@ func Test_QueryString_method_should_create_query_string_with_fuzziness(t *testin
 }
 
 func Test_QueryString_method_should_create_query_string_with_fuzzy_max_expansions(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").FuzzyMaxExpansions(50),
 	)
@@ -166,7 +166,7 @@ func Test_QueryString_method_should_create_query_string_with_fuzzy_max_expansion
 }
 
 func Test_QueryString_method_should_create_query_string_with_fuzzy_prefix_length(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").FuzzyPrefixLength(1),
 	)
@@ -178,7 +178,7 @@ func Test_QueryString_method_should_create_query_string_with_fuzzy_prefix_length
 }
 
 func Test_QueryString_method_should_create_query_string_with_fuzzy_transpositions(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").FuzzyTranspositions(false),
 	)
@@ -190,7 +190,7 @@ func Test_QueryString_method_should_create_query_string_with_fuzzy_transposition
 }
 
 func Test_QueryString_method_should_create_query_string_with_lenient(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").Lenient(true),
 	)
@@ -202,7 +202,7 @@ func Test_QueryString_method_should_create_query_string_with_lenient(t *testing.
 }
 
 func Test_QueryString_method_should_create_query_string_with_max_determinized_states(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").MaxDeterminizedStates(5000),
 	)
@@ -214,7 +214,7 @@ func Test_QueryString_method_should_create_query_string_with_max_determinized_st
 }
 
 func Test_QueryString_method_should_create_query_string_with_minimum_should_match(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").MinimumShouldMatch("1"),
 	)
@@ -226,7 +226,7 @@ func Test_QueryString_method_should_create_query_string_with_minimum_should_matc
 }
 
 func Test_QueryString_method_should_create_query_string_with_quote_analyzer(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").QuoteAnalyzer("value"),
 	)
@@ -238,7 +238,7 @@ func Test_QueryString_method_should_create_query_string_with_quote_analyzer(t *t
 }
 
 func Test_QueryString_method_should_create_query_string_with_phrase_slop(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").PhraseSlop(0),
 	)
@@ -250,7 +250,7 @@ func Test_QueryString_method_should_create_query_string_with_phrase_slop(t *test
 }
 
 func Test_QueryString_method_should_create_query_string_with_quote_field_suffix(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").QuoteFieldSuffix("value"),
 	)
@@ -262,7 +262,7 @@ func Test_QueryString_method_should_create_query_string_with_quote_field_suffix(
 }
 
 func Test_QueryString_method_should_create_query_string_with_rewrite(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").Rewrite("value"),
 	)
@@ -274,7 +274,7 @@ func Test_QueryString_method_should_create_query_string_with_rewrite(t *testing.
 }
 
 func Test_QueryString_method_should_create_query_string_with_time_zone(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").TimeZone("value"),
 	)
@@ -286,7 +286,7 @@ func Test_QueryString_method_should_create_query_string_with_time_zone(t *testin
 }
 
 func Test_QueryString_method_should_create_query_string_with_all_parameters(t *testing.T) {
-	// Given
+	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").
 			DefaultField("value").
