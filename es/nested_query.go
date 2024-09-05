@@ -31,8 +31,8 @@ func Nested[T any](path string, nestedQuery T) nestedType {
 }
 
 func (n nestedType) putInNested(key string, value any) nestedType {
-	if nested, exists := n["nested"]; exists {
-		nested.(Object)[key] = value
+	if nestedObject, ok := n["nested"].(Object); ok {
+		nestedObject[key] = value
 	}
 	return n
 }
