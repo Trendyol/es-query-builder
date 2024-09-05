@@ -2,9 +2,9 @@ package testing
 
 import (
 	"encoding/json"
-	"time"
 
 	"github.com/Trendyol/es-query-builder/es"
+	"github.com/bayraktugrul/go-await"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -21,9 +21,9 @@ func (s *testSuite) Test_it_should_return_documents_that_filtered_by_term_query(
 	barDoc, _ := json.Marshal(bar)
 
 	s.ElasticsearchRepository.Insert(testIndexName, "10", string(fooDoc))
-	time.Sleep(2 * time.Second)
 	s.ElasticsearchRepository.Insert(testIndexName, "20", string(barDoc))
-	time.Sleep(2 * time.Second)
+	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(testIndexName, "10") })
+	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(testIndexName, "20") })
 
 	query := es.NewQuery(
 		es.Bool().Must(
@@ -60,11 +60,11 @@ func (s *testSuite) Test_it_should_return_documents_that_filtered_by_terms_query
 	testDoc3, _ := json.Marshal(doc3)
 
 	s.ElasticsearchRepository.Insert(testIndexName, "10", string(testDoc1))
-	time.Sleep(2 * time.Second)
 	s.ElasticsearchRepository.Insert(testIndexName, "20", string(testDoc2))
-	time.Sleep(2 * time.Second)
 	s.ElasticsearchRepository.Insert(testIndexName, "30", string(testDoc3))
-	time.Sleep(2 * time.Second)
+	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(testIndexName, "10") })
+	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(testIndexName, "20") })
+	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(testIndexName, "30") })
 
 	query := es.NewQuery(
 		es.Bool().Must(
@@ -80,6 +80,49 @@ func (s *testSuite) Test_it_should_return_documents_that_filtered_by_terms_query
 	assert.Equal(s.T(), len(result), 2)
 	assert.Contains(s.T(), result, doc2)
 	assert.Contains(s.T(), result, doc3)
+
+	s.ElasticsearchRepository.Delete(testIndexName, "10")
+	s.ElasticsearchRepository.Delete(testIndexName, "20")
+	s.ElasticsearchRepository.Delete(testIndexName, "30")
+}
+
+func (s *testSuite) Test_it_should_return_documents_that_filtered_by_query_string_with_wildcard_or_operator() {
+	// Given
+	foo := FooDocument{
+		Foo: "foo",
+	}
+	bar := FooDocument{
+		Foo: "bar",
+	}
+	george := FooDocument{
+		Foo: "george orwell",
+	}
+
+	fooDoc, _ := json.Marshal(foo)
+	barDoc, _ := json.Marshal(bar)
+	georgeDoc, _ := json.Marshal(george)
+
+	s.ElasticsearchRepository.Insert(testIndexName, "10", string(fooDoc))
+	s.ElasticsearchRepository.Insert(testIndexName, "20", string(barDoc))
+	s.ElasticsearchRepository.Insert(testIndexName, "30", string(georgeDoc))
+	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(testIndexName, "10") })
+	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(testIndexName, "20") })
+	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(testIndexName, "30") })
+	//f* OR bar
+	query := es.NewQuery(
+		es.Bool().Must(
+			es.QueryString[string]("ge* OR bar").AnalyzeWildcard(true)),
+	)
+	bodyJSON, _ := json.Marshal(query)
+
+	// When
+	result, err := s.ElasticsearchRepository.Search(testIndexName, string(bodyJSON))
+
+	// Then
+	assert.Nil(s.T(), err)
+	assert.Equal(s.T(), len(result), 2)
+	assert.Equal(s.T(), result[0].Foo, "george orwell")
+	assert.Equal(s.T(), result[1].Foo, "bar")
 
 	s.ElasticsearchRepository.Delete(testIndexName, "10")
 	s.ElasticsearchRepository.Delete(testIndexName, "20")
