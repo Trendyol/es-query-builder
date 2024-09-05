@@ -7,12 +7,6 @@ import (
 
 type sortType Object
 
-type sourceType Object
-
-type includesType Array
-
-type excludesType Array
-
 // NewQuery creates a new query es.Object with the provided query clause.
 //
 // This function takes any query clause as input and attempts to convert it into the correct internal type using the `correctType` function.
@@ -114,26 +108,6 @@ func (o Object) From(from int) Object {
 	return o
 }
 
-// Source initializes and returns a sourceType object in the es.Object.
-//
-// This method sets the "_source" field in the es.Object to a new, empty sourceType object.
-// The sourceType object is used to specify which fields should be included or excluded
-// from the source data in the search results.
-//
-// Example usage:
-//
-//	src := es.NewQuery(...).Source()
-//	// src now has a "_source" field set to an empty sourceType object.
-//
-// Returns:
-//
-//	A sourceType object, with the "_source" field of the es.Object set to this new object.
-func (o Object) Source() sourceType {
-	s := sourceType{}
-	o["_source"] = s
-	return s
-}
-
 // SourceFalse sets the "_source" field to false in the es.Object.
 //
 // This method configures the es.Object to not include the source data in the search results.
@@ -141,7 +115,7 @@ func (o Object) Source() sourceType {
 //
 // Example usage:
 //
-//	query := es.NewQuery().SourceFalse()
+//	query := es.NewQuery(...).SourceFalse()
 //	// query now has a "_source" field set to false.
 //
 // Returns:
@@ -152,62 +126,78 @@ func (o Object) SourceFalse() Object {
 	return o
 }
 
-// Includes adds one or more fields to be included in the sourceType object.
+// SourceIncludes adds one or more fields to be included in the _source field of the es.Object.
 //
-// This method updates the sourceType object to specify which fields should be included
-// in the search results. If the "includes" key does not already exist, it initializes
-// it with an empty includesType slice before appending the new fields.
+// This method updates the _source field of the es.Object to specify which fields should be
+// included in the search results. If the _source field or the "includes" key does not
+// already exist, it initializes them appropriately before appending the new fields.
 //
 // Example usage:
 //
-//	s := Source().Includes("title", "author")
-//	// s now has an "includes" parameter with "title" and "author" fields.
+//	query := es.NewQuery(...).SourceIncludes("title", "author")
+//	// query now has a "_source" field with an "includes" key containing "title" and "author".
 //
 // Parameters:
 //   - fields: A variadic list of strings specifying the fields to be included.
 //
 // Returns:
 //
-//	The updated sourceType object with the "includes" parameter set to the specified fields.
-func (s sourceType) Includes(fields ...string) sourceType {
-	includes, exists := s["includes"]
-	if !exists {
-		includes = includesType{}
+//	The updated Object with the "_source.includes" parameter set to the specified fields.
+func (o Object) SourceIncludes(fields ...string) Object {
+	if len(fields) == 0 {
+		return o
+	}
+	source, ok := o["_source"].(Object)
+	if !ok {
+		source = Object{}
+	}
+	includes, ok := source["includes"].(Array)
+	if !ok {
+		includes = Array{}
 	}
 	for i := 0; i < len(fields); i++ {
-		includes = append(includes.(includesType), fields[i])
+		includes = append(includes, fields[i])
 	}
-	s["includes"] = includes
-	return s
+	source["includes"] = includes
+	o["_source"] = source
+	return o
 }
 
-// Excludes adds one or more fields to be excluded from the sourceType object.
+// SourceExcludes adds one or more fields to be excluded from the _source field of the es.Object.
 //
-// This method updates the sourceType object to specify which fields should be excluded
-// from the search results. If the "excludes" key does not already exist, it initializes
-// it with an empty excludesType slice before appending the new fields.
+// This method updates the _source field of the es.Object to specify which fields should be
+// excluded from the search results. If the _source field or the "excludes" key does not
+// already exist, it initializes them appropriately before appending the new fields.
 //
 // Example usage:
 //
-//	s := Source().Excludes("metadata", "private")
-//	// s now has an "excludes" parameter with "metadata" and "private" fields.
+//	query := es.NewQuery(...).SourceExcludes("metadata", "private")
+//	// query now has a "_source" field with an "excludes" key containing "metadata" and "private".
 //
 // Parameters:
 //   - fields: A variadic list of strings specifying the fields to be excluded.
 //
 // Returns:
 //
-//	The updated sourceType object with the "excludes" parameter set to the specified fields.
-func (s sourceType) Excludes(fields ...string) sourceType {
-	excludes, exists := s["excludes"]
+//	The updated Object with the "_source.excludes" parameter set to the specified fields.
+func (o Object) SourceExcludes(fields ...string) Object {
+	if len(fields) == 0 {
+		return o
+	}
+	source, ok := o["_source"].(Object)
+	if !ok {
+		source = Object{}
+	}
+	excludes, exists := source["excludes"].(Array)
 	if !exists {
-		excludes = excludesType{}
+		excludes = Array{}
 	}
 	for i := 0; i < len(fields); i++ {
-		excludes = append(excludes.(excludesType), fields[i])
+		excludes = append(excludes, fields[i])
 	}
-	s["excludes"] = excludes
-	return s
+	source["excludes"] = excludes
+	o["_source"] = source
+	return o
 }
 
 // Sort creates a new sortType object with the specified field.

@@ -28,16 +28,13 @@ func createConditionalQuery(items []int) map[string]any {
 			).
 			MustNot(
 				es.Exists("blocks.reason.id"),
-			),
-	).
+			)).
 		Size(100).
 		Sort(
 			es.Sort("modifiedDate").Order(order.Desc),
-		)
-
-	query.Source().
-		Includes("id", "type", "indexedAt", "chapters").
-		Excludes("private.key")
+		).
+		SourceIncludes("id", "type", "indexedAt", "chapters").
+		SourceExcludes("private.key")
 
 	return query
 }
