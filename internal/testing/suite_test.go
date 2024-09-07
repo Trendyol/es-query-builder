@@ -3,7 +3,6 @@ package testing
 import (
 	"context"
 	"fmt"
-	"integration-tests/container"
 	"os"
 	"strings"
 	"testing"
@@ -12,10 +11,9 @@ import (
 	"github.com/elastic/go-elasticsearch/v8"
 	"github.com/elastic/go-elasticsearch/v8/esapi"
 	"github.com/stretchr/testify/suite"
-)
 
-const (
-	testIndexName = "foo-index"
+	"integration-tests/constants"
+	"integration-tests/container"
 )
 
 func TestSuite(t *testing.T) {
@@ -48,7 +46,7 @@ func (s *testSuite) SetupSuite() {
 	s.ElasticsearchRepository = NewElasticsearchRepository(s.ESClient)
 
 	indicesRequest := esapi.IndicesCreateRequest{
-		Index: testIndexName,
+		Index: constants.TestIndex,
 		Body:  strings.NewReader(testIndexBody()),
 	}
 
