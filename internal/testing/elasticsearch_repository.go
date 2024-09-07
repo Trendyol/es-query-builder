@@ -16,20 +16,22 @@ type elasticsearchRepository struct {
 }
 
 type ElasticsearchRepository interface {
-	Search(index, query string) ([]FooDocument, error)
-	Insert(indexName, docId, document string) error
-	Delete(indexName, docId string) error
-	DeleteByQuery(indexName, query string) error
-	Exists(indexName, docId string) bool
+	Search(query string) ([]FooDocument, error)
+	BulkInsert(documents []FooDocument) error
+	Insert(document FooDocument) error
+	BulkDelete(docIds []string) error
+	Delete(docId string) error
+	DeleteByQuery(query string) error
+	Exists(docId string) bool
 }
 
 func NewElasticsearchRepository(client *elasticsearch.Client) ElasticsearchRepository {
 	return &elasticsearchRepository{client: client}
 }
 
-func (e *elasticsearchRepository) Search(index, query string) ([]FooDocument, error) {
+func (e *elasticsearchRepository) Search(query string) ([]FooDocument, error) {
 	res, err := e.client.Search(
-		e.client.Search.WithIndex(index),
+		e.client.Search.WithIndex(constants.TestIndex),
 		e.client.Search.WithBody(strings.NewReader(query)),
 	)
 	defer func() {
@@ -60,11 +62,41 @@ func (e *elasticsearchRepository) Search(index, query string) ([]FooDocument, er
 	return result, nil
 }
 
-func (e *elasticsearchRepository) Insert(indexName, docId, document string) error {
+func (e *elasticsearchRepository) BulkInsert(documents []FooDocument) error {
+	var bulkRequestBody strings.Builder
+
+	for i := range documents {
+		meta := fmt.Sprintf(`{"index":{"_index":"%s","_id":"%s"}}%s`, constants.TestIndex, documents[i], "\n")
+		bulkRequestBody.WriteString(meta)
+
+		docJson, err := json.Marshal(documents[i])
+		if err != nil {
+			return fmt.Errorf("failed to marshal document with Id %s: %w", documents[i].Id, err)
+		}
+		bulkRequestBody.WriteString(string(docJson) + "\n")
+	}
+	request := esapi.BulkRequest{
+		Body:    strings.NewReader(bulkRequestBody.String()),
+		Refresh: constants.True,
+	}
+
+	res, err := request.Do(context.Background(), e.client)
+	if err != nil {
+		return fmt.Errorf("failed to execute bulk insert request: %w", err)
+	}
+	if res.IsError() {
+		return fmt.Errorf("bulk insert request returned error: %s", res.String())
+	}
+	return nil
+}
+
+func (e *elasticsearchRepository) Insert(document FooDocument) error {
+	fooDoc, _ := json.Marshal(document)
+
 	request := esapi.IndexRequest{
-		Index:      indexName,
-		DocumentID: docId,
-		Body:       strings.NewReader(document),
+		Index:      constants.TestIndex,
+		DocumentID: document.Id,
+		Body:       strings.NewReader(string(fooDoc)),
 		Refresh:    constants.True,
 	}
 
@@ -78,9 +110,9 @@ func (e *elasticsearchRepository) Insert(indexName, docId, document string) erro
 	return err
 }
 
-func (e *elasticsearchRepository) Delete(indexName, docId string) error {
+func (e *elasticsearchRepository) Delete(docId string) error {
 	request := esapi.DeleteRequest{
-		Index:      indexName,
+		Index:      constants.TestIndex,
 		DocumentID: docId,
 	}
 	res, err := request.Do(context.Background(), e.client)
@@ -93,9 +125,32 @@ func (e *elasticsearchRepository) Delete(indexName, docId string) error {
 	return err
 }
 
-func (e *elasticsearchRepository) DeleteByQuery(indexName, query string) error {
+func (e *elasticsearchRepository) BulkDelete(docIds []string) error {
+	var bulkRequestBody strings.Builder
+
+	for _, docId := range docIds {
+		meta := fmt.Sprintf(`{"delete":{"_index":"%s","_id":"%s"}}%s`, constants.TestIndex, docId, "\n")
+		bulkRequestBody.WriteString(meta)
+	}
+
+	request := esapi.BulkRequest{
+		Body:    strings.NewReader(bulkRequestBody.String()),
+		Refresh: constants.True,
+	}
+
+	res, err := request.Do(context.Background(), e.client)
+	if err != nil {
+		return fmt.Errorf("failed to execute bulk delete request: %w", err)
+	}
+	if res.IsError() {
+		return fmt.Errorf("bulk delete request returned error: %s", res.String())
+	}
+	return nil
+}
+
+func (e *elasticsearchRepository) DeleteByQuery(query string) error {
 	request := esapi.DeleteByQueryRequest{
-		Index: []string{indexName},
+		Index: []string{constants.TestIndex},
 		Body:  strings.NewReader(query),
 	}
 	res, err := request.Do(context.Background(), e.client)
@@ -108,9 +163,9 @@ func (e *elasticsearchRepository) DeleteByQuery(indexName, query string) error {
 	return err
 }
 
-func (e *elasticsearchRepository) Exists(indexName, docId string) bool {
+func (e *elasticsearchRepository) Exists(docId string) bool {
 	request := esapi.ExistsRequest{
-		Index:      indexName,
+		Index:      constants.TestIndex,
 		DocumentID: docId,
 	}
 	res, _ := request.Do(context.Background(), e.client)

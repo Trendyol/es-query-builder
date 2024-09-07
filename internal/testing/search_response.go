@@ -11,5 +11,6 @@ type Hit struct {
 }
 
 type FooDocument struct {
+	Id  string `json:"id"`
 	Foo string `json:"foo"`
 }
