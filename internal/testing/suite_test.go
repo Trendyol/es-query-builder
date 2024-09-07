@@ -3,8 +3,6 @@ package testing
 import (
 	"context"
 	"fmt"
-	"integration-tests/constants"
-	"integration-tests/container"
 	"os"
 	"strings"
 	"testing"
@@ -13,6 +11,9 @@ import (
 	"github.com/elastic/go-elasticsearch/v8"
 	"github.com/elastic/go-elasticsearch/v8/esapi"
 	"github.com/stretchr/testify/suite"
+
+	"integration-tests/constants"
+	"integration-tests/container"
 )
 
 func TestSuite(t *testing.T) {

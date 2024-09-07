@@ -4,11 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/elastic/go-elasticsearch/v8"
-	"github.com/elastic/go-elasticsearch/v8/esapi"
-	"integration-tests/constants"
 	"net/http"
 	"strings"
+
+	"github.com/elastic/go-elasticsearch/v8"
+	"github.com/elastic/go-elasticsearch/v8/esapi"
+
+	"integration-tests/constants"
 )
 
 type elasticsearchRepository struct {
@@ -117,10 +119,10 @@ func (e *elasticsearchRepository) Delete(docId string) error {
 	}
 	res, err := request.Do(context.Background(), e.client)
 	if err != nil {
-		return fmt.Errorf("failed to execute insert request: %w", err)
+		return fmt.Errorf("failed to execute delete request: %w", err)
 	}
 	if res.IsError() {
-		return fmt.Errorf("insert request returned error: %s", res.String())
+		return fmt.Errorf("delete request returned error: %s", res.String())
 	}
 	return err
 }
@@ -155,10 +157,10 @@ func (e *elasticsearchRepository) DeleteByQuery(query string) error {
 	}
 	res, err := request.Do(context.Background(), e.client)
 	if err != nil {
-		return fmt.Errorf("failed to execute insert request: %w", err)
+		return fmt.Errorf("failed to execute delete by query request: %w", err)
 	}
 	if res.IsError() {
-		return fmt.Errorf("insert request returned error: %s", res.String())
+		return fmt.Errorf("delete by query request returned error: %s", res.String())
 	}
 	return err
 }
