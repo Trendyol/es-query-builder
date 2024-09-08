@@ -180,6 +180,7 @@ You can check and run [benchmarks](./benchmarks) on your machine.
 - **Arch**: ARM64
 - **Memory**: 32GB LPDDR5
 - **Go Version**: go1.22.1
+- **es-query-builder Version**: v0.2.1
 
 ![arm64 combined](https://github.com/user-attachments/assets/eade143d-c31c-4caf-96f4-8005fa1b11bc)
 
