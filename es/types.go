@@ -19,6 +19,8 @@ func correctType(b any) (any, bool) {
 		return Object{"bool": b}, true
 	case rangeType:
 		return Object{"range": b}, true
+	case regexpType:
+		return Object{"regexp": b}, true
 	}
 	return b, true
 }

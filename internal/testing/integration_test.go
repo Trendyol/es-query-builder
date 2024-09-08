@@ -128,3 +128,50 @@ func (s *testSuite) Test_it_should_return_documents_that_filtered_by_query_strin
 	s.ElasticsearchRepository.Delete(testIndexName, "20")
 	s.ElasticsearchRepository.Delete(testIndexName, "30")
 }
+
+func (s *testSuite) Test_it_should_return_documents_that_filtered_by_regexp_query() {
+	// Given
+	foo := FooDocument{
+		Foo: "foo",
+	}
+	bar := FooDocument{
+		Foo: "bar",
+	}
+	georgeOrwell := FooDocument{
+		Foo: "george orwell",
+	}
+	georgeBest := FooDocument{
+		Foo: "george best",
+	}
+	fooDoc, _ := json.Marshal(foo)
+	barDoc, _ := json.Marshal(bar)
+	georgeOrwellDoc, _ := json.Marshal(georgeOrwell)
+	georgeBestDoc, _ := json.Marshal(georgeBest)
+
+	s.ElasticsearchRepository.Insert(testIndexName, "10", string(fooDoc))
+	s.ElasticsearchRepository.Insert(testIndexName, "20", string(barDoc))
+	s.ElasticsearchRepository.Insert(testIndexName, "30", string(georgeOrwellDoc))
+	s.ElasticsearchRepository.Insert(testIndexName, "40", string(georgeBestDoc))
+	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(testIndexName, "10") })
+	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(testIndexName, "20") })
+	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(testIndexName, "30") })
+	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(testIndexName, "40") })
+	//f* OR bar
+	query := es.NewQuery(
+		es.Regexp("foo", "george.*"),
+	)
+	bodyJSON, _ := json.Marshal(query)
+
+	// When
+	result, err := s.ElasticsearchRepository.Search(testIndexName, string(bodyJSON))
+
+	// Then
+	assert.Nil(s.T(), err)
+	assert.Equal(s.T(), len(result), 2)
+	assert.Equal(s.T(), result[0].Foo, "george orwell")
+	assert.Equal(s.T(), result[1].Foo, "george best")
+
+	s.ElasticsearchRepository.Delete(testIndexName, "10")
+	s.ElasticsearchRepository.Delete(testIndexName, "20")
+	s.ElasticsearchRepository.Delete(testIndexName, "30")
+}
