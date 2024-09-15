@@ -20,8 +20,32 @@ type rangeType Object
 //	A rangeType object with the specified field ready for defining range conditions.
 func Range(key string) rangeType {
 	return rangeType{
-		key: Object{},
+		"range": Object{
+			key: Object{},
+		},
 	}
+}
+
+func (r rangeType) putInTheField(key string, value any) rangeType {
+	if rang, ok := r["range"].(Object); ok {
+		for field := range rang {
+			if fieldObject, foOk := rang[field].(Object); foOk {
+				fieldObject[key] = value
+			}
+		}
+	}
+	return r
+}
+
+func (r rangeType) delete(key string) rangeType {
+	if rang, ok := r["range"].(Object); ok {
+		for field := range rang {
+			if fieldObject, foOk := rang[field].(Object); foOk {
+				delete(fieldObject, key)
+			}
+		}
+	}
+	return r
 }
 
 // LesserThan sets the "lt" (less than) field for the range query.
@@ -42,12 +66,8 @@ func Range(key string) rangeType {
 //
 //	The updated rangeType object with the "lt" field set to the specified value.
 func (r rangeType) LesserThan(lt any) rangeType {
-	for key := range r {
-		if rangeObject, ok := r[key].(Object); ok {
-			rangeObject["lt"] = lt
-			delete(rangeObject, "lte")
-		}
-	}
+	r.putInTheField("lt", lt)
+	r.delete("lte")
 	return r
 }
 
@@ -69,12 +89,8 @@ func (r rangeType) LesserThan(lt any) rangeType {
 //
 //	The updated rangeType object with the "lte" field set to the specified value.
 func (r rangeType) LesserThanOrEqual(lte any) rangeType {
-	for key := range r {
-		if rangeObject, ok := r[key].(Object); ok {
-			rangeObject["lte"] = lte
-			delete(rangeObject, "lt")
-		}
-	}
+	r.putInTheField("lte", lte)
+	r.delete("lt")
 	return r
 }
 
@@ -96,12 +112,8 @@ func (r rangeType) LesserThanOrEqual(lte any) rangeType {
 //
 //	The updated rangeType object with the "gt" field set to the specified value.
 func (r rangeType) GreaterThan(gt any) rangeType {
-	for key := range r {
-		if rangeObject, ok := r[key].(Object); ok {
-			rangeObject["gt"] = gt
-			delete(rangeObject, "gte")
-		}
-	}
+	r.putInTheField("gt", gt)
+	r.delete("gte")
 	return r
 }
 
@@ -123,12 +135,8 @@ func (r rangeType) GreaterThan(gt any) rangeType {
 //
 //	The updated rangeType object with the "gte" field set to the specified value.
 func (r rangeType) GreaterThanOrEqual(gte any) rangeType {
-	for key := range r {
-		if rangeObject, ok := r[key].(Object); ok {
-			rangeObject["gte"] = gte
-			delete(rangeObject, "gt")
-		}
-	}
+	r.putInTheField("gte", gte)
+	r.delete("gt")
 	return r
 }
 
@@ -150,12 +158,7 @@ func (r rangeType) GreaterThanOrEqual(gte any) rangeType {
 //
 //	The updated rangeType object with the "format" field set to the specified value.
 func (r rangeType) Format(format string) rangeType {
-	for key := range r {
-		if rangeObject, ok := r[key].(Object); ok {
-			rangeObject["format"] = format
-		}
-	}
-	return r
+	return r.putInTheField("format", format)
 }
 
 // Boost sets the "boost" field for the range query.
@@ -175,10 +178,5 @@ func (r rangeType) Format(format string) rangeType {
 //
 //	The updated rangeType object with the "boost" field set to the specified value.
 func (r rangeType) Boost(boost float64) rangeType {
-	for key := range r {
-		if rangeObject, ok := r[key].(Object); ok {
-			rangeObject["boost"] = boost
-		}
-	}
-	return r
+	return r.putInTheField("boost", boost)
 }
