@@ -66,9 +66,7 @@ func (r rangeType) delete(key string) rangeType {
 //
 //	The updated rangeType object with the "lt" field set to the specified value.
 func (r rangeType) LesserThan(lt any) rangeType {
-	r.putInTheField("lt", lt)
-	r.delete("lte")
-	return r
+	return r.putInTheField("lt", lt).delete("lte")
 }
 
 // LesserThanOrEqual sets the "lte" (less than or equal to) field for the range query.
@@ -89,9 +87,7 @@ func (r rangeType) LesserThan(lt any) rangeType {
 //
 //	The updated rangeType object with the "lte" field set to the specified value.
 func (r rangeType) LesserThanOrEqual(lte any) rangeType {
-	r.putInTheField("lte", lte)
-	r.delete("lt")
-	return r
+	return r.putInTheField("lte", lte).delete("lt")
 }
 
 // GreaterThan sets the "gt" (greater than) field for the range query.
@@ -112,9 +108,7 @@ func (r rangeType) LesserThanOrEqual(lte any) rangeType {
 //
 //	The updated rangeType object with the "gt" field set to the specified value.
 func (r rangeType) GreaterThan(gt any) rangeType {
-	r.putInTheField("gt", gt)
-	r.delete("gte")
-	return r
+	return r.putInTheField("gt", gt).delete("gte")
 }
 
 // GreaterThanOrEqual sets the "gte" (greater than or equal to) field for the range query.
@@ -135,9 +129,7 @@ func (r rangeType) GreaterThan(gt any) rangeType {
 //
 //	The updated rangeType object with the "gte" field set to the specified value.
 func (r rangeType) GreaterThanOrEqual(gte any) rangeType {
-	r.putInTheField("gte", gte)
-	r.delete("gt")
-	return r
+	return r.putInTheField("gte", gte).delete("gt")
 }
 
 // Format sets the "format" field for the range query.
