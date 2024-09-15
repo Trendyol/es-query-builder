@@ -4,8 +4,8 @@ type regexpType Object
 
 // Regexp creates a new regexpType object with the specified key-value pair.
 //
-// This function initializes a regexpType object with a single term query, where the
-// key is the field name and the value is the term to search for. This is typically
+// This function initializes a regexpType object with a single regexp query, where the
+// key is the field name and the value is the regexp to search for. This is typically
 // used to construct a regexp query in search queries.
 //
 // Example usage:
@@ -19,19 +19,23 @@ type regexpType Object
 //
 // Returns:
 //
-//	A termType object containing the specified term query.
+//	A regexpType object containing the specified regexp query.
 func Regexp(key string, value string) regexpType {
-	regexp := regexpType{
-		key: Object{},
+	return regexpType{
+		"regexp": Object{
+			key: Object{
+				"value": value,
+			},
+		},
 	}
-	regexp.value(value)
-	return regexp
 }
 
-func (r regexpType) value(value string) regexpType {
-	for key := range r {
-		if rangeObject, ok := r[key].(Object); ok {
-			rangeObject["value"] = value
+func (r regexpType) putInTheField(key string, value any) regexpType {
+	if regexp, ok := r["regexp"].(Object); ok {
+		for field := range regexp {
+			if fieldObject, foOk := regexp[field].(Object); foOk {
+				fieldObject[key] = value
+			}
 		}
 	}
 	return r
@@ -50,12 +54,7 @@ func (r regexpType) value(value string) regexpType {
 //
 //	The updated regexp object with the "flags" field set to the specified value.
 func (r regexpType) Flags(flags string) regexpType {
-	for key := range r {
-		if rangeObject, ok := r[key].(Object); ok {
-			rangeObject["flags"] = flags
-		}
-	}
-	return r
+	return r.putInTheField("flags", flags)
 }
 
 // CaseInsensitive Allows case insensitive matching of the regular expression
@@ -72,12 +71,7 @@ func (r regexpType) Flags(flags string) regexpType {
 //
 //	The updated regexp object with the "case_insensitive" field set to the specified value.
 func (r regexpType) CaseInsensitive(caseInsensitive bool) regexpType {
-	for key := range r {
-		if rangeObject, ok := r[key].(Object); ok {
-			rangeObject["case_insensitive"] = caseInsensitive
-		}
-	}
-	return r
+	return r.putInTheField("case_insensitive", caseInsensitive)
 }
 
 // MaxDeterminizedStates Maximum number of automaton states required for the query.
@@ -93,12 +87,7 @@ func (r regexpType) CaseInsensitive(caseInsensitive bool) regexpType {
 //
 //	The updated regexp object with the "max_determinized_states" field set to the specified value.
 func (r regexpType) MaxDeterminizedStates(maxDeterminizedStates int) regexpType {
-	for key := range r {
-		if rangeObject, ok := r[key].(Object); ok {
-			rangeObject["max_determinized_states"] = maxDeterminizedStates
-		}
-	}
-	return r
+	return r.putInTheField("max_determinized_states", maxDeterminizedStates)
 }
 
 // ReWrite Method used to rewrite the query.
@@ -112,12 +101,7 @@ func (r regexpType) MaxDeterminizedStates(maxDeterminizedStates int) regexpType 
 //
 // Returns:
 //
-//	The updated regexp object with the "max_determinized_states" field set to the specified value.
+//	The updated regexp object with the "rewrite" field set to the specified value.
 func (r regexpType) ReWrite(rewrite string) regexpType {
-	for key := range r {
-		if rangeObject, ok := r[key].(Object); ok {
-			rangeObject["rewrite"] = rewrite
-		}
-	}
-	return r
+	return r.putInTheField("rewrite", rewrite)
 }
