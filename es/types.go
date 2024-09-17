@@ -15,7 +15,7 @@ func correctType(b any) (any, bool) {
 		return Object{}, false
 	}
 	switch b.(type) {
-	case boolType:
+	case BoolType:
 		return Object{"bool": b}, true
 	case rangeType:
 		return Object{"range": b}, true
