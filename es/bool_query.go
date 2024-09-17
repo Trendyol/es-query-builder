@@ -1,33 +1,33 @@
 package es
 
-type boolType Object
+type BoolType Object
 
-type filterType Array
+type FilterType Array
 
-type mustType Array
+type MustType Array
 
-type mustNotType Array
+type MustNotType Array
 
-type shouldType Array
+type ShouldType Array
 
-// Bool creates and returns an empty boolType object.
+// Bool creates and returns an empty BoolType object.
 //
-// This function is typically used to initialize a boolType, which can be
+// This function is typically used to initialize a BoolType, which can be
 // populated later with the appropriate boolean query conditions.
 //
 // Example usage:
 //
 //	b := Bool()
-//	// b is now an empty boolType object that can be used in a query.
+//	// b is now an empty BoolType object that can be used in a query.
 //
 // Returns:
 //
-//	An empty boolType object.
-func Bool() boolType {
-	return boolType{}
+//	An empty BoolType object.
+func Bool() BoolType {
+	return BoolType{}
 }
 
-// MinimumShouldMatch sets the "minimum_should_match" parameter in a boolType query.
+// MinimumShouldMatch sets the "minimum_should_match" parameter in a BoolType query.
 //
 // This method allows you to specify the minimum number of "should" clauses
 // that must match in a boolean query. The "minimum_should_match" parameter
@@ -45,13 +45,13 @@ func Bool() boolType {
 //
 // Returns:
 //
-//	The updated boolType object with the "minimum_should_match" parameter set.
-func (b boolType) MinimumShouldMatch(minimumShouldMatch int) boolType {
+//	The updated BoolType object with the "minimum_should_match" parameter set.
+func (b BoolType) MinimumShouldMatch(minimumShouldMatch int) BoolType {
 	b["minimum_should_match"] = minimumShouldMatch
 	return b
 }
 
-// Boost sets the "boost" parameter in a boolType query.
+// Boost sets the "boost" parameter in a BoolType query.
 //
 // This method allows you to assign a boost value to a boolean query, which
 // can be used to increase or decrease the relevance score of the query's
@@ -70,17 +70,17 @@ func (b boolType) MinimumShouldMatch(minimumShouldMatch int) boolType {
 //
 // Returns:
 //
-//	The updated boolType object with the "boost" parameter set.
-func (b boolType) Boost(boost float64) boolType {
+//	The updated BoolType object with the "boost" parameter set.
+func (b BoolType) Boost(boost float64) BoolType {
 	b["boost"] = boost
 	return b
 }
 
-// Filter adds one or more filter conditions to the boolType object.
+// Filter adds one or more filter conditions to the BoolType object.
 //
-// This method updates the "filter" section of the boolType object by appending
+// This method updates the "filter" section of the BoolType object by appending
 // the specified filter conditions. It accepts a variadic number of filter conditions,
-// checks their types, and adds them to the "filter" array in the boolType object.
+// checks their types, and adds them to the "filter" array in the BoolType object.
 //
 // Example usage:
 //
@@ -96,11 +96,11 @@ func (b boolType) Boost(boost float64) boolType {
 //
 // Returns:
 //
-//	The updated boolType object with the new filter conditions added.
-func (b boolType) Filter(items ...any) boolType {
-	filter, ok := b["filter"].(filterType)
+//	The updated BoolType object with the new filter conditions added.
+func (b BoolType) Filter(items ...any) BoolType {
+	filter, ok := b["filter"].(FilterType)
 	if !ok {
-		filter = filterType{}
+		filter = FilterType{}
 	}
 	for i := 0; i < len(items); i++ {
 		if field, fOk := correctType(items[i]); fOk {
@@ -111,11 +111,11 @@ func (b boolType) Filter(items ...any) boolType {
 	return b
 }
 
-// Must adds one or more conditions to the "must" section of the boolType object.
+// Must adds one or more conditions to the "must" section of the BoolType object.
 //
 // This method updates the "must" section by appending the specified conditions.
 // It accepts a variadic number of conditions, checks their types, and adds them to
-// the "must" array in the boolType object.
+// the "must" array in the BoolType object.
 //
 // Example usage:
 //
@@ -131,11 +131,11 @@ func (b boolType) Filter(items ...any) boolType {
 //
 // Returns:
 //
-//	The updated boolType object with the new conditions added to the "must" section.
-func (b boolType) Must(items ...any) boolType {
-	must, ok := b["must"].(mustType)
+//	The updated BoolType object with the new conditions added to the "must" section.
+func (b BoolType) Must(items ...any) BoolType {
+	must, ok := b["must"].(MustType)
 	if !ok {
-		must = mustType{}
+		must = MustType{}
 	}
 	for i := 0; i < len(items); i++ {
 		if field, fOk := correctType(items[i]); fOk {
@@ -146,11 +146,11 @@ func (b boolType) Must(items ...any) boolType {
 	return b
 }
 
-// MustNot adds one or more conditions to the "must_not" section of the boolType object.
+// MustNot adds one or more conditions to the "must_not" section of the BoolType object.
 //
 // This method updates the "must_not" section by appending the specified conditions.
 // It accepts a variadic number of conditions, checks their types, and adds them to
-// the "must_not" array in the boolType object.
+// the "must_not" array in the BoolType object.
 //
 // Example usage:
 //
@@ -166,11 +166,11 @@ func (b boolType) Must(items ...any) boolType {
 //
 // Returns:
 //
-//	The updated boolType object with the new conditions added to the "must_not" section.
-func (b boolType) MustNot(items ...any) boolType {
-	mustNot, ok := b["must_not"].(mustNotType)
+//	The updated BoolType object with the new conditions added to the "must_not" section.
+func (b BoolType) MustNot(items ...any) BoolType {
+	mustNot, ok := b["must_not"].(MustNotType)
 	if !ok {
-		mustNot = mustNotType{}
+		mustNot = MustNotType{}
 	}
 	for i := 0; i < len(items); i++ {
 		if field, fOk := correctType(items[i]); fOk {
@@ -181,11 +181,11 @@ func (b boolType) MustNot(items ...any) boolType {
 	return b
 }
 
-// Should adds one or more conditions to the "should" section of the boolType object.
+// Should adds one or more conditions to the "should" section of the BoolType object.
 //
 // This method updates the "should" section by appending the specified conditions.
 // It accepts a variadic number of conditions, checks their types, and adds them to
-// the "should" array in the boolType object.
+// the "should" array in the BoolType object.
 //
 // Example usage:
 //
@@ -201,11 +201,11 @@ func (b boolType) MustNot(items ...any) boolType {
 //
 // Returns:
 //
-//	The updated boolType object with the new conditions added to the "should" section.
-func (b boolType) Should(items ...any) boolType {
-	should, ok := b["should"].(shouldType)
+//	The updated BoolType object with the new conditions added to the "should" section.
+func (b BoolType) Should(items ...any) BoolType {
+	should, ok := b["should"].(ShouldType)
 	if !ok {
-		should = shouldType{}
+		should = ShouldType{}
 	}
 	for i := 0; i < len(items); i++ {
 		if field, fOk := correctType(items[i]); fOk {

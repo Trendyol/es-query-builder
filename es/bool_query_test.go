@@ -20,7 +20,7 @@ func Test_Bool_method_should_create_boolType(t *testing.T) {
 
 	// Then
 	assert.NotNil(t, b)
-	assert.IsTypeString(t, "es.boolType", b)
+	assert.IsTypeString(t, "es.BoolType", b)
 }
 
 func Test_Bool_should_have_MinimumShouldMatch_method(t *testing.T) {
@@ -108,7 +108,7 @@ func Test_Filter_method_should_return_boolType(t *testing.T) {
 
 	// Then
 	assert.NotNil(t, filter)
-	assert.IsTypeString(t, "es.boolType", filter)
+	assert.IsTypeString(t, "es.BoolType", filter)
 }
 
 func Test_Filter_method_should_add_filter_if_doesnt_exist_before(t *testing.T) {
@@ -138,7 +138,7 @@ func Test_Filter_method_should_hold_items(t *testing.T) {
 
 	// Then
 	assert.True(t, exists)
-	assert.IsTypeString(t, "es.filterType", filter)
+	assert.IsTypeString(t, "es.FilterType", filter)
 
 	bodyJSON := assert.MarshalWithoutError(t, b)
 	assert.Equal(t, "{\"filter\":[{\"term\":{\"id\":12345}}]}", bodyJSON)
@@ -155,7 +155,7 @@ func Test_Must_method_should_return_boolType(t *testing.T) {
 
 	// Then
 	assert.NotNil(t, must)
-	assert.IsTypeString(t, "es.boolType", must)
+	assert.IsTypeString(t, "es.BoolType", must)
 }
 
 func Test_Must_method_should_add_must_if_doesnt_exist_before(t *testing.T) {
@@ -185,7 +185,7 @@ func Test_Must_method_should_hold_items(t *testing.T) {
 
 	// Then
 	assert.True(t, exists)
-	assert.IsTypeString(t, "es.mustType", must)
+	assert.IsTypeString(t, "es.MustType", must)
 
 	bodyJSON := assert.MarshalWithoutError(t, b)
 	assert.Equal(t, "{\"must\":[{\"term\":{\"id\":12345}}]}", bodyJSON)
@@ -202,7 +202,7 @@ func Test_MustNot_method_should_return_boolType(t *testing.T) {
 
 	// Then
 	assert.NotNil(t, mustNot)
-	assert.IsTypeString(t, "es.boolType", mustNot)
+	assert.IsTypeString(t, "es.BoolType", mustNot)
 }
 
 func Test_MustNot_method_should_add_must_not_if_doesnt_exist_before(t *testing.T) {
@@ -232,7 +232,7 @@ func Test_MustNot_method_should_hold_items(t *testing.T) {
 
 	// Then
 	assert.True(t, exists)
-	assert.IsTypeString(t, "es.mustNotType", mustNot)
+	assert.IsTypeString(t, "es.MustNotType", mustNot)
 
 	bodyJSON := assert.MarshalWithoutError(t, b)
 	assert.Equal(t, "{\"must_not\":[{\"term\":{\"id\":12345}}]}", bodyJSON)
@@ -249,7 +249,7 @@ func Test_Should_method_should_return_boolType(t *testing.T) {
 
 	// Then
 	assert.NotNil(t, should)
-	assert.IsTypeString(t, "es.boolType", should)
+	assert.IsTypeString(t, "es.BoolType", should)
 }
 
 func Test_Should_method_should_add_should_if_doesnt_exist_before(t *testing.T) {
@@ -279,7 +279,7 @@ func Test_Should_method_should_hold_items(t *testing.T) {
 
 	// Then
 	assert.True(t, exists)
-	assert.IsTypeString(t, "es.shouldType", should)
+	assert.IsTypeString(t, "es.ShouldType", should)
 
 	bodyJSON := assert.MarshalWithoutError(t, b)
 	assert.Equal(t, "{\"should\":[{\"term\":{\"id\":12345}}]}", bodyJSON)
