@@ -208,7 +208,8 @@ func (q simpleQueryStringType) AnalyzeWildcard(value bool) simpleQueryStringType
 	return q
 }
 
-// AutoGenerateSynonymsPhraseQuery sets the option to automatically generate phrase queries for synonyms in the simpleQueryStringType object.
+// AutoGenerateSynonymsPhraseQuery sets the option to automatically generate phrase queries for synonyms
+// in the simpleQueryStringType object.
 //
 // This method enables or disables the automatic generation of phrase queries for synonyms in the query string.
 // When set to true, Elasticsearch will automatically create phrase queries for terms that have synonyms,
