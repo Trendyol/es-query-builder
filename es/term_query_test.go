@@ -132,6 +132,7 @@ func Test_TermFunc_should_add_only_term_fields_inside_the_query_when_callback_re
 	// When Then
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
+	// nolint:golint,lll
 	assert.Equal(t, "{\"query\":{\"bool\":{\"filter\":[{\"term\":{\"a\":{\"value\":\"b\"}}},{\"term\":{\"e\":{\"value\":\"f\"}}}]}}}", bodyJSON)
 }
 
@@ -191,6 +192,7 @@ func Test_TermIf_should_add_only_term_fields_inside_the_query_when_condition_is_
 	// When Then
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
+	// nolint:golint,lll
 	assert.Equal(t, "{\"query\":{\"bool\":{\"filter\":[{\"term\":{\"a\":{\"value\":\"b\"}}},{\"term\":{\"e\":{\"value\":\"f\"}}}]}}}", bodyJSON)
 }
 
