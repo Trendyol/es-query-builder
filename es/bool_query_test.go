@@ -141,7 +141,7 @@ func Test_Filter_method_should_hold_items(t *testing.T) {
 	assert.IsTypeString(t, "es.FilterType", filter)
 
 	bodyJSON := assert.MarshalWithoutError(t, b)
-	assert.Equal(t, "{\"filter\":[{\"term\":{\"id\":12345}}]}", bodyJSON)
+	assert.Equal(t, "{\"filter\":[{\"term\":{\"id\":{\"value\":12345}}}]}", bodyJSON)
 }
 
 ////   Bool.Must   ////
@@ -188,7 +188,7 @@ func Test_Must_method_should_hold_items(t *testing.T) {
 	assert.IsTypeString(t, "es.MustType", must)
 
 	bodyJSON := assert.MarshalWithoutError(t, b)
-	assert.Equal(t, "{\"must\":[{\"term\":{\"id\":12345}}]}", bodyJSON)
+	assert.Equal(t, "{\"must\":[{\"term\":{\"id\":{\"value\":12345}}}]}", bodyJSON)
 }
 
 ////   Bool.MustNot   ////
@@ -235,7 +235,7 @@ func Test_MustNot_method_should_hold_items(t *testing.T) {
 	assert.IsTypeString(t, "es.MustNotType", mustNot)
 
 	bodyJSON := assert.MarshalWithoutError(t, b)
-	assert.Equal(t, "{\"must_not\":[{\"term\":{\"id\":12345}}]}", bodyJSON)
+	assert.Equal(t, "{\"must_not\":[{\"term\":{\"id\":{\"value\":12345}}}]}", bodyJSON)
 }
 
 ////   Bool.Should   ////
@@ -282,5 +282,5 @@ func Test_Should_method_should_hold_items(t *testing.T) {
 	assert.IsTypeString(t, "es.ShouldType", should)
 
 	bodyJSON := assert.MarshalWithoutError(t, b)
-	assert.Equal(t, "{\"should\":[{\"term\":{\"id\":12345}}]}", bodyJSON)
+	assert.Equal(t, "{\"should\":[{\"term\":{\"id\":{\"value\":12345}}}]}", bodyJSON)
 }

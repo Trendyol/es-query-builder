@@ -23,9 +23,44 @@ type termType Object
 func Term[T any](key string, value T) termType {
 	return termType{
 		"term": Object{
-			key: value,
+			key: Object{
+				"value": value,
+			},
 		},
 	}
+}
+
+func (t termType) putInTheField(key string, value any) termType {
+	if term, ok := t["term"].(Object); ok {
+		for field := range term {
+			if fieldObject, foOk := term[field].(Object); foOk {
+				fieldObject[key] = value
+			}
+		}
+	}
+	return t
+}
+
+// CaseInsensitive sets the "case_insensitive" parameter in a termType query.
+//
+// This method allows you to specify whether the term query should be case-
+// insensitive. When set to true, the term matching will ignore case,
+// allowing for more flexible matches in the query results.
+//
+// Example usage:
+//
+//	t := Term().CaseInsensitive(true)
+//	// t now includes a "case_insensitive" parameter set to true.
+//
+// Parameters:
+//   - caseInsensitive: A boolean value indicating whether the term query
+//     should be case-insensitive.
+//
+// Returns:
+//
+//	The updated termType object with the "case_insensitive" parameter set.
+func (t termType) CaseInsensitive(caseInsensitive bool) termType {
+	return t.putInTheField("case_insensitive", caseInsensitive)
 }
 
 // TermFunc creates a termType object based on a condition evaluated by a function.

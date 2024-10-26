@@ -30,7 +30,7 @@ func Test_Range_should_add_range_field_when_inside_query(t *testing.T) {
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
 	// nolint:golint,lll
-	assert.Equal(t, "{\"query\":{\"bool\":{\"must\":[{\"range\":{\"age\":{\"gte\":10,\"lte\":20}}},{\"term\":{\"language\":\"tr\"}}]}}}", bodyJSON)
+	assert.Equal(t, "{\"query\":{\"bool\":{\"must\":[{\"range\":{\"age\":{\"gte\":10,\"lte\":20}}},{\"term\":{\"language\":{\"value\":\"tr\"}}}]}}}", bodyJSON)
 }
 
 func Test_Range_method_should_create_rangeType(t *testing.T) {
