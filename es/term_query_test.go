@@ -56,6 +56,27 @@ func Test_Term_CaseInsensitive_should_create_json_with_case_insensitive_field_in
 	assert.Equal(t, "{\"query\":{\"term\":{\"type\":{\"case_insensitive\":true,\"value\":\"File\"}}}}", bodyJSON)
 }
 
+func Test_Term_should_have_Boost_method(t *testing.T) {
+	// Given
+	term := es.Term("key", "value")
+
+	// When Then
+	assert.NotNil(t, term.CaseInsensitive)
+}
+
+func Test_Term_Boost_should_create_json_with_boost_field_inside_term(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.Term("type", "File").
+			Boost(3.14),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"term\":{\"type\":{\"boost\":3.14,\"value\":\"File\"}}}}", bodyJSON)
+}
+
 ////   TermFunc   ////
 
 func Test_TermFunc_should_exist_on_es_package(t *testing.T) {

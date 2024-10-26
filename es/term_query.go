@@ -63,6 +63,29 @@ func (t termType) CaseInsensitive(caseInsensitive bool) termType {
 	return t.putInTheField("case_insensitive", caseInsensitive)
 }
 
+// Boost sets the "boost" parameter in a termType query.
+//
+// This method allows you to specify a boost factor for the term query,
+// which influences the relevance score of matching documents. A higher
+// boost value increases the importance of the term in the query,
+// resulting in higher scores for documents that match this term.
+//
+// Example usage:
+//
+//	t := Term().Boost(1.5)
+//	// t now includes a "boost" parameter set to 1.5.
+//
+// Parameters:
+//   - boost: A float64 value representing the boost factor for the term
+//     query.
+//
+// Returns:
+//
+//	The updated termType object with the "boost" parameter set.
+func (t termType) Boost(boost float64) termType {
+	return t.putInTheField("boost", boost)
+}
+
 // TermFunc creates a termType object based on a condition evaluated by a function.
 //
 // This function conditionally creates a termType object if the provided function
