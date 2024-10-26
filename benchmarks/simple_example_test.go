@@ -24,7 +24,9 @@ func createSimpleQueryVanilla() map[string]any {
 				"filter": []map[string]interface{}{
 					{
 						"term": map[string]interface{}{
-							"id": 123456,
+							"id": map[string]interface{}{
+								"value": 123456,
+							},
 						},
 					},
 				},

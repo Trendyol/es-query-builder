@@ -42,7 +42,9 @@ func createMixedQueryVanilla() map[string]any {
 				"must": []map[string]interface{}{
 					{
 						"term": map[string]interface{}{
-							"author": "George Orwell",
+							"author": map[string]interface{}{
+								"value": "George Orwell",
+							},
 						},
 					},
 				},
