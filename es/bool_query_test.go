@@ -44,6 +44,27 @@ func Test_Bool_MinimumShouldMatch_should_create_json_with_minimum_should_match_f
 	assert.Equal(t, "{\"query\":{\"bool\":{\"minimum_should_match\":7}}}", bodyJSON)
 }
 
+func Test_Bool_should_have_AdjustPureNegative_method(t *testing.T) {
+	// Given
+	b := es.Bool()
+
+	// When Then
+	assert.NotNil(t, b.AdjustPureNegative)
+}
+
+func Test_Bool_AdjustPureNegative_should_create_json_with_adjust_pure_negative_field_inside_bool(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.Bool().
+			AdjustPureNegative(false),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"bool\":{\"adjust_pure_negative\":false}}}", bodyJSON)
+}
+
 func Test_Bool_should_have_Boost_method(t *testing.T) {
 	// Given
 	b := es.Bool()
