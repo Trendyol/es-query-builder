@@ -14,8 +14,11 @@ func correctType(b any) (any, bool) {
 	if b == nil || unsafeIsNil(b) {
 		return Object{}, false
 	}
-	if _, ok := b.(boolType); ok {
+	switch b.(type) {
+	case BoolType:
 		return Object{"bool": b}, true
+	case rangeType:
+		return Object{"range": b}, true
 	}
 	return b, true
 }
