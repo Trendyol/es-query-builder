@@ -34,9 +34,10 @@ func Match[T any](key string, query T) matchType {
 
 func (m matchType) putInTheField(key string, value any) matchType {
 	if match, ok := m["match"].(Object); ok {
-		for field := range match {
-			if fieldObject, foOk := match[field].(Object); foOk {
+		for _, fieldObj := range match {
+			if fieldObject, foOk := fieldObj.(Object); foOk {
 				fieldObject[key] = value
+				break
 			}
 		}
 	}
