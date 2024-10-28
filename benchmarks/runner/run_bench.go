@@ -105,13 +105,13 @@ func findBenchmarkTestFiles(projectDirectory string) ([]string, error) {
 func saveResults(results []*BenchmarkResult, fileName string) error {
 	file, err := os.Create(fileName)
 	if err != nil {
-		panic(fmt.Errorf("failed to create file %s: %w", fileName, err))
+		return fmt.Errorf("failed to create file %s: %w", fileName, err)
 	}
 	defer file.Close()
 
 	encoder := json.NewEncoder(file)
 	if err = encoder.Encode(results); err != nil {
-		panic(fmt.Errorf("failed to encode results to JSON: %w", err))
+		return fmt.Errorf("failed to encode results to JSON: %w", err)
 	}
 	return nil
 }
