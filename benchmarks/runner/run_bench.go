@@ -210,7 +210,7 @@ func runBenchmarkSuite(parameters Parameters) error {
 	fmt.Printf("-- Benchmark Suite completed at %s\n", formatTimeAsStamp(endTime))
 	fmt.Printf("-- Benchmarks ran for %.2fs\n", elapsedTime.Seconds())
 	resultFileName := fmt.Sprintf("benchmark_results_%s", formatTimeAsFileName(startTime))
-	if parameters.SaveFunc(results, resultFileName); err != nil {
+	if err = parameters.SaveFunc(results, resultFileName); err != nil {
 		return fmt.Errorf("could not save benchmark results to file %s: %w", resultFileName, err)
 	}
 	return nil
