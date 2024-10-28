@@ -41,8 +41,7 @@ Example:
 
   or
 
-  go run run_bench.go (it will run with default settings)
-`
+  go run run_bench.go (it will run with default settings)`
 
 type Run struct {
 	Name    string  `json:"name"`
@@ -108,8 +107,9 @@ func parseBenchmarkOutput(benchmarkOutput string) (*BenchmarkResult, error) {
 	}, nil
 }
 
-func generateCommand(projectDirectory, testFilePath string, benchtime uint) *exec.Cmd {
-	cmd := exec.Command("go", "test", "-bench=.", fmt.Sprintf("-benchtime=%ds", benchtime), testFilePath)
+func generateCommand(projectDirectory, testFilePath string, benchtimeAmount uint) *exec.Cmd {
+	benchtime := fmt.Sprintf("-benchtime=%ds", benchtimeAmount)
+	cmd := exec.Command("go", "test", "-bench=.", benchtime, testFilePath)
 	cmd.Dir = projectDirectory
 	return cmd
 }
@@ -291,6 +291,7 @@ func normalizeString(text string) string {
 	return strings.ToLower(strings.TrimSpace(text))
 }
 
+// nolint:golint,funlen
 func parseParameters(args []string) Parameters {
 	projectDirectory, err := os.Getwd()
 	if err != nil {
