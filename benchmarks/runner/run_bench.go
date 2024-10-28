@@ -144,7 +144,7 @@ func main() {
 			fmt.Printf("Error running benchmark for %s. err: %s", testFile, err.Error())
 		}
 		results = append(results, result)
-		time.Sleep(5 * time.Second)
+		time.Sleep(20 * time.Second)
 	}
 	endTime := time.Now()
 	elapsedTime := endTime.Sub(startTime)
