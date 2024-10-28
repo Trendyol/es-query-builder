@@ -70,7 +70,7 @@ func parseBenchmarkOutput(benchmarkOutput string) (*BenchmarkResult, error) {
 }
 
 func generateCommand(projectDirectory, testFilePath string) *exec.Cmd {
-	cmd := exec.Command("go", "test", "-bench=.", "-benchtime=1s", testFilePath)
+	cmd := exec.Command("go", "test", "-bench=.", "-benchtime=5s", testFilePath)
 	cmd.Dir = projectDirectory
 	return cmd
 }
@@ -144,6 +144,7 @@ func main() {
 			fmt.Printf("Error running benchmark for %s. err: %s", testFile, err.Error())
 		}
 		results = append(results, result)
+		time.Sleep(5 * time.Second)
 	}
 	endTime := time.Now()
 	elapsedTime := endTime.Sub(startTime)
