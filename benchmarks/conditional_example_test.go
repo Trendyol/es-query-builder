@@ -60,7 +60,9 @@ func createConditionalQueryVanilla(items []int) map[string]any {
 		},
 		{
 			"term": map[string]interface{}{
-				"type": "File",
+				"type": map[string]interface{}{
+					"value": "File",
+				},
 			},
 		},
 		{

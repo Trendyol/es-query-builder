@@ -30,7 +30,9 @@ func createTyExampleQueryVanilla(brandIds []int64, storefrontIds []string) map[s
 				"filter": []interface{}{
 					map[string]interface{}{
 						"term": map[string]interface{}{
-							"type": "LegalRule",
+							"type": map[string]interface{}{
+								"value": "LegalRule",
+							},
 						},
 					},
 					map[string]interface{}{

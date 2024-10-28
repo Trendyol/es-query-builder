@@ -36,12 +36,16 @@ func createNestedQueryVanilla() map[string]any {
 								"must": []map[string]interface{}{
 									{
 										"term": map[string]interface{}{
-											"driver.vehicle.make": "Powell Motors",
+											"driver.vehicle.make": map[string]interface{}{
+												"value": "Powell Motors",
+											},
 										},
 									},
 									{
 										"term": map[string]interface{}{
-											"driver.vehicle.model": "Canyonero",
+											"driver.vehicle.model": map[string]interface{}{
+												"value": "Canyonero",
+											},
 										},
 									},
 								},

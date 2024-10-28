@@ -24,7 +24,8 @@ func Test_Condition_If_should_add_Term_When_condition_is_true(t *testing.T) {
 	// Then
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
-	assert.Equal(t, "{\"query\":{\"bool\":{\"filter\":[{\"term\":{\"language\":\"en\"}},{\"exists\":{\"field\":\"brandId\"}}]}}}", bodyJSON)
+	// nolint:golint,lll
+	assert.Equal(t, "{\"query\":{\"bool\":{\"filter\":[{\"term\":{\"language\":{\"value\":\"en\"}}},{\"exists\":{\"field\":\"brandId\"}}]}}}", bodyJSON)
 }
 
 func Test_Condition_If_should_not_add_Term_When_condition_is_not_true(t *testing.T) {
