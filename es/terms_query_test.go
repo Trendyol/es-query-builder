@@ -35,6 +35,27 @@ func Test_Terms_method_should_create_termsType(t *testing.T) {
 	assert.IsTypeString(t, "es.termsType", b)
 }
 
+func Test_Terms_should_have_Boost_method(t *testing.T) {
+	// Given
+	terms := es.Terms("key", "value1", "value2", "value3")
+
+	// When Then
+	assert.NotNil(t, terms.Boost)
+}
+
+func Test_Terms_Boost_should_create_json_with_boost_field_inside_terms(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.Terms("sector.name", "a1", "b2", "c3").
+			Boost(2.718),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"terms\":{\"boost\":2.718,\"sector.name\":[\"a1\",\"b2\",\"c3\"]}}}", bodyJSON)
+}
+
 ////   TermsArray   ////
 
 func Test_TermsArray_should_exist_on_es_package(t *testing.T) {
