@@ -39,7 +39,7 @@ func (s *testSuite) Test_it_should_return_documents_that_filtered_by_terms_query
 
 	// Then
 	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), len(result), 2)
+	assert.Equal(s.T(), 2, len(result))
 	assert.Contains(s.T(), result, doc2)
 	assert.Contains(s.T(), result, doc3)
 

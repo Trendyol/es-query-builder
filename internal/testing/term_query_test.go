@@ -34,8 +34,8 @@ func (s *testSuite) Test_it_should_return_documents_that_filtered_by_term_query(
 
 	// Then
 	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), len(result), 1)
-	assert.Equal(s.T(), result[0].Foo, "foo")
+	assert.Equal(s.T(), 1, len(result))
+	assert.Equal(s.T(), "foo", result[0].Foo)
 
 	s.ElasticsearchRepository.BulkDelete([]string{foo.Id, bar.Id})
 }
