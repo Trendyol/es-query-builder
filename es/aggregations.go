@@ -180,9 +180,10 @@ func AggCustom(agg Object) aggsType {
 }
 
 func (agg aggsType) putInTheField(key string, value any) aggsType {
-	for field := range agg {
-		if fieldObject, ok := agg[field].(Object); ok {
+	for _, fieldObj := range agg {
+		if fieldObject, ok := fieldObj.(Object); ok {
 			fieldObject[key] = value
+			break
 		}
 	}
 	return agg

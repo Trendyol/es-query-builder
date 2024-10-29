@@ -557,9 +557,10 @@ func (q queryStringType) TimeZone(value string) queryStringType {
 }
 
 func (q queryStringType) putInTheField(key string, value any) queryStringType {
-	for field := range q {
-		if fieldObject, ok := q[field].(Object); ok {
+	for _, fieldObj := range q {
+		if fieldObject, ok := fieldObj.(Object); ok {
 			fieldObject[key] = value
+			break
 		}
 	}
 	return q

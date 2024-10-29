@@ -224,9 +224,10 @@ func Sort(field string) sortType {
 }
 
 func (s sortType) putInTheField(key string, value any) sortType {
-	for field := range s {
-		if fieldObject, ok := s[field].(Object); ok {
+	for _, fieldObj := range s {
+		if fieldObject, ok := fieldObj.(Object); ok {
 			fieldObject[key] = value
+			break
 		}
 	}
 	return s

@@ -32,9 +32,10 @@ func Regexp(key string, value string) regexpType {
 
 func (r regexpType) putInTheField(key string, value any) regexpType {
 	if regexp, ok := r["regexp"].(Object); ok {
-		for field := range regexp {
-			if fieldObject, foOk := regexp[field].(Object); foOk {
+		for _, fieldObj := range regexp {
+			if fieldObject, foOk := fieldObj.(Object); foOk {
 				fieldObject[key] = value
+				break
 			}
 		}
 	}
