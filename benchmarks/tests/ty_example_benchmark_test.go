@@ -1,8 +1,9 @@
-package benchmarks_test
+package tests_test
 
 import (
 	"testing"
 
+	"github.com/Trendyol/es-query-builder/benchmarks/tests/marshal"
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
@@ -76,7 +77,7 @@ func Benchmark_Ty_Example_Vanilla(b *testing.B) {
 func Test_Ty_Example_Queries_are_equal(t *testing.T) {
 	brandIds := []int64{11, 22, 33, 44}
 	storefrontIds := []string{"35", "36", "43", "48", "49", "50"}
-	build := marshalString(t, createTyExampleQuery(brandIds, storefrontIds))
-	vanilla := marshalString(t, createTyExampleQueryVanilla(brandIds, storefrontIds))
+	build := marshal.String(t, createTyExampleQuery(brandIds, storefrontIds))
+	vanilla := marshal.String(t, createTyExampleQueryVanilla(brandIds, storefrontIds))
 	assert.Equal(t, vanilla, build)
 }
