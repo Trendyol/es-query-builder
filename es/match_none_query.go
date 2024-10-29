@@ -34,9 +34,10 @@ func MatchNone[T any](key string, query T) matchNoneType {
 
 func (m matchNoneType) putInTheField(key string, value any) matchNoneType {
 	if matchNone, ok := m["match_none"].(Object); ok {
-		for field := range matchNone {
-			if fieldObject, foOk := matchNone[field].(Object); foOk {
+		for _, fieldObj := range matchNone {
+			if fieldObject, foOk := fieldObj.(Object); foOk {
 				fieldObject[key] = value
+				break
 			}
 		}
 	}

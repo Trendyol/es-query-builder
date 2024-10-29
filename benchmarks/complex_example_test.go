@@ -87,17 +87,23 @@ func createComplexQueryVanilla(id int) map[string]any {
 							"should": []map[string]interface{}{
 								{
 									"term": map[string]interface{}{
-										"doc.id": id,
+										"doc.id": map[string]interface{}{
+											"value": id,
+										},
 									},
 								},
 								{
 									"term": map[string]interface{}{
-										"file.fileId": id,
+										"file.fileId": map[string]interface{}{
+											"value": id,
+										},
 									},
 								},
 								{
 									"term": map[string]interface{}{
-										"page.number": id,
+										"page.number": map[string]interface{}{
+											"value": id,
+										},
 									},
 								},
 							},
@@ -107,7 +113,9 @@ func createComplexQueryVanilla(id int) map[string]any {
 				"filter": []map[string]interface{}{
 					{
 						"term": map[string]interface{}{
-							"type": "File",
+							"type": map[string]interface{}{
+								"value": "File",
+							},
 						},
 					},
 					{

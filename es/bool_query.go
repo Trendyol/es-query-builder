@@ -51,6 +51,30 @@ func (b BoolType) MinimumShouldMatch(minimumShouldMatch int) BoolType {
 	return b
 }
 
+// AdjustPureNegative sets the "adjust_pure_negative" parameter in a BoolType query.
+//
+// This method allows you to specify whether pure negative queries should be
+// adjusted or not. When set to true, the query will be adjusted to include
+// pure negative queries, which can influence the matching behavior of the
+// boolean query.
+//
+// Example usage:
+//
+//	b := Bool().AdjustPureNegative(true)
+//	// b now includes an "adjust_pure_negative" parameter set to true.
+//
+// Parameters:
+//   - adjustPureNegative: A boolean value indicating whether to adjust
+//     pure negative queries in the boolean query.
+//
+// Returns:
+//
+//	The updated BoolType object with the "adjust_pure_negative" parameter set.
+func (b BoolType) AdjustPureNegative(adjustPureNegative bool) BoolType {
+	b["adjust_pure_negative"] = adjustPureNegative
+	return b
+}
+
 // Boost sets the "boost" parameter in a BoolType query.
 //
 // This method allows you to assign a boost value to a boolean query, which

@@ -298,9 +298,10 @@ func (q simpleQueryStringType) QuoteFieldSuffix(value string) simpleQueryStringT
 }
 
 func (q simpleQueryStringType) putInTheField(key string, value any) simpleQueryStringType {
-	for field := range q {
-		if fieldObject, ok := q[field].(Object); ok {
+	for _, fieldObj := range q {
+		if fieldObject, ok := fieldObj.(Object); ok {
 			fieldObject[key] = value
+			break
 		}
 	}
 	return q

@@ -44,6 +44,27 @@ func Test_Bool_MinimumShouldMatch_should_create_json_with_minimum_should_match_f
 	assert.Equal(t, "{\"query\":{\"bool\":{\"minimum_should_match\":7}}}", bodyJSON)
 }
 
+func Test_Bool_should_have_AdjustPureNegative_method(t *testing.T) {
+	// Given
+	b := es.Bool()
+
+	// When Then
+	assert.NotNil(t, b.AdjustPureNegative)
+}
+
+func Test_Bool_AdjustPureNegative_should_create_json_with_adjust_pure_negative_field_inside_bool(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.Bool().
+			AdjustPureNegative(false),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"bool\":{\"adjust_pure_negative\":false}}}", bodyJSON)
+}
+
 func Test_Bool_should_have_Boost_method(t *testing.T) {
 	// Given
 	b := es.Bool()
@@ -141,7 +162,7 @@ func Test_Filter_method_should_hold_items(t *testing.T) {
 	assert.IsTypeString(t, "es.FilterType", filter)
 
 	bodyJSON := assert.MarshalWithoutError(t, b)
-	assert.Equal(t, "{\"filter\":[{\"term\":{\"id\":12345}}]}", bodyJSON)
+	assert.Equal(t, "{\"filter\":[{\"term\":{\"id\":{\"value\":12345}}}]}", bodyJSON)
 }
 
 ////   Bool.Must   ////
@@ -188,7 +209,7 @@ func Test_Must_method_should_hold_items(t *testing.T) {
 	assert.IsTypeString(t, "es.MustType", must)
 
 	bodyJSON := assert.MarshalWithoutError(t, b)
-	assert.Equal(t, "{\"must\":[{\"term\":{\"id\":12345}}]}", bodyJSON)
+	assert.Equal(t, "{\"must\":[{\"term\":{\"id\":{\"value\":12345}}}]}", bodyJSON)
 }
 
 ////   Bool.MustNot   ////
@@ -235,7 +256,7 @@ func Test_MustNot_method_should_hold_items(t *testing.T) {
 	assert.IsTypeString(t, "es.MustNotType", mustNot)
 
 	bodyJSON := assert.MarshalWithoutError(t, b)
-	assert.Equal(t, "{\"must_not\":[{\"term\":{\"id\":12345}}]}", bodyJSON)
+	assert.Equal(t, "{\"must_not\":[{\"term\":{\"id\":{\"value\":12345}}}]}", bodyJSON)
 }
 
 ////   Bool.Should   ////
@@ -282,5 +303,5 @@ func Test_Should_method_should_hold_items(t *testing.T) {
 	assert.IsTypeString(t, "es.ShouldType", should)
 
 	bodyJSON := assert.MarshalWithoutError(t, b)
-	assert.Equal(t, "{\"should\":[{\"term\":{\"id\":12345}}]}", bodyJSON)
+	assert.Equal(t, "{\"should\":[{\"term\":{\"id\":{\"value\":12345}}}]}", bodyJSON)
 }

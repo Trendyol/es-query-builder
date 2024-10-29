@@ -64,7 +64,9 @@ func createAggsQueryVanilla() map[string]any {
 				"must": []map[string]interface{}{
 					{
 						"term": map[string]interface{}{
-							"type": "File",
+							"type": map[string]interface{}{
+								"value": "File",
+							},
 						},
 					},
 					{

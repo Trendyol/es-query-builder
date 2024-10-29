@@ -49,12 +49,16 @@ func createIntermediateQueryVanilla(id int) map[string]any {
 							"should": []interface{}{
 								map[string]interface{}{
 									"term": map[string]interface{}{
-										"doc.id": id,
+										"doc.id": map[string]interface{}{
+											"value": id,
+										},
 									},
 								},
 								map[string]interface{}{
 									"term": map[string]interface{}{
-										"file.fileId": id,
+										"file.fileId": map[string]interface{}{
+											"value": id,
+										},
 									},
 								},
 							},

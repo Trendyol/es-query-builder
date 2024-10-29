@@ -29,6 +29,37 @@ func Terms(key string, values ...any) termsType {
 	}
 }
 
+func (t termsType) putInTheField(key string, value any) termsType {
+	if terms, ok := t["terms"].(Object); ok {
+		terms[key] = value
+	}
+	return t
+}
+
+// Boost sets the "boost" parameter in a termsType query.
+//
+// This method allows you to specify a boost factor for the terms query,
+// which influences the relevance score of documents matching any of the
+// specified terms. A higher boost value increases the importance of the
+// terms in the query, resulting in higher scores for documents that match
+// any of these terms.
+//
+// Example usage:
+//
+//	t := Terms().Boost(1.5)
+//	// t now includes a "boost" parameter set to 1.5.
+//
+// Parameters:
+//   - boost: A float64 value representing the boost factor for the terms
+//     query.
+//
+// Returns:
+//
+//	The updated termsType object with the "boost" parameter set.
+func (t termsType) Boost(boost float64) termsType {
+	return t.putInTheField("boost", boost)
+}
+
 // TermsArray creates a new termsType object with the specified key and values as a slice.
 //
 // This function initializes a termsType object for a terms query, where the key

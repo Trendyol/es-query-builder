@@ -68,7 +68,7 @@ func (e *elasticsearchRepository) BulkInsert(documents []FooDocument) error {
 	var bulkRequestBody strings.Builder
 
 	for i := range documents {
-		meta := fmt.Sprintf(`{"index":{"_index":"%s","_id":"%s"}}%s`, constants.TestIndex, documents[i], "\n")
+		meta := fmt.Sprintf(`{"index":{"_index":"%s","_id":"%s"}}%s`, constants.TestIndex, documents[i].Id, "\n")
 		bulkRequestBody.WriteString(meta)
 
 		docJson, err := json.Marshal(documents[i])
