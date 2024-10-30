@@ -1,8 +1,9 @@
-package benchmarks_test
+package tests_test
 
 import (
 	"testing"
 
+	"github.com/Trendyol/es-query-builder/benchmarks/tests/marshal"
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/es/enums/sort/order"
 	"github.com/Trendyol/es-query-builder/test/assert"
@@ -125,7 +126,7 @@ func createAggsQueryVanilla() map[string]any {
 	return query
 }
 
-func Benchmark_Aggs_Example_Builder(b *testing.B) {
+func Benchmark_Aggs_Builder(b *testing.B) {
 	createAggsQuery()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -133,7 +134,7 @@ func Benchmark_Aggs_Example_Builder(b *testing.B) {
 	}
 }
 
-func Benchmark_Aggs_Example_Vanilla(b *testing.B) {
+func Benchmark_Aggs_Vanilla(b *testing.B) {
 	createAggsQueryVanilla()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -142,7 +143,7 @@ func Benchmark_Aggs_Example_Vanilla(b *testing.B) {
 }
 
 func Test_Aggs_Queries_are_equal(t *testing.T) {
-	builder := marshalString(t, createAggsQuery())
-	vanilla := marshalString(t, createAggsQueryVanilla())
+	builder := marshal.String(t, createAggsQuery())
+	vanilla := marshal.String(t, createAggsQueryVanilla())
 	assert.Equal(t, vanilla, builder)
 }

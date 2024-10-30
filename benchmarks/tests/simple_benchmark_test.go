@@ -1,8 +1,9 @@
-package benchmarks_test
+package tests_test
 
 import (
 	"testing"
 
+	"github.com/Trendyol/es-query-builder/benchmarks/tests/marshal"
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
@@ -53,7 +54,7 @@ func Benchmark_Simple_Vanilla(b *testing.B) {
 }
 
 func Test_Simple_Queries_are_equal(t *testing.T) {
-	build := marshalString(t, createSimpleQuery())
-	vanilla := marshalString(t, createSimpleQueryVanilla())
+	build := marshal.String(t, createSimpleQuery())
+	vanilla := marshal.String(t, createSimpleQueryVanilla())
 	assert.Equal(t, vanilla, build)
 }

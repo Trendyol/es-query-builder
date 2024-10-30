@@ -1,8 +1,9 @@
-package benchmarks_test
+package tests_test
 
 import (
 	"testing"
 
+	"github.com/Trendyol/es-query-builder/benchmarks/tests/marshal"
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/es/enums/sort/order"
 	"github.com/Trendyol/es-query-builder/test/assert"
@@ -100,7 +101,7 @@ func Benchmark_Intermediate_Vanilla(b *testing.B) {
 
 func Test_Intermediate_Queries_are_equal(t *testing.T) {
 	id := 42
-	build := marshalString(t, createIntermediateQuery(id))
-	vanilla := marshalString(t, createIntermediateQueryVanilla(id))
+	build := marshal.String(t, createIntermediateQuery(id))
+	vanilla := marshal.String(t, createIntermediateQueryVanilla(id))
 	assert.Equal(t, vanilla, build)
 }

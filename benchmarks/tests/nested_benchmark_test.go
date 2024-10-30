@@ -1,8 +1,9 @@
-package benchmarks_test
+package tests_test
 
 import (
 	"testing"
 
+	"github.com/Trendyol/es-query-builder/benchmarks/tests/marshal"
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
@@ -59,7 +60,7 @@ func createNestedQueryVanilla() map[string]any {
 	return query
 }
 
-func Benchmark_Nested_Example_Builder(b *testing.B) {
+func Benchmark_Nested_Builder(b *testing.B) {
 	createNestedQuery()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -67,7 +68,7 @@ func Benchmark_Nested_Example_Builder(b *testing.B) {
 	}
 }
 
-func Benchmark_Nested_Example_Vanilla(b *testing.B) {
+func Benchmark_Nested_Vanilla(b *testing.B) {
 	createNestedQueryVanilla()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -76,7 +77,7 @@ func Benchmark_Nested_Example_Vanilla(b *testing.B) {
 }
 
 func Test_Nested_Queries_are_equal(t *testing.T) {
-	build := marshalString(t, createNestedQuery())
-	vanilla := marshalString(t, createNestedQueryVanilla())
+	build := marshal.String(t, createNestedQuery())
+	vanilla := marshal.String(t, createNestedQueryVanilla())
 	assert.Equal(t, vanilla, build)
 }
