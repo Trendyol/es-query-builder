@@ -299,7 +299,6 @@ func normalizeString(text string) string {
 	return strings.ToLower(strings.TrimSpace(text))
 }
 
-// nolint:golint,funlen
 func parseParameters(args []string) Parameters {
 	projectDirectory, err := os.Getwd()
 	if err != nil {
