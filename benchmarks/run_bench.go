@@ -270,21 +270,29 @@ func saveArg(value string) (func([]*BenchmarkResult, string) error, error) {
 	return nil, fmt.Errorf("illegal value for -save parameter")
 }
 
-func workingDirectoryArg(path string) error {
+func workingDirectoryArg(path string) (string, error) {
 	info, err := os.Stat(path)
 	if os.IsNotExist(err) {
-		return fmt.Errorf("%s does not exists on the system", path)
+		return "", fmt.Errorf("%s does not exists on the system", path)
 	}
 	if err != nil {
-		return err
+		return "", err
 	}
 	if !info.IsDir() {
-		return fmt.Errorf("%s not a directory path", path)
+		return "", fmt.Errorf("%s not a directory path", path)
 	}
 	if !filepath.IsAbs(path) {
-		return fmt.Errorf("path must be absolute and start with /")
+		return "", fmt.Errorf("path must be absolute and start with /")
 	}
-	return nil
+	return path, nil
+}
+
+func ensureResult[T any](result T, err error) T {
+	if err != nil {
+		fmt.Printf("Error: %s\n", err.Error())
+		printHelpAndExit()
+	}
+	return result
 }
 
 func normalizeString(text string) string {
@@ -320,32 +328,13 @@ func parseParameters(args []string) Parameters {
 		key, value := normalizeString(keyValue[0]), normalizeString(keyValue[1])
 		switch key {
 		case "cooldown":
-			cooldownFunc, err := cooldownArg(value)
-			if err != nil {
-				fmt.Printf("Error: %s\n", err.Error())
-				printHelpAndExit()
-			}
-			parameters.CooldownFunc = cooldownFunc
+			parameters.CooldownFunc = ensureResult(cooldownArg(value))
 		case "benchtime":
-			benchtime, err := benchtimeArg(value)
-			if err != nil {
-				fmt.Printf("Error: %s\n", err.Error())
-				printHelpAndExit()
-			}
-			parameters.Benchtime = benchtime
+			parameters.Benchtime = ensureResult(benchtimeArg(value))
 		case "save":
-			saveFunc, err := saveArg(value)
-			if err != nil {
-				fmt.Printf("Error: %s\n", err.Error())
-				printHelpAndExit()
-			}
-			parameters.SaveFunc = saveFunc
+			parameters.SaveFunc = ensureResult(saveArg(value))
 		case "wd", "workingdirectory":
-			if err = workingDirectoryArg(value); err != nil {
-				fmt.Printf("Error: %s\n", err.Error())
-				printHelpAndExit()
-			}
-			parameters.WorkingDirectory = value
+			parameters.WorkingDirectory = ensureResult(workingDirectoryArg(value))
 		default:
 			fmt.Printf("Error: unknown parameter <%s>. please read the help message 🙏\n", key)
 			printHelpAndExit()
