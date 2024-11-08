@@ -1,8 +1,9 @@
-package benchmarks_test
+package tests_test
 
 import (
 	"testing"
 
+	"github.com/Trendyol/es-query-builder/benchmarks/tests/marshal"
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
@@ -98,7 +99,7 @@ func createMixedQueryVanilla() map[string]any {
 	return query
 }
 
-func Benchmark_Mixed_Example_Builder(b *testing.B) {
+func Benchmark_Mixed_Builder(b *testing.B) {
 	createMixedQuery()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -106,7 +107,7 @@ func Benchmark_Mixed_Example_Builder(b *testing.B) {
 	}
 }
 
-func Benchmark_Mixed_Example_Vanilla(b *testing.B) {
+func Benchmark_Mixed_Vanilla(b *testing.B) {
 	createMixedQueryVanilla()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -115,7 +116,7 @@ func Benchmark_Mixed_Example_Vanilla(b *testing.B) {
 }
 
 func Test_Mixed_Queries_are_equal(t *testing.T) {
-	build := marshalString(t, createMixedQuery())
-	vanilla := marshalString(t, createMixedQueryVanilla())
+	build := marshal.String(t, createMixedQuery())
+	vanilla := marshal.String(t, createMixedQueryVanilla())
 	assert.Equal(t, vanilla, build)
 }
