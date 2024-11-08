@@ -58,9 +58,9 @@ type BenchmarkResult struct {
 
 type Parameters struct {
 	CooldownFunc     func()
-	Benchtime        uint
 	SaveFunc         func([]*BenchmarkResult, string) error
 	WorkingDirectory string
+	Benchtime        uint
 }
 
 func parseBenchmarkOutput(benchmarkOutput string) (*BenchmarkResult, error) {
