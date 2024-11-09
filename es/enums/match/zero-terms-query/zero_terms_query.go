@@ -8,7 +8,7 @@ package zerotermsquery
 //
 // Example usage:
 //
-//	match := Match("field", "value").ZeroTermsQuery(ZeroTermsQuery.All)
+//	match := es.Match("field", "value").ZeroTermsQuery(ZeroTermsQuery.All)
 //	// match now has the "zero_terms_query" field set to "all" in the matchType object.
 //
 // Parameters:

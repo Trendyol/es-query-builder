@@ -3,11 +3,12 @@ package operator_test
 import (
 	"testing"
 
-	Operator "github.com/Trendyol/es-query-builder/es/enums/match/operator"
 	"github.com/Trendyol/es-query-builder/test/assert"
+
+	Operator "github.com/Trendyol/es-query-builder/es/enums/match/operator"
 )
 
-func Test_ScoreModeString(t *testing.T) {
+func Test_OperatorString(t *testing.T) {
 	tests := []struct {
 		operator Operator.Operator
 		result   string
