@@ -39,3 +39,5 @@ func Test_Match_should_create_json_with_match_field_inside_query(t *testing.T) {
 	// nolint:golint,lll
 	assert.Equal(t, "{\"query\":{\"match\":{\"message\":{\"boost\":2.14,\"operator\":\"or\",\"query\":\"this is a test\"}}}}", bodyJSON)
 }
+
+// TODO: write parameter test
