@@ -31,7 +31,7 @@ func Test_Bool_should_have_MinimumShouldMatch_method(t *testing.T) {
 	assert.NotNil(t, b.MinimumShouldMatch)
 }
 
-func Test_Bool_MinimumShouldMatch_should_create_json_with_minimum_should_match_field_inside_bool(t *testing.T) {
+func Test_Bool_MinimumShouldMatch_should_create_json_with_int_minimum_should_match_field_inside_bool(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.Bool().
@@ -42,6 +42,19 @@ func Test_Bool_MinimumShouldMatch_should_create_json_with_minimum_should_match_f
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{\"bool\":{\"minimum_should_match\":7}}}", bodyJSON)
+}
+
+func Test_Bool_MinimumShouldMatch_should_create_json_with_string_minimum_should_match_field_inside_bool(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.Bool().
+			MinimumShouldMatch("2<-25% 9<-3"),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"bool\":{\"minimum_should_match\":\"2\\u003c-25% 9\\u003c-3\"}}}", bodyJSON)
 }
 
 func Test_Bool_should_have_AdjustPureNegative_method(t *testing.T) {

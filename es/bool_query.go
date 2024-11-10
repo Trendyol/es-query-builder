@@ -46,7 +46,7 @@ func Bool() BoolType {
 // Returns:
 //
 //	The updated BoolType object with the "minimum_should_match" parameter set.
-func (b BoolType) MinimumShouldMatch(minimumShouldMatch int) BoolType {
+func (b BoolType) MinimumShouldMatch(minimumShouldMatch any) BoolType {
 	b["minimum_should_match"] = minimumShouldMatch
 	return b
 }
