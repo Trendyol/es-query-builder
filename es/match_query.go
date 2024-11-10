@@ -50,8 +50,7 @@ func (m matchType) putInTheField(key string, value any) matchType {
 // Operator sets the "operator" field in the match query.
 //
 // This method configures the match query to use a specified operator (e.g., "AND" or "OR")
-// for the matching process. It calls putInTheField to add or update the "operator" key
-// in the match query object.
+// for the matching process.
 //
 // Example usage:
 //
@@ -71,8 +70,7 @@ func (m matchType) Operator(operator Operator.Operator) matchType {
 // Boost sets the "boost" field in the match query.
 //
 // This method configures the match query to use a specified boost factor, which influences
-// the relevance scoring of the matched documents. It calls putInTheField to add or update
-// the "boost" key in the match query object.
+// the relevance scoring of the matched documents.
 //
 // Example usage:
 //
@@ -94,7 +92,6 @@ func (m matchType) Boost(boost float64) matchType {
 // This method configures the match query to use a specified cutoff frequency, which is useful
 // for controlling how often terms should appear in the document for it to be considered a match.
 // A lower cutoff frequency increases precision, while a higher one allows more terms to be matched.
-// It calls putInTheField to add or update the "cutoff_frequency" key in the match query object.
 //
 // Example usage:
 //
@@ -116,7 +113,6 @@ func (m matchType) CutoffFrequency(cutoffFrequency float64) matchType {
 // This method configures the match query to use a specified fuzziness level, which determines
 // the allowed edit distance (e.g., number of character changes) for a term to be considered a match.
 // Common values include "AUTO", or integers representing the number of edits (e.g., 1 or 2).
-// It calls putInTheField to add or update the "fuzziness" key in the match query object.
 //
 // Example usage:
 //
@@ -138,7 +134,7 @@ func (m matchType) Fuzziness(fuzziness any) matchType {
 // This method configures the match query to use a specified fuzzy rewrite method,
 // which controls how multi-term queries are rewritten. Common values include "constant_score",
 // "scoring_boolean", and other rewrite options that influence the scoring and performance of
-// fuzzy matching. It calls putInTheField to add or update the "fuzzy_rewrite" key in the match query object.
+// fuzzy matching.
 //
 // Example usage:
 //
@@ -159,8 +155,7 @@ func (m matchType) FuzzyRewrite(fuzzyRewrite string) matchType {
 //
 // This method configures the match query to allow or disallow transpositions (e.g., swapping two adjacent characters)
 // when performing fuzzy matching. Setting this field to true enables transpositions, which can increase the match rate
-// for terms with common typos or character swaps. It calls putInTheField to add or update the "fuzzy_transpositions" key
-// in the match query object.
+// for terms with common typos or character swaps.
 //
 // Example usage:
 //
@@ -182,7 +177,6 @@ func (m matchType) FuzzyTranspositions(fuzzyTranspositions bool) matchType {
 // This method configures the match query to use lenient parsing, allowing it to skip errors
 // for data type mismatches. When set to true, documents that contain mismatched data types
 // (e.g., text in a numeric field) will not cause errors and will be ignored instead.
-// It calls putInTheField to add or update the "lenient" key in the match query object.
 //
 // Example usage:
 //
@@ -203,8 +197,7 @@ func (m matchType) Lenient(lenient bool) matchType {
 //
 // This method configures the match query to limit the maximum number of terms that can be expanded
 // for multi-term queries, such as those involving fuzzy matching. Higher values allow more terms to
-// be considered, but may impact performance. It calls putInTheField to add or update the "max_expansions"
-// key in the match query object.
+// be considered, but may impact performance.
 //
 // Example usage:
 //
@@ -226,8 +219,7 @@ func (m matchType) MaxExpansions(maxExpansions int) matchType {
 // This method configures the match query to specify a minimum prefix length for fuzzy matching,
 // which defines the number of initial characters in a term that must match exactly before
 // considering fuzziness. Increasing this value can improve performance by reducing the number
-// of fuzzy matches, but may also limit the flexibility of the query. It calls putInTheField
-// to add or update the "prefix_length" key in the match query object.
+// of fuzzy matches, but may also limit the flexibility of the query.
 //
 // Example usage:
 //
@@ -249,7 +241,7 @@ func (m matchType) PrefixLength(prefixLength int) matchType {
 // This method configures the behavior of the match query when no terms remain after analysis
 // (for example, if all terms are stop words). The specified zero_terms_query value determines
 // how to handle this scenario, with options like "all" to match all documents or "none" to
-// match none. It calls putInTheField to add or update the "zero_terms_query" key in the match query object.
+// match none.
 //
 // Example usage:
 //
