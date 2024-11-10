@@ -32,8 +32,7 @@ func (m matchAllType) putInTheField(key string, value any) matchAllType {
 // Boost sets the "boost" field in the match_all query.
 //
 // This method configures the match_all query to use a specified boost factor, which influences
-// the relevance scoring of the matched documents. It calls putInTheField to add or update
-// the "boost" key in the match_all query object.
+// the relevance scoring of the matched documents.
 //
 // Example usage:
 //
