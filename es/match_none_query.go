@@ -12,7 +12,7 @@ type matchNoneType Object
 //
 // Example usage:
 //
-//	mn := MatchNone("title", "es-query-builder")
+//	mn := es.MatchNone("title", "es-query-builder")
 //	// mn now contains a matchNoneType object that matches no documents for the "title" field with the query "es-query-builder".
 //
 // Parameters:
@@ -52,7 +52,7 @@ func (m matchNoneType) putInTheField(key string, value any) matchNoneType {
 //
 // Example usage:
 //
-//	mn := MatchNone("title", "es-query-builder").Operator("AND")
+//	mn := es.MatchNone("title", "es-query-builder").Operator("AND")
 //	// mn now has an "operator" field set to "AND" in the match_none query object.
 //
 // Parameters:
@@ -73,7 +73,7 @@ func (m matchNoneType) Operator(operator Operator.Operator) matchNoneType {
 //
 // Example usage:
 //
-//	mn := MatchNone("title", "es-query-builder").Boost(1.5)
+//	mn := es.MatchNone("title", "es-query-builder").Boost(1.5)
 //	// mn now has a "boost" field set to 1.5 in the match_none query object.
 //
 // Parameters:

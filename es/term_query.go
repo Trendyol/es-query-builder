@@ -10,7 +10,7 @@ type termType Object
 //
 // Example usage:
 //
-//	t := Term("category", "books")
+//	t := es.Term("category", "books")
 //	// t now contains a termType object with a term query for the "category" field.
 //
 // Parameters:
@@ -49,7 +49,7 @@ func (t termType) putInTheField(key string, value any) termType {
 //
 // Example usage:
 //
-//	t := Term().CaseInsensitive(true)
+//	t := es.Term().CaseInsensitive(true)
 //	// t now includes a "case_insensitive" parameter set to true.
 //
 // Parameters:
@@ -72,7 +72,7 @@ func (t termType) CaseInsensitive(caseInsensitive bool) termType {
 //
 // Example usage:
 //
-//	t := Term().Boost(1.5)
+//	t := es.Term().Boost(1.5)
 //	// t now includes a "boost" parameter set to 1.5.
 //
 // Parameters:
@@ -94,7 +94,7 @@ func (t termType) Boost(boost float64) termType {
 //
 // Example usage:
 //
-//	t := TermFunc("category", "books", func(key, value string) bool {
+//	t := es.TermFunc("category", "books", func(key, value string) bool {
 //	    return value != ""
 //	})
 //	// t is either a termType object or nil based on the condition.
@@ -122,7 +122,7 @@ func TermFunc[T any](key string, value T, f func(key string, value T) bool) term
 //
 // Example usage:
 //
-//	t := TermIf("category", "books", true)
+//	t := es.TermIf("category", "books", true)
 //	// t is a termType object if the condition is true; otherwise, it is nil.
 //
 // Parameters:

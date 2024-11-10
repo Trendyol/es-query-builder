@@ -9,7 +9,7 @@ type rangeType Object
 //
 // Example usage:
 //
-//	r := Range("age")
+//	r := es.Range("age")
 //	// r now contains a rangeType object with the specified field "age" for range queries.
 //
 // Parameters:
@@ -56,7 +56,7 @@ func (r rangeType) delete(key string) rangeType {
 //
 // Example usage:
 //
-//	r := Range("age").LesserThan(20)
+//	r := es.Range("age").LesserThan(20)
 //	// r now has an "lt" field set to 20 in the range query for the "age" field.
 //
 // Parameters:
@@ -77,7 +77,7 @@ func (r rangeType) LesserThan(lt any) rangeType {
 //
 // Example usage:
 //
-//	r := Range("age").LesserThanOrEqual(20)
+//	r := es.Range("age").LesserThanOrEqual(20)
 //	// r now has an "lte" field set to 20 in the range query for the "age" field.
 //
 // Parameters:
@@ -98,7 +98,7 @@ func (r rangeType) LesserThanOrEqual(lte any) rangeType {
 //
 // Example usage:
 //
-//	r := Range("age").GreaterThan(50)
+//	r := es.Range("age").GreaterThan(50)
 //	// r now has a "gt" field set to 50 in the range query for the "age" field.
 //
 // Parameters:
@@ -119,7 +119,7 @@ func (r rangeType) GreaterThan(gt any) rangeType {
 //
 // Example usage:
 //
-//	r := Range("age").GreaterThanOrEqual(50)
+//	r := es.Range("age").GreaterThanOrEqual(50)
 //	// r now has a "gte" field set to 50 in the range query for the "age" field.
 //
 // Parameters:
@@ -140,7 +140,7 @@ func (r rangeType) GreaterThanOrEqual(gte any) rangeType {
 //
 // Example usage:
 //
-//	r := Range("date").Format("yyyy-MM-dd")
+//	r := es.Range("date").Format("yyyy-MM-dd")
 //	// r now has a "format" field set to "yyyy-MM-dd" in the range query for the "date" field.
 //
 // Parameters:
@@ -160,7 +160,7 @@ func (r rangeType) Format(format string) rangeType {
 //
 // Example usage:
 //
-//	r := Range("age").Boost(1.5)
+//	r := es.Range("age").Boost(1.5)
 //	// r now has a "boost" field set to 1.5 in the range query for the "age" field.
 //
 // Parameters:

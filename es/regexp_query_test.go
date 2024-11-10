@@ -65,7 +65,7 @@ func Test_Regexp_should_create_json_with_match_all_field_inside_rewrite_query(t 
 	// Given
 	query := es.NewQuery(
 		es.Regexp("key", "value1").
-			ReWrite("a"),
+			Rewrite("a"),
 	)
 
 	// When Then

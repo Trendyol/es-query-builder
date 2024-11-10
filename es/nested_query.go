@@ -12,7 +12,7 @@ type nestedType Object
 //
 // Example usage:
 //
-//	nestedQuery := Nested("comments", es.Bool().Filter(...).MustNot(...))
+//	nestedQuery := es.Nested("comments", es.Bool().Filter(...).MustNot(...))
 //	// nestedQuery now contains a nestedType object with the specified path and query.
 //
 // Parameters:
@@ -45,7 +45,7 @@ func (n nestedType) putInNested(key string, value any) nestedType {
 //
 // Example usage:
 //
-//	nested := Nested("comments", es.Term("text", "example"))
+//	nested := es.Nested("comments", es.Term("text", "example"))
 //	nested = nested.InnerHits(Object{"inner": "hits"})
 //	// nested now has an "inner_hits" field with the specified Object in the nested query.
 //
@@ -67,7 +67,7 @@ func (n nestedType) InnerHits(innerHits Object) nestedType {
 //
 // Example usage:
 //
-//	nested := Nested("comments", es.Term("text", "example"))
+//	nested := es.Nested("comments", es.Term("text", "example"))
 //	nested = nested.ScoreMode(ScoreMode.Sum)
 //	// nested now has a "score_mode" field with the specified ScoreMode value in the nested query.
 //
