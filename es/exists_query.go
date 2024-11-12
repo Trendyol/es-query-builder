@@ -10,7 +10,7 @@ type existsType Object
 //
 // Example usage:
 //
-//	e := Exists("title")
+//	e := es.Exists("title")
 //	// e now contains an existsType object that checks for the existence of the "title" field.
 //
 // Parameters:
@@ -35,7 +35,7 @@ func Exists(key string) existsType {
 //
 // Example usage:
 //
-//	e := ExistsFunc("title", func(key string) bool {
+//	e := es.ExistsFunc("title", func(key string) bool {
 //	    return key != ""
 //	})
 //	// e is either an existsType object or nil based on the condition.
@@ -62,7 +62,7 @@ func ExistsFunc(key string, f func(key string) bool) existsType {
 //
 // Example usage:
 //
-//	e := ExistsIf("title", true)
+//	e := es.ExistsIf("title", true)
 //	// e is an existsType object if the condition is true; otherwise, it is nil.
 //
 // Parameters:

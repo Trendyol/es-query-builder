@@ -10,7 +10,7 @@ type matchAllType Object
 //
 // Example usage:
 //
-//	ma := MatchAll()
+//	ma := es.MatchAll()
 //	// ma now contains a matchAllType object that matches all documents.
 //
 // Returns:
@@ -36,7 +36,7 @@ func (m matchAllType) putInTheField(key string, value any) matchAllType {
 //
 // Example usage:
 //
-//	ma := MatchAll().Boost(1.5)
+//	ma := es.MatchAll().Boost(1.5)
 //	// ma now has a "boost" field set to 1.5 in the match_all query object.
 //
 // Parameters:

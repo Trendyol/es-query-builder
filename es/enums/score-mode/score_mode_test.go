@@ -3,7 +3,8 @@ package scoremode_test
 import (
 	"testing"
 
-	scoremode "github.com/Trendyol/es-query-builder/es/enums/nested/score-mode"
+	"github.com/Trendyol/es-query-builder/es/enums/score-mode"
+
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
 

@@ -10,7 +10,7 @@ type regexpType Object
 //
 // Example usage:
 //
-//	t := Regexp("endpoint", "/books/.*")
+//	t := es.Regexp("endpoint", "/books/.*")
 //	// t now contains a regexpType object with a regexp query for the "endpoint" field.
 //
 // Parameters:
@@ -45,7 +45,7 @@ func (r regexpType) putInTheField(key string, value any) regexpType {
 // Flags Enables optional operators for the regular expression.
 // Example usage:
 //
-//	regexp := Regexp("endpoint", "/books/.*").Flags("ALL")
+//	regexp := es.Regexp("endpoint", "/books/.*").Flags("ALL")
 //	// regexp now a "flags" field set "ALL" in the regexp query object.
 //
 // Parameters:
@@ -62,7 +62,7 @@ func (r regexpType) Flags(flags string) regexpType {
 // value with the indexed field values when set to true.
 // Example usage:
 //
-//	regexp := Regexp("endpoint", "/books/.*").CaseInsensitive(true)
+//	regexp := es.Regexp("endpoint", "/books/.*").CaseInsensitive(true)
 //	// regexp now a "case_insensitive" field set true in the regexp query object.
 //
 // Parameters:
@@ -78,7 +78,7 @@ func (r regexpType) CaseInsensitive(caseInsensitive bool) regexpType {
 // MaxDeterminizedStates Maximum number of automaton states required for the query.
 // Example usage:
 //
-//	regexp := Regexp("endpoint", "/books/.*").MaxDeterminizedStates(10000)
+//	regexp := es.Regexp("endpoint", "/books/.*").MaxDeterminizedStates(10000)
 //	// regexp now a "max_determinized_states" field set 10000 in the regexp query object.
 //
 // Parameters:
@@ -91,10 +91,10 @@ func (r regexpType) MaxDeterminizedStates(maxDeterminizedStates int) regexpType 
 	return r.putInTheField("max_determinized_states", maxDeterminizedStates)
 }
 
-// ReWrite Method used to rewrite the query.
+// Rewrite Method used to rewrite the query.
 // Example usage:
 //
-//	regexp := Regexp("endpoint", "/books/.*").ReWrite("a")
+//	regexp := es.Regexp("endpoint", "/books/.*").Rewrite("a")
 //	// regexp now a "rewrite" field set "a" in the regexp query object.
 //
 // Parameters:
@@ -103,6 +103,6 @@ func (r regexpType) MaxDeterminizedStates(maxDeterminizedStates int) regexpType 
 // Returns:
 //
 //	The updated regexp object with the "rewrite" field set to the specified value.
-func (r regexpType) ReWrite(rewrite string) regexpType {
+func (r regexpType) Rewrite(rewrite string) regexpType {
 	return r.putInTheField("rewrite", rewrite)
 }
