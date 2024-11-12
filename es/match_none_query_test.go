@@ -3,8 +3,6 @@ package es_test
 import (
 	"testing"
 
-	Operator "github.com/Trendyol/es-query-builder/es/enums/operator"
-
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
@@ -29,13 +27,12 @@ func Test_MatchNone_should_create_json_with_match_none_field_inside_query(t *tes
 	// Given
 	query := es.NewQuery(
 		es.MatchNone("fooBar", "lorem ipsum").
-			Boost(6.19).
-			Operator(Operator.And),
+			Boost(6.19),
 	)
 
 	// When Then
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
 	// nolint:golint,lll
-	assert.Equal(t, "{\"query\":{\"match_none\":{\"fooBar\":{\"boost\":6.19,\"operator\":\"and\",\"query\":\"lorem ipsum\"}}}}", bodyJSON)
+	assert.Equal(t, "{\"query\":{\"match_none\":{\"fooBar\":{\"boost\":6.19,\"query\":\"lorem ipsum\"}}}}", bodyJSON)
 }
