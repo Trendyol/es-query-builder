@@ -236,6 +236,28 @@ func (m matchType) PrefixLength(prefixLength int) matchType {
 	return m.putInTheField("prefix_length", prefixLength)
 }
 
+// AutoGenerateSynonymsPhraseQuery sets the "auto_generate_synonyms_phrase_query" field in the match query.
+//
+// This method enables or disables automatic generation of phrase queries for synonyms in the match query.
+// When enabled, the query engine automatically expands the search to include synonym phrases, which can
+// enhance results by including terms related to the search term. However, enabling this may increase
+// the complexity of the query and affect performance, especially with a large synonym dictionary.
+//
+// Example usage:
+//
+//	m := es.Match("title", "es-query-builder").AutoGenerateSynonymsPhraseQuery(true)
+//	// m now has the "auto_generate_synonyms_phrase_query" field set to true in the match query object.
+//
+// Parameters:
+//   - autoGenerateSynonymsPhraseQuery: A boolean indicating whether to automatically generate phrase queries for synonyms.
+//
+// Returns:
+//
+//	The updated matchType object with the "auto_generate_synonyms_phrase_query" field set to the specified value.
+func (m matchType) AutoGenerateSynonymsPhraseQuery(autoGenerateSynonymsPhraseQuery bool) matchType {
+	return m.putInTheField("auto_generate_synonyms_phrase_query", autoGenerateSynonymsPhraseQuery)
+}
+
 // ZeroTermsQuery sets the "zero_terms_query" field in the match query.
 //
 // This method configures the behavior of the match query when no terms remain after analysis
