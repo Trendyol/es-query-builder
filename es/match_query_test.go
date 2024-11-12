@@ -215,6 +215,27 @@ func Test_Match_PrefixLength_should_create_json_with_prefix_length_field_inside_
 	assert.Equal(t, "{\"query\":{\"match\":{\"type\":{\"prefix_length\":40,\"query\":\"Folder\"}}}}", bodyJSON)
 }
 
+func Test_Match_should_have_AutoGenerateSynonymsPhraseQuery_method(t *testing.T) {
+	// Given
+	term := es.Match("key", "value")
+
+	// When Then
+	assert.NotNil(t, term.AutoGenerateSynonymsPhraseQuery)
+}
+
+func Test_Match_AutoGenerateSynonymsPhraseQuery_should_create_json_with_auto_generate_synonyms_phrase_query_field_inside_match(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.Match("type", "Folder").
+			AutoGenerateSynonymsPhraseQuery(false),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"match\":{\"type\":{\"auto_generate_synonyms_phrase_query\":false,\"query\":\"Folder\"}}}}", bodyJSON)
+}
+
 func Test_Match_should_have_ZeroTermsQuery_method(t *testing.T) {
 	// Given
 	term := es.Match("key", "value")
@@ -249,6 +270,7 @@ func Test_Match_should_create_json_with_match_field_inside_query(t *testing.T) {
 			Lenient(true).
 			MaxExpansions(50).
 			PrefixLength(2).
+			AutoGenerateSynonymsPhraseQuery(true).
 			ZeroTermsQuery(ZeroTermsQuery.None),
 	)
 
@@ -256,5 +278,5 @@ func Test_Match_should_create_json_with_match_field_inside_query(t *testing.T) {
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
 	// nolint:golint,lll
-	assert.Equal(t, "{\"query\":{\"match\":{\"message\":{\"boost\":2.14,\"cutoff_frequency\":0.241,\"fuzziness\":\"AUTO\",\"fuzzy_rewrite\":\"constant_score\",\"fuzzy_transpositions\":true,\"lenient\":true,\"max_expansions\":50,\"operator\":\"or\",\"prefix_length\":2,\"query\":\"this is a test\",\"zero_terms_query\":\"none\"}}}}", bodyJSON)
+	assert.Equal(t, "{\"query\":{\"match\":{\"message\":{\"auto_generate_synonyms_phrase_query\":true,\"boost\":2.14,\"cutoff_frequency\":0.241,\"fuzziness\":\"AUTO\",\"fuzzy_rewrite\":\"constant_score\",\"fuzzy_transpositions\":true,\"lenient\":true,\"max_expansions\":50,\"operator\":\"or\",\"prefix_length\":2,\"query\":\"this is a test\",\"zero_terms_query\":\"none\"}}}}", bodyJSON)
 }
