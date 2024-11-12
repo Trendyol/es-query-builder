@@ -1,6 +1,8 @@
 package es
 
-import Operator "github.com/Trendyol/es-query-builder/es/enums/match/operator"
+import (
+	Operator "github.com/Trendyol/es-query-builder/es/enums/operator"
+)
 
 type matchNoneType Object
 

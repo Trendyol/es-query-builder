@@ -1,8 +1,8 @@
 package es
 
 import (
-	Operator "github.com/Trendyol/es-query-builder/es/enums/match/operator"
-	ZeroTermsQuery "github.com/Trendyol/es-query-builder/es/enums/match/zero-terms-query"
+	Operator "github.com/Trendyol/es-query-builder/es/enums/operator"
+	ZeroTermsQuery "github.com/Trendyol/es-query-builder/es/enums/zero-terms-query"
 )
 
 type matchType Object

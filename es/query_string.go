@@ -1,5 +1,9 @@
 package es
 
+import (
+	Operator "github.com/Trendyol/es-query-builder/es/enums/operator"
+)
+
 type queryStringType Object
 
 // QueryString creates a new queryStringType object with the specified query string.
@@ -175,25 +179,25 @@ func (q queryStringType) Boost(value float64) queryStringType {
 // DefaultOperator sets the default operator for the queryStringType object.
 //
 // This method specifies the default operator to be used between terms in the query string
-// when no explicit operator is provided. The default operator can be "AND" or "OR",
+// when no explicit operator is provided. The default operator can be operator.And or operator.Or,
 // determining whether all terms (AND) or any term (OR) must be matched in the search results.
 //
 // Example usage:
 //
 // b := es.QueryString("value").
-// DefaultOperator("AND")
+// DefaultOperator(Operator.And)
 //
-//	q := es.QueryString("Foo Bar").DefaultOperator("OR")
-//	// q now uses "OR" as the default operator, meaning any term can match in the query.
+//	q := es.QueryString("Foo Bar").DefaultOperator(Operator.Or)
+//	// q now uses "or" as the default operator, meaning any term can match in the query.
 //
 // Parameters:
-//   - value: A string representing the default operator to be used ("AND" or "OR").
+//   - operator: A operator.Operator representing the default operator to be used ("and" or "or").
 //
 // Returns:
 //
 // The updated queryStringType object with the "default_operator" set.
-func (q queryStringType) DefaultOperator(value string) queryStringType {
-	return q.putInTheField("default_operator", value)
+func (q queryStringType) DefaultOperator(operator Operator.Operator) queryStringType {
+	return q.putInTheField("default_operator", operator)
 }
 
 // EnablePositionIncrements sets the option to enable or disable position increments in the queryStringType object.

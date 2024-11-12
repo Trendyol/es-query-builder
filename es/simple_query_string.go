@@ -1,5 +1,9 @@
 package es
 
+import (
+	Operator "github.com/Trendyol/es-query-builder/es/enums/operator"
+)
+
 type simpleQueryStringType Object
 
 // SimpleQueryString creates a new simpleQueryStringType object with the specified query string.
@@ -73,24 +77,24 @@ func (q simpleQueryStringType) Analyzer(value string) simpleQueryStringType {
 // DefaultOperator sets the default operator for the simpleQueryStringType object.
 //
 // This method specifies the default operator to be used between terms in the query string
-// when no explicit operator is provided. The default operator can be "AND" or "OR",
-// determining whether all terms (AND) or any term (OR) must be matched in the search results.
+// when no explicit operator is provided. The default operator can be operator.And or operator.Or,
+// determining whether all terms (and) or any term (or) must be matched in the search results.
 //
 // Example usage:
 //
 //	q := es.SimpleQueryString("Foo Bar").
-//	DefaultOperator("OR")
+//	DefaultOperator(operator.Or)
 //
-// q now uses "OR" as the default operator, meaning any term can match in the query.
+// q now uses "or" as the default operator, meaning any term can match in the query.
 //
 // Parameters:
-//   - value: A string representing the default operator to be used ("AND" or "OR").
+//   - operator: A operator.Operator representing the default operator to be used ("and" or "or").
 //
 // Returns:
 //
 // The updated simpleQueryStringType object with the "default_operator" set.
-func (q simpleQueryStringType) DefaultOperator(value string) simpleQueryStringType {
-	return q.putInTheField("default_operator", value)
+func (q simpleQueryStringType) DefaultOperator(operator Operator.Operator) simpleQueryStringType {
+	return q.putInTheField("default_operator", operator)
 }
 
 // MinimumShouldMatch sets the minimum number of clauses that must match for the simpleQueryStringType object.

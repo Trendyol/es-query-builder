@@ -3,10 +3,10 @@ package es_test
 import (
 	"testing"
 
+	ScoreMode "github.com/Trendyol/es-query-builder/es/enums/score-mode"
+
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"
-
-	ScoreMode "github.com/Trendyol/es-query-builder/es/enums/nested/score-mode"
 )
 
 ////    Nested    ////

@@ -1,6 +1,8 @@
 package es
 
-import ScoreMode "github.com/Trendyol/es-query-builder/es/enums/nested/score-mode"
+import (
+	ScoreMode "github.com/Trendyol/es-query-builder/es/enums/score-mode"
+)
 
 type nestedType Object
 

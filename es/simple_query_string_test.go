@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/Trendyol/es-query-builder/es"
+	"github.com/Trendyol/es-query-builder/es/enums/operator"
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
@@ -60,13 +61,13 @@ func Test_SimpleQueryString_method_should_create_simple_query_string_with_analyz
 func Test_SimpleQueryString_method_should_create_simple_query_string_with_default_operator(t *testing.T) {
 	// Given When
 	b := es.NewQuery(
-		es.SimpleQueryString("value").DefaultOperator("AND"),
+		es.SimpleQueryString("value").DefaultOperator(operator.And),
 	)
 
 	// Then
 	assert.NotNil(t, b)
 	bodyJSON := assert.MarshalWithoutError(t, b)
-	assert.Equal(t, "{\"query\":{\"simple_query_string\":{\"default_operator\":\"AND\",\"query\":\"value\"}}}", bodyJSON)
+	assert.Equal(t, "{\"query\":{\"simple_query_string\":{\"default_operator\":\"and\",\"query\":\"value\"}}}", bodyJSON)
 }
 
 func Test_SimpleQueryString_method_should_create_simple_query_string_with_minimum_should_match(t *testing.T) {
@@ -183,7 +184,7 @@ func Test_SimpleQueryString_method_should_create_simple_query_string_with_all_pa
 		es.SimpleQueryString("value").
 			Fields([]string{"field1", "field2"}).
 			Analyzer("standard").
-			DefaultOperator("AND").
+			DefaultOperator(operator.And).
 			MinimumShouldMatch("2").
 			FuzzyMaxExpansions(50).
 			FuzzyPrefixLength(2).
@@ -202,7 +203,7 @@ func Test_SimpleQueryString_method_should_create_simple_query_string_with_all_pa
 		"\"analyze_wildcard\":true,"+
 		"\"analyzer\":\"standard\","+
 		"\"auto_generate_synonyms_phrase_query\":true,"+
-		"\"default_operator\":\"AND\","+
+		"\"default_operator\":\"and\","+
 		"\"fields\":[\"field1\",\"field2\"],"+
 		"\"flags\":\"AND|OR|PREFIX\","+
 		"\"fuzzy_max_expansions\":50,"+

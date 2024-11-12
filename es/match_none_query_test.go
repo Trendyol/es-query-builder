@@ -3,10 +3,10 @@ package es_test
 import (
 	"testing"
 
+	Operator "github.com/Trendyol/es-query-builder/es/enums/operator"
+
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"
-
-	Operator "github.com/Trendyol/es-query-builder/es/enums/match/operator"
 )
 
 ////   MatchNone   ////
