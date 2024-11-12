@@ -223,7 +223,7 @@ func Test_Match_should_have_AutoGenerateSynonymsPhraseQuery_method(t *testing.T)
 	assert.NotNil(t, term.AutoGenerateSynonymsPhraseQuery)
 }
 
-func Test_Match_AutoGenerateSynonymsPhraseQuery_should_create_json_with_auto_generate_synonyms_phrase_query_field_inside_match(t *testing.T) {
+func Test_Match_AutoGenerateSynonymsPhraseQuery_should_create_json_auto_generate_synonyms_phrase_query_field_inside_match(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.Match("type", "Folder").
