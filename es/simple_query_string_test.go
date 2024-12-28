@@ -178,6 +178,18 @@ func Test_SimpleQueryString_method_should_create_simple_query_string_with_quote_
 	assert.Equal(t, "{\"query\":{\"simple_query_string\":{\"query\":\"value\",\"quote_field_suffix\":\"_phrase\"}}}", bodyJSON)
 }
 
+func Test_SimpleQueryString_method_should_create_simple_query_string_with_boost(t *testing.T) {
+	// Given When
+	b := es.NewQuery(
+		es.SimpleQueryString("value").Boost(3.12),
+	)
+
+	// Then
+	assert.NotNil(t, b)
+	bodyJSON := assert.MarshalWithoutError(t, b)
+	assert.Equal(t, "{\"query\":{\"simple_query_string\":{\"boost\":3.12,\"query\":\"value\"}}}", bodyJSON)
+}
+
 func Test_SimpleQueryString_method_should_create_simple_query_string_with_all_parameters(t *testing.T) {
 	// Given When
 	b := es.NewQuery(
@@ -193,7 +205,8 @@ func Test_SimpleQueryString_method_should_create_simple_query_string_with_all_pa
 			AutoGenerateSynonymsPhraseQuery(true).
 			Flags("AND|OR|PREFIX").
 			Lenient(true).
-			QuoteFieldSuffix("_phrase"),
+			QuoteFieldSuffix("_phrase").
+			Boost(5.19),
 	)
 
 	// Then
@@ -203,6 +216,7 @@ func Test_SimpleQueryString_method_should_create_simple_query_string_with_all_pa
 		"\"analyze_wildcard\":true,"+
 		"\"analyzer\":\"standard\","+
 		"\"auto_generate_synonyms_phrase_query\":true,"+
+		"\"boost\":5.19,"+
 		"\"default_operator\":\"and\","+
 		"\"fields\":[\"field1\",\"field2\"],"+
 		"\"flags\":\"AND|OR|PREFIX\","+

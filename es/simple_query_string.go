@@ -289,6 +289,29 @@ func (q simpleQueryStringType) QuoteFieldSuffix(value string) simpleQueryStringT
 	return q.putInTheField("quote_field_suffix", value)
 }
 
+// Boost sets the "boost" parameter in a simpleQueryStringType query.
+//
+// This method allows you to specify a boost factor for the simple query string query,
+// which influences the relevance score of matching documents. A higher boost value
+// increases the importance of the query in the overall score, resulting in higher
+// scores for documents that match the query string conditions.
+//
+// Example usage:
+//
+//	q := es.SimpleQueryString().Boost(1.8)
+//	// q now includes a "boost" parameter set to 1.8.
+//
+// Parameters:
+//   - boost: A float64 value representing the boost factor for the simple
+//     query string query.
+//
+// Returns:
+//
+//	The updated simpleQueryStringType object with the "boost" parameter set.
+func (q simpleQueryStringType) Boost(boost float64) simpleQueryStringType {
+	return q.putInTheField("boost", boost)
+}
+
 func (q simpleQueryStringType) putInTheField(key string, value any) simpleQueryStringType {
 	for _, fieldObj := range q {
 		if fieldObject, ok := fieldObj.(Object); ok {

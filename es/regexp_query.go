@@ -106,3 +106,26 @@ func (r regexpType) MaxDeterminizedStates(maxDeterminizedStates int) regexpType 
 func (r regexpType) Rewrite(rewrite string) regexpType {
 	return r.putInTheField("rewrite", rewrite)
 }
+
+// Boost sets the "boost" parameter in a regexpType query.
+//
+// This method allows you to specify a boost factor for the regular expression query,
+// which influences the relevance score of matching documents. A higher boost value
+// increases the importance of the query in the overall score, resulting in higher
+// scores for documents that match the regular expression.
+//
+// Example usage:
+//
+//	r := es.Regexp().Boost(1.2)
+//	// r now includes a "boost" parameter set to 1.2.
+//
+// Parameters:
+//   - boost: A float64 value representing the boost factor for the regular
+//     expression query.
+//
+// Returns:
+//
+//	The updated regexpType object with the "boost" parameter set.
+func (r regexpType) Boost(boost float64) regexpType {
+	return r.putInTheField("boost", boost)
+}

@@ -1,5 +1,7 @@
 package es
 
+import RangeRelation "github.com/Trendyol/es-query-builder/es/enums/range-relation"
+
 type rangeType Object
 
 // Range creates a new rangeType object with the specified field.
@@ -171,4 +173,73 @@ func (r rangeType) Format(format string) rangeType {
 //	The updated rangeType object with the "boost" field set to the specified value.
 func (r rangeType) Boost(boost float64) rangeType {
 	return r.putInTheField("boost", boost)
+}
+
+// From sets the "from" field for the range query.
+//
+// This method specifies the lower bound for the range query. The "from" field defines
+// the start of the range, and documents with values greater than or equal to this
+// value will be considered a match.
+//
+// Example usage:
+//
+//	r := es.Range("age").From(18)
+//	// r now has a "from" field set to 18 in the range query for the "age" field.
+//
+// Parameters:
+//   - from: The value representing the lower bound of the range. It can be of any type
+//     that is valid for the field (e.g., integer, string, date).
+//
+// Returns:
+//
+//	The updated rangeType object with the "from" field set to the specified value.
+func (r rangeType) From(from any) rangeType {
+	return r.putInTheField("from", from)
+}
+
+// To sets the "to" field for the range query.
+//
+// This method specifies the upper bound for the range query. The "to" field defines
+// the end of the range, and documents with values less than or equal to this
+// value will be considered a match.
+//
+// Example usage:
+//
+//	r := es.Range("age").To(65)
+//	// r now has a "to" field set to 65 in the range query for the "age" field.
+//
+// Parameters:
+//   - to: The value representing the upper bound of the range. It can be of any type
+//     that is valid for the field (e.g., integer, string, date).
+//
+// Returns:
+//
+//	The updated rangeType object with the "to" field set to the specified value.
+func (r rangeType) To(to any) rangeType {
+	return r.putInTheField("to", to)
+}
+
+// Relation sets the "relation" field for the range query.
+//
+// This method specifies the relationship between the ranges in the query. It allows
+// you to define how the "from" and "to" values are related, such as whether one
+// range is within another, contains it, or intersects with it.
+//
+// Example usage:
+//
+//	r := es.Range("age").Relation(es.RangeRelation.Within)
+//	// r now has a "relation" field set to "within" in the range query for the "age" field.
+//
+// Parameters:
+//   - relation: The RangeRelation value representing the relationship between the ranges.
+//     It can be one of the following values:
+//   - Within
+//   - Contains
+//   - Intersects
+//
+// Returns:
+//
+//	The updated rangeType object with the "relation" field set to the specified value.
+func (r rangeType) Relation(relation RangeRelation.RangeRelation) rangeType {
+	return r.putInTheField("relation", relation)
 }

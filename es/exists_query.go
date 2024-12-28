@@ -27,6 +27,36 @@ func Exists(key string) existsType {
 	}
 }
 
+func (e existsType) putInTheField(key string, value any) existsType {
+	if exists, ok := e["exists"].(Object); ok {
+		exists[key] = value
+	}
+	return e
+}
+
+// Boost sets the "boost" parameter in an existsType query.
+//
+// This method allows you to specify a boost factor for the exists query,
+// which influences the relevance score of matching documents. A higher
+// boost value increases the importance of the query in the overall score,
+// resulting in higher scores for documents that satisfy the exists condition.
+//
+// Example usage:
+//
+//	e := es.Exists().Boost(2.0)
+//	// e now includes a "boost" parameter set to 2.0.
+//
+// Parameters:
+//   - boost: A float64 value representing the boost factor for the exists
+//     query.
+//
+// Returns:
+//
+//	The updated existsType object with the "boost" parameter set.
+func (e existsType) Boost(boost float64) existsType {
+	return e.putInTheField("boost", boost)
+}
+
 // ExistsFunc creates an existsType object based on a condition evaluated by a function.
 //
 // This function conditionally creates an existsType object if the provided function
