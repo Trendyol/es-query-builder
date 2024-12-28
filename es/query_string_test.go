@@ -1,8 +1,9 @@
 package es_test
 
 import (
-	TextQueryType "github.com/Trendyol/es-query-builder/es/enums/text-query-type"
 	"testing"
+
+	TextQueryType "github.com/Trendyol/es-query-builder/es/enums/text-query-type"
 
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"
