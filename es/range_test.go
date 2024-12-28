@@ -1,8 +1,9 @@
 package es_test
 
 import (
-	range_relation "github.com/Trendyol/es-query-builder/es/enums/range-relation"
 	"testing"
+
+	range_relation "github.com/Trendyol/es-query-builder/es/enums/range-relation"
 
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"

@@ -1,4 +1,4 @@
-// Package range_relation provides utilities for working with range relations.
+// Package rangerelation provides utilities for working with range relations.
 //
 // RangeRelation is a string type used to specify the spatial or logical relationship
 // between two ranges, such as whether one range is entirely within another,
@@ -14,7 +14,7 @@
 //   - Within: Indicates that one range is entirely within another.
 //   - Contains: Indicates that one range entirely contains another.
 //   - Intersects: Indicates that the ranges overlap or intersect at least partially.
-package range_relation
+package rangerelation
 
 // RangeRelation represents the relationship between two ranges.
 //

@@ -1,4 +1,4 @@
-package range_relation_test
+package rangerelation_test
 
 import (
 	"testing"
