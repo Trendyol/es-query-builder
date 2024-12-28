@@ -1,5 +1,9 @@
 package es
 
+import (
+	Operator "github.com/Trendyol/es-query-builder/es/enums/operator"
+)
+
 type simpleQueryStringType Object
 
 // SimpleQueryString creates a new simpleQueryStringType object with the specified query string.
@@ -10,7 +14,7 @@ type simpleQueryStringType Object
 //
 // Example usage:
 //
-//	q := SimpleQueryString("Foo + Bar")
+//	q := es.SimpleQueryString("Foo + Bar")
 //	// q now contains a simpleQueryStringType object with a simple query string query.
 //
 // Parameters:
@@ -36,7 +40,7 @@ func SimpleQueryString[T any](query T) simpleQueryStringType {
 //
 // Example usage:
 //
-//	q := SimpleQueryString("Foo Bar").Fields([]string{"title", "content"})
+//	q := es.SimpleQueryString("Foo Bar").Fields([]string{"title", "content"})
 //	// q now searches within the "title" and "content" fields.
 //
 // Parameters:
@@ -46,8 +50,7 @@ func SimpleQueryString[T any](query T) simpleQueryStringType {
 //
 // The updated simpleQueryStringType object with the "fields" option set.
 func (q simpleQueryStringType) Fields(value []string) simpleQueryStringType {
-	q.putInTheField("fields", value)
-	return q
+	return q.putInTheField("fields", value)
 }
 
 // Analyzer sets the analyzer to be used for the simpleQueryStringType object.
@@ -58,7 +61,7 @@ func (q simpleQueryStringType) Fields(value []string) simpleQueryStringType {
 //
 // Example usage:
 //
-//	q := SimpleQueryString("Foo Bar").Analyzer("standard")
+//	q := es.SimpleQueryString("Foo Bar").Analyzer("standard")
 //	// q now uses the "standard" analyzer for processing the query string.
 //
 // Parameters:
@@ -68,32 +71,30 @@ func (q simpleQueryStringType) Fields(value []string) simpleQueryStringType {
 //
 // The updated simpleQueryStringType object with the "analyzer" set.
 func (q simpleQueryStringType) Analyzer(value string) simpleQueryStringType {
-	q.putInTheField("analyzer", value)
-	return q
+	return q.putInTheField("analyzer", value)
 }
 
 // DefaultOperator sets the default operator for the simpleQueryStringType object.
 //
 // This method specifies the default operator to be used between terms in the query string
-// when no explicit operator is provided. The default operator can be "AND" or "OR",
-// determining whether all terms (AND) or any term (OR) must be matched in the search results.
+// when no explicit operator is provided. The default operator can be operator.And or operator.Or,
+// determining whether all terms (and) or any term (or) must be matched in the search results.
 //
 // Example usage:
 //
 //	q := es.SimpleQueryString("Foo Bar").
-//	DefaultOperator("OR")
+//	DefaultOperator(operator.Or)
 //
-// q now uses "OR" as the default operator, meaning any term can match in the query.
+// q now uses "or" as the default operator, meaning any term can match in the query.
 //
 // Parameters:
-//   - value: A string representing the default operator to be used ("AND" or "OR").
+//   - operator: A operator.Operator representing the default operator to be used ("and" or "or").
 //
 // Returns:
 //
 // The updated simpleQueryStringType object with the "default_operator" set.
-func (q simpleQueryStringType) DefaultOperator(value string) simpleQueryStringType {
-	q.putInTheField("default_operator", value)
-	return q
+func (q simpleQueryStringType) DefaultOperator(operator Operator.Operator) simpleQueryStringType {
+	return q.putInTheField("default_operator", operator)
 }
 
 // MinimumShouldMatch sets the minimum number of clauses that must match for the simpleQueryStringType object.
@@ -104,7 +105,7 @@ func (q simpleQueryStringType) DefaultOperator(value string) simpleQueryStringTy
 //
 // Example usage:
 //
-//	q := SimpleQueryString("Foo Bar Baz").MinimumShouldMatch("2")
+//	q := es.SimpleQueryString("Foo Bar Baz").MinimumShouldMatch("2")
 //	// q now requires that at least 2 of the terms match for a document to be considered a match.
 //
 // Parameters:
@@ -114,8 +115,7 @@ func (q simpleQueryStringType) DefaultOperator(value string) simpleQueryStringTy
 //
 // The updated simpleQueryStringType object with the "minimum_should_match" option set.
 func (q simpleQueryStringType) MinimumShouldMatch(value string) simpleQueryStringType {
-	q.putInTheField("minimum_should_match", value)
-	return q
+	return q.putInTheField("minimum_should_match", value)
 }
 
 // FuzzyMaxExpansions sets the maximum number of expansions for fuzzy matching in the simpleQueryStringType object.
@@ -127,7 +127,7 @@ func (q simpleQueryStringType) MinimumShouldMatch(value string) simpleQueryStrin
 //
 // Example usage:
 //
-//	q := SimpleQueryString("Foo~").FuzzyMaxExpansions(50)
+//	q := es.SimpleQueryString("Foo~").FuzzyMaxExpansions(50)
 //	// q now allows up to 50 expansions for fuzzy matching.
 //
 // Parameters:
@@ -137,8 +137,7 @@ func (q simpleQueryStringType) MinimumShouldMatch(value string) simpleQueryStrin
 //
 // The updated simpleQueryStringType object with the "fuzzy_max_expansions" option set.
 func (q simpleQueryStringType) FuzzyMaxExpansions(value int64) simpleQueryStringType {
-	q.putInTheField("fuzzy_max_expansions", value)
-	return q
+	return q.putInTheField("fuzzy_max_expansions", value)
 }
 
 // FuzzyPrefixLength sets the prefix length for fuzzy matching in the simpleQueryStringType object.
@@ -150,7 +149,7 @@ func (q simpleQueryStringType) FuzzyMaxExpansions(value int64) simpleQueryString
 //
 // Example usage:
 //
-//	q := SimpleQueryString("Foo~").FuzzyPrefixLength(2)
+//	q := es.SimpleQueryString("Foo~").FuzzyPrefixLength(2)
 //	// q now requires the first 2 characters to match exactly before applying fuzziness.
 //
 // Parameters:
@@ -160,8 +159,7 @@ func (q simpleQueryStringType) FuzzyMaxExpansions(value int64) simpleQueryString
 //
 // The updated simpleQueryStringType object with the "fuzzy_prefix_length" option set.
 func (q simpleQueryStringType) FuzzyPrefixLength(value int64) simpleQueryStringType {
-	q.putInTheField("fuzzy_prefix_length", value)
-	return q
+	return q.putInTheField("fuzzy_prefix_length", value)
 }
 
 // FuzzyTranspositions sets the option to allow transpositions in fuzzy matching for the simpleQueryStringType object.
@@ -172,7 +170,7 @@ func (q simpleQueryStringType) FuzzyPrefixLength(value int64) simpleQueryStringT
 //
 // Example usage:
 //
-//	q := SimpleQueryString("Foo~").FuzzyTranspositions(true)
+//	q := es.SimpleQueryString("Foo~").FuzzyTranspositions(true)
 //	// q now allows transpositions in fuzzy matching.
 //
 // Parameters:
@@ -182,8 +180,7 @@ func (q simpleQueryStringType) FuzzyPrefixLength(value int64) simpleQueryStringT
 //
 // The updated simpleQueryStringType object with the "fuzzy_transpositions" option set.
 func (q simpleQueryStringType) FuzzyTranspositions(value bool) simpleQueryStringType {
-	q.putInTheField("fuzzy_transpositions", value)
-	return q
+	return q.putInTheField("fuzzy_transpositions", value)
 }
 
 // AnalyzeWildcard sets the option to analyze wildcard terms in the simpleQueryStringType object.
@@ -194,7 +191,7 @@ func (q simpleQueryStringType) FuzzyTranspositions(value bool) simpleQueryString
 //
 // Example usage:
 //
-//	q := SimpleQueryString("Fo*").AnalyzeWildcard(true)
+//	q := es.SimpleQueryString("Fo*").AnalyzeWildcard(true)
 //	// q now analyzes wildcard terms in the query string.
 //
 // Parameters:
@@ -204,8 +201,7 @@ func (q simpleQueryStringType) FuzzyTranspositions(value bool) simpleQueryString
 //
 // The updated simpleQueryStringType object with the "analyze_wildcard" option set.
 func (q simpleQueryStringType) AnalyzeWildcard(value bool) simpleQueryStringType {
-	q.putInTheField("analyze_wildcard", value)
-	return q
+	return q.putInTheField("analyze_wildcard", value)
 }
 
 // AutoGenerateSynonymsPhraseQuery sets the option to automatically generate phrase queries for synonyms
@@ -217,7 +213,7 @@ func (q simpleQueryStringType) AnalyzeWildcard(value bool) simpleQueryStringType
 //
 // Example usage:
 //
-//	q := SimpleQueryString("quick brown fox").AutoGenerateSynonymsPhraseQuery(true)
+//	q := es.SimpleQueryString("quick brown fox").AutoGenerateSynonymsPhraseQuery(true)
 //	// q now automatically generates phrase queries for synonyms in the query string.
 //
 // Parameters:
@@ -227,8 +223,7 @@ func (q simpleQueryStringType) AnalyzeWildcard(value bool) simpleQueryStringType
 //
 // The updated simpleQueryStringType object with the "auto_generate_synonyms_phrase_query" option set.
 func (q simpleQueryStringType) AutoGenerateSynonymsPhraseQuery(value bool) simpleQueryStringType {
-	q.putInTheField("auto_generate_synonyms_phrase_query", value)
-	return q
+	return q.putInTheField("auto_generate_synonyms_phrase_query", value)
 }
 
 // Flags sets the flags for the simpleQueryStringType object.
@@ -238,7 +233,7 @@ func (q simpleQueryStringType) AutoGenerateSynonymsPhraseQuery(value bool) simpl
 //
 // Example usage:
 //
-//	q := SimpleQueryString("Foo Bar").Flags("AND|OR|PREFIX")
+//	q := es.SimpleQueryString("Foo Bar").Flags("AND|OR|PREFIX")
 //	// q now enables AND, OR, and PREFIX features for the query.
 //
 // Parameters:
@@ -249,8 +244,7 @@ func (q simpleQueryStringType) AutoGenerateSynonymsPhraseQuery(value bool) simpl
 //
 // The updated simpleQueryStringType object with the "flags" option set.
 func (q simpleQueryStringType) Flags(value string) simpleQueryStringType {
-	q.putInTheField("flags", value)
-	return q
+	return q.putInTheField("flags", value)
 }
 
 // Lenient sets the leniency option for the simpleQueryStringType object.
@@ -262,7 +256,7 @@ func (q simpleQueryStringType) Flags(value string) simpleQueryStringType {
 //
 // Example usage:
 //
-//	q := SimpleQueryString("Foo Bar").Lenient(true)
+//	q := es.SimpleQueryString("Foo Bar").Lenient(true)
 //	// q is now lenient, allowing it to tolerate errors during the query.
 //
 // Parameters:
@@ -272,8 +266,7 @@ func (q simpleQueryStringType) Flags(value string) simpleQueryStringType {
 //
 // The updated simpleQueryStringType object with the "lenient" option set.
 func (q simpleQueryStringType) Lenient(value bool) simpleQueryStringType {
-	q.putInTheField("lenient", value)
-	return q
+	return q.putInTheField("lenient", value)
 }
 
 // QuoteFieldSuffix sets the field suffix to be used for quoted text in the simpleQueryStringType object.
@@ -283,7 +276,7 @@ func (q simpleQueryStringType) Lenient(value bool) simpleQueryStringType {
 //
 // Example usage:
 //
-//	q := SimpleQueryString("Foo \"Bar Baz\"").QuoteFieldSuffix("_phrase")
+//	q := es.SimpleQueryString("Foo \"Bar Baz\"").QuoteFieldSuffix("_phrase")
 //	// q now appends "_phrase" to the field names when processing quoted text in the query string.
 //
 // Parameters:
@@ -293,8 +286,30 @@ func (q simpleQueryStringType) Lenient(value bool) simpleQueryStringType {
 //
 // The updated simpleQueryStringType object with the "quote_field_suffix" option set.
 func (q simpleQueryStringType) QuoteFieldSuffix(value string) simpleQueryStringType {
-	q.putInTheField("quote_field_suffix", value)
-	return q
+	return q.putInTheField("quote_field_suffix", value)
+}
+
+// Boost sets the "boost" parameter in a simpleQueryStringType query.
+//
+// This method allows you to specify a boost factor for the simple query string query,
+// which influences the relevance score of matching documents. A higher boost value
+// increases the importance of the query in the overall score, resulting in higher
+// scores for documents that match the query string conditions.
+//
+// Example usage:
+//
+//	q := es.SimpleQueryString().Boost(1.8)
+//	// q now includes a "boost" parameter set to 1.8.
+//
+// Parameters:
+//   - boost: A float64 value representing the boost factor for the simple
+//     query string query.
+//
+// Returns:
+//
+//	The updated simpleQueryStringType object with the "boost" parameter set.
+func (q simpleQueryStringType) Boost(boost float64) simpleQueryStringType {
+	return q.putInTheField("boost", boost)
 }
 
 func (q simpleQueryStringType) putInTheField(key string, value any) simpleQueryStringType {

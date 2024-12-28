@@ -61,7 +61,7 @@ func Test_Term_should_have_Boost_method(t *testing.T) {
 	term := es.Term("key", "value")
 
 	// When Then
-	assert.NotNil(t, term.CaseInsensitive)
+	assert.NotNil(t, term.Boost)
 }
 
 func Test_Term_Boost_should_create_json_with_boost_field_inside_term(t *testing.T) {

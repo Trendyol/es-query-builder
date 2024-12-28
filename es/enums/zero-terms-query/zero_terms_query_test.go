@@ -3,9 +3,9 @@ package zerotermsquery_test
 import (
 	"testing"
 
-	"github.com/Trendyol/es-query-builder/test/assert"
+	ZeroTermsQuery "github.com/Trendyol/es-query-builder/es/enums/zero-terms-query"
 
-	ZeroTermsQuery "github.com/Trendyol/es-query-builder/es/enums/match/zero-terms-query"
+	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
 func Test_ZeroTermsQueryString(t *testing.T) {

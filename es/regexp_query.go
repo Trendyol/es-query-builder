@@ -10,7 +10,7 @@ type regexpType Object
 //
 // Example usage:
 //
-//	t := Regexp("endpoint", "/books/.*")
+//	t := es.Regexp("endpoint", "/books/.*")
 //	// t now contains a regexpType object with a regexp query for the "endpoint" field.
 //
 // Parameters:
@@ -30,22 +30,10 @@ func Regexp(key string, value string) regexpType {
 	}
 }
 
-func (r regexpType) putInTheField(key string, value any) regexpType {
-	if regexp, ok := r["regexp"].(Object); ok {
-		for _, fieldObj := range regexp {
-			if fieldObject, foOk := fieldObj.(Object); foOk {
-				fieldObject[key] = value
-				break
-			}
-		}
-	}
-	return r
-}
-
 // Flags Enables optional operators for the regular expression.
 // Example usage:
 //
-//	regexp := Regexp("endpoint", "/books/.*").Flags("ALL")
+//	regexp := es.Regexp("endpoint", "/books/.*").Flags("ALL")
 //	// regexp now a "flags" field set "ALL" in the regexp query object.
 //
 // Parameters:
@@ -62,7 +50,7 @@ func (r regexpType) Flags(flags string) regexpType {
 // value with the indexed field values when set to true.
 // Example usage:
 //
-//	regexp := Regexp("endpoint", "/books/.*").CaseInsensitive(true)
+//	regexp := es.Regexp("endpoint", "/books/.*").CaseInsensitive(true)
 //	// regexp now a "case_insensitive" field set true in the regexp query object.
 //
 // Parameters:
@@ -78,7 +66,7 @@ func (r regexpType) CaseInsensitive(caseInsensitive bool) regexpType {
 // MaxDeterminizedStates Maximum number of automaton states required for the query.
 // Example usage:
 //
-//	regexp := Regexp("endpoint", "/books/.*").MaxDeterminizedStates(10000)
+//	regexp := es.Regexp("endpoint", "/books/.*").MaxDeterminizedStates(10000)
 //	// regexp now a "max_determinized_states" field set 10000 in the regexp query object.
 //
 // Parameters:
@@ -91,10 +79,10 @@ func (r regexpType) MaxDeterminizedStates(maxDeterminizedStates int) regexpType 
 	return r.putInTheField("max_determinized_states", maxDeterminizedStates)
 }
 
-// ReWrite Method used to rewrite the query.
+// Rewrite Method used to rewrite the query.
 // Example usage:
 //
-//	regexp := Regexp("endpoint", "/books/.*").ReWrite("a")
+//	regexp := es.Regexp("endpoint", "/books/.*").Rewrite("a")
 //	// regexp now a "rewrite" field set "a" in the regexp query object.
 //
 // Parameters:
@@ -103,6 +91,41 @@ func (r regexpType) MaxDeterminizedStates(maxDeterminizedStates int) regexpType 
 // Returns:
 //
 //	The updated regexp object with the "rewrite" field set to the specified value.
-func (r regexpType) ReWrite(rewrite string) regexpType {
+func (r regexpType) Rewrite(rewrite string) regexpType {
 	return r.putInTheField("rewrite", rewrite)
+}
+
+// Boost sets the "boost" parameter in a regexpType query.
+//
+// This method allows you to specify a boost factor for the regular expression query,
+// which influences the relevance score of matching documents. A higher boost value
+// increases the importance of the query in the overall score, resulting in higher
+// scores for documents that match the regular expression.
+//
+// Example usage:
+//
+//	r := es.Regexp().Boost(1.2)
+//	// r now includes a "boost" parameter set to 1.2.
+//
+// Parameters:
+//   - boost: A float64 value representing the boost factor for the regular
+//     expression query.
+//
+// Returns:
+//
+//	The updated regexpType object with the "boost" parameter set.
+func (r regexpType) Boost(boost float64) regexpType {
+	return r.putInTheField("boost", boost)
+}
+
+func (r regexpType) putInTheField(key string, value any) regexpType {
+	if regexp, ok := r["regexp"].(Object); ok {
+		for _, fieldObj := range regexp {
+			if fieldObject, foOk := fieldObj.(Object); foOk {
+				fieldObject[key] = value
+				break
+			}
+		}
+	}
+	return r
 }

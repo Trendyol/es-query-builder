@@ -179,16 +179,6 @@ func AggCustom(agg Object) aggsType {
 	return aggsType(agg)
 }
 
-func (agg aggsType) putInTheField(key string, value any) aggsType {
-	for _, fieldObj := range agg {
-		if fieldObject, ok := fieldObj.(Object); ok {
-			fieldObject[key] = value
-			break
-		}
-	}
-	return agg
-}
-
 // Aggs adds a nested aggregation to the aggsType object.
 //
 // This method adds a nested aggregation under the "aggs" field with the given name.
@@ -385,4 +375,14 @@ func (o Object) Aggs(name string, agg aggsType) Object {
 	aggs[name] = agg
 	o["aggs"] = aggs
 	return o
+}
+
+func (agg aggsType) putInTheField(key string, value any) aggsType {
+	for _, fieldObj := range agg {
+		if fieldObject, ok := fieldObj.(Object); ok {
+			fieldObject[key] = value
+			break
+		}
+	}
+	return agg
 }

@@ -17,7 +17,7 @@ type ShouldType Array
 //
 // Example usage:
 //
-//	b := Bool()
+//	b := es.Bool()
 //	// b is now an empty BoolType object that can be used in a query.
 //
 // Returns:
@@ -36,7 +36,7 @@ func Bool() BoolType {
 //
 // Example usage:
 //
-//	b := Bool().MinimumShouldMatch(2)
+//	b := es.Bool().MinimumShouldMatch(2)
 //	// b now includes a "minimum_should_match" parameter with a value of 2.
 //
 // Parameters:
@@ -60,7 +60,7 @@ func (b BoolType) MinimumShouldMatch(minimumShouldMatch any) BoolType {
 //
 // Example usage:
 //
-//	b := Bool().AdjustPureNegative(true)
+//	b := es.Bool().AdjustPureNegative(true)
 //	// b now includes an "adjust_pure_negative" parameter set to true.
 //
 // Parameters:
@@ -84,7 +84,7 @@ func (b BoolType) AdjustPureNegative(adjustPureNegative bool) BoolType {
 //
 // Example usage:
 //
-//	b := Bool().Boost(1.5)
+//	b := es.Bool().Boost(1.5)
 //	// b now includes a "boost" parameter with a value of 1.5.
 //
 // Parameters:

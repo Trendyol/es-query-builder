@@ -10,7 +10,7 @@ type termsType Object
 //
 // Example usage:
 //
-//	t := Terms("category", "books", "electronics")
+//	t := es.Terms("category", "books", "electronics")
 //	// t now contains a termsType object with a terms query for the "category" field.
 //
 // Parameters:
@@ -29,13 +29,6 @@ func Terms(key string, values ...any) termsType {
 	}
 }
 
-func (t termsType) putInTheField(key string, value any) termsType {
-	if terms, ok := t["terms"].(Object); ok {
-		terms[key] = value
-	}
-	return t
-}
-
 // Boost sets the "boost" parameter in a termsType query.
 //
 // This method allows you to specify a boost factor for the terms query,
@@ -46,7 +39,7 @@ func (t termsType) putInTheField(key string, value any) termsType {
 //
 // Example usage:
 //
-//	t := Terms().Boost(1.5)
+//	t := es.Terms().Boost(1.5)
 //	// t now includes a "boost" parameter set to 1.5.
 //
 // Parameters:
@@ -69,7 +62,7 @@ func (t termsType) Boost(boost float64) termsType {
 //
 // Example usage:
 //
-//	t := TermsArray("category", []string{"books", "electronics"})
+//	t := es.TermsArray("category", []string{"books", "electronics"})
 //	// t now contains a termsType object with a terms query for the "category" field.
 //
 // Parameters:
@@ -96,7 +89,7 @@ func TermsArray[T any](key string, values []T) termsType {
 //
 // Example usage:
 //
-//	t := TermsFunc("category", []string{"books", "electronics"}, func(key string, values []string) bool {
+//	t := es.TermsFunc("category", []string{"books", "electronics"}, func(key string, values []string) bool {
 //	    return len(values) > 0
 //	})
 //	// t is either a termsType object or nil based on the condition.
@@ -124,7 +117,7 @@ func TermsFunc[T any](key string, values []T, f func(key string, values []T) boo
 //
 // Example usage:
 //
-//	t := TermsIf("category", []string{"books", "electronics"}, true)
+//	t := es.TermsIf("category", []string{"books", "electronics"}, true)
 //	// t is a termsType object if the condition is true; otherwise, it is nil.
 //
 // Parameters:
@@ -140,4 +133,11 @@ func TermsIf[T any](key string, values []T, condition bool) termsType {
 		return nil
 	}
 	return TermsArray(key, values)
+}
+
+func (t termsType) putInTheField(key string, value any) termsType {
+	if terms, ok := t["terms"].(Object); ok {
+		terms[key] = value
+	}
+	return t
 }

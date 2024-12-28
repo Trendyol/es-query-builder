@@ -208,7 +208,7 @@ func (o Object) SourceExcludes(fields ...string) Object {
 //
 // Example usage:
 //
-//	s := Sort("age")
+//	s := es.Sort("age")
 //	// s now includes a sortType with an "age" field that can be further configured.
 //
 // Parameters:
@@ -223,16 +223,6 @@ func Sort(field string) sortType {
 	}
 }
 
-func (s sortType) putInTheField(key string, value any) sortType {
-	for _, fieldObj := range s {
-		if fieldObject, ok := fieldObj.(Object); ok {
-			fieldObject[key] = value
-			break
-		}
-	}
-	return s
-}
-
 // Order sets the "order" parameter in a sortType object.
 //
 // This method specifies the order in which the results should be sorted.
@@ -241,7 +231,7 @@ func (s sortType) putInTheField(key string, value any) sortType {
 //
 // Example usage:
 //
-//	s := Sort("age").Order(Order.Desc)
+//	s := es.Sort("age").Order(Order.Desc)
 //	// s now includes an "order" parameter with the value "desc".
 //
 // Parameters:
@@ -262,7 +252,7 @@ func (s sortType) Order(order Order.Order) sortType {
 //
 // Example usage:
 //
-//	s := Sort("age").Mode(Mode.Avg)
+//	s := es.Sort("age").Mode(Mode.Avg)
 //	// s now includes a "mode" parameter with the value "avg".
 //
 // Parameters:
@@ -282,7 +272,7 @@ func (s sortType) Mode(mode Mode.Mode) sortType {
 //
 // Example usage:
 //
-//	query := es.NewQuery(...).Sort(Sort("age").Order(Order.Desc), Sort("date").Order(Order.Asc))
+//	query := es.NewQuery(...).Sort(es.Sort("age").Order(Order.Desc), es.Sort("date").Order(Order.Asc))
 //	// query now includes a "sort" parameter with multiple sortType objects.
 //
 // Parameters:
@@ -294,4 +284,14 @@ func (s sortType) Mode(mode Mode.Mode) sortType {
 func (o Object) Sort(sorts ...sortType) Object {
 	o["sort"] = sorts
 	return o
+}
+
+func (s sortType) putInTheField(key string, value any) sortType {
+	for _, fieldObj := range s {
+		if fieldObject, ok := fieldObj.(Object); ok {
+			fieldObject[key] = value
+			break
+		}
+	}
+	return s
 }
