@@ -32,13 +32,6 @@ func Nested[T any](path string, nestedQuery T) nestedType {
 	}
 }
 
-func (n nestedType) putInNested(key string, value any) nestedType {
-	if nestedObject, ok := n["nested"].(Object); ok {
-		nestedObject[key] = value
-	}
-	return n
-}
-
 // InnerHits sets the "inner_hits" field for the nested query.
 //
 // This method specifies the inner hits for the nested query, allowing you to control
@@ -81,4 +74,11 @@ func (n nestedType) InnerHits(innerHits Object) nestedType {
 //	The updated nestedType object with the "score_mode" field set to the specified value.
 func (n nestedType) ScoreMode(scoreMode ScoreMode.ScoreMode) nestedType {
 	return n.putInNested("score_mode", scoreMode)
+}
+
+func (n nestedType) putInNested(key string, value any) nestedType {
+	if nestedObject, ok := n["nested"].(Object); ok {
+		nestedObject[key] = value
+	}
+	return n
 }

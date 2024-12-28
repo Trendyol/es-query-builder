@@ -30,17 +30,6 @@ func Term[T any](key string, value T) termType {
 	}
 }
 
-func (t termType) putInTheField(key string, value any) termType {
-	if term, ok := t["term"].(Object); ok {
-		for field := range term {
-			if fieldObject, foOk := term[field].(Object); foOk {
-				fieldObject[key] = value
-			}
-		}
-	}
-	return t
-}
-
 // CaseInsensitive sets the "case_insensitive" parameter in a termType query.
 //
 // This method allows you to specify whether the term query should be case-
@@ -138,4 +127,15 @@ func TermIf[T any](key string, value T, condition bool) termType {
 		return nil
 	}
 	return Term(key, value)
+}
+
+func (t termType) putInTheField(key string, value any) termType {
+	if term, ok := t["term"].(Object); ok {
+		for field := range term {
+			if fieldObject, foOk := term[field].(Object); foOk {
+				fieldObject[key] = value
+			}
+		}
+	}
+	return t
 }

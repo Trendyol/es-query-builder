@@ -28,28 +28,6 @@ func Range(key string) rangeType {
 	}
 }
 
-func (r rangeType) putInTheField(key string, value any) rangeType {
-	if rang, ok := r["range"].(Object); ok {
-		for field := range rang {
-			if fieldObject, foOk := rang[field].(Object); foOk {
-				fieldObject[key] = value
-			}
-		}
-	}
-	return r
-}
-
-func (r rangeType) delete(key string) rangeType {
-	if rang, ok := r["range"].(Object); ok {
-		for field := range rang {
-			if fieldObject, foOk := rang[field].(Object); foOk {
-				delete(fieldObject, key)
-			}
-		}
-	}
-	return r
-}
-
 // LesserThan sets the "lt" (less than) field for the range query.
 //
 // This method specifies that the range query should match values that are less than
@@ -242,4 +220,26 @@ func (r rangeType) To(to any) rangeType {
 //	The updated rangeType object with the "relation" field set to the specified value.
 func (r rangeType) Relation(relation RangeRelation.RangeRelation) rangeType {
 	return r.putInTheField("relation", relation)
+}
+
+func (r rangeType) putInTheField(key string, value any) rangeType {
+	if rang, ok := r["range"].(Object); ok {
+		for field := range rang {
+			if fieldObject, foOk := rang[field].(Object); foOk {
+				fieldObject[key] = value
+			}
+		}
+	}
+	return r
+}
+
+func (r rangeType) delete(key string) rangeType {
+	if rang, ok := r["range"].(Object); ok {
+		for field := range rang {
+			if fieldObject, foOk := rang[field].(Object); foOk {
+				delete(fieldObject, key)
+			}
+		}
+	}
+	return r
 }

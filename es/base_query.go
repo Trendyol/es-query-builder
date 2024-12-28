@@ -223,16 +223,6 @@ func Sort(field string) sortType {
 	}
 }
 
-func (s sortType) putInTheField(key string, value any) sortType {
-	for _, fieldObj := range s {
-		if fieldObject, ok := fieldObj.(Object); ok {
-			fieldObject[key] = value
-			break
-		}
-	}
-	return s
-}
-
 // Order sets the "order" parameter in a sortType object.
 //
 // This method specifies the order in which the results should be sorted.
@@ -294,4 +284,14 @@ func (s sortType) Mode(mode Mode.Mode) sortType {
 func (o Object) Sort(sorts ...sortType) Object {
 	o["sort"] = sorts
 	return o
+}
+
+func (s sortType) putInTheField(key string, value any) sortType {
+	for _, fieldObj := range s {
+		if fieldObject, ok := fieldObj.(Object); ok {
+			fieldObject[key] = value
+			break
+		}
+	}
+	return s
 }

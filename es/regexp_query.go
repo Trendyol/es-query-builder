@@ -30,18 +30,6 @@ func Regexp(key string, value string) regexpType {
 	}
 }
 
-func (r regexpType) putInTheField(key string, value any) regexpType {
-	if regexp, ok := r["regexp"].(Object); ok {
-		for _, fieldObj := range regexp {
-			if fieldObject, foOk := fieldObj.(Object); foOk {
-				fieldObject[key] = value
-				break
-			}
-		}
-	}
-	return r
-}
-
 // Flags Enables optional operators for the regular expression.
 // Example usage:
 //
@@ -128,4 +116,16 @@ func (r regexpType) Rewrite(rewrite string) regexpType {
 //	The updated regexpType object with the "boost" parameter set.
 func (r regexpType) Boost(boost float64) regexpType {
 	return r.putInTheField("boost", boost)
+}
+
+func (r regexpType) putInTheField(key string, value any) regexpType {
+	if regexp, ok := r["regexp"].(Object); ok {
+		for _, fieldObj := range regexp {
+			if fieldObject, foOk := fieldObj.(Object); foOk {
+				fieldObject[key] = value
+				break
+			}
+		}
+	}
+	return r
 }

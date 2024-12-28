@@ -35,18 +35,6 @@ func Match[T any](key string, query T) matchType {
 	}
 }
 
-func (m matchType) putInTheField(key string, value any) matchType {
-	if match, ok := m["match"].(Object); ok {
-		for _, fieldObj := range match {
-			if fieldObject, foOk := fieldObj.(Object); foOk {
-				fieldObject[key] = value
-				break
-			}
-		}
-	}
-	return m
-}
-
 // Operator sets the "operator" field in the match query.
 //
 // This method configures the match query to use a specified operator (e.g., "AND" or "OR")
@@ -278,4 +266,16 @@ func (m matchType) AutoGenerateSynonymsPhraseQuery(autoGenerateSynonymsPhraseQue
 //	The updated matchType object with the "zero_terms_query" field set to the specified value.
 func (m matchType) ZeroTermsQuery(zeroTermsQuery ZeroTermsQuery.ZeroTermsQuery) matchType {
 	return m.putInTheField("zero_terms_query", zeroTermsQuery)
+}
+
+func (m matchType) putInTheField(key string, value any) matchType {
+	if match, ok := m["match"].(Object); ok {
+		for _, fieldObj := range match {
+			if fieldObject, foOk := fieldObj.(Object); foOk {
+				fieldObject[key] = value
+				break
+			}
+		}
+	}
+	return m
 }

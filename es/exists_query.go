@@ -27,13 +27,6 @@ func Exists(key string) existsType {
 	}
 }
 
-func (e existsType) putInTheField(key string, value any) existsType {
-	if exists, ok := e["exists"].(Object); ok {
-		exists[key] = value
-	}
-	return e
-}
-
 // Boost sets the "boost" parameter in an existsType query.
 //
 // This method allows you to specify a boost factor for the exists query,
@@ -107,4 +100,11 @@ func ExistsIf(key string, condition bool) existsType {
 		return nil
 	}
 	return Exists(key)
+}
+
+func (e existsType) putInTheField(key string, value any) existsType {
+	if exists, ok := e["exists"].(Object); ok {
+		exists[key] = value
+	}
+	return e
 }

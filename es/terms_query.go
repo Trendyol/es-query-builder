@@ -29,13 +29,6 @@ func Terms(key string, values ...any) termsType {
 	}
 }
 
-func (t termsType) putInTheField(key string, value any) termsType {
-	if terms, ok := t["terms"].(Object); ok {
-		terms[key] = value
-	}
-	return t
-}
-
 // Boost sets the "boost" parameter in a termsType query.
 //
 // This method allows you to specify a boost factor for the terms query,
@@ -140,4 +133,11 @@ func TermsIf[T any](key string, values []T, condition bool) termsType {
 		return nil
 	}
 	return TermsArray(key, values)
+}
+
+func (t termsType) putInTheField(key string, value any) termsType {
+	if terms, ok := t["terms"].(Object); ok {
+		terms[key] = value
+	}
+	return t
 }

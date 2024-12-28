@@ -1,35 +1,30 @@
-// Package rangerelation provides utilities for working with range relations.
+package rangerelation
+
+// RangeRelation represents the relationship between two ranges in a query.
 //
-// RangeRelation is a string type used to specify the spatial or logical relationship
-// between two ranges, such as whether one range is entirely within another,
-// contains another, or intersects with another.
+// RangeRelation is a string type that specifies how a range interacts with another range.
+// It is commonly used in range queries, especially in geospatial or numeric data contexts.
+//
+// Constants:
+//   - Within: Specifies that the range is entirely within another range.
+//   - Contains: Specifies that the range entirely contains another range.
+//   - Intersects: Specifies that the range overlaps or intersects with another range.
 //
 // Example usage:
 //
 //	var relation RangeRelation = Within
 //
-//	// Use relation in a query configuration
-//
-// Constants:
-//   - Within: Indicates that one range is entirely within another.
-//   - Contains: Indicates that one range entirely contains another.
-//   - Intersects: Indicates that the ranges overlap or intersect at least partially.
-package rangerelation
-
-// RangeRelation represents the relationship between two ranges.
-//
-// RangeRelation is a string type that specifies the spatial or logical relationship
-// between ranges, which is commonly used in geospatial queries or similar scenarios.
+//	// Use relation in a range query configuration.
 type RangeRelation string
 
 const (
-	// Within indicates that one range is entirely within another.
+	// Within specifies that the range is entirely within another range.
 	Within RangeRelation = "within"
 
-	// Contains indicates that one range entirely contains another.
+	// Contains specifies that the range entirely contains another range.
 	Contains RangeRelation = "contains"
 
-	// Intersects indicates that the ranges overlap or intersect at least partially.
+	// Intersects specifies that the range overlaps or intersects with another range.
 	Intersects RangeRelation = "intersects"
 )
 

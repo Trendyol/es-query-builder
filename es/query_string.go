@@ -2,6 +2,7 @@ package es
 
 import (
 	Operator "github.com/Trendyol/es-query-builder/es/enums/operator"
+	TextQueryType "github.com/Trendyol/es-query-builder/es/enums/text-query-type"
 )
 
 type queryStringType Object
@@ -537,6 +538,104 @@ func (q queryStringType) Rewrite(value string) queryStringType {
 // The updated queryStringType object with the "time_zone" option set.
 func (q queryStringType) TimeZone(value string) queryStringType {
 	return q.putInTheField("time_zone", value)
+}
+
+// Escape sets the "escape" field for the query string query.
+//
+// This method determines whether special characters in the query string should be escaped.
+// Escaping ensures that special characters are treated literally rather than as part of
+// the query syntax.
+//
+// Example usage:
+//
+//	q := es.QueryString("user:admin").Escape(true)
+//	// q now has an "escape" field set to true in the query string query.
+//
+// Parameters:
+//   - escape: A boolean value indicating whether special characters should be escaped:
+//   - true: Escape special characters in the query string.
+//   - false: Do not escape special characters.
+//
+// Returns:
+//
+//	The updated queryStringType object with the "escape" field set to the specified value.
+func (q queryStringType) Escape(escape bool) queryStringType {
+	return q.putInTheField("escape", escape)
+}
+
+// FuzzyRewrite sets the "fuzzy_rewrite" field for the query string query.
+//
+// This method specifies the rewrite method to use when executing fuzzy queries.
+// The rewrite method determines how the fuzzy query is executed, such as whether
+// it uses constant scoring or other advanced mechanisms.
+//
+// Example usage:
+//
+//	q := es.QueryString("name:john~").FuzzyRewrite("scoring_boolean")
+//	// q now has a "fuzzy_rewrite" field set to "scoring_boolean" in the query string query.
+//
+// Parameters:
+//   - fuzzyRewrite: A string value specifying the rewrite method for fuzzy queries.
+//     Common options include:
+//   - "constant_score": Produces a constant score for all matching documents.
+//   - "scoring_boolean": Uses a scoring Boolean query for matching documents.
+//   - Other custom rewrite methods supported by the query engine.
+//
+// Returns:
+//
+//	The updated queryStringType object with the "fuzzy_rewrite" field set to the specified value.
+func (q queryStringType) FuzzyRewrite(fuzzyRewrite string) queryStringType {
+	return q.putInTheField("fuzzy_rewrite", fuzzyRewrite)
+}
+
+// TieBreaker sets the "tie_breaker" field for the query string query.
+//
+// This method specifies the tie breaker multiplier for disjunction queries. The tie breaker
+// is used to control how much influence matching terms in multiple fields have on the final score.
+// It helps balance the score contribution of documents that match multiple fields.
+//
+// Example usage:
+//
+//	q := es.QueryString("title:search body:query").TieBreaker(0.3)
+//	// q now has a "tie_breaker" field set to 0.3 in the query string query.
+//
+// Parameters:
+//   - tieBreaker: A float64 value representing the tie breaker multiplier. Common values include:
+//   - 0.0: Uses only the score of the best matching term (no tie breaking).
+//   - 1.0: Adds up the scores of all matching terms.
+//   - Values between 0.0 and 1.0 control the influence of additional matching terms.
+//
+// Returns:
+//
+//	The updated queryStringType object with the "tie_breaker" field set to the specified value.
+func (q queryStringType) TieBreaker(tieBreaker float64) queryStringType {
+	return q.putInTheField("tie_breaker", tieBreaker)
+}
+
+// Type sets the "type" field for the query string query.
+//
+// This method specifies the text query type to use for the query. The text query type
+// determines how the query text is analyzed and matched against the fields.
+//
+// Example usage:
+//
+//	q := es.QueryString("description:fast").Type(es.TextQueryType.Phrase)
+//	// q now has a "type" field set to "phrase" in the query string query.
+//
+// Parameters:
+//   - textQueryType: A TextQueryType value representing the type of text query to use.
+//     Common options include:
+//   - TextQueryType.BestFields: Use the best matching fields for scoring.
+//   - TextQueryType.MostFields: Combine scores from all matching fields.
+//   - TextQueryType.CrossFields: Treat matching fields as a single field.
+//   - TextQueryType.Phrase: Match terms as a phrase.
+//   - TextQueryType.PhrasePrefix: Match terms as a phrase with a prefix.
+//
+// Returns:
+//
+//	The updated queryStringType object with the "type" field set to the specified value.
+func (q queryStringType) Type(textQueryType TextQueryType.TextQueryType) queryStringType {
+	return q.putInTheField("type", textQueryType)
 }
 
 func (q queryStringType) putInTheField(key string, value any) queryStringType {

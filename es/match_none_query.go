@@ -30,18 +30,6 @@ func MatchNone[T any](key string, query T) matchNoneType {
 	}
 }
 
-func (m matchNoneType) putInTheField(key string, value any) matchNoneType {
-	if matchNone, ok := m["match_none"].(Object); ok {
-		for _, fieldObj := range matchNone {
-			if fieldObject, foOk := fieldObj.(Object); foOk {
-				fieldObject[key] = value
-				break
-			}
-		}
-	}
-	return m
-}
-
 // Boost sets the "boost" field in the match_none query.
 //
 // This method configures the match_none query to use a specified boost factor, which influences
@@ -61,4 +49,16 @@ func (m matchNoneType) putInTheField(key string, value any) matchNoneType {
 //	The updated matchNoneType object with the "boost" field set to the specified value.
 func (m matchNoneType) Boost(boost float64) matchNoneType {
 	return m.putInTheField("boost", boost)
+}
+
+func (m matchNoneType) putInTheField(key string, value any) matchNoneType {
+	if matchNone, ok := m["match_none"].(Object); ok {
+		for _, fieldObj := range matchNone {
+			if fieldObject, foOk := fieldObj.(Object); foOk {
+				fieldObject[key] = value
+				break
+			}
+		}
+	}
+	return m
 }

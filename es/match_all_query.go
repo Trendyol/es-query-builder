@@ -22,13 +22,6 @@ func MatchAll() matchAllType {
 	}
 }
 
-func (m matchAllType) putInTheField(key string, value any) matchAllType {
-	if matchAll, ok := m["match_all"].(Object); ok {
-		matchAll[key] = value
-	}
-	return m
-}
-
 // Boost sets the "boost" field in the match_all query.
 //
 // This method configures the match_all query to use a specified boost factor, which influences
@@ -47,4 +40,11 @@ func (m matchAllType) putInTheField(key string, value any) matchAllType {
 //	The updated matchAllType object with the "boost" field set to the specified value.
 func (m matchAllType) Boost(boost float64) matchAllType {
 	return m.putInTheField("boost", boost)
+}
+
+func (m matchAllType) putInTheField(key string, value any) matchAllType {
+	if matchAll, ok := m["match_all"].(Object); ok {
+		matchAll[key] = value
+	}
+	return m
 }

@@ -1,6 +1,7 @@
 package es_test
 
 import (
+	TextQueryType "github.com/Trendyol/es-query-builder/es/enums/text-query-type"
 	"testing"
 
 	"github.com/Trendyol/es-query-builder/es"
@@ -285,6 +286,54 @@ func Test_QueryString_method_should_create_query_string_with_time_zone(t *testin
 	assert.Equal(t, "{\"query\":{\"query_string\":{\"query\":\"value\",\"time_zone\":\"value\"}}}", bodyJSON)
 }
 
+func Test_QueryString_method_should_create_query_string_with_escape(t *testing.T) {
+	// Given When
+	b := es.NewQuery(
+		es.QueryString("value").Escape(true),
+	)
+
+	// Then
+	assert.NotNil(t, b)
+	bodyJSON := assert.MarshalWithoutError(t, b)
+	assert.Equal(t, "{\"query\":{\"query_string\":{\"escape\":true,\"query\":\"value\"}}}", bodyJSON)
+}
+
+func Test_QueryString_method_should_create_query_string_with_type(t *testing.T) {
+	// Given When
+	b := es.NewQuery(
+		es.QueryString("value").Type(TextQueryType.Mostfields),
+	)
+
+	// Then
+	assert.NotNil(t, b)
+	bodyJSON := assert.MarshalWithoutError(t, b)
+	assert.Equal(t, "{\"query\":{\"query_string\":{\"query\":\"value\",\"type\":\"most_fields\"}}}", bodyJSON)
+}
+
+func Test_QueryString_method_should_create_query_string_with_tie_breaker(t *testing.T) {
+	// Given When
+	b := es.NewQuery(
+		es.QueryString("value").TieBreaker(5.291),
+	)
+
+	// Then
+	assert.NotNil(t, b)
+	bodyJSON := assert.MarshalWithoutError(t, b)
+	assert.Equal(t, "{\"query\":{\"query_string\":{\"query\":\"value\",\"tie_breaker\":5.291}}}", bodyJSON)
+}
+
+func Test_QueryString_method_should_create_query_string_with_fuzzy_rewrite(t *testing.T) {
+	// Given When
+	b := es.NewQuery(
+		es.QueryString("value").FuzzyRewrite("reWrite"),
+	)
+
+	// Then
+	assert.NotNil(t, b)
+	bodyJSON := assert.MarshalWithoutError(t, b)
+	assert.Equal(t, "{\"query\":{\"query_string\":{\"fuzzy_rewrite\":\"reWrite\",\"query\":\"value\"}}}", bodyJSON)
+}
+
 func Test_QueryString_method_should_create_query_string_with_all_parameters(t *testing.T) {
 	// Given When
 	b := es.NewQuery(
@@ -303,23 +352,28 @@ func Test_QueryString_method_should_create_query_string_with_all_parameters(t *t
 			FuzzyPrefixLength(1.0).
 			FuzzyTranspositions(true).
 			Lenient(true).
-			MaxDeterminizedStates(2).MinimumShouldMatch("value").
+			MaxDeterminizedStates(2).
+			MinimumShouldMatch("value").
 			QuoteAnalyzer("value").
 			PhraseSlop(2).
 			QuoteFieldSuffix("value").
 			Rewrite("value").
-			TimeZone("value"),
+			TimeZone("value").
+			TieBreaker(3.29).
+			Escape(false).
+			FuzzyRewrite("constant_score").
+			Type(TextQueryType.Crossfields),
 	)
 
 	// Then
 	assert.NotNil(t, b)
 	bodyJSON := assert.MarshalWithoutError(t, b)
 	assert.Equal(t, "{\"query\":{\"query_string\":{\"allow_leading_wildcard\":false,\"analyze_wildcard\":true,"+
-		"\"analyzer\":\"value\",\"auto_generate_synonyms_phrase_query\":true,"+
-		"\"boost\":2.5,\"default_field\":\"value\",\"default_operator\":\"value\","+
-		"\"enable_position_increments\":true,\"fields\":[\"field1\",\"field2\"],"+
-		"\"fuzziness\":\"value\",\"fuzzy_max_expansions\":2,\"fuzzy_prefix_length\":1,"+
-		"\"fuzzy_transpositions\":true,\"lenient\":true,\"max_determinized_states\":2,"+
-		"\"minimum_should_match\":\"value\",\"phrase_slop\":2,\"query\":\"value\",\"quote_analyzer\":\"value\","+
-		"\"quote_field_suffix\":\"value\",\"rewrite\":\"value\",\"time_zone\":\"value\"}}}", bodyJSON)
+		"\"analyzer\":\"value\",\"auto_generate_synonyms_phrase_query\":true,\"boost\":2.5,\"default_field\":\"value\","+
+		"\"default_operator\":\"value\",\"enable_position_increments\":true,\"escape\":false,\"fields\":[\"field1\","+
+		"\"field2\"],\"fuzziness\":\"value\",\"fuzzy_max_expansions\":2,\"fuzzy_prefix_length\":1,"+
+		"\"fuzzy_rewrite\":\"constant_score\",\"fuzzy_transpositions\":true,\"lenient\":true,"+
+		"\"max_determinized_states\":2,\"minimum_should_match\":\"value\",\"phrase_slop\":2,\"query\":\"value\","+
+		"\"quote_analyzer\":\"value\",\"quote_field_suffix\":\"value\",\"rewrite\":\"value\",\"tie_breaker\":3.29,"+
+		"\"time_zone\":\"value\",\"type\":\"cross_fields\"}}}", bodyJSON)
 }
