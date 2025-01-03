@@ -45,12 +45,12 @@ func Nested[T any](path string, nestedQuery T) nestedType {
 //	// nested now has an "inner_hits" field with the specified Object in the nested query.
 //
 // Parameters:
-//   - innerHits: An es.Object representing the inner hits configuration for the nested query.
+//   - innerHits: An innerHitsType representing the inner hits configuration for the nested query.
 //
 // Returns:
 //
 //	The updated nestedType object with the "inner_hits" field set to the specified value.
-func (n nestedType) InnerHits(innerHits Object) nestedType {
+func (n nestedType) InnerHits(innerHits innerHitsType) nestedType {
 	return n.putInNested("inner_hits", innerHits)
 }
 

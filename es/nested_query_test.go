@@ -50,13 +50,18 @@ func Test_Nested_should_have_InnerHits_method(t *testing.T) {
 func Test_InnerHits_should_add_inner_hits_field_into_Nested(t *testing.T) {
 	// Given
 	query := es.NewQuery(
-		es.Nested("nested.path", es.Object{}).InnerHits(es.Object{"inner": "hits"}),
+		es.Nested("nested.path", es.Object{}).
+			InnerHits(
+				es.InnerHits().
+					Size(1_000).
+					From(5_000),
+			),
 	)
 
 	// When Then
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
-	assert.Equal(t, "{\"query\":{\"nested\":{\"inner_hits\":{\"inner\":\"hits\"},\"path\":\"nested.path\",\"query\":{}}}}", bodyJSON)
+	assert.Equal(t, "{\"query\":{\"nested\":{\"inner_hits\":{\"from\":5000,\"size\":1000},\"path\":\"nested.path\",\"query\":{}}}}", bodyJSON)
 }
 
 func Test_Nested_should_have_ScoreMode_method(t *testing.T) {
