@@ -28,10 +28,10 @@ func Test_Match_method_should_create_matchType(t *testing.T) {
 
 func Test_Match_should_have_Boost_method(t *testing.T) {
 	// Given
-	term := es.Match("key", "value")
+	match := es.Match("key", "value")
 
 	// When Then
-	assert.NotNil(t, term.Boost)
+	assert.NotNil(t, match.Boost)
 }
 
 func Test_Match_Boost_should_create_json_with_boost_field_inside_match(t *testing.T) {
@@ -49,10 +49,10 @@ func Test_Match_Boost_should_create_json_with_boost_field_inside_match(t *testin
 
 func Test_Match_should_have_Operator_method(t *testing.T) {
 	// Given
-	term := es.Match("key", "value")
+	match := es.Match("key", "value")
 
 	// When Then
-	assert.NotNil(t, term.Operator)
+	assert.NotNil(t, match.Operator)
 }
 
 func Test_Match_Operator_should_create_json_with_operator_field_inside_match(t *testing.T) {
@@ -70,10 +70,10 @@ func Test_Match_Operator_should_create_json_with_operator_field_inside_match(t *
 
 func Test_Match_should_have_CutoffFrequency_method(t *testing.T) {
 	// Given
-	term := es.Match("key", "value")
+	match := es.Match("key", "value")
 
 	// When Then
-	assert.NotNil(t, term.CutoffFrequency)
+	assert.NotNil(t, match.CutoffFrequency)
 }
 
 func Test_Match_CutoffFrequency_should_create_json_with_cutoff_frequency_field_inside_match(t *testing.T) {
@@ -91,10 +91,10 @@ func Test_Match_CutoffFrequency_should_create_json_with_cutoff_frequency_field_i
 
 func Test_Match_should_have_Fuzziness_method(t *testing.T) {
 	// Given
-	term := es.Match("key", "value")
+	match := es.Match("key", "value")
 
 	// When Then
-	assert.NotNil(t, term.Fuzziness)
+	assert.NotNil(t, match.Fuzziness)
 }
 
 func Test_Match_Fuzziness_should_create_json_with_fuzziness_field_inside_match(t *testing.T) {
@@ -112,10 +112,10 @@ func Test_Match_Fuzziness_should_create_json_with_fuzziness_field_inside_match(t
 
 func Test_Match_should_have_FuzzyRewrite_method(t *testing.T) {
 	// Given
-	term := es.Match("key", "value")
+	match := es.Match("key", "value")
 
 	// When Then
-	assert.NotNil(t, term.FuzzyRewrite)
+	assert.NotNil(t, match.FuzzyRewrite)
 }
 
 func Test_Match_FuzzyRewrite_should_create_json_with_fuzzy_rewrite_field_inside_match(t *testing.T) {
@@ -133,10 +133,10 @@ func Test_Match_FuzzyRewrite_should_create_json_with_fuzzy_rewrite_field_inside_
 
 func Test_Match_should_have_FuzzyTranspositions_method(t *testing.T) {
 	// Given
-	term := es.Match("key", "value")
+	match := es.Match("key", "value")
 
 	// When Then
-	assert.NotNil(t, term.FuzzyTranspositions)
+	assert.NotNil(t, match.FuzzyTranspositions)
 }
 
 func Test_Match_FuzzyTranspositions_should_create_json_with_fuzzy_transpositions_field_inside_match(t *testing.T) {
@@ -154,10 +154,10 @@ func Test_Match_FuzzyTranspositions_should_create_json_with_fuzzy_transpositions
 
 func Test_Match_should_have_Lenient_method(t *testing.T) {
 	// Given
-	term := es.Match("key", "value")
+	match := es.Match("key", "value")
 
 	// When Then
-	assert.NotNil(t, term.Lenient)
+	assert.NotNil(t, match.Lenient)
 }
 
 func Test_Match_Lenient_should_create_json_with_lenient_field_inside_match(t *testing.T) {
@@ -175,10 +175,10 @@ func Test_Match_Lenient_should_create_json_with_lenient_field_inside_match(t *te
 
 func Test_Match_should_have_MaxExpansions_method(t *testing.T) {
 	// Given
-	term := es.Match("key", "value")
+	match := es.Match("key", "value")
 
 	// When Then
-	assert.NotNil(t, term.MaxExpansions)
+	assert.NotNil(t, match.MaxExpansions)
 }
 
 func Test_Match_MaxExpansions_should_create_json_with_max_expansions_field_inside_match(t *testing.T) {
@@ -196,10 +196,10 @@ func Test_Match_MaxExpansions_should_create_json_with_max_expansions_field_insid
 
 func Test_Match_should_have_PrefixLength_method(t *testing.T) {
 	// Given
-	term := es.Match("key", "value")
+	match := es.Match("key", "value")
 
 	// When Then
-	assert.NotNil(t, term.PrefixLength)
+	assert.NotNil(t, match.PrefixLength)
 }
 
 func Test_Match_PrefixLength_should_create_json_with_prefix_length_field_inside_match(t *testing.T) {
@@ -217,10 +217,10 @@ func Test_Match_PrefixLength_should_create_json_with_prefix_length_field_inside_
 
 func Test_Match_should_have_AutoGenerateSynonymsPhraseQuery_method(t *testing.T) {
 	// Given
-	term := es.Match("key", "value")
+	match := es.Match("key", "value")
 
 	// When Then
-	assert.NotNil(t, term.AutoGenerateSynonymsPhraseQuery)
+	assert.NotNil(t, match.AutoGenerateSynonymsPhraseQuery)
 }
 
 func Test_Match_AutoGenerateSynonymsPhraseQuery_should_create_json_auto_generate_synonyms_phrase_query_field_inside_match(t *testing.T) {
@@ -238,10 +238,10 @@ func Test_Match_AutoGenerateSynonymsPhraseQuery_should_create_json_auto_generate
 
 func Test_Match_should_have_ZeroTermsQuery_method(t *testing.T) {
 	// Given
-	term := es.Match("key", "value")
+	match := es.Match("key", "value")
 
 	// When Then
-	assert.NotNil(t, term.ZeroTermsQuery)
+	assert.NotNil(t, match.ZeroTermsQuery)
 }
 
 func Test_Match_ZeroTermsQuery_should_create_json_with_zero_terms_query_field_inside_match(t *testing.T) {
