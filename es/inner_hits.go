@@ -447,8 +447,9 @@ func FieldCollapse(field string) fieldCollapseType {
 //
 // Example usage:
 //
-//	collapse := es.FieldCollapse("category").Collapse(es.FieldCollapse("subcategory"))
-//	// The es.fieldCollapseType object now includes a "collapse" field specifying the collapse criteria for both "category" and "subcategory".
+//		collapse := es.FieldCollapse("category").Collapse(es.FieldCollapse("subcategory"))
+//		// The es.fieldCollapseType object now includes a "collapse" field specifying the collapse criteria
+//	 // for both "category" and "subcategory".
 //
 // Parameters:
 //   - fieldCollapse: A es.fieldCollapseType object representing the collapse configuration to apply.
