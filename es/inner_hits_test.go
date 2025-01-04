@@ -143,6 +143,15 @@ func Test_InnerHits_SourceIncludes_should_create_json_with_source_field_inside_i
 	assert.Equal(t, "{\"_source\":{\"includes\":[\"id\",\"name\",\"description\"]}}", bodyJSON)
 }
 
+func Test_InnerHits_SourceIncludes_should_not_create_json_with_source_field_inside_inner_hits_when_empty(t *testing.T) {
+	// Given
+	ih := es.InnerHits().SourceIncludes()
+	// When Then
+	assert.NotNil(t, ih)
+	bodyJSON := assert.MarshalWithoutError(t, ih)
+	assert.Equal(t, "{}", bodyJSON)
+}
+
 func Test_InnerHits_should_have_SourceExcludes_method(t *testing.T) {
 	// Given
 	ih := es.InnerHits()
@@ -158,6 +167,15 @@ func Test_InnerHits_SourceExcludes_should_create_json_with_source_field_inside_i
 	assert.NotNil(t, ih)
 	bodyJSON := assert.MarshalWithoutError(t, ih)
 	assert.Equal(t, "{\"_source\":{\"excludes\":[\"secret\",\"key\",\"partition\"]}}", bodyJSON)
+}
+
+func Test_InnerHits_SourceExcludes_should_not_create_json_with_source_field_inside_inner_hits_when_empty(t *testing.T) {
+	// Given
+	ih := es.InnerHits().SourceExcludes()
+	// When Then
+	assert.NotNil(t, ih)
+	bodyJSON := assert.MarshalWithoutError(t, ih)
+	assert.Equal(t, "{}", bodyJSON)
 }
 
 func Test_InnerHits_should_have_StoredFields_method(t *testing.T) {
