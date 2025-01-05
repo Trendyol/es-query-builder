@@ -4,22 +4,22 @@ import RangeRelation "github.com/Trendyol/es-query-builder/es/enums/range-relati
 
 type rangeType Object
 
-// Range creates a new rangeType object with the specified field.
+// Range creates a new es.rangeType object with the specified field.
 //
-// This function initializes a rangeType object for specifying range queries. The key represents
-// the field name, and the rangeType object is used to define the range conditions for that field.
+// This function initializes a es.rangeType object for specifying range queries. The key represents
+// the field name, and the es.rangeType object is used to define the range conditions for that field.
 //
 // Example usage:
 //
 //	r := es.Range("age")
-//	// r now contains a rangeType object with the specified field "age" for range queries.
+//	// r now contains a es.rangeType object with the specified field "age" for range queries.
 //
 // Parameters:
 //   - key: A string representing the field name for the range query.
 //
 // Returns:
 //
-//	A rangeType object with the specified field ready for defining range conditions.
+//	A es.rangeType object with the specified field ready for defining range conditions.
 func Range(key string) rangeType {
 	return rangeType{
 		"range": Object{
@@ -44,7 +44,7 @@ func Range(key string) rangeType {
 //
 // Returns:
 //
-//	The updated rangeType object with the "lt" field set to the specified value.
+//	The updated es.rangeType object with the "lt" field set to the specified value.
 func (r rangeType) LesserThan(lt any) rangeType {
 	return r.putInTheField("lt", lt).delete("lte")
 }
@@ -65,7 +65,7 @@ func (r rangeType) LesserThan(lt any) rangeType {
 //
 // Returns:
 //
-//	The updated rangeType object with the "lte" field set to the specified value.
+//	The updated es.rangeType object with the "lte" field set to the specified value.
 func (r rangeType) LesserThanOrEqual(lte any) rangeType {
 	return r.putInTheField("lte", lte).delete("lt")
 }
@@ -86,7 +86,7 @@ func (r rangeType) LesserThanOrEqual(lte any) rangeType {
 //
 // Returns:
 //
-//	The updated rangeType object with the "gt" field set to the specified value.
+//	The updated es.rangeType object with the "gt" field set to the specified value.
 func (r rangeType) GreaterThan(gt any) rangeType {
 	return r.putInTheField("gt", gt).delete("gte")
 }
@@ -107,7 +107,7 @@ func (r rangeType) GreaterThan(gt any) rangeType {
 //
 // Returns:
 //
-//	The updated rangeType object with the "gte" field set to the specified value.
+//	The updated es.rangeType object with the "gte" field set to the specified value.
 func (r rangeType) GreaterThanOrEqual(gte any) rangeType {
 	return r.putInTheField("gte", gte).delete("gt")
 }
@@ -128,7 +128,7 @@ func (r rangeType) GreaterThanOrEqual(gte any) rangeType {
 //
 // Returns:
 //
-//	The updated rangeType object with the "format" field set to the specified value.
+//	The updated es.rangeType object with the "format" field set to the specified value.
 func (r rangeType) Format(format string) rangeType {
 	return r.putInTheField("format", format)
 }
@@ -148,7 +148,7 @@ func (r rangeType) Format(format string) rangeType {
 //
 // Returns:
 //
-//	The updated rangeType object with the "boost" field set to the specified value.
+//	The updated es.rangeType object with the "boost" field set to the specified value.
 func (r rangeType) Boost(boost float64) rangeType {
 	return r.putInTheField("boost", boost)
 }
@@ -170,7 +170,7 @@ func (r rangeType) Boost(boost float64) rangeType {
 //
 // Returns:
 //
-//	The updated rangeType object with the "from" field set to the specified value.
+//	The updated es.rangeType object with the "from" field set to the specified value.
 func (r rangeType) From(from any) rangeType {
 	return r.putInTheField("from", from)
 }
@@ -192,7 +192,7 @@ func (r rangeType) From(from any) rangeType {
 //
 // Returns:
 //
-//	The updated rangeType object with the "to" field set to the specified value.
+//	The updated es.rangeType object with the "to" field set to the specified value.
 func (r rangeType) To(to any) rangeType {
 	return r.putInTheField("to", to)
 }
@@ -217,7 +217,7 @@ func (r rangeType) To(to any) rangeType {
 //
 // Returns:
 //
-//	The updated rangeType object with the "relation" field set to the specified value.
+//	The updated es.rangeType object with the "relation" field set to the specified value.
 func (r rangeType) Relation(relation RangeRelation.RangeRelation) rangeType {
 	return r.putInTheField("relation", relation)
 }

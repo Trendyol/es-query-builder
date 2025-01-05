@@ -24,7 +24,7 @@ type sortType Object
 //
 // Returns:
 //
-//	An Object containing the "query" field with the processed query clause.
+//	An es.Object containing the "query" field with the processed query clause.
 func NewQuery(queryClause any) Object {
 	if field, ok := correctType(queryClause); ok {
 		return Object{
@@ -54,7 +54,7 @@ func NewQuery(queryClause any) Object {
 //
 // Returns:
 //
-//	The updated Object with the "track_total_hits" parameter set.
+//	The updated es.Object with the "track_total_hits" parameter set.
 func (o Object) TrackTotalHits(value bool) Object {
 	o["track_total_hits"] = value
 	return o
@@ -78,7 +78,7 @@ func (o Object) TrackTotalHits(value bool) Object {
 //
 // Returns:
 //
-//	The updated Object with the "size" parameter set.
+//	The updated es.Object with the "size" parameter set.
 func (o Object) Size(size int) Object {
 	o["size"] = size
 	return o
@@ -102,7 +102,7 @@ func (o Object) Size(size int) Object {
 //
 // Returns:
 //
-//	The updated Object with the "from" parameter set.
+//	The updated es.Object with the "from" parameter set.
 func (o Object) From(from int) Object {
 	o["from"] = from
 	return o
@@ -142,7 +142,7 @@ func (o Object) SourceFalse() Object {
 //
 // Returns:
 //
-//	The updated Object with the "_source.includes" parameter set to the specified fields.
+//	The updated es.Object with the "_source.includes" parameter set to the specified fields.
 func (o Object) SourceIncludes(fields ...string) Object {
 	if len(fields) == 0 {
 		return o
@@ -179,7 +179,7 @@ func (o Object) SourceIncludes(fields ...string) Object {
 //
 // Returns:
 //
-//	The updated Object with the "_source.excludes" parameter set to the specified fields.
+//	The updated es.Object with the "_source.excludes" parameter set to the specified fields.
 func (o Object) SourceExcludes(fields ...string) Object {
 	if len(fields) == 0 {
 		return o
@@ -200,33 +200,33 @@ func (o Object) SourceExcludes(fields ...string) Object {
 	return o
 }
 
-// Sort creates a new sortType object with the specified field.
+// Sort creates a new es.sortType object with the specified field.
 //
-// This function initializes a sortType object with a given field name. The
+// This function initializes a es.sortType object with a given field name. The
 // field is used to specify the sorting criteria in the search query. The
-// resulting sortType can be further configured with sorting order and mode.
+// resulting es.sortType can be further configured with sorting order and mode.
 //
 // Example usage:
 //
 //	s := es.Sort("age")
-//	// s now includes a sortType with an "age" field that can be further configured.
+//	// s now includes a es.sortType with an "age" field that can be further configured.
 //
 // Parameters:
 //   - field: A string representing the field to sort by.
 //
 // Returns:
 //
-//	A sortType object with the specified field.
+//	A es.sortType object with the specified field.
 func Sort(field string) sortType {
 	return sortType{
 		field: Object{},
 	}
 }
 
-// Order sets the "order" parameter in a sortType object.
+// Order sets the "order" parameter in a es.sortType object.
 //
 // This method specifies the order in which the results should be sorted.
-// It configures the sortType object to sort the results in ascending or
+// It configures the es.sortType object to sort the results in ascending or
 // descending order.
 //
 // Example usage:
@@ -239,12 +239,12 @@ func Sort(field string) sortType {
 //
 // Returns:
 //
-//	The updated sortType object with the "order" parameter set.
+//	The updated es.sortType object with the "order" parameter set.
 func (s sortType) Order(order Order.Order) sortType {
 	return s.putInTheField("order", order)
 }
 
-// Mode sets the "mode" parameter in a sortType object.
+// Mode sets the "mode" parameter in a es.sortType object.
 //
 // This method specifies the mode used for sorting the results. The mode
 // determines how sorting should be handled, such as by specifying different
@@ -260,23 +260,23 @@ func (s sortType) Order(order Order.Order) sortType {
 //
 // Returns:
 //
-//	The updated sortType object with the "mode" parameter set.
+//	The updated es.sortType object with the "mode" parameter set.
 func (s sortType) Mode(mode Mode.Mode) sortType {
 	return s.putInTheField("mode", mode)
 }
 
-// Sort adds one or more sortType objects to an es.Object.
+// Sort adds one or more es.sortType objects to an es.Object.
 //
 // This method allows you to specify multiple sorting criteria for the search query.
-// Each sortType object defines how the results should be sorted based on different fields.
+// Each es.sortType object defines how the results should be sorted based on different fields.
 //
 // Example usage:
 //
 //	query := es.NewQuery(...).Sort(es.Sort("age").Order(Order.Desc), es.Sort("date").Order(Order.Asc))
-//	// query now includes a "sort" parameter with multiple sortType objects.
+//	// query now includes a "sort" parameter with multiple es.sortType objects.
 //
 // Parameters:
-//   - sorts: A variadic list of sortType objects, each specifying sorting criteria.
+//   - sorts: A variadic list of es.sortType objects, each specifying sorting criteria.
 //
 // Returns:
 //

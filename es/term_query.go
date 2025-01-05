@@ -2,16 +2,16 @@ package es
 
 type termType Object
 
-// Term creates a new termType object with the specified key-value pair.
+// Term creates a new es.termType object with the specified key-value pair.
 //
-// This function initializes a termType object with a single term query, where the
+// This function initializes a es.termType object with a single term query, where the
 // key is the field name and the value is the term to search for. This is typically
 // used to construct a term query in search queries.
 //
 // Example usage:
 //
 //	t := es.Term("category", "books")
-//	// t now contains a termType object with a term query for the "category" field.
+//	// t now contains a es.termType object with a term query for the "category" field.
 //
 // Parameters:
 //   - key: A string representing the field name for the term query.
@@ -19,7 +19,7 @@ type termType Object
 //
 // Returns:
 //
-//	A termType object containing the specified term query.
+//	A es.termType object containing the specified term query.
 func Term[T any](key string, value T) termType {
 	return termType{
 		"term": Object{
@@ -30,7 +30,7 @@ func Term[T any](key string, value T) termType {
 	}
 }
 
-// CaseInsensitive sets the "case_insensitive" parameter in a termType query.
+// CaseInsensitive sets the "case_insensitive" parameter in a es.termType query.
 //
 // This method allows you to specify whether the term query should be case-
 // insensitive. When set to true, the term matching will ignore case,
@@ -47,12 +47,12 @@ func Term[T any](key string, value T) termType {
 //
 // Returns:
 //
-//	The updated termType object with the "case_insensitive" parameter set.
+//	The updated es.termType object with the "case_insensitive" parameter set.
 func (t termType) CaseInsensitive(caseInsensitive bool) termType {
 	return t.putInTheField("case_insensitive", caseInsensitive)
 }
 
-// Boost sets the "boost" parameter in a termType query.
+// Boost sets the "boost" parameter in a es.termType query.
 //
 // This method allows you to specify a boost factor for the term query,
 // which influences the relevance score of matching documents. A higher
@@ -70,33 +70,33 @@ func (t termType) CaseInsensitive(caseInsensitive bool) termType {
 //
 // Returns:
 //
-//	The updated termType object with the "boost" parameter set.
+//	The updated es.termType object with the "boost" parameter set.
 func (t termType) Boost(boost float64) termType {
 	return t.putInTheField("boost", boost)
 }
 
-// TermFunc creates a termType object based on a condition evaluated by a function.
+// TermFunc creates a es.termType object based on a condition evaluated by a function.
 //
-// This function conditionally creates a termType object if the provided function
+// This function conditionally creates a es.termType object if the provided function
 // returns true for the given key-value pair. If the function returns false, it
-// returns nil instead of creating a termType object.
+// returns nil instead of creating a es.termType object.
 //
 // Example usage:
 //
 //	t := es.TermFunc("category", "books", func(key, value string) bool {
 //	    return value != ""
 //	})
-//	// t is either a termType object or nil based on the condition.
+//	// t is either a es.termType object or nil based on the condition.
 //
 // Parameters:
 //   - key: A string representing the field name for the term query.
 //   - value: The value to be searched for in the specified field. The type is generic.
 //   - f: A function that takes a key and value, and returns a boolean indicating
-//     whether to create the termType object.
+//     whether to create the es.termType object.
 //
 // Returns:
 //
-//	A termType object if the condition is true; otherwise, nil.
+//	A es.termType object if the condition is true; otherwise, nil.
 func TermFunc[T any](key string, value T, f func(key string, value T) bool) termType {
 	if !f(key, value) {
 		return nil
@@ -104,24 +104,24 @@ func TermFunc[T any](key string, value T, f func(key string, value T) bool) term
 	return Term(key, value)
 }
 
-// TermIf creates a termType object based on a boolean condition.
+// TermIf creates a es.termType object based on a boolean condition.
 //
-// This function creates a termType object if the provided condition is true. If
-// the condition is false, it returns nil instead of creating a termType object.
+// This function creates a es.termType object if the provided condition is true. If
+// the condition is false, it returns nil instead of creating a es.termType object.
 //
 // Example usage:
 //
 //	t := es.TermIf("category", "books", true)
-//	// t is a termType object if the condition is true; otherwise, it is nil.
+//	// t is a es.termType object if the condition is true; otherwise, it is nil.
 //
 // Parameters:
 //   - key: A string representing the field name for the term query.
 //   - value: The value to be searched for in the specified field. The type is generic.
-//   - condition: A boolean value that determines whether to create the termType object.
+//   - condition: A boolean value that determines whether to create the es.termType object.
 //
 // Returns:
 //
-//	A termType object if the condition is true; otherwise, nil.
+//	A es.termType object if the condition is true; otherwise, nil.
 func TermIf[T any](key string, value T, condition bool) termType {
 	if !condition {
 		return nil

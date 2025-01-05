@@ -12,22 +12,22 @@ type ShouldType Array
 
 // Bool creates and returns an empty BoolType object.
 //
-// This function is typically used to initialize a BoolType, which can be
+// This function is typically used to initialize a es.BoolType, which can be
 // populated later with the appropriate boolean query conditions.
 //
 // Example usage:
 //
 //	b := es.Bool()
-//	// b is now an empty BoolType object that can be used in a query.
+//	// b is now an empty es.BoolType object that can be used in a query.
 //
 // Returns:
 //
-//	An empty BoolType object.
+//	An empty es.BoolType object.
 func Bool() BoolType {
 	return BoolType{}
 }
 
-// MinimumShouldMatch sets the "minimum_should_match" parameter in a BoolType query.
+// MinimumShouldMatch sets the "minimum_should_match" parameter in a es.BoolType query.
 //
 // This method allows you to specify the minimum number of "should" clauses
 // that must match in a boolean query. The "minimum_should_match" parameter
@@ -45,13 +45,13 @@ func Bool() BoolType {
 //
 // Returns:
 //
-//	The updated BoolType object with the "minimum_should_match" parameter set.
+//	The updated es.BoolType object with the "minimum_should_match" parameter set.
 func (b BoolType) MinimumShouldMatch(minimumShouldMatch any) BoolType {
 	b["minimum_should_match"] = minimumShouldMatch
 	return b
 }
 
-// AdjustPureNegative sets the "adjust_pure_negative" parameter in a BoolType query.
+// AdjustPureNegative sets the "adjust_pure_negative" parameter in a es.BoolType query.
 //
 // This method allows you to specify whether pure negative queries should be
 // adjusted or not. When set to true, the query will be adjusted to include
@@ -69,13 +69,13 @@ func (b BoolType) MinimumShouldMatch(minimumShouldMatch any) BoolType {
 //
 // Returns:
 //
-//	The updated BoolType object with the "adjust_pure_negative" parameter set.
+//	The updated es.BoolType object with the "adjust_pure_negative" parameter set.
 func (b BoolType) AdjustPureNegative(adjustPureNegative bool) BoolType {
 	b["adjust_pure_negative"] = adjustPureNegative
 	return b
 }
 
-// Boost sets the "boost" parameter in a BoolType query.
+// Boost sets the "boost" parameter in a es.BoolType query.
 //
 // This method allows you to assign a boost value to a boolean query, which
 // can be used to increase or decrease the relevance score of the query's
@@ -94,17 +94,17 @@ func (b BoolType) AdjustPureNegative(adjustPureNegative bool) BoolType {
 //
 // Returns:
 //
-//	The updated BoolType object with the "boost" parameter set.
+//	The updated es.BoolType object with the "boost" parameter set.
 func (b BoolType) Boost(boost float64) BoolType {
 	b["boost"] = boost
 	return b
 }
 
-// Filter adds one or more filter conditions to the BoolType object.
+// Filter adds one or more filter conditions to the es.BoolType object.
 //
-// This method updates the "filter" section of the BoolType object by appending
+// This method updates the "filter" section of the es.BoolType object by appending
 // the specified filter conditions. It accepts a variadic number of filter conditions,
-// checks their types, and adds them to the "filter" array in the BoolType object.
+// checks their types, and adds them to the "filter" array in the es.BoolType object.
 //
 // Example usage:
 //
@@ -120,7 +120,7 @@ func (b BoolType) Boost(boost float64) BoolType {
 //
 // Returns:
 //
-//	The updated BoolType object with the new filter conditions added.
+//	The updated es.BoolType object with the new filter conditions added.
 func (b BoolType) Filter(items ...any) BoolType {
 	filter, ok := b["filter"].(FilterType)
 	if !ok {
@@ -135,11 +135,11 @@ func (b BoolType) Filter(items ...any) BoolType {
 	return b
 }
 
-// Must adds one or more conditions to the "must" section of the BoolType object.
+// Must adds one or more conditions to the "must" section of the es.BoolType object.
 //
 // This method updates the "must" section by appending the specified conditions.
 // It accepts a variadic number of conditions, checks their types, and adds them to
-// the "must" array in the BoolType object.
+// the "must" array in the es.BoolType object.
 //
 // Example usage:
 //
@@ -155,7 +155,7 @@ func (b BoolType) Filter(items ...any) BoolType {
 //
 // Returns:
 //
-//	The updated BoolType object with the new conditions added to the "must" section.
+//	The updated es.BoolType object with the new conditions added to the "must" section.
 func (b BoolType) Must(items ...any) BoolType {
 	must, ok := b["must"].(MustType)
 	if !ok {
@@ -170,11 +170,11 @@ func (b BoolType) Must(items ...any) BoolType {
 	return b
 }
 
-// MustNot adds one or more conditions to the "must_not" section of the BoolType object.
+// MustNot adds one or more conditions to the "must_not" section of the es.BoolType object.
 //
 // This method updates the "must_not" section by appending the specified conditions.
 // It accepts a variadic number of conditions, checks their types, and adds them to
-// the "must_not" array in the BoolType object.
+// the "must_not" array in the es.BoolType object.
 //
 // Example usage:
 //
@@ -190,7 +190,7 @@ func (b BoolType) Must(items ...any) BoolType {
 //
 // Returns:
 //
-//	The updated BoolType object with the new conditions added to the "must_not" section.
+//	The updated es.BoolType object with the new conditions added to the "must_not" section.
 func (b BoolType) MustNot(items ...any) BoolType {
 	mustNot, ok := b["must_not"].(MustNotType)
 	if !ok {
@@ -205,11 +205,11 @@ func (b BoolType) MustNot(items ...any) BoolType {
 	return b
 }
 
-// Should adds one or more conditions to the "should" section of the BoolType object.
+// Should adds one or more conditions to the "should" section of the es.BoolType object.
 //
 // This method updates the "should" section by appending the specified conditions.
 // It accepts a variadic number of conditions, checks their types, and adds them to
-// the "should" array in the BoolType object.
+// the "should" array in the es.BoolType object.
 //
 // Example usage:
 //
@@ -225,7 +225,7 @@ func (b BoolType) MustNot(items ...any) BoolType {
 //
 // Returns:
 //
-//	The updated BoolType object with the new conditions added to the "should" section.
+//	The updated es.BoolType object with the new conditions added to the "should" section.
 func (b BoolType) Should(items ...any) BoolType {
 	should, ok := b["should"].(ShouldType)
 	if !ok {

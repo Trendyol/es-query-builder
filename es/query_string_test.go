@@ -9,6 +9,8 @@ import (
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
+////   Query String   ////
+
 func Test_QueryString_should_exist_on_es_package(t *testing.T) {
 	// Given When
 	assert.NotNil(t, es.QueryString[any])

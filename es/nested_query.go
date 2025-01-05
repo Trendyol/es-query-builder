@@ -6,7 +6,7 @@ import (
 
 type nestedType Object
 
-// Nested creates a new nestedType object for a nested query.
+// Nested creates a new es.nestedType object for a nested query.
 //
 // This function initializes a nested query object with the specified path and query.
 // The path represents the field path for the nested query, and the nested query is
@@ -15,7 +15,7 @@ type nestedType Object
 // Example usage:
 //
 //	nestedQuery := es.Nested("comments", es.Bool().Filter(...).MustNot(...))
-//	// nestedQuery now contains a nestedType object with the specified path and query.
+//	// nestedQuery now contains a es.nestedType object with the specified path and query.
 //
 // Parameters:
 //   - path: A string representing the path for the nested query.
@@ -23,7 +23,7 @@ type nestedType Object
 //
 // Returns:
 //
-//	A nestedType object with the "nested" query and specified path.
+//	A es.nestedType object with the "nested" query and specified path.
 func Nested[T any](path string, nestedQuery T) nestedType {
 	o := NewQuery(nestedQuery)
 	o["path"] = path
@@ -45,11 +45,11 @@ func Nested[T any](path string, nestedQuery T) nestedType {
 //	// nested now has an "inner_hits" field with the specified Object in the nested query.
 //
 // Parameters:
-//   - innerHits: An innerHitsType representing the inner hits configuration for the nested query.
+//   - innerHits: An es.innerHitsType representing the inner hits configuration for the nested query.
 //
 // Returns:
 //
-//	The updated nestedType object with the "inner_hits" field set to the specified value.
+//	The updated es.nestedType object with the "inner_hits" field set to the specified value.
 func (n nestedType) InnerHits(innerHits innerHitsType) nestedType {
 	return n.putInNested("inner_hits", innerHits)
 }
@@ -91,7 +91,7 @@ func (n nestedType) ScoreMode(scoreMode ScoreMode.ScoreMode) nestedType {
 //
 // Returns:
 //
-//	The updated nestedType object with the "boost" field set to the specified value.
+//	The updated es.nestedType object with the "boost" field set to the specified value.
 func (n nestedType) Boost(boost float64) nestedType {
 	return n.putInNested("boost", boost)
 }
@@ -113,7 +113,7 @@ func (n nestedType) Boost(boost float64) nestedType {
 //
 // Returns:
 //
-//	The updated nestedType object with the "ignore_unmapped" field set to the specified value.
+//	The updated es.nestedType object with the "ignore_unmapped" field set to the specified value.
 func (n nestedType) IgnoreUnmapped(ignoreUnmapped bool) nestedType {
 	return n.putInNested("ignore_unmapped", ignoreUnmapped)
 }

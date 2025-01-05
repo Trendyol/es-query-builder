@@ -2,16 +2,16 @@ package es
 
 type regexpType Object
 
-// Regexp creates a new regexpType object with the specified key-value pair.
+// Regexp creates a new es.regexpType object with the specified key-value pair.
 //
-// This function initializes a regexpType object with a single regexp query, where the
+// This function initializes a es.regexpType object with a single regexp query, where the
 // key is the field name and the value is the regexp to search for. This is typically
 // used to construct a regexp query in search queries.
 //
 // Example usage:
 //
 //	t := es.Regexp("endpoint", "/books/.*")
-//	// t now contains a regexpType object with a regexp query for the "endpoint" field.
+//	// t now contains a es.regexpType object with a regexp query for the "endpoint" field.
 //
 // Parameters:
 //   - key: A string representing the field name for the regexp query.
@@ -19,7 +19,7 @@ type regexpType Object
 //
 // Returns:
 //
-//	A regexpType object containing the specified regexp query.
+//	A es.regexpType object containing the specified regexp query.
 func Regexp(key string, value string) regexpType {
 	return regexpType{
 		"regexp": Object{
@@ -41,7 +41,7 @@ func Regexp(key string, value string) regexpType {
 //
 // Returns:
 //
-//	The updated regexp object with the "flags" field set to the specified value.
+//	The updated es.regexpType object with the "flags" field set to the specified value.
 func (r regexpType) Flags(flags string) regexpType {
 	return r.putInTheField("flags", flags)
 }
@@ -58,7 +58,7 @@ func (r regexpType) Flags(flags string) regexpType {
 //
 // Returns:
 //
-//	The updated regexp object with the "case_insensitive" field set to the specified value.
+//	The updated es.regexpType object with the "case_insensitive" field set to the specified value.
 func (r regexpType) CaseInsensitive(caseInsensitive bool) regexpType {
 	return r.putInTheField("case_insensitive", caseInsensitive)
 }
@@ -74,7 +74,7 @@ func (r regexpType) CaseInsensitive(caseInsensitive bool) regexpType {
 //
 // Returns:
 //
-//	The updated regexp object with the "max_determinized_states" field set to the specified value.
+//	The updated es.regexpType object with the "max_determinized_states" field set to the specified value.
 func (r regexpType) MaxDeterminizedStates(maxDeterminizedStates int) regexpType {
 	return r.putInTheField("max_determinized_states", maxDeterminizedStates)
 }
@@ -90,12 +90,12 @@ func (r regexpType) MaxDeterminizedStates(maxDeterminizedStates int) regexpType 
 //
 // Returns:
 //
-//	The updated regexp object with the "rewrite" field set to the specified value.
+//	The updated es.regexpType object with the "rewrite" field set to the specified value.
 func (r regexpType) Rewrite(rewrite string) regexpType {
 	return r.putInTheField("rewrite", rewrite)
 }
 
-// Boost sets the "boost" parameter in a regexpType query.
+// Boost sets the "boost" parameter in a es.regexpType query.
 //
 // This method allows you to specify a boost factor for the regular expression query,
 // which influences the relevance score of matching documents. A higher boost value
@@ -113,7 +113,7 @@ func (r regexpType) Rewrite(rewrite string) regexpType {
 //
 // Returns:
 //
-//	The updated regexpType object with the "boost" parameter set.
+//	The updated es.regexpType object with the "boost" parameter set.
 func (r regexpType) Boost(boost float64) regexpType {
 	return r.putInTheField("boost", boost)
 }

@@ -21,7 +21,7 @@ type aggTermType Object
 //
 // Returns:
 //
-//	An aggTermType object with the "field" set to the provided value.
+//	An es.aggTermType object with the "field" set to the provided value.
 func AggTerm(field string) aggTermType {
 	return aggTermType{
 		"field": field,
@@ -31,7 +31,7 @@ func AggTerm(field string) aggTermType {
 // Missing sets the "missing" value for an aggregation term.
 //
 // This method specifies a value to be used when the field is missing in documents.
-// It updates the aggTermType object to handle missing values in the aggregation.
+// It updates the es.aggTermType object to handle missing values in the aggregation.
 //
 // Example usage:
 //
@@ -43,7 +43,7 @@ func AggTerm(field string) aggTermType {
 //
 // Returns:
 //
-//	The updated aggTermType object with the "missing" field set to the specified value.
+//	The updated es.aggTermType object with the "missing" field set to the specified value.
 func (aggTerm aggTermType) Missing(missing string) aggTermType {
 	aggTerm["missing"] = missing
 	return aggTerm
@@ -61,7 +61,7 @@ func (aggTerm aggTermType) Missing(missing string) aggTermType {
 //
 // Returns:
 //
-//	An aggsType object with the "terms" field initialized.
+//	An es.aggsType object with the "terms" field initialized.
 func AggTerms() aggsType {
 	return aggsType{
 		"terms": Object{},
@@ -80,7 +80,7 @@ func AggTerms() aggsType {
 //
 // Returns:
 //
-//	An aggsType object with the "multi_terms" field initialized.
+//	An es.aggsType object with the "multi_terms" field initialized.
 func AggMultiTerms() aggsType {
 	return aggsType{
 		"multi_terms": Object{},
@@ -99,7 +99,7 @@ func AggMultiTerms() aggsType {
 //
 // Returns:
 //
-//	An aggsType object with the "nested" field initialized.
+//	An es.aggsType object with the "nested" field initialized.
 func AggNested() aggsType {
 	return aggsType{
 		"nested": Object{},
@@ -117,7 +117,7 @@ func AggNested() aggsType {
 //
 // Returns:
 //
-//	An aggsType object with the "max" field initialized.
+//	An es.aggsType object with the "max" field initialized.
 func AggMax() aggsType {
 	return aggsType{
 		"max": Object{},
@@ -135,7 +135,7 @@ func AggMax() aggsType {
 //
 // Returns:
 //
-//	An aggsType object with the "min" field initialized.
+//	An es.aggsType object with the "min" field initialized.
 func AggMin() aggsType {
 	return aggsType{
 		"min": Object{},
@@ -153,7 +153,7 @@ func AggMin() aggsType {
 //
 // Returns:
 //
-//	An aggsType object with the "avg" field initialized.
+//	An es.aggsType object with the "avg" field initialized.
 func AggAvg() aggsType {
 	return aggsType{
 		"avg": Object{},
@@ -174,12 +174,12 @@ func AggAvg() aggsType {
 //
 // Returns:
 //
-//	An aggsType object initialized with the provided custom aggregation.
+//	An es.aggsType object initialized with the provided custom aggregation.
 func AggCustom(agg Object) aggsType {
 	return aggsType(agg)
 }
 
-// Aggs adds a nested aggregation to the aggsType object.
+// Aggs adds a nested aggregation to the es.aggsType object.
 //
 // This method adds a nested aggregation under the "aggs" field with the given name.
 //
@@ -195,7 +195,7 @@ func AggCustom(agg Object) aggsType {
 //
 // Returns:
 //
-//	The updated aggsType object with the nested aggregation added.
+//	The updated es.aggsType object with the nested aggregation added.
 func (agg aggsType) Aggs(name string, nestedAgg aggsType) aggsType {
 	aggs, ok := agg["aggs"].(Object)
 	if !ok {
@@ -206,9 +206,9 @@ func (agg aggsType) Aggs(name string, nestedAgg aggsType) aggsType {
 	return agg
 }
 
-// Field sets the "field" value in the aggsType object.
+// Field sets the "field" value in the es.aggsType object.
 //
-// This method specifies the field to aggregate on in the aggsType object.
+// This method specifies the field to aggregate on in the es.aggsType object.
 //
 // Example usage:
 //
@@ -220,14 +220,14 @@ func (agg aggsType) Aggs(name string, nestedAgg aggsType) aggsType {
 //
 // Returns:
 //
-//	The updated aggsType object with the "field" set to the specified value.
+//	The updated es.aggsType object with the "field" set to the specified value.
 func (agg aggsType) Field(field string) aggsType {
 	return agg.putInTheField("field", field)
 }
 
-// Path sets the "path" value in the aggsType object.
+// Path sets the "path" value in the es.aggsType object.
 //
-// This method specifies the nested path for the aggregation in the aggsType object.
+// This method specifies the nested path for the aggregation in the es.aggsType object.
 //
 // Example usage:
 //
@@ -239,12 +239,12 @@ func (agg aggsType) Field(field string) aggsType {
 //
 // Returns:
 //
-//	The updated aggsType object with the "path" set to the specified value.
+//	The updated es.aggsType object with the "path" set to the specified value.
 func (agg aggsType) Path(path string) aggsType {
 	return agg.putInTheField("path", path)
 }
 
-// Size sets the "size" value in the aggsType object.
+// Size sets the "size" value in the es.aggsType object.
 //
 // This method specifies the number of terms to return in the aggregation result.
 //
@@ -258,12 +258,12 @@ func (agg aggsType) Path(path string) aggsType {
 //
 // Returns:
 //
-//	The updated aggsType object with the "size" field set to the specified value.
+//	The updated es.aggsType object with the "size" field set to the specified value.
 func (agg aggsType) Size(size int) aggsType {
 	return agg.putInTheField("size", size)
 }
 
-// Order sets the "order" field in the aggsType object.
+// Order sets the "order" field in the es.aggsType object.
 //
 // This method specifies the sorting order for the aggregation results.
 //
@@ -278,7 +278,7 @@ func (agg aggsType) Size(size int) aggsType {
 //
 // Returns:
 //
-//	The updated aggsType object with the "order" field set to the specified value.
+//	The updated es.aggsType object with the "order" field set to the specified value.
 func (agg aggsType) Order(field string, order Order.Order) aggsType {
 	return agg.putInTheField("order",
 		Object{
@@ -287,7 +287,7 @@ func (agg aggsType) Order(field string, order Order.Order) aggsType {
 	)
 }
 
-// Include sets the "include" field in the aggsType object.
+// Include sets the "include" field in the es.aggsType object.
 //
 // This method specifies a pattern to include in the aggregation results.
 //
@@ -301,12 +301,12 @@ func (agg aggsType) Order(field string, order Order.Order) aggsType {
 //
 // Returns:
 //
-//	The updated aggsType object with the "include" field set to the specified value.
+//	The updated es.aggsType object with the "include" field set to the specified value.
 func (agg aggsType) Include(include string) aggsType {
 	return agg.putInTheField("include", include)
 }
 
-// Exclude sets the "exclude" field in the aggsType object.
+// Exclude sets the "exclude" field in the es.aggsType object.
 //
 // This method specifies a pattern to exclude from the aggregation results.
 //
@@ -320,14 +320,14 @@ func (agg aggsType) Include(include string) aggsType {
 //
 // Returns:
 //
-//	The updated aggsType object with the "exclude" field set to the specified value.
+//	The updated es.aggsType object with the "exclude" field set to the specified value.
 func (agg aggsType) Exclude(exclude string) aggsType {
 	return agg.putInTheField("exclude", exclude)
 }
 
 // Terms sets the "terms" field in the aggsType object.
 //
-// This method adds a list of aggregation terms to the "terms" field of the aggsType object.
+// This method adds a list of aggregation terms to the "terms" field of the es.aggsType object.
 // It allows specifying multiple term aggregations for the aggregation query.
 //
 // Example usage:
@@ -340,11 +340,11 @@ func (agg aggsType) Exclude(exclude string) aggsType {
 //	// agg now has the "terms" field containing the provided term aggregations.
 //
 // Parameters:
-//   - terms: A variadic list of aggTermType objects representing the term aggregations.
+//   - terms: A variadic list of es.aggTermType objects representing the term aggregations.
 //
 // Returns:
 //
-//	The updated aggsType object with the "terms" field set to the provided term aggregations.
+//	The updated es.aggsType object with the "terms" field set to the provided term aggregations.
 func (agg aggsType) Terms(terms ...aggTermType) aggsType {
 	return agg.putInTheField("terms", terms)
 }
@@ -362,7 +362,7 @@ func (agg aggsType) Terms(terms ...aggTermType) aggsType {
 //
 // Parameters:
 //   - name: The name to associate with the nested aggregation.
-//   - agg: The aggsType object representing the nested aggregation.
+//   - agg: The es.aggsType object representing the nested aggregation.
 //
 // Returns:
 //
