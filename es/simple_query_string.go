@@ -1,8 +1,6 @@
 package es
 
-import (
-	Operator "github.com/Trendyol/es-query-builder/es/enums/operator"
-)
+import Operator "github.com/Trendyol/es-query-builder/es/enums/operator"
 
 type simpleQueryStringType Object
 

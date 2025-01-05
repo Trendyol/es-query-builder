@@ -3,8 +3,9 @@ package es_test
 import (
 	"testing"
 
+	Order "github.com/Trendyol/es-query-builder/es/enums/sort/order"
+
 	"github.com/Trendyol/es-query-builder/es"
-	"github.com/Trendyol/es-query-builder/es/enums/sort/order"
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
@@ -273,7 +274,7 @@ func Test_InnerHits_should_have_Sort_method(t *testing.T) {
 
 func Test_InnerHits_Sort_should_create_json_with_sort_field_inside_inner_hits(t *testing.T) {
 	// Given
-	ih := es.InnerHits().Sort(es.Sort("indexedAt").Order(order.Desc))
+	ih := es.InnerHits().Sort(es.Sort("indexedAt").Order(Order.Desc))
 	// When Then
 	assert.NotNil(t, ih)
 	bodyJSON := assert.MarshalWithoutError(t, ih)

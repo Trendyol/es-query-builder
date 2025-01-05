@@ -3,8 +3,9 @@ package es_test
 import (
 	"testing"
 
+	Operator "github.com/Trendyol/es-query-builder/es/enums/operator"
+
 	"github.com/Trendyol/es-query-builder/es"
-	"github.com/Trendyol/es-query-builder/es/enums/operator"
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
@@ -63,7 +64,7 @@ func Test_SimpleQueryString_method_should_create_simple_query_string_with_analyz
 func Test_SimpleQueryString_method_should_create_simple_query_string_with_default_operator(t *testing.T) {
 	// Given When
 	b := es.NewQuery(
-		es.SimpleQueryString("value").DefaultOperator(operator.And),
+		es.SimpleQueryString("value").DefaultOperator(Operator.And),
 	)
 
 	// Then
@@ -198,7 +199,7 @@ func Test_SimpleQueryString_method_should_create_simple_query_string_with_all_pa
 		es.SimpleQueryString("value").
 			Fields([]string{"field1", "field2"}).
 			Analyzer("standard").
-			DefaultOperator(operator.And).
+			DefaultOperator(Operator.And).
 			MinimumShouldMatch("2").
 			FuzzyMaxExpansions(50).
 			FuzzyPrefixLength(2).

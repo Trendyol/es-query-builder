@@ -3,7 +3,7 @@ package es_test
 import (
 	"testing"
 
-	range_relation "github.com/Trendyol/es-query-builder/es/enums/range-relation"
+	RangeRelation "github.com/Trendyol/es-query-builder/es/enums/range-relation"
 
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"
@@ -235,7 +235,7 @@ func Test_Range_Relation_should_create_json_with_range_field_inside_query(t *tes
 		es.Range("partition").
 			From(512).
 			To(1024).
-			Relation(range_relation.Within),
+			Relation(RangeRelation.Within),
 	)
 
 	// When Then
