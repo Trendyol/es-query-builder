@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html data-theme="dark">
+<head>
+  <title>Elasticsearch Query to Go Converter</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/monokai.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/solarized.min.css" rel="stylesheet">
+  <link href="style/style.css" rel="stylesheet">
+</head>
+<body>
+<div class="header">
+  <h1>ES Query to Go</h1>
+  <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg class="moon-icon" viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
+  </button>
+</div>
+<div class="container">
+  <div class="editor-container">
+    <div class="toolbar">
+      <button id="parseBtn" class="btn">Convert to Go</button>
+      <button id="formatBtn" class="btn">Format JSON</button>
+    </div>
+    <div class="editor-wrapper">
+      <textarea id="esQuery"></textarea>
+    </div>
+    <div id="inputError" class="error"></div>
+  </div>
+  <div class="editor-container">
+    <div class="toolbar">
+      <button id="copyBtn" class="btn">
+        <svg class="copy-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        Copy to Clipboard
+      </button>
+    </div>
+    <div class="editor-wrapper">
+      <textarea id="goCode"></textarea>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+    <div class="footer-content">
+        <a href="https://github.com/GokselKUCUKSAHIN" target="_blank" rel="noopener noreferrer" class="github-link">
+            <svg class="github-icon" viewBox="0 0 24 24" width="16" height="16">
+                <path fill="currentColor" d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"></path>
+            </svg>
+            @GokselKUCUKSAHIN
+        </a>
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/go/go.min.js"></script>
+<script src="script/index.js"></script>
+<script>
+  const parser = new ESQueryParser();
+
+  // Theme handling
+  const themeToggle = document.getElementById('themeToggle');
+  const html = document.documentElement;
+  
+  themeToggle.addEventListener('click', () => {
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateEditorThemes(newTheme);
+  });
+
+  // Initialize theme from localStorage
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  html.setAttribute('data-theme', savedTheme);
+
+  const esEditor = CodeMirror.fromTextArea(document.getElementById('esQuery'), {
+    mode: 'javascript',
+    theme: savedTheme === 'dark' ? 'monokai' : 'solarized light',
+    lineNumbers: true,
+    matchBrackets: true,
+    autoCloseBrackets: true,
+    tabSize: 2,
+    indentWithTabs: true,
+    extraKeys: {"Ctrl-Q": function(cm){ cm.foldCode(cm.getCursor()); }},
+    foldGutter: true,
+    gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+    lint: true
+  });
+
+  const goEditor = CodeMirror.fromTextArea(document.getElementById('goCode'), {
+    mode: 'go',
+    theme: savedTheme === 'dark' ? 'monokai' : 'solarized light',
+    lineNumbers: true,
+    readOnly: true,
+    tabSize: 4,
+    indentWithTabs: true
+  });
+
+  function updateEditorThemes(theme) {
+    const editorTheme = theme === 'dark' ? 'monokai' : 'solarized light';
+    esEditor.setOption('theme', editorTheme);
+    goEditor.setOption('theme', editorTheme);
+  }
+
+  document.getElementById('parseBtn').addEventListener('click', () => {
+    try {
+      const query = JSON.parse(esEditor.getValue());
+      const code = parser.parse(query);
+      goEditor.setValue(code);
+      goEditor.refresh(); // Ensure proper formatting
+      document.getElementById('inputError').textContent = '';
+    } catch (e) {
+      document.getElementById('inputError').textContent = e.message;
+    }
+  });
+
+  document.getElementById('formatBtn').addEventListener('click', () => {
+    try {
+      const query = JSON.parse(esEditor.getValue());
+      esEditor.setValue(JSON.stringify(query, null, 2));
+      document.getElementById('inputError').textContent = '';
+    } catch (e) {
+      document.getElementById('inputError').textContent = 'Invalid JSON';
+    }
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', () => {
+    navigator.clipboard.writeText(goEditor.getValue())
+        .then(() => {
+            const copyBtn = document.getElementById('copyBtn');
+            copyBtn.innerHTML = `
+                <svg class="copy-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                Copied!
+            `;
+            copyBtn.classList.add('copied');
+            setTimeout(() => {
+                copyBtn.innerHTML = `
+                    <svg class="copy-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    Copy to Clipboard
+                `;
+                copyBtn.classList.remove('copied');
+            }, 2000);
+        })
+        .catch(err => console.error('Failed to copy:', err));
+  });
+</script>
+</body>
+</html>

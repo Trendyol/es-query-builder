@@ -1,0 +1,294 @@
+:root[data-theme="light"] {
+    --bg-color: #ffffff;
+    --text-color: #2d3436;
+    --editor-bg: #f5f6fa;
+    --toolbar-bg: #e8e8e8;
+    --button-bg: #3498db;
+    --button-hover: #2980b9;
+    --button-text: #ffffff;
+    --error-color: #d63031;
+    --border-color: #dfe6e9;
+}
+
+:root[data-theme="dark"] {
+    --bg-color: #2d3436;
+    --text-color: #dfe6e9;
+    --editor-bg: #2f3640;
+    --toolbar-bg: #353b48;
+    --button-bg: #6c5ce7;
+    --button-hover: #5849c2;
+    --button-text: #ffffff;
+    --error-color: #ff7675;
+    --border-color: #4a4a4a;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 20px;
+}
+
+.header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.theme-toggle:hover {
+    background-color: var(--toolbar-bg);
+}
+
+.theme-toggle svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--text-color);
+}
+
+[data-theme="dark"] .sun-icon,
+[data-theme="light"] .moon-icon {
+    display: none;
+}
+
+.container {
+    display: flex;
+    gap: 20px;
+    height: calc(100vh - 100px);
+    flex-direction: row;
+}
+
+.editor-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--editor-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.toolbar {
+    padding: 10px;
+    background-color: var(--toolbar-bg);
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn:hover {
+    background-color: var(--button-hover);
+}
+
+.editor-wrapper {
+    flex: 1;
+    overflow: hidden;
+}
+
+.CodeMirror {
+    height: 100% !important;
+    font-family: "JetBrains Mono", "Fira Code", monospace !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+}
+
+/* Tema-spesifik CodeMirror override'ları */
+.cm-s-monokai,
+.cm-s-solarized {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+}
+
+.cm-s-monokai .CodeMirror-line,
+.cm-s-solarized .CodeMirror-line {
+    font-size: 14px !important;
+}
+
+.cm-s-monokai .CodeMirror-linenumber,
+.cm-s-solarized .CodeMirror-linenumber {
+    font-size: 14px !important;
+}
+
+.error {
+    color: var(--error-color);
+    font-size: 14px;
+    margin: 0;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.error:not(:empty) {
+    padding: 10px;
+    max-height: 100px;
+    opacity: 1;
+    border-top: 1px solid var(--border-color);
+}
+
+/* CodeMirror özelleştirmeleri */
+.CodeMirror-gutters {
+    border-right: 1px solid var(--border-color) !important;
+    background-color: var(--editor-bg) !important;
+}
+
+.CodeMirror-linenumber {
+    color: var(--text-color) !important;
+    opacity: 0.5;
+}
+
+/* Güneş ikonu düzeltmesi */
+.sun-icon {
+    path {
+        d: path("M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42M12 6a6 6 0 1 0 0 12 6 6 0 0 0 0-12z");
+    }
+}
+
+/* Responsive tasarım için medya sorguları */
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        height: auto;
+        min-height: calc(100vh - 100px);
+    }
+
+    .editor-container {
+        min-height: 400px;
+    }
+
+    body {
+        padding: 10px;
+    }
+
+    .header {
+        padding: 0 10px;
+    }
+
+    .toolbar {
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        flex: 1;
+        min-width: 120px;
+        text-align: center;
+    }
+
+    .CodeMirror,
+    .cm-s-monokai,
+    .cm-s-solarized,
+    .cm-s-monokai .CodeMirror-line,
+    .cm-s-solarized .CodeMirror-line,
+    .cm-s-monokai .CodeMirror-linenumber,
+    .cm-s-solarized .CodeMirror-linenumber {
+        font-size: 13px !important;
+    }
+}
+
+/* Çok küçük ekranlar için ek optimizasyonlar */
+@media screen and (max-width: 480px) {
+    .header h1 {
+        font-size: 1.2rem;
+    }
+
+    .btn {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+
+    .CodeMirror,
+    .cm-s-monokai,
+    .cm-s-solarized,
+    .cm-s-monokai .CodeMirror-line,
+    .cm-s-solarized .CodeMirror-line,
+    .cm-s-monokai .CodeMirror-linenumber,
+    .cm-s-solarized .CodeMirror-linenumber {
+        font-size: 12px !important;
+    }
+}
+
+.copy-icon {
+    stroke: currentColor;
+}
+
+/* Copy button success state */
+.btn.copied {
+    background-color: #27ae60;
+}
+
+.footer {
+    margin-top: 20px;
+    padding: 15px 0;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.github-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 14px;
+    transition: opacity 0.2s ease;
+}
+
+.github-link:hover {
+    opacity: 0.8;
+}
+
+.github-icon {
+    transition: transform 0.2s ease;
+}
+
+.github-link:hover .github-icon {
+    transform: scale(1.1);
+}
+
+/* Responsive tasarım için footer ayarları */
+@media screen and (max-width: 768px) {
+    .footer {
+        margin-top: 15px;
+        padding: 10px 0;
+    }
+}
