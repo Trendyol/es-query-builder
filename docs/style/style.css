@@ -24,7 +24,10 @@
 
 body {
     margin: 0;
-    padding: 20px;
+    padding: 10px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
@@ -35,12 +38,12 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     padding: 0 20px;
 }
 
 .header h1 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 600;
     margin: 0;
 }
@@ -49,12 +52,13 @@ body {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 8px;
+    padding: 12px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: background-color 0.3s ease;
+    margin: -4px;
 }
 
 .theme-toggle:hover {
@@ -73,14 +77,16 @@ body {
 }
 
 .container {
+    flex: 1;
     display: flex;
     gap: 20px;
-    height: calc(100vh - 100px);
-    flex-direction: row;
+    height: auto;
+    min-height: 0;
 }
 
 .editor-container {
     flex: 1;
+    min-height: 350px;
     display: flex;
     flex-direction: column;
     background-color: var(--editor-bg);
@@ -90,24 +96,26 @@ body {
 }
 
 .toolbar {
-    padding: 10px;
+    padding: 8px;
     background-color: var(--toolbar-bg);
     display: flex;
-    gap: 10px;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
 .btn {
-    padding: 8px 16px;
+    padding: 10px;
     border: none;
     border-radius: 4px;
     background-color: var(--button-bg);
     color: var(--button-text);
     cursor: pointer;
-    font-size: 14px;
+    font-size: 13px;
     transition: background-color 0.2s ease;
     display: flex;
     align-items: center;
     gap: 8px;
+    justify-content: center;
 }
 
 .btn:hover {
@@ -116,7 +124,7 @@ body {
 
 .editor-wrapper {
     flex: 1;
-    overflow: hidden;
+    min-height: 0;
 }
 
 .CodeMirror {
@@ -178,66 +186,122 @@ body {
     }
 }
 
-/* Responsive tasarım için medya sorguları */
+/* Responsive düzenlemeler */
 @media screen and (max-width: 768px) {
-    .container {
-        flex-direction: column;
-        height: auto;
-        min-height: calc(100vh - 100px);
-    }
-
-    .editor-container {
-        min-height: 400px;
-    }
-
     body {
-        padding: 10px;
+        padding: 8px;
     }
 
     .header {
-        padding: 0 10px;
+        margin-bottom: 12px;
+    }
+
+    .header h1 {
+        font-size: 1.2rem;
+    }
+
+    .container {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .editor-container {
+        min-height: 300px;
     }
 
     .toolbar {
+        padding: 8px;
+        gap: 8px;
         flex-wrap: wrap;
     }
 
     .btn {
         flex: 1;
-        min-width: 120px;
-        text-align: center;
+        min-width: 0;
+        padding: 10px;
+        font-size: 13px;
+        justify-content: center;
     }
 
-    .CodeMirror,
-    .cm-s-monokai,
-    .cm-s-solarized,
-    .cm-s-monokai .CodeMirror-line,
-    .cm-s-solarized .CodeMirror-line,
-    .cm-s-monokai .CodeMirror-linenumber,
-    .cm-s-solarized .CodeMirror-linenumber {
-        font-size: 13px !important;
+    .CodeMirror {
+        height: 100% !important;
+        font-size: 14px !important;
+    }
+
+    .theme-toggle {
+        padding: 12px;
+        margin: -4px;
+    }
+
+    .copy-icon {
+        width: 14px;
+        height: 14px;
     }
 }
 
-/* Çok küçük ekranlar için ek optimizasyonlar */
+/* Küçük mobil cihazlar için */
 @media screen and (max-width: 480px) {
     .header h1 {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     .btn {
-        padding: 6px 12px;
-        font-size: 13px;
+        padding: 8px;
+        font-size: 12px;
     }
 
-    .CodeMirror,
-    .cm-s-monokai,
-    .cm-s-solarized,
-    .cm-s-monokai .CodeMirror-line,
-    .cm-s-solarized .CodeMirror-line,
-    .cm-s-monokai .CodeMirror-linenumber,
-    .cm-s-solarized .CodeMirror-linenumber {
-        font-size: 12px !important;
+    .CodeMirror {
+        font-size: 13px !important;
+    }
+
+    .footer {
+        font-size: 12px;
+        padding: 10px 0;
+    }
+}
+
+/* Yatay mobil görünüm için */
+@media screen and (max-height: 600px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .editor-container {
+        min-height: 250px;
+    }
+}
+
+/* Tablet optimizasyonu */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        gap: 15px;
+    }
+
+    .editor-container {
+        min-height: 400px;
+    }
+}
+
+/* Touch cihaz optimizasyonları */
+@media (hover: none) {
+    .btn, 
+    .theme-toggle {
+        min-height: 44px;
+    }
+
+    .CodeMirror {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .CodeMirror-scroll {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* Soft keyboard açıldığında düzenleme */
+@media screen and (max-height: 400px) {
+    .container {
+        height: auto;
     }
 }
 
