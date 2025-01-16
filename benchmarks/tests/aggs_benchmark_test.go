@@ -16,7 +16,7 @@ func createAggsQuery() map[string]any {
 				es.Term("type", "File"),
 				es.Range("indexedAt").
 					GreaterThan("2020-06-01").
-					LesserThanOrEqual("now"),
+					LessThanOrEqual("now"),
 			).
 			MustNot(
 				es.Exists("file.name"),

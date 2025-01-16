@@ -23,7 +23,7 @@ func Test_Range_should_add_range_field_when_inside_query(t *testing.T) {
 			Must(
 				es.Range("age").
 					GreaterThanOrEqual(10).
-					LesserThanOrEqual(20),
+					LessThanOrEqual(20),
 				es.Term("language", "tr"),
 			),
 	)
@@ -51,7 +51,7 @@ func Test_Range_should_create_json_with_range_field_inside_query(t *testing.T) {
 	query := es.NewQuery(
 		es.Range("age").
 			GreaterThanOrEqual(10).
-			LesserThanOrEqual(20),
+			LessThanOrEqual(20),
 	)
 
 	// When Then
@@ -60,22 +60,22 @@ func Test_Range_should_create_json_with_range_field_inside_query(t *testing.T) {
 	assert.Equal(t, "{\"query\":{\"range\":{\"age\":{\"gte\":10,\"lte\":20}}}}", bodyJSON)
 }
 
-func Test_Range_should_have_LesserThan_method(t *testing.T) {
+func Test_Range_should_have_LessThan_method(t *testing.T) {
 	// Given
 	r := es.Range("age")
 
 	// When Then
 	assert.NotNil(t, r)
-	assert.NotNil(t, r.LesserThan)
+	assert.NotNil(t, r.LessThan)
 }
 
-func Test_Range_should_have_LesserThanOrEqual_method(t *testing.T) {
+func Test_Range_should_have_LessThanOrEqual_method(t *testing.T) {
 	// Given
 	r := es.Range("age")
 
 	// When Then
 	assert.NotNil(t, r)
-	assert.NotNil(t, r.LesserThanOrEqual)
+	assert.NotNil(t, r.LessThanOrEqual)
 }
 
 func Test_Range_should_have_GreaterThan_method(t *testing.T) {
@@ -114,8 +114,8 @@ func Test_Range_lte_should_override_lt_and_vise_versa(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.Range("age").
-			LesserThan(11).
-			LesserThanOrEqual(23),
+			LessThan(11).
+			LessThanOrEqual(23),
 	)
 
 	// When Then
@@ -138,7 +138,7 @@ func Test_Range_Format_should_create_json_with_range_field_inside_query(t *testi
 	query := es.NewQuery(
 		es.Range("birth-date").
 			GreaterThanOrEqual("1990-01-01").
-			LesserThanOrEqual("2024-04-12").
+			LessThanOrEqual("2024-04-12").
 			Format("yyyy-MM-dd"),
 	)
 
@@ -163,7 +163,7 @@ func Test_Range_Boost_should_create_json_with_range_field_inside_query(t *testin
 	query := es.NewQuery(
 		es.Range("partition").
 			GreaterThan(112).
-			LesserThan(765).
+			LessThan(765).
 			Boost(3.2),
 	)
 

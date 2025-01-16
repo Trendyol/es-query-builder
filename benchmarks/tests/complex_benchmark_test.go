@@ -15,7 +15,7 @@ func createComplexQuery(id int) map[string]any {
 			Must(
 				es.Range("partition").
 					GreaterThan(25).
-					LesserThanOrEqual(30),
+					LessThanOrEqual(30),
 				es.Bool().
 					Should(
 						es.Term("doc.id", id),
