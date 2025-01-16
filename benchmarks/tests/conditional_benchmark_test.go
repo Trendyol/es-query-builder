@@ -15,7 +15,7 @@ func createConditionalQuery(items []int) map[string]any {
 			Filter(
 				es.Range("indexedAt").
 					GreaterThan("2021-01-01").
-					LesserThanOrEqual("now"),
+					LessThanOrEqual("now"),
 				es.Term("type", "File"),
 				es.Terms("sector", 1, 2, 3),
 				es.TermsFunc("id", items, func(key string, values []int) bool {

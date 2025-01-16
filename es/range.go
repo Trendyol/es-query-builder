@@ -48,7 +48,7 @@ func (r rangeType) delete(key string) rangeType {
 	return r
 }
 
-// LesserThan sets the "lt" (less than) field for the range query.
+// LessThan sets the "lt" (less than) field for the range query.
 //
 // This method specifies that the range query should match values that are less than
 // the provided value. It removes any existing "lte" (less than or equal to) field to ensure
@@ -56,7 +56,7 @@ func (r rangeType) delete(key string) rangeType {
 //
 // Example usage:
 //
-//	r := Range("age").LesserThan(20)
+//	r := Range("age").LessThan(20)
 //	// r now has an "lt" field set to 20 in the range query for the "age" field.
 //
 // Parameters:
@@ -65,11 +65,11 @@ func (r rangeType) delete(key string) rangeType {
 // Returns:
 //
 //	The updated rangeType object with the "lt" field set to the specified value.
-func (r rangeType) LesserThan(lt any) rangeType {
+func (r rangeType) LessThan(lt any) rangeType {
 	return r.putInTheField("lt", lt).delete("lte")
 }
 
-// LesserThanOrEqual sets the "lte" (less than or equal to) field for the range query.
+// LessThanOrEqual sets the "lte" (less than or equal to) field for the range query.
 //
 // This method specifies that the range query should match values that are less than or equal
 // to the provided value. It removes any existing "lt" (less than) field to ensure that only
@@ -77,7 +77,7 @@ func (r rangeType) LesserThan(lt any) rangeType {
 //
 // Example usage:
 //
-//	r := Range("age").LesserThanOrEqual(20)
+//	r := Range("age").LessThanOrEqual(20)
 //	// r now has an "lte" field set to 20 in the range query for the "age" field.
 //
 // Parameters:
@@ -86,7 +86,7 @@ func (r rangeType) LesserThan(lt any) rangeType {
 // Returns:
 //
 //	The updated rangeType object with the "lte" field set to the specified value.
-func (r rangeType) LesserThanOrEqual(lte any) rangeType {
+func (r rangeType) LessThanOrEqual(lte any) rangeType {
 	return r.putInTheField("lte", lte).delete("lt")
 }
 
