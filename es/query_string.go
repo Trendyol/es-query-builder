@@ -9,14 +9,14 @@ type queryStringType Object
 
 // QueryString creates a new es.queryStringType object with the specified query string.
 //
-// This function initializes a es.queryStringType object with a query string, which
+// This function initializes an es.queryStringType object with a query string, which
 // is typically used to perform full-text search queries in Elasticsearch. The query string
 // can contain multiple terms and operators, allowing for complex search expressions.
 //
 // Example usage:
 //
 //	q := es.QueryString("Foo AND Bar")
-//	// q now contains a es.queryStringType object with a query string query.
+//	// q now contains an es.queryStringType object with a query string query.
 //
 // Parameters:
 //   - query: The query string to be used in the search. The type is generic and can be
@@ -24,7 +24,7 @@ type queryStringType Object
 //
 // Returns:
 //
-//	A es.queryStringType object containing the specified query string.
+//	An es.queryStringType object containing the specified query string.
 func QueryString[T any](query T) queryStringType {
 	return queryStringType{
 		"query_string": Object{
@@ -45,7 +45,7 @@ func QueryString[T any](query T) queryStringType {
 // DefaultField("defaultField")
 //
 //	q := es.QueryString("Foo Bar").DefaultField("title")
-//	// q now contains a es.queryStringType object where the default field for the query is "title".
+//	// q now contains an es.queryStringType object where the default field for the query is "title".
 //
 // Parameters:
 //   - value: A string representing the field name to be used as the default field in the query.

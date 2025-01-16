@@ -6,14 +6,14 @@ type simpleQueryStringType Object
 
 // SimpleQueryString creates a new es.simpleQueryStringType object with the specified query string.
 //
-// This function initializes a es.simpleQueryStringType object with a simple query string, which
+// This function initializes an es.simpleQueryStringType object with a simple query string, which
 // is typically used to perform simple text search queries in Elasticsearch. The query string
 // can contain multiple terms and operators, allowing for basic search expressions.
 //
 // Example usage:
 //
 //	q := es.SimpleQueryString("Foo + Bar")
-//	// q now contains a es.simpleQueryStringType object with a simple query string query.
+//	// q now contains an es.simpleQueryStringType object with a simple query string query.
 //
 // Parameters:
 //   - query: The query string to be used in the search. The type is generic and can be
@@ -21,7 +21,7 @@ type simpleQueryStringType Object
 //
 // Returns:
 //
-//	A es.simpleQueryStringType object containing the specified query string.
+//	An es.simpleQueryStringType object containing the specified query string.
 func SimpleQueryString[T any](query T) simpleQueryStringType {
 	return simpleQueryStringType{
 		"simple_query_string": Object{
@@ -287,7 +287,7 @@ func (q simpleQueryStringType) QuoteFieldSuffix(value string) simpleQueryStringT
 	return q.putInTheField("quote_field_suffix", value)
 }
 
-// Boost sets the "boost" parameter in a es.simpleQueryStringType query.
+// Boost sets the "boost" parameter in an es.simpleQueryStringType query.
 //
 // This method allows you to specify a boost factor for the simple query string query,
 // which influences the relevance score of matching documents. A higher boost value

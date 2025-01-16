@@ -12,7 +12,7 @@ type ShouldType Array
 
 // Bool creates and returns an empty BoolType object.
 //
-// This function is typically used to initialize a es.BoolType, which can be
+// This function is typically used to initialize an es.BoolType, which can be
 // populated later with the appropriate boolean query conditions.
 //
 // Example usage:
@@ -27,7 +27,7 @@ func Bool() BoolType {
 	return BoolType{}
 }
 
-// MinimumShouldMatch sets the "minimum_should_match" parameter in a es.BoolType query.
+// MinimumShouldMatch sets the "minimum_should_match" parameter in an es.BoolType query.
 //
 // This method allows you to specify the minimum number of "should" clauses
 // that must match in a boolean query. The "minimum_should_match" parameter
@@ -51,7 +51,7 @@ func (b BoolType) MinimumShouldMatch(minimumShouldMatch any) BoolType {
 	return b
 }
 
-// AdjustPureNegative sets the "adjust_pure_negative" parameter in a es.BoolType query.
+// AdjustPureNegative sets the "adjust_pure_negative" parameter in an es.BoolType query.
 //
 // This method allows you to specify whether pure negative queries should be
 // adjusted or not. When set to true, the query will be adjusted to include
@@ -75,7 +75,7 @@ func (b BoolType) AdjustPureNegative(adjustPureNegative bool) BoolType {
 	return b
 }
 
-// Boost sets the "boost" parameter in a es.BoolType query.
+// Boost sets the "boost" parameter in an es.BoolType query.
 //
 // This method allows you to assign a boost value to a boolean query, which
 // can be used to increase or decrease the relevance score of the query's

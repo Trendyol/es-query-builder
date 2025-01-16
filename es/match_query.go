@@ -9,14 +9,14 @@ type matchType Object
 
 // Match creates a new es.matchType object with the specified field and query.
 //
-// This function initializes a es.matchType object for a match query, where the key
+// This function initializes an es.matchType object for a match query, where the key
 // is the field name and query is the value to search for in that field. This is used
 // to construct queries that match the specified value in the given field.
 //
 // Example usage:
 //
 //	m := es.Match("title", "es-query-builder")
-//	// m now contains a es.matchType object that matches the query "es-query-builder" in the "title" field.
+//	// m now contains an es.matchType object that matches the query "es-query-builder" in the "title" field.
 //
 // Parameters:
 //   - key: A string representing the field name for the match query.
@@ -24,7 +24,7 @@ type matchType Object
 //
 // Returns:
 //
-//	A es.matchType object containing the specified match query.
+//	An es.matchType object containing the specified match query.
 func Match[T any](key string, query T) matchType {
 	return matchType{
 		"match": Object{

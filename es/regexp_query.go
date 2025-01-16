@@ -4,14 +4,14 @@ type regexpType Object
 
 // Regexp creates a new es.regexpType object with the specified key-value pair.
 //
-// This function initializes a es.regexpType object with a single regexp query, where the
+// This function initializes an es.regexpType object with a single regexp query, where the
 // key is the field name and the value is the regexp to search for. This is typically
 // used to construct a regexp query in search queries.
 //
 // Example usage:
 //
 //	t := es.Regexp("endpoint", "/books/.*")
-//	// t now contains a es.regexpType object with a regexp query for the "endpoint" field.
+//	// t now contains an es.regexpType object with a regexp query for the "endpoint" field.
 //
 // Parameters:
 //   - key: A string representing the field name for the regexp query.
@@ -19,7 +19,7 @@ type regexpType Object
 //
 // Returns:
 //
-//	A es.regexpType object containing the specified regexp query.
+//	An es.regexpType object containing the specified regexp query.
 func Regexp(key string, value string) regexpType {
 	return regexpType{
 		"regexp": Object{
@@ -95,7 +95,7 @@ func (r regexpType) Rewrite(rewrite string) regexpType {
 	return r.putInTheField("rewrite", rewrite)
 }
 
-// Boost sets the "boost" parameter in a es.regexpType query.
+// Boost sets the "boost" parameter in an es.regexpType query.
 //
 // This method allows you to specify a boost factor for the regular expression query,
 // which influences the relevance score of matching documents. A higher boost value

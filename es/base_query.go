@@ -202,28 +202,28 @@ func (o Object) SourceExcludes(fields ...string) Object {
 
 // Sort creates a new es.sortType object with the specified field.
 //
-// This function initializes a es.sortType object with a given field name. The
+// This function initializes an es.sortType object with a given field name. The
 // field is used to specify the sorting criteria in the search query. The
 // resulting es.sortType can be further configured with sorting order and mode.
 //
 // Example usage:
 //
 //	s := es.Sort("age")
-//	// s now includes a es.sortType with an "age" field that can be further configured.
+//	// s now includes an es.sortType with an "age" field that can be further configured.
 //
 // Parameters:
 //   - field: A string representing the field to sort by.
 //
 // Returns:
 //
-//	A es.sortType object with the specified field.
+//	An es.sortType object with the specified field.
 func Sort(field string) sortType {
 	return sortType{
 		field: Object{},
 	}
 }
 
-// Order sets the "order" parameter in a es.sortType object.
+// Order sets the "order" parameter in an es.sortType object.
 //
 // This method specifies the order in which the results should be sorted.
 // It configures the es.sortType object to sort the results in ascending or
@@ -244,7 +244,7 @@ func (s sortType) Order(order Order.Order) sortType {
 	return s.putInTheField("order", order)
 }
 
-// Mode sets the "mode" parameter in a es.sortType object.
+// Mode sets the "mode" parameter in an es.sortType object.
 //
 // This method specifies the mode used for sorting the results. The mode
 // determines how sorting should be handled, such as by specifying different

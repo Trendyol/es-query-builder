@@ -4,14 +4,14 @@ type matchNoneType Object
 
 // MatchNone creates a new es.matchNoneType object with the specified field and query.
 //
-// This function initializes a es.matchNoneType object for a match_none query, where the key
+// This function initializes an es.matchNoneType object for a match_none query, where the key
 // represents the field name and query is the value to be matched. This is used to construct
 // queries that explicitly match no documents for the specified value in the given field.
 //
 // Example usage:
 //
 //	mn := es.MatchNone("title", "es-query-builder")
-//	// mn now contains a es.matchNoneType object that matches no documents for the "title" field with the query "es-query-builder".
+//	// mn now contains an es.matchNoneType object that matches no documents for the "title" field with the query "es-query-builder".
 //
 // Parameters:
 //   - key: A string representing the field name for the match_none query.
@@ -19,7 +19,7 @@ type matchNoneType Object
 //
 // Returns:
 //
-//	A es.matchNoneType object containing the specified match_none query.
+//	An es.matchNoneType object containing the specified match_none query.
 func MatchNone[T any](key string, query T) matchNoneType {
 	return matchNoneType{
 		"match_none": Object{

@@ -36,7 +36,7 @@ func InnerHits() innerHitsType {
 //	// The inner hits object now includes a "collapse" field configured for the "author" field.
 //
 // Parameters:
-//   - fieldCollapse: A es.fieldCollapseType object defining the collapsing behavior based on a specific field.
+//   - fieldCollapse: An es.fieldCollapseType object defining the collapsing behavior based on a specific field.
 //
 // Returns:
 //
@@ -433,7 +433,7 @@ func (ih innerHitsType) Version(version bool) innerHitsType {
 //
 // Returns:
 //
-//	A es.fieldCollapseType object with the "field" set to the specified value, used for collapsing results.
+//	An es.fieldCollapseType object with the "field" set to the specified value, used for collapsing results.
 func FieldCollapse(field string) fieldCollapseType {
 	return fieldCollapseType{
 		"field": field,
@@ -452,7 +452,7 @@ func FieldCollapse(field string) fieldCollapseType {
 //	 // for both "category" and "subcategory".
 //
 // Parameters:
-//   - fieldCollapse: A es.fieldCollapseType object representing the collapse configuration to apply.
+//   - fieldCollapse: An es.fieldCollapseType object representing the collapse configuration to apply.
 //
 // Returns:
 //
@@ -521,7 +521,7 @@ func (fc fieldCollapseType) MaxConcurrentGroupSearches(maxConcurrentGroupSearche
 //
 // Returns:
 //
-//	A es.fieldAndFormatType object with the "field" set to the specified value and an optional "format".
+//	An es.fieldAndFormatType object with the "field" set to the specified value and an optional "format".
 func FieldAndFormat(field string) fieldAndFormatType {
 	return fieldAndFormatType{
 		"field": field,

@@ -4,14 +4,14 @@ type termsType Object
 
 // Terms creates a new es.termsType object with the specified key and values.
 //
-// This function initializes a es.termsType object for a terms query, where the key
+// This function initializes an es.termsType object for a terms query, where the key
 // is the field name and values is a variadic list of terms to search for in that field.
 // This is used to construct queries that match any of the specified terms.
 //
 // Example usage:
 //
 //	t := es.Terms("category", "books", "electronics")
-//	// t now contains a es.termsType object with a terms query for the "category" field.
+//	// t now contains an es.termsType object with a terms query for the "category" field.
 //
 // Parameters:
 //   - key: A string representing the field name for the terms query.
@@ -20,7 +20,7 @@ type termsType Object
 //
 // Returns:
 //
-//	A es.termsType object containing the specified terms query.
+//	An es.termsType object containing the specified terms query.
 func Terms(key string, values ...any) termsType {
 	return termsType{
 		"terms": Object{
@@ -29,7 +29,7 @@ func Terms(key string, values ...any) termsType {
 	}
 }
 
-// Boost sets the "boost" parameter in a es.termsType query.
+// Boost sets the "boost" parameter in an es.termsType query.
 //
 // This method allows you to specify a boost factor for the terms query,
 // which influences the relevance score of documents matching any of the
@@ -55,7 +55,7 @@ func (t termsType) Boost(boost float64) termsType {
 
 // TermsArray creates a new es.termsType object with the specified key and values as a slice.
 //
-// This function initializes a es.termsType object for a terms query, where the key
+// This function initializes an es.termsType object for a terms query, where the key
 // is the field name and values is a slice of terms to search for in that field.
 // This is useful for cases where the terms are provided as a slice instead of
 // a variadic list.
@@ -63,7 +63,7 @@ func (t termsType) Boost(boost float64) termsType {
 // Example usage:
 //
 //	t := es.TermsArray("category", []string{"books", "electronics"})
-//	// t now contains a es.termsType object with a terms query for the "category" field.
+//	// t now contains an es.termsType object with a terms query for the "category" field.
 //
 // Parameters:
 //   - key: A string representing the field name for the terms query.
@@ -72,7 +72,7 @@ func (t termsType) Boost(boost float64) termsType {
 //
 // Returns:
 //
-//	A es.termsType object containing the specified terms query.
+//	An es.termsType object containing the specified terms query.
 func TermsArray[T any](key string, values []T) termsType {
 	return termsType{
 		"terms": Object{
@@ -81,18 +81,18 @@ func TermsArray[T any](key string, values []T) termsType {
 	}
 }
 
-// TermsFunc creates a es.termsType object based on a condition evaluated by a function.
+// TermsFunc creates an es.termsType object based on a condition evaluated by a function.
 //
-// This function conditionally creates a es.termsType object if the provided function
+// This function conditionally creates an es.termsType object if the provided function
 // returns true for the given key and values. If the function returns false, it
-// returns nil instead of creating a es.termsType object.
+// returns nil instead of creating an es.termsType object.
 //
 // Example usage:
 //
 //	t := es.TermsFunc("category", []string{"books", "electronics"}, func(key string, values []string) bool {
 //	    return len(values) > 0
 //	})
-//	// t is either a es.termsType object or nil based on the condition.
+//	// t is either an es.termsType object or nil based on the condition.
 //
 // Parameters:
 //   - key: A string representing the field name for the terms query.
@@ -102,7 +102,7 @@ func TermsArray[T any](key string, values []T) termsType {
 //
 // Returns:
 //
-//	A es.termsType object if the condition is true; otherwise, nil.
+//	An es.termsType object if the condition is true; otherwise, nil.
 func TermsFunc[T any](key string, values []T, f func(key string, values []T) bool) termsType {
 	if !f(key, values) {
 		return nil
@@ -110,15 +110,15 @@ func TermsFunc[T any](key string, values []T, f func(key string, values []T) boo
 	return TermsArray(key, values)
 }
 
-// TermsIf creates a es.termsType object based on a boolean condition.
+// TermsIf creates an es.termsType object based on a boolean condition.
 //
-// This function creates a es.termsType object if the provided condition is true. If
-// the condition is false, it returns nil instead of creating a es.termsType object.
+// This function creates an es.termsType object if the provided condition is true. If
+// the condition is false, it returns nil instead of creating an es.termsType object.
 //
 // Example usage:
 //
 //	t := es.TermsIf("category", []string{"books", "electronics"}, true)
-//	// t is a es.termsType object if the condition is true; otherwise, it is nil.
+//	// t is an es.termsType object if the condition is true; otherwise, it is nil.
 //
 // Parameters:
 //   - key: A string representing the field name for the terms query.
@@ -127,7 +127,7 @@ func TermsFunc[T any](key string, values []T, f func(key string, values []T) boo
 //
 // Returns:
 //
-//	A es.termsType object if the condition is true; otherwise, nil.
+//	An es.termsType object if the condition is true; otherwise, nil.
 func TermsIf[T any](key string, values []T, condition bool) termsType {
 	if !condition {
 		return nil

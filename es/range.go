@@ -6,20 +6,20 @@ type rangeType Object
 
 // Range creates a new es.rangeType object with the specified field.
 //
-// This function initializes a es.rangeType object for specifying range queries. The key represents
+// This function initializes an es.rangeType object for specifying range queries. The key represents
 // the field name, and the es.rangeType object is used to define the range conditions for that field.
 //
 // Example usage:
 //
 //	r := es.Range("age")
-//	// r now contains a es.rangeType object with the specified field "age" for range queries.
+//	// r now contains an es.rangeType object with the specified field "age" for range queries.
 //
 // Parameters:
 //   - key: A string representing the field name for the range query.
 //
 // Returns:
 //
-//	A es.rangeType object with the specified field ready for defining range conditions.
+//	An es.rangeType object with the specified field ready for defining range conditions.
 func Range(key string) rangeType {
 	return rangeType{
 		"range": Object{

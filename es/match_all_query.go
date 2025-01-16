@@ -4,18 +4,18 @@ type matchAllType Object
 
 // MatchAll creates a new es.matchAllType object that matches all documents.
 //
-// This function initializes a es.matchAllType object that is used to construct queries
+// This function initializes an es.matchAllType object that is used to construct queries
 // that match all documents. This can be useful for scenarios where you want to ensure
 // that all documents are included in the results.
 //
 // Example usage:
 //
 //	ma := es.MatchAll()
-//	// ma now contains a es.matchAllType object that matches all documents.
+//	// ma now contains an es.matchAllType object that matches all documents.
 //
 // Returns:
 //
-//	A es.matchAllType object with a match_all query that matches all documents.
+//	An es.matchAllType object with a match_all query that matches all documents.
 func MatchAll() matchAllType {
 	return matchAllType{
 		"match_all": Object{},

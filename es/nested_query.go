@@ -13,7 +13,7 @@ type nestedType Object
 // Example usage:
 //
 //	nestedQuery := es.Nested("comments", es.Bool().Filter(...).MustNot(...))
-//	// nestedQuery now contains a es.nestedType object with the specified path and query.
+//	// nestedQuery now contains an es.nestedType object with the specified path and query.
 //
 // Parameters:
 //   - path: A string representing the path for the nested query.
@@ -21,7 +21,7 @@ type nestedType Object
 //
 // Returns:
 //
-//	A es.nestedType object with the "nested" query and specified path.
+//	a es.nestedType object with the "nested" query and specified path.
 func Nested[T any](path string, nestedQuery T) nestedType {
 	o := NewQuery(nestedQuery)
 	o["path"] = path
