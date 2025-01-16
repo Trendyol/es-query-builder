@@ -3,20 +3,21 @@ package scoremode_test
 import (
 	"testing"
 
-	scoremode "github.com/Trendyol/es-query-builder/es/enums/nested/score-mode"
+	ScoreMode "github.com/Trendyol/es-query-builder/es/enums/score-mode"
+
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
 func Test_ScoreModeString(t *testing.T) {
 	tests := []struct {
-		mode   scoremode.ScoreMode
+		mode   ScoreMode.ScoreMode
 		result string
 	}{
-		{scoremode.Avg, "avg"},
-		{scoremode.Max, "max"},
-		{scoremode.Min, "min"},
-		{scoremode.None, "none"},
-		{scoremode.Sum, "sum"},
+		{ScoreMode.Avg, "avg"},
+		{ScoreMode.Max, "max"},
+		{ScoreMode.Min, "min"},
+		{ScoreMode.None, "none"},
+		{ScoreMode.Sum, "sum"},
 	}
 
 	for _, test := range tests {

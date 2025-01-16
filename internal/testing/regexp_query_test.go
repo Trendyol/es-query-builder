@@ -2,6 +2,7 @@ package testing
 
 import (
 	"encoding/json"
+
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/bayraktugrul/go-await"
 	"github.com/stretchr/testify/assert"

@@ -7,10 +7,10 @@ import (
 	"net/http"
 	"strings"
 
+	"integration-tests/constants"
+
 	"github.com/elastic/go-elasticsearch/v8"
 	"github.com/elastic/go-elasticsearch/v8/esapi"
-
-	"integration-tests/constants"
 )
 
 type elasticsearchRepository struct {

@@ -7,13 +7,13 @@ import (
 	"strings"
 	"testing"
 
+	"integration-tests/constants"
+	"integration-tests/container"
+
 	"github.com/elastic/elastic-transport-go/v8/elastictransport"
 	"github.com/elastic/go-elasticsearch/v8"
 	"github.com/elastic/go-elasticsearch/v8/esapi"
 	"github.com/stretchr/testify/suite"
-
-	"integration-tests/constants"
-	"integration-tests/container"
 )
 
 func TestSuite(t *testing.T) {

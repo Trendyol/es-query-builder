@@ -1,22 +1,22 @@
 package es
 
 import (
-	Operator "github.com/Trendyol/es-query-builder/es/enums/match/operator"
-	ZeroTermsQuery "github.com/Trendyol/es-query-builder/es/enums/match/zero-terms-query"
+	Operator "github.com/Trendyol/es-query-builder/es/enums/operator"
+	ZeroTermsQuery "github.com/Trendyol/es-query-builder/es/enums/zero-terms-query"
 )
 
 type matchType Object
 
-// Match creates a new matchType object with the specified field and query.
+// Match creates a new es.matchType object with the specified field and query.
 //
-// This function initializes a matchType object for a match query, where the key
+// This function initializes an es.matchType object for a match query, where the key
 // is the field name and query is the value to search for in that field. This is used
 // to construct queries that match the specified value in the given field.
 //
 // Example usage:
 //
 //	m := es.Match("title", "es-query-builder")
-//	// m now contains a matchType object that matches the query "es-query-builder" in the "title" field.
+//	// m now contains an es.matchType object that matches the query "es-query-builder" in the "title" field.
 //
 // Parameters:
 //   - key: A string representing the field name for the match query.
@@ -24,7 +24,7 @@ type matchType Object
 //
 // Returns:
 //
-//	A matchType object containing the specified match query.
+//	An es.matchType object containing the specified match query.
 func Match[T any](key string, query T) matchType {
 	return matchType{
 		"match": Object{
@@ -33,18 +33,6 @@ func Match[T any](key string, query T) matchType {
 			},
 		},
 	}
-}
-
-func (m matchType) putInTheField(key string, value any) matchType {
-	if match, ok := m["match"].(Object); ok {
-		for _, fieldObj := range match {
-			if fieldObject, foOk := fieldObj.(Object); foOk {
-				fieldObject[key] = value
-				break
-			}
-		}
-	}
-	return m
 }
 
 // Operator sets the "operator" field in the match query.
@@ -62,7 +50,7 @@ func (m matchType) putInTheField(key string, value any) matchType {
 //
 // Returns:
 //
-//	The updated matchType object with the "operator" field set to the specified value.
+//	The updated es.matchType object with the "operator" field set to the specified value.
 func (m matchType) Operator(operator Operator.Operator) matchType {
 	return m.putInTheField("operator", operator)
 }
@@ -82,7 +70,7 @@ func (m matchType) Operator(operator Operator.Operator) matchType {
 //
 // Returns:
 //
-//	The updated matchType object with the "boost" field set to the specified value.
+//	The updated es.matchType object with the "boost" field set to the specified value.
 func (m matchType) Boost(boost float64) matchType {
 	return m.putInTheField("boost", boost)
 }
@@ -103,7 +91,7 @@ func (m matchType) Boost(boost float64) matchType {
 //
 // Returns:
 //
-//	The updated matchType object with the "cutoff_frequency" field set to the specified value.
+//	The updated es.matchType object with the "cutoff_frequency" field set to the specified value.
 func (m matchType) CutoffFrequency(cutoffFrequency float64) matchType {
 	return m.putInTheField("cutoff_frequency", cutoffFrequency)
 }
@@ -124,7 +112,7 @@ func (m matchType) CutoffFrequency(cutoffFrequency float64) matchType {
 //
 // Returns:
 //
-//	The updated matchType object with the "fuzziness" field set to the specified value.
+//	The updated es.matchType object with the "fuzziness" field set to the specified value.
 func (m matchType) Fuzziness(fuzziness any) matchType {
 	return m.putInTheField("fuzziness", fuzziness)
 }
@@ -146,7 +134,7 @@ func (m matchType) Fuzziness(fuzziness any) matchType {
 //
 // Returns:
 //
-//	The updated matchType object with the "fuzzy_rewrite" field set to the specified value.
+//	The updated es.matchType object with the "fuzzy_rewrite" field set to the specified value.
 func (m matchType) FuzzyRewrite(fuzzyRewrite string) matchType {
 	return m.putInTheField("fuzzy_rewrite", fuzzyRewrite)
 }
@@ -167,7 +155,7 @@ func (m matchType) FuzzyRewrite(fuzzyRewrite string) matchType {
 //
 // Returns:
 //
-//	The updated matchType object with the "fuzzy_transpositions" field set to the specified value.
+//	The updated es.matchType object with the "fuzzy_transpositions" field set to the specified value.
 func (m matchType) FuzzyTranspositions(fuzzyTranspositions bool) matchType {
 	return m.putInTheField("fuzzy_transpositions", fuzzyTranspositions)
 }
@@ -188,7 +176,7 @@ func (m matchType) FuzzyTranspositions(fuzzyTranspositions bool) matchType {
 //
 // Returns:
 //
-//	The updated matchType object with the "lenient" field set to the specified value.
+//	The updated es.matchType object with the "lenient" field set to the specified value.
 func (m matchType) Lenient(lenient bool) matchType {
 	return m.putInTheField("lenient", lenient)
 }
@@ -209,7 +197,7 @@ func (m matchType) Lenient(lenient bool) matchType {
 //
 // Returns:
 //
-//	The updated matchType object with the "max_expansions" field set to the specified value.
+//	The updated es.matchType object with the "max_expansions" field set to the specified value.
 func (m matchType) MaxExpansions(maxExpansions int) matchType {
 	return m.putInTheField("max_expansions", maxExpansions)
 }
@@ -231,7 +219,7 @@ func (m matchType) MaxExpansions(maxExpansions int) matchType {
 //
 // Returns:
 //
-//	The updated matchType object with the "prefix_length" field set to the specified value.
+//	The updated es.matchType object with the "prefix_length" field set to the specified value.
 func (m matchType) PrefixLength(prefixLength int) matchType {
 	return m.putInTheField("prefix_length", prefixLength)
 }
@@ -253,7 +241,7 @@ func (m matchType) PrefixLength(prefixLength int) matchType {
 //
 // Returns:
 //
-//	The updated matchType object with the "auto_generate_synonyms_phrase_query" field set to the specified value.
+//	The updated es.matchType object with the "auto_generate_synonyms_phrase_query" field set to the specified value.
 func (m matchType) AutoGenerateSynonymsPhraseQuery(autoGenerateSynonymsPhraseQuery bool) matchType {
 	return m.putInTheField("auto_generate_synonyms_phrase_query", autoGenerateSynonymsPhraseQuery)
 }
@@ -275,7 +263,19 @@ func (m matchType) AutoGenerateSynonymsPhraseQuery(autoGenerateSynonymsPhraseQue
 //
 // Returns:
 //
-//	The updated matchType object with the "zero_terms_query" field set to the specified value.
+//	The updated es.matchType object with the "zero_terms_query" field set to the specified value.
 func (m matchType) ZeroTermsQuery(zeroTermsQuery ZeroTermsQuery.ZeroTermsQuery) matchType {
 	return m.putInTheField("zero_terms_query", zeroTermsQuery)
+}
+
+func (m matchType) putInTheField(key string, value any) matchType {
+	if match, ok := m["match"].(Object); ok {
+		for _, fieldObj := range match {
+			if fieldObject, foOk := fieldObj.(Object); foOk {
+				fieldObject[key] = value
+				break
+			}
+		}
+	}
+	return m
 }
