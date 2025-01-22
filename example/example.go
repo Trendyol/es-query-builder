@@ -6,8 +6,9 @@ import (
 	"fmt"
 	"log"
 
+	Order "github.com/Trendyol/es-query-builder/es/enums/sort/order"
+
 	"github.com/Trendyol/es-query-builder/es"
-	"github.com/Trendyol/es-query-builder/es/enums/sort/order"
 )
 
 func mockGetDocumentsEs(query string) (string, error) {
@@ -97,7 +98,7 @@ func buildQuery(id int) es.Object {
 				es.Terms("type", "DOC", "FILE"),
 			)).
 		Size(45).
-		Sort(es.Sort("name").Order(order.Asc)).
+		Sort(es.Sort("name").Order(Order.Asc)).
 		SourceIncludes("id", "type", "indexedAt", "chapters")
 
 	return query

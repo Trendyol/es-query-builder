@@ -16,11 +16,11 @@ func Test_MatchAll_should_exist_on_es_package(t *testing.T) {
 
 func Test_MatchAll_method_should_create_matchAllType(t *testing.T) {
 	// Given
-	b := es.MatchAll()
+	matchAll := es.MatchAll()
 
 	// Then
-	assert.NotNil(t, b)
-	assert.IsTypeString(t, "es.matchAllType", b)
+	assert.NotNil(t, matchAll)
+	assert.IsTypeString(t, "es.matchAllType", matchAll)
 }
 
 func Test_MatchAll_should_create_json_with_match_all_field_inside_query(t *testing.T) {

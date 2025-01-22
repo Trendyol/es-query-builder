@@ -3,6 +3,8 @@ package es_test
 import (
 	"testing"
 
+	RangeRelation "github.com/Trendyol/es-query-builder/es/enums/range-relation"
+
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
@@ -170,4 +172,75 @@ func Test_Range_Boost_should_create_json_with_range_field_inside_query(t *testin
 	bodyJSON := assert.MarshalWithoutError(t, query)
 	// nolint:golint,lll
 	assert.Equal(t, "{\"query\":{\"range\":{\"partition\":{\"boost\":3.2,\"gt\":112,\"lt\":765}}}}", bodyJSON)
+}
+
+func Test_Range_should_have_From_method(t *testing.T) {
+	// Given
+	r := es.Range("age")
+
+	// When Then
+	assert.NotNil(t, r)
+	assert.NotNil(t, r.From)
+}
+
+func Test_Range_From_should_create_json_with_range_field_inside_query(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.Range("partition").
+			From(512),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	// nolint:golint,lll
+	assert.Equal(t, "{\"query\":{\"range\":{\"partition\":{\"from\":512}}}}", bodyJSON)
+}
+
+func Test_Range_should_have_To_method(t *testing.T) {
+	// Given
+	r := es.Range("age")
+
+	// When Then
+	assert.NotNil(t, r)
+	assert.NotNil(t, r.To)
+}
+
+func Test_Range_To_should_create_json_with_range_field_inside_query(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.Range("partition").
+			To(1024),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	// nolint:golint,lll
+	assert.Equal(t, "{\"query\":{\"range\":{\"partition\":{\"to\":1024}}}}", bodyJSON)
+}
+
+func Test_Range_should_have_Relation_method(t *testing.T) {
+	// Given
+	r := es.Range("age")
+
+	// When Then
+	assert.NotNil(t, r)
+	assert.NotNil(t, r.Relation)
+}
+
+func Test_Range_Relation_should_create_json_with_range_field_inside_query(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.Range("partition").
+			From(512).
+			To(1024).
+			Relation(RangeRelation.Within),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	// nolint:golint,lll
+	assert.Equal(t, "{\"query\":{\"range\":{\"partition\":{\"from\":512,\"relation\":\"within\",\"to\":1024}}}}", bodyJSON)
 }

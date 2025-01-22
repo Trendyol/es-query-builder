@@ -3,10 +3,10 @@ package es_test
 import (
 	"testing"
 
+	Order "github.com/Trendyol/es-query-builder/es/enums/sort/order"
+
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"
-
-	Order "github.com/Trendyol/es-query-builder/es/enums/sort/order"
 )
 
 ////    AGGS    ////

@@ -1,15 +1,15 @@
 package zerotermsquery
 
-// ZeroTermsQuery sets the "zero_terms_query" field in the matchType object.
+// ZeroTermsQuery sets the "zero_terms_query" field in the es.matchType object.
 //
 // This method specifies the behavior of the match query when no terms remain after analysis,
-// such as when all terms are stop words. It updates the matchType object to include the provided
+// such as when all terms are stop words. It updates the es.matchType object to include the provided
 // zeroTermsQuery value, which determines how the query should respond in this scenario.
 //
 // Example usage:
 //
 //	match := es.Match("field", "value").ZeroTermsQuery(ZeroTermsQuery.All)
-//	// match now has the "zero_terms_query" field set to "all" in the matchType object.
+//	// match now has the "zero_terms_query" field set to "all" in the es.matchType object.
 //
 // Parameters:
 //   - zeroTermsQuery: A ZeroTermsQuery value indicating the behavior for zero-term queries.
@@ -17,7 +17,7 @@ package zerotermsquery
 //
 // Returns:
 //
-//	The updated matchType object with the "zero_terms_query" field set to the specified value.
+//	The updated es.matchType object with the "zero_terms_query" field set to the specified value.
 type ZeroTermsQuery string
 
 const (

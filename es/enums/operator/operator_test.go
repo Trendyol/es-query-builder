@@ -3,9 +3,9 @@ package operator_test
 import (
 	"testing"
 
-	"github.com/Trendyol/es-query-builder/test/assert"
+	Operator "github.com/Trendyol/es-query-builder/es/enums/operator"
 
-	Operator "github.com/Trendyol/es-query-builder/es/enums/match/operator"
+	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
 func Test_OperatorString(t *testing.T) {

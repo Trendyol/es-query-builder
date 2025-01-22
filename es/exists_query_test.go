@@ -35,6 +35,27 @@ func Test_Exists_method_should_create_existsType(t *testing.T) {
 	assert.IsTypeString(t, "es.existsType", b)
 }
 
+func Test_Exists_should_have_Boost_method(t *testing.T) {
+	// Given
+	exists := es.Exists("key")
+
+	// When Then
+	assert.NotNil(t, exists.Boost)
+}
+
+func Test_Exists_Boost_should_create_json_with_boost_field_inside_exists(t *testing.T) {
+	// Given
+	query := es.NewQuery(
+		es.Exists("type").
+			Boost(3.14),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"exists\":{\"boost\":3.14,\"field\":\"type\"}}}", bodyJSON)
+}
+
 ////   ExistsFunc   ////
 
 func Test_ExistsFunc_should_exist_on_es_package(t *testing.T) {

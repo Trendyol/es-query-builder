@@ -12,10 +12,10 @@ package condition
 //
 // Example usage:
 //
-//	result := If(es.Object{"key": "value"}, true)
+//	result := condition.If(es.Object{"key": "value"}, true)
 //	// result is es.Object{"key": "value"}
 //
-//	result = If(es.Object{"key": "value"}, false)
+//	result = condition.If(es.Object{"key": "value"}, false)
 //	// result is nil
 func If[T ~map[string]any | ~[]any](item T, condition bool) T {
 	if !condition {
