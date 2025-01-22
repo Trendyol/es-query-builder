@@ -21,7 +21,7 @@ type nestedType Object
 //
 // Returns:
 //
-//	a es.nestedType object with the "nested" query and specified path.
+//	an es.nestedType object with the "nested" query and specified path.
 func Nested[T any](path string, nestedQuery T) nestedType {
 	o := NewQuery(nestedQuery)
 	o["path"] = path
