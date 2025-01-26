@@ -308,6 +308,7 @@ func Test_Multi_Match_should_have_AutoGenerateSynonymsPhraseQuery_method(t *test
 	assert.NotNil(t, match.AutoGenerateSynonymsPhraseQuery)
 }
 
+// nolint:golint,lll
 func Test_Multi_Match_AutoGenerateSynonymsPhraseQuery_should_create_json_auto_generate_synonyms_phrase_query_field_inside_match(t *testing.T) {
 	// Given
 	query := es.NewQuery(
