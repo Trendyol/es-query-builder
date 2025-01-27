@@ -33,7 +33,7 @@ func Test_Match_Bool_Prefix_should_have_Boost_method(t *testing.T) {
 	assert.NotNil(t, match.Boost)
 }
 
-func Test_Match_Bool_Prefix_Boost_should_create_json_with_boost_field_inside_match(t *testing.T) {
+func Test_Match_Bool_Prefix_Boost_should_create_json_with_boost_field_inside_match_bool_prefix(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MatchBoolPrefix("type", "Folder").
@@ -54,7 +54,7 @@ func Test_Match_Bool_Prefix_should_have_Analyzer_method(t *testing.T) {
 	assert.NotNil(t, match.Analyzer)
 }
 
-func Test_Match_Bool_Prefix_Analyzer_should_create_json_with_analyzer_field_inside_match(t *testing.T) {
+func Test_Match_Bool_Prefix_Analyzer_should_create_json_with_analyzer_field_inside_match_bool_prefix(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MatchBoolPrefix("type", "Folder").
@@ -75,7 +75,7 @@ func Test_Match_Bool_Prefix_should_have_MinimumShouldMatch_method(t *testing.T) 
 	assert.NotNil(t, match.MinimumShouldMatch)
 }
 
-func Test_Match_Bool_Prefix_MinimumShouldMatch_should_create_json_with_minimum_should_match_field_inside_match(t *testing.T) {
+func Test_Match_Bool_Prefix_MinimumShouldMatch_should_create_json_with_minimum_should_match_field_inside_match_bool_prefix(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MatchBoolPrefix("type", "Folder").
@@ -96,7 +96,7 @@ func Test_Match_Bool_Prefix_should_have_Operator_method(t *testing.T) {
 	assert.NotNil(t, match.Operator)
 }
 
-func Test_Match_Bool_Prefix_Operator_should_create_json_with_operator_field_inside_match(t *testing.T) {
+func Test_Match_Bool_Prefix_Operator_should_create_json_with_operator_field_inside_match_bool_prefix(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MatchBoolPrefix("type", "Folder").
@@ -117,7 +117,7 @@ func Test_Match_Bool_Prefix_should_have_Fuzziness_method(t *testing.T) {
 	assert.NotNil(t, match.Fuzziness)
 }
 
-func Test_Match_Bool_Prefix_Fuzziness_should_create_json_with_fuzziness_field_inside_match(t *testing.T) {
+func Test_Match_Bool_Prefix_Fuzziness_should_create_json_with_fuzziness_field_inside_match_bool_prefix(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MatchBoolPrefix("type", "Folder").
@@ -138,7 +138,7 @@ func Test_Match_Bool_Prefix_should_have_FuzzyRewrite_method(t *testing.T) {
 	assert.NotNil(t, match.FuzzyRewrite)
 }
 
-func Test_Match_Bool_Prefix_FuzzyRewrite_should_create_json_with_fuzzy_rewrite_field_inside_match(t *testing.T) {
+func Test_Match_Bool_Prefix_FuzzyRewrite_should_create_json_with_fuzzy_rewrite_field_inside_match_bool_prefix(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MatchBoolPrefix("type", "Folder").
@@ -159,7 +159,7 @@ func Test_Match_Bool_Prefix_should_have_FuzzyTranspositions_method(t *testing.T)
 	assert.NotNil(t, match.FuzzyTranspositions)
 }
 
-func Test_Match_Bool_Prefix_FuzzyTranspositions_should_create_json_with_fuzzy_transpositions_field_inside_match(t *testing.T) {
+func Test_Match_Bool_Prefix_FuzzyTranspositions_should_create_json_with_fuzzy_transpositions_field_inside_match_bool_prefix(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MatchBoolPrefix("type", "Directory").
@@ -180,7 +180,7 @@ func Test_Match_Bool_Prefix_should_have_MaxExpansions_method(t *testing.T) {
 	assert.NotNil(t, match.MaxExpansions)
 }
 
-func Test_Match_Bool_Prefix_MaxExpansions_should_create_json_with_max_expansions_field_inside_match(t *testing.T) {
+func Test_Match_Bool_Prefix_MaxExpansions_should_create_json_with_max_expansions_field_inside_match_bool_prefix(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MatchBoolPrefix("type", "Folder").
@@ -201,7 +201,7 @@ func Test_Match_Bool_Prefix_should_have_PrefixLength_method(t *testing.T) {
 	assert.NotNil(t, match.PrefixLength)
 }
 
-func Test_Match_Bool_Prefix_PrefixLength_should_create_json_with_prefix_length_field_inside_match(t *testing.T) {
+func Test_Match_Bool_Prefix_PrefixLength_should_create_json_with_prefix_length_field_inside_match_bool_prefix(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MatchBoolPrefix("type", "Folder").
