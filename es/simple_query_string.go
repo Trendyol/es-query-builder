@@ -51,7 +51,7 @@ func (q simpleQueryStringType) Fields(value []string) simpleQueryStringType {
 	return q.putInTheField("fields", value)
 }
 
-// Analyzer sets the analyzer to be used for the simpleQueryStringType object.
+// Analyzer sets the analyzer to be used for the es.simpleQueryStringType object.
 //
 // This method specifies the analyzer that should be applied to the query string.
 // Analyzers are used to process the text, such as tokenizing and normalizing it,
@@ -203,7 +203,7 @@ func (q simpleQueryStringType) AnalyzeWildcard(value bool) simpleQueryStringType
 }
 
 // AutoGenerateSynonymsPhraseQuery sets the option to automatically generate phrase queries for synonyms
-// in the simpleQueryStringType object.
+// in the es.simpleQueryStringType object.
 //
 // This method enables or disables the automatic generation of phrase queries for synonyms in the query string.
 // When set to true, Elasticsearch will automatically create phrase queries for terms that have synonyms,
