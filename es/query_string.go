@@ -463,8 +463,8 @@ func (q queryStringType) QuoteAnalyzer(value string) queryStringType {
 // Returns:
 //
 // The updated es.queryStringType object with the "phrase_slop" option set.
-func (q queryStringType) PhraseSlop(value int64) queryStringType {
-	return q.putInTheField("phrase_slop", value)
+func (q queryStringType) PhraseSlop(slop float64) queryStringType {
+	return q.putInTheField("phrase_slop", slop)
 }
 
 // QuoteFieldSuffix sets the field suffix to be used for quoted text in the es.queryStringType object.
