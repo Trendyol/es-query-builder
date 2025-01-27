@@ -10,11 +10,13 @@ import (
 ////   Regexp   ////
 
 func Test_Regexp_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.Regexp)
 }
 
 func Test_Regexp_should_have_Boost_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	regex := es.Regexp("key", "[a-z0-9]")
 
@@ -23,6 +25,7 @@ func Test_Regexp_should_have_Boost_method(t *testing.T) {
 }
 
 func Test_Regexp_should_have_Flags_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	regex := es.Regexp("key", "[a-z0-9]")
 
@@ -31,6 +34,7 @@ func Test_Regexp_should_have_Flags_method(t *testing.T) {
 }
 
 func Test_Regexp_should_have_Rewrite_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	regex := es.Regexp("key", "[a-z0-9]")
 
@@ -39,6 +43,7 @@ func Test_Regexp_should_have_Rewrite_method(t *testing.T) {
 }
 
 func Test_Regexp_should_have_CaseInsensitive_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	regex := es.Regexp("key", "[a-z0-9]")
 
@@ -47,6 +52,7 @@ func Test_Regexp_should_have_CaseInsensitive_method(t *testing.T) {
 }
 
 func Test_Regexp_should_have_MaxDeterminizedStates_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	regex := es.Regexp("key", "[a-z0-9]")
 
@@ -55,6 +61,7 @@ func Test_Regexp_should_have_MaxDeterminizedStates_method(t *testing.T) {
 }
 
 func Test_Regexp_should_create_json_with_regexp_field_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Regexp("endpoint", "/books/.*"),
@@ -67,6 +74,7 @@ func Test_Regexp_should_create_json_with_regexp_field_inside_query(t *testing.T)
 }
 
 func Test_Regexp_method_should_create_regexpType(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Regexp("key", "value")
 
@@ -76,6 +84,7 @@ func Test_Regexp_method_should_create_regexpType(t *testing.T) {
 }
 
 func Test_Regexp_should_create_json_with_match_all_field_inside_caseinsensitive_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Regexp("key", "value1").
@@ -89,6 +98,7 @@ func Test_Regexp_should_create_json_with_match_all_field_inside_caseinsensitive_
 }
 
 func Test_Regexp_should_create_json_with_match_all_field_inside_maxdeterminizedstates_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Regexp("key", "value1").
@@ -102,6 +112,7 @@ func Test_Regexp_should_create_json_with_match_all_field_inside_maxdeterminizeds
 }
 
 func Test_Regexp_should_create_json_with_match_all_field_inside_rewrite_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Regexp("key", "value1").
@@ -115,6 +126,7 @@ func Test_Regexp_should_create_json_with_match_all_field_inside_rewrite_query(t 
 }
 
 func Test_Regexp_should_create_json_with_match_all_field_inside_flags_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Regexp("key", "value1").
@@ -128,6 +140,7 @@ func Test_Regexp_should_create_json_with_match_all_field_inside_flags_query(t *t
 }
 
 func Test_Regexp_Boost_should_create_json_with_boost_field_inside_regexp(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Regexp("name", "[bst]ake").

@@ -12,11 +12,13 @@ import (
 ////   Inner Hits   ////
 
 func Test_InnerHits_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.InnerHits)
 }
 
 func Test_InnerHits_method_should_create_innerHitsType(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits()
 
@@ -26,6 +28,7 @@ func Test_InnerHits_method_should_create_innerHitsType(t *testing.T) {
 }
 
 func Test_InnerHits_should_have_Explain_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits()
 
@@ -34,6 +37,7 @@ func Test_InnerHits_should_have_Explain_method(t *testing.T) {
 }
 
 func Test_InnerHits_Explain_should_create_json_with_explain_field_inside_inner_hits(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits().Explain(true)
 	// When Then
@@ -43,6 +47,7 @@ func Test_InnerHits_Explain_should_create_json_with_explain_field_inside_inner_h
 }
 
 func Test_InnerHits_should_have_Fields_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits()
 
@@ -51,6 +56,7 @@ func Test_InnerHits_should_have_Fields_method(t *testing.T) {
 }
 
 func Test_InnerHits_Fields_should_create_json_with_fields_field_inside_inner_hits(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits().Fields("f1", "g2", "h3")
 	// When Then
@@ -60,6 +66,7 @@ func Test_InnerHits_Fields_should_create_json_with_fields_field_inside_inner_hit
 }
 
 func Test_InnerHits_should_have_Size_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits()
 
@@ -68,6 +75,7 @@ func Test_InnerHits_should_have_Size_method(t *testing.T) {
 }
 
 func Test_InnerHits_Size_should_create_json_with_size_field_inside_inner_hits(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits().Size(100)
 	// When Then
@@ -77,6 +85,7 @@ func Test_InnerHits_Size_should_create_json_with_size_field_inside_inner_hits(t 
 }
 
 func Test_InnerHits_should_have_From_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits()
 
@@ -85,6 +94,7 @@ func Test_InnerHits_should_have_From_method(t *testing.T) {
 }
 
 func Test_InnerHits_From_should_create_json_with_from_field_inside_inner_hits(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits().From(5_000)
 	// When Then
@@ -94,6 +104,7 @@ func Test_InnerHits_From_should_create_json_with_from_field_inside_inner_hits(t 
 }
 
 func Test_InnerHits_should_have_Name_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits()
 
@@ -102,6 +113,7 @@ func Test_InnerHits_should_have_Name_method(t *testing.T) {
 }
 
 func Test_InnerHits_Name_should_create_json_with_name_field_inside_inner_hits(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits().Name("Göksel")
 	// When Then
@@ -111,6 +123,7 @@ func Test_InnerHits_Name_should_create_json_with_name_field_inside_inner_hits(t 
 }
 
 func Test_InnerHits_should_have_SourceFalse_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits()
 
@@ -119,6 +132,7 @@ func Test_InnerHits_should_have_SourceFalse_method(t *testing.T) {
 }
 
 func Test_InnerHits_SourceFalse_should_create_json_with_source_field_inside_inner_hits_with_false(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits().SourceFalse()
 	// When Then
@@ -128,6 +142,7 @@ func Test_InnerHits_SourceFalse_should_create_json_with_source_field_inside_inne
 }
 
 func Test_InnerHits_should_have_SourceIncludes_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits()
 
@@ -136,6 +151,7 @@ func Test_InnerHits_should_have_SourceIncludes_method(t *testing.T) {
 }
 
 func Test_InnerHits_SourceIncludes_should_create_json_with_source_field_inside_inner_hits(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits().SourceIncludes("id", "name", "description")
 	// When Then
@@ -145,6 +161,7 @@ func Test_InnerHits_SourceIncludes_should_create_json_with_source_field_inside_i
 }
 
 func Test_InnerHits_SourceIncludes_should_not_create_json_with_source_field_inside_inner_hits_when_empty(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits().SourceIncludes()
 	// When Then
@@ -154,6 +171,7 @@ func Test_InnerHits_SourceIncludes_should_not_create_json_with_source_field_insi
 }
 
 func Test_InnerHits_should_have_SourceExcludes_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits()
 
@@ -162,6 +180,7 @@ func Test_InnerHits_should_have_SourceExcludes_method(t *testing.T) {
 }
 
 func Test_InnerHits_SourceExcludes_should_create_json_with_source_field_inside_inner_hits(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits().SourceExcludes("secret", "key", "partition")
 	// When Then
@@ -171,6 +190,7 @@ func Test_InnerHits_SourceExcludes_should_create_json_with_source_field_inside_i
 }
 
 func Test_InnerHits_SourceExcludes_should_not_create_json_with_source_field_inside_inner_hits_when_empty(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits().SourceExcludes()
 	// When Then
@@ -180,6 +200,7 @@ func Test_InnerHits_SourceExcludes_should_not_create_json_with_source_field_insi
 }
 
 func Test_InnerHits_should_have_StoredFields_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits()
 
@@ -188,6 +209,7 @@ func Test_InnerHits_should_have_StoredFields_method(t *testing.T) {
 }
 
 func Test_InnerHits_StoredFields_should_create_json_with_stored_fields_field_inside_inner_hits(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits().StoredFields("x1", "y2", "z3")
 	// When Then
@@ -197,6 +219,7 @@ func Test_InnerHits_StoredFields_should_create_json_with_stored_fields_field_ins
 }
 
 func Test_InnerHits_should_have_TrackScores_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits()
 
@@ -205,6 +228,7 @@ func Test_InnerHits_should_have_TrackScores_method(t *testing.T) {
 }
 
 func Test_InnerHits_TrackScores_should_create_json_with_track_scores_field_inside_inner_hits(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits().TrackScores(false)
 	// When Then
@@ -214,6 +238,7 @@ func Test_InnerHits_TrackScores_should_create_json_with_track_scores_field_insid
 }
 
 func Test_InnerHits_should_have_Version_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits()
 
@@ -222,6 +247,7 @@ func Test_InnerHits_should_have_Version_method(t *testing.T) {
 }
 
 func Test_InnerHits_Version_should_create_json_with_version_field_inside_inner_hits(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits().Version(true)
 	// When Then
@@ -231,6 +257,7 @@ func Test_InnerHits_Version_should_create_json_with_version_field_inside_inner_h
 }
 
 func Test_InnerHits_should_have_IgnoreUnmapped_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits()
 
@@ -239,6 +266,7 @@ func Test_InnerHits_should_have_IgnoreUnmapped_method(t *testing.T) {
 }
 
 func Test_InnerHits_IgnoreUnmapped_should_create_json_with_ignore_unmapped_field_inside_inner_hits(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits().IgnoreUnmapped(true)
 	// When Then
@@ -248,6 +276,7 @@ func Test_InnerHits_IgnoreUnmapped_should_create_json_with_ignore_unmapped_field
 }
 
 func Test_InnerHits_should_have_SeqNoPrimaryTerm_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits()
 
@@ -256,6 +285,7 @@ func Test_InnerHits_should_have_SeqNoPrimaryTerm_method(t *testing.T) {
 }
 
 func Test_InnerHits_SeqNoPrimaryTerm_should_create_json_with_seq_no_primary_term_field_inside_inner_hits(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits().SeqNoPrimaryTerm(false)
 	// When Then
@@ -265,6 +295,7 @@ func Test_InnerHits_SeqNoPrimaryTerm_should_create_json_with_seq_no_primary_term
 }
 
 func Test_InnerHits_should_have_Sort_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits()
 
@@ -273,6 +304,7 @@ func Test_InnerHits_should_have_Sort_method(t *testing.T) {
 }
 
 func Test_InnerHits_Sort_should_create_json_with_sort_field_inside_inner_hits(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits().Sort(es.Sort("indexedAt").Order(Order.Desc))
 	// When Then
@@ -282,6 +314,7 @@ func Test_InnerHits_Sort_should_create_json_with_sort_field_inside_inner_hits(t 
 }
 
 func Test_InnerHits_should_have_Collapse_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits()
 
@@ -290,6 +323,7 @@ func Test_InnerHits_should_have_Collapse_method(t *testing.T) {
 }
 
 func Test_InnerHits_Collapse_should_create_json_with_collapse_field_inside_inner_hits(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits().Collapse(es.FieldCollapse("yelle"))
 	// When Then
@@ -299,6 +333,7 @@ func Test_InnerHits_Collapse_should_create_json_with_collapse_field_inside_inner
 }
 
 func Test_InnerHits_should_have_DocvalueFields_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits()
 
@@ -307,6 +342,7 @@ func Test_InnerHits_should_have_DocvalueFields_method(t *testing.T) {
 }
 
 func Test_InnerHits_DocvalueFields_should_create_json_with_docvalue_fields_field_inside_inner_hits(t *testing.T) {
+	t.Parallel()
 	// Given
 	ih := es.InnerHits().DocvalueFields(
 		es.FieldAndFormat("id"),
@@ -322,11 +358,13 @@ func Test_InnerHits_DocvalueFields_should_create_json_with_docvalue_fields_field
 ////   Field Collapse   ////
 
 func Test_FieldCollapse_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.FieldCollapse)
 }
 
 func Test_FieldCollapse_method_should_create_fieldCollapseType(t *testing.T) {
+	t.Parallel()
 	// Given
 	fc := es.FieldCollapse("name")
 
@@ -336,6 +374,7 @@ func Test_FieldCollapse_method_should_create_fieldCollapseType(t *testing.T) {
 }
 
 func Test_FieldCollapse_should_have_Collapse_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	fc := es.FieldCollapse("id")
 
@@ -344,6 +383,7 @@ func Test_FieldCollapse_should_have_Collapse_method(t *testing.T) {
 }
 
 func Test_FieldCollapse_Collapse_should_create_json_with_collapse_field_inside_field_collapse(t *testing.T) {
+	t.Parallel()
 	// Given
 	fc := es.FieldCollapse("id").Collapse(es.FieldCollapse("index"))
 	// When Then
@@ -353,6 +393,7 @@ func Test_FieldCollapse_Collapse_should_create_json_with_collapse_field_inside_f
 }
 
 func Test_FieldCollapse_should_have_InnerHits_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	fc := es.FieldCollapse("id")
 
@@ -361,6 +402,7 @@ func Test_FieldCollapse_should_have_InnerHits_method(t *testing.T) {
 }
 
 func Test_FieldCollapse_InnerHits_should_create_json_with_inner_hits_field_inside_field_collapse(t *testing.T) {
+	t.Parallel()
 	// Given
 	fc := es.FieldCollapse("display").InnerHits(es.InnerHits().Fields("name", "surname"))
 	// When Then
@@ -370,6 +412,7 @@ func Test_FieldCollapse_InnerHits_should_create_json_with_inner_hits_field_insid
 }
 
 func Test_FieldCollapse_should_have_MaxConcurrentGroupSearches_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	fc := es.FieldCollapse("id")
 
@@ -379,6 +422,7 @@ func Test_FieldCollapse_should_have_MaxConcurrentGroupSearches_method(t *testing
 
 // nolint:golint,lll
 func Test_FieldCollapse_MaxConcurrentGroupSearches_should_create_json_with_max_concurrent_group_searches_field_inside_field_collapse(t *testing.T) {
+	t.Parallel()
 	// Given
 	fc := es.FieldCollapse("display").MaxConcurrentGroupSearches(67)
 	// When Then
@@ -390,11 +434,13 @@ func Test_FieldCollapse_MaxConcurrentGroupSearches_should_create_json_with_max_c
 ////   Field And Format   ////
 
 func Test_FieldAndFormat_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.FieldAndFormat)
 }
 
 func Test_FieldAndFormat_method_should_create_fieldAndFormatType(t *testing.T) {
+	t.Parallel()
 	// Given
 	fnf := es.FieldAndFormat("name")
 
@@ -404,6 +450,7 @@ func Test_FieldAndFormat_method_should_create_fieldAndFormatType(t *testing.T) {
 }
 
 func Test_FieldAndFormat_should_have_Format_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	fnf := es.FieldAndFormat("name")
 
@@ -412,6 +459,7 @@ func Test_FieldAndFormat_should_have_Format_method(t *testing.T) {
 }
 
 func Test_FieldAndFormat_Format_should_create_json_with_format_field_inside_field_and_format(t *testing.T) {
+	t.Parallel()
 	// Given
 	fnf := es.FieldAndFormat("xyz").Format("yyyy-MM-dd")
 	// When Then
@@ -421,6 +469,7 @@ func Test_FieldAndFormat_Format_should_create_json_with_format_field_inside_fiel
 }
 
 func Test_FieldAndFormat_should_have_IncludeUnmapped_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	fnf := es.FieldAndFormat("name")
 
@@ -429,6 +478,7 @@ func Test_FieldAndFormat_should_have_IncludeUnmapped_method(t *testing.T) {
 }
 
 func Test_FieldAndFormat_IncludeUnmapped_should_create_json_with_include_unmapped_field_inside_field_and_format(t *testing.T) {
+	t.Parallel()
 	// Given
 	fnf := es.FieldAndFormat("hello").IncludeUnmapped(false)
 	// When Then

@@ -12,11 +12,13 @@ import (
 ////   Simple Query String   ////
 
 func Test_SimpleQueryString_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When
 	assert.NotNil(t, es.SimpleQueryString[any])
 }
 
 func Test_SimpleQueryString_method_should_create_simpleQueryStringType(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.SimpleQueryString("value")
 
@@ -26,6 +28,7 @@ func Test_SimpleQueryString_method_should_create_simpleQueryStringType(t *testin
 }
 
 func Test_SimpleQueryString_method_should_create_simple_query_string_with_required_query(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.SimpleQueryString("value"),
@@ -38,6 +41,7 @@ func Test_SimpleQueryString_method_should_create_simple_query_string_with_requir
 }
 
 func Test_SimpleQueryString_method_should_create_simple_query_string_with_fields(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.SimpleQueryString("value").Fields([]string{"field1", "field2"}),
@@ -50,6 +54,7 @@ func Test_SimpleQueryString_method_should_create_simple_query_string_with_fields
 }
 
 func Test_SimpleQueryString_method_should_create_simple_query_string_with_analyzer(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.SimpleQueryString("value").Analyzer("standard"),
@@ -62,6 +67,7 @@ func Test_SimpleQueryString_method_should_create_simple_query_string_with_analyz
 }
 
 func Test_SimpleQueryString_method_should_create_simple_query_string_with_default_operator(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.SimpleQueryString("value").DefaultOperator(Operator.And),
@@ -74,6 +80,7 @@ func Test_SimpleQueryString_method_should_create_simple_query_string_with_defaul
 }
 
 func Test_SimpleQueryString_method_should_create_simple_query_string_with_minimum_should_match(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.SimpleQueryString("value").MinimumShouldMatch("2"),
@@ -86,6 +93,7 @@ func Test_SimpleQueryString_method_should_create_simple_query_string_with_minimu
 }
 
 func Test_SimpleQueryString_method_should_create_simple_query_string_with_fuzzy_max_expansions(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.SimpleQueryString("value").FuzzyMaxExpansions(50),
@@ -98,6 +106,7 @@ func Test_SimpleQueryString_method_should_create_simple_query_string_with_fuzzy_
 }
 
 func Test_SimpleQueryString_method_should_create_simple_query_string_with_fuzzy_prefix_length(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.SimpleQueryString("value").FuzzyPrefixLength(2),
@@ -110,6 +119,7 @@ func Test_SimpleQueryString_method_should_create_simple_query_string_with_fuzzy_
 }
 
 func Test_SimpleQueryString_method_should_create_simple_query_string_with_fuzzy_transpositions(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.SimpleQueryString("value").FuzzyTranspositions(true),
@@ -122,6 +132,7 @@ func Test_SimpleQueryString_method_should_create_simple_query_string_with_fuzzy_
 }
 
 func Test_SimpleQueryString_method_should_create_simple_query_string_with_analyze_wildcard(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.SimpleQueryString("value").AnalyzeWildcard(true),
@@ -134,6 +145,7 @@ func Test_SimpleQueryString_method_should_create_simple_query_string_with_analyz
 }
 
 func Test_SimpleQueryString_method_should_create_simple_query_string_with_auto_generate_synonyms_phrase_query(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.SimpleQueryString("value").AutoGenerateSynonymsPhraseQuery(true),
@@ -146,6 +158,7 @@ func Test_SimpleQueryString_method_should_create_simple_query_string_with_auto_g
 }
 
 func Test_SimpleQueryString_method_should_create_simple_query_string_with_flags(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.SimpleQueryString("value").Flags("AND|OR|PREFIX"),
@@ -158,6 +171,7 @@ func Test_SimpleQueryString_method_should_create_simple_query_string_with_flags(
 }
 
 func Test_SimpleQueryString_method_should_create_simple_query_string_with_lenient(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.SimpleQueryString("value").Lenient(true),
@@ -170,6 +184,7 @@ func Test_SimpleQueryString_method_should_create_simple_query_string_with_lenien
 }
 
 func Test_SimpleQueryString_method_should_create_simple_query_string_with_quote_field_suffix(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.SimpleQueryString("value").QuoteFieldSuffix("_phrase"),
@@ -182,6 +197,7 @@ func Test_SimpleQueryString_method_should_create_simple_query_string_with_quote_
 }
 
 func Test_SimpleQueryString_method_should_create_simple_query_string_with_boost(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.SimpleQueryString("value").Boost(3.12),
@@ -194,6 +210,7 @@ func Test_SimpleQueryString_method_should_create_simple_query_string_with_boost(
 }
 
 func Test_SimpleQueryString_method_should_create_simple_query_string_with_all_parameters(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.SimpleQueryString("value").

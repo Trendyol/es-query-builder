@@ -12,11 +12,13 @@ import (
 ////   Match Phrase Prefix   ////
 
 func Test_MatchPhrasePrefix_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.MatchPhrasePrefix[any])
 }
 
 func Test_MatchPhrasePrefix_method_should_create_matchPhrasePrefixType(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.MatchPhrasePrefix("key", "value")
 
@@ -26,6 +28,7 @@ func Test_MatchPhrasePrefix_method_should_create_matchPhrasePrefixType(t *testin
 }
 
 func Test_MatchPhrasePrefix_should_have_Analyzer_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MatchPhrasePrefix("key", "value")
 
@@ -34,6 +37,7 @@ func Test_MatchPhrasePrefix_should_have_Analyzer_method(t *testing.T) {
 }
 
 func Test_MatchPhrasePrefix_Analyzer_should_create_json_with_analyzer_field_inside_match_phrase_prefix(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MatchPhrasePrefix("type", "Folder").
@@ -47,6 +51,7 @@ func Test_MatchPhrasePrefix_Analyzer_should_create_json_with_analyzer_field_insi
 }
 
 func Test_MatchPhrasePrefix_should_have_Boost_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MatchPhrasePrefix("key", "value")
 
@@ -55,6 +60,7 @@ func Test_MatchPhrasePrefix_should_have_Boost_method(t *testing.T) {
 }
 
 func Test_MatchPhrasePrefix_Boost_should_create_json_with_boost_field_inside_match_phrase_prefix(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MatchPhrasePrefix("type", "Folder").
@@ -68,6 +74,7 @@ func Test_MatchPhrasePrefix_Boost_should_create_json_with_boost_field_inside_mat
 }
 
 func Test_MatchPhrasePrefix_should_have_MaxExpansions_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MatchPhrasePrefix("key", "value")
 
@@ -76,6 +83,7 @@ func Test_MatchPhrasePrefix_should_have_MaxExpansions_method(t *testing.T) {
 }
 
 func Test_MatchPhrasePrefix_MaxExpansions_should_create_json_with_max_expansions_field_inside_match_phrase_prefix(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MatchPhrasePrefix("type", "Folder").
@@ -89,6 +97,7 @@ func Test_MatchPhrasePrefix_MaxExpansions_should_create_json_with_max_expansions
 }
 
 func Test_MatchPhrasePrefix_should_have_Slop_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MatchPhrasePrefix("key", "value")
 
@@ -97,6 +106,7 @@ func Test_MatchPhrasePrefix_should_have_Slop_method(t *testing.T) {
 }
 
 func Test_MatchPhrasePrefix_Slop_should_create_json_with_slop_field_inside_match_phrase_prefix(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MatchPhrasePrefix("type", "Folder").
@@ -110,6 +120,7 @@ func Test_MatchPhrasePrefix_Slop_should_create_json_with_slop_field_inside_match
 }
 
 func Test_MatchPhrasePrefix_should_have_ZeroTermsQuery_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MatchPhrasePrefix("key", "value")
 
@@ -118,6 +129,7 @@ func Test_MatchPhrasePrefix_should_have_ZeroTermsQuery_method(t *testing.T) {
 }
 
 func Test_MatchPhrasePrefix_ZeroTermsQuery_should_create_json_with_zero_terms_query_field_inside_match_phrase_prefix(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MatchPhrasePrefix("type", "Folder").
@@ -131,6 +143,7 @@ func Test_MatchPhrasePrefix_ZeroTermsQuery_should_create_json_with_zero_terms_qu
 }
 
 func Test_MatchPhrasePrefix_should_create_json_with_match_phrase_prefix_field_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MatchPhrasePrefix("message", "this is a test").

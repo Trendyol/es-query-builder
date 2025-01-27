@@ -10,11 +10,13 @@ import (
 ////   Terms   ////
 
 func Test_Terms_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.Terms)
 }
 
 func Test_Terms_should_create_json_with_terms_field_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Terms("key", "value1", "value2", "value3"),
@@ -27,6 +29,7 @@ func Test_Terms_should_create_json_with_terms_field_inside_query(t *testing.T) {
 }
 
 func Test_Terms_method_should_create_termsType(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Terms("key", "value1", "value2", "value3")
 
@@ -36,6 +39,7 @@ func Test_Terms_method_should_create_termsType(t *testing.T) {
 }
 
 func Test_Terms_should_have_Boost_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	terms := es.Terms("key", "value1", "value2", "value3")
 
@@ -44,6 +48,7 @@ func Test_Terms_should_have_Boost_method(t *testing.T) {
 }
 
 func Test_Terms_Boost_should_create_json_with_boost_field_inside_terms(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Terms("sector.name", "a1", "b2", "c3").
@@ -59,11 +64,13 @@ func Test_Terms_Boost_should_create_json_with_boost_field_inside_terms(t *testin
 ////   TermsArray   ////
 
 func Test_TermsArray_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.TermsArray[string])
 }
 
 func Test_TermsArray_should_create_json_with_terms_field_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.TermsArray("key", []any{"value1", "value2", "value3"}),
@@ -76,6 +83,7 @@ func Test_TermsArray_should_create_json_with_terms_field_inside_query(t *testing
 }
 
 func Test_TermsArray_method_should_create_termsType(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.TermsArray("key", []any{"value1", "value2", "value3"})
 
@@ -87,11 +95,13 @@ func Test_TermsArray_method_should_create_termsType(t *testing.T) {
 ////   TermsFunc   ////
 
 func Test_TermsFunc_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.TermsFunc[string])
 }
 
 func Test_TermsFunc_should_create_json_with_terms_field_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.TermsFunc("key", []string{"a", "b", "c"}, func(key string, values []string) bool {
@@ -106,6 +116,7 @@ func Test_TermsFunc_should_create_json_with_terms_field_inside_query(t *testing.
 }
 
 func Test_TermsFunc_should_not_add_terms_field_inside_query_when_callback_result_is_false(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.TermsFunc("key", []string{"a", "b", "c"}, func(key string, value []string) bool {
@@ -120,6 +131,7 @@ func Test_TermsFunc_should_not_add_terms_field_inside_query_when_callback_result
 }
 
 func Test_TermsFunc_should_add_only_terms_fields_inside_the_query_when_callback_result_is_true(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Bool().
@@ -143,6 +155,7 @@ func Test_TermsFunc_should_add_only_terms_fields_inside_the_query_when_callback_
 }
 
 func Test_TermsFunc_method_should_create_termType(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.TermsFunc("key", []string{"a", "b", "c"}, func(key string, value []string) bool {
 		return true
@@ -156,11 +169,13 @@ func Test_TermsFunc_method_should_create_termType(t *testing.T) {
 ////   TermsIf   ////
 
 func Test_TermsIf_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.TermsIf[string])
 }
 
 func Test_TermsIf_should_create_json_with_terms_field_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.TermsIf("key", []string{"a", "b", "c"}, true),
@@ -173,6 +188,7 @@ func Test_TermsIf_should_create_json_with_terms_field_inside_query(t *testing.T)
 }
 
 func Test_TermsIf_should_not_add_terms_field_inside_query_when_condition_is_false(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.TermsIf("key", []string{"a", "b", "c"}, false),
@@ -185,6 +201,7 @@ func Test_TermsIf_should_not_add_terms_field_inside_query_when_condition_is_fals
 }
 
 func Test_TermsIf_should_add_only_terms_fields_inside_the_query_when_condition_is_true(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Bool().
@@ -202,6 +219,7 @@ func Test_TermsIf_should_add_only_terms_fields_inside_the_query_when_condition_i
 }
 
 func Test_TermsIf_method_should_create_termType(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.TermsIf("key", []string{"a", "b", "c"}, true)
 

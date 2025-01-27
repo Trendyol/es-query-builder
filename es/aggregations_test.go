@@ -12,11 +12,13 @@ import (
 ////    AGGS    ////
 
 func Test_AggTerm_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.AggTerm)
 }
 
 func Test_AggTerm_method_should_create_aggTermType(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggTerm("path")
 
@@ -26,6 +28,7 @@ func Test_AggTerm_method_should_create_aggTermType(t *testing.T) {
 }
 
 func Test_AggTerm_should_create_json_with_field_field_inside(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggTerm("path")
 
@@ -36,6 +39,7 @@ func Test_AggTerm_should_create_json_with_field_field_inside(t *testing.T) {
 }
 
 func Test_AggTerm_should_have_Missing_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggTerm("path")
 
@@ -44,6 +48,7 @@ func Test_AggTerm_should_have_Missing_method(t *testing.T) {
 }
 
 func Test_Missing_should_add_missing_field_into_AggTerm(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggTerm("path").Missing("missing_name")
 
@@ -54,11 +59,13 @@ func Test_Missing_should_add_missing_field_into_AggTerm(t *testing.T) {
 }
 
 func Test_AggTerms_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.AggTerms)
 }
 
 func Test_AggTerms_method_should_create_aggType(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggTerms()
 
@@ -68,6 +75,7 @@ func Test_AggTerms_method_should_create_aggType(t *testing.T) {
 }
 
 func Test_AggTerms_should_create_json_with_terms_field_inside(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggTerms()
 
@@ -78,11 +86,13 @@ func Test_AggTerms_should_create_json_with_terms_field_inside(t *testing.T) {
 }
 
 func Test_AggMultiTerms_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.AggMultiTerms)
 }
 
 func Test_AggMultiTerms_method_should_create_aggType(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggMultiTerms()
 
@@ -92,6 +102,7 @@ func Test_AggMultiTerms_method_should_create_aggType(t *testing.T) {
 }
 
 func Test_AggMultiTerms_should_create_json_with_multi_terms_field_inside(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggMultiTerms()
 
@@ -102,11 +113,13 @@ func Test_AggMultiTerms_should_create_json_with_multi_terms_field_inside(t *test
 }
 
 func Test_AggNested_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.AggNested)
 }
 
 func Test_AggNested_method_should_create_aggType(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggNested()
 
@@ -116,6 +129,7 @@ func Test_AggNested_method_should_create_aggType(t *testing.T) {
 }
 
 func Test_AggNested_should_create_json_with_nested_field_inside(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggNested()
 
@@ -126,11 +140,13 @@ func Test_AggNested_should_create_json_with_nested_field_inside(t *testing.T) {
 }
 
 func Test_AggCustom_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.AggCustom)
 }
 
 func Test_AggCustom_method_should_create_aggType(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggCustom(nil)
 
@@ -140,6 +156,7 @@ func Test_AggCustom_method_should_create_aggType(t *testing.T) {
 }
 
 func Test_AggCustom_should_create_json(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggCustom(es.Object{
 		"custom": es.Object{
@@ -154,6 +171,7 @@ func Test_AggCustom_should_create_json(t *testing.T) {
 }
 
 func Test_AggType_should_have_Field_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggTerms()
 
@@ -162,6 +180,7 @@ func Test_AggType_should_have_Field_method(t *testing.T) {
 }
 
 func Test_Field_should_add_field_field_into_AggTerm(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggTerms().Field("path")
 
@@ -172,6 +191,7 @@ func Test_Field_should_add_field_field_into_AggTerm(t *testing.T) {
 }
 
 func Test_AggType_should_have_Path_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggTerms()
 
@@ -180,6 +200,7 @@ func Test_AggType_should_have_Path_method(t *testing.T) {
 }
 
 func Test_Path_should_add_path_field_into_AggNested(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggNested().Path("review")
 
@@ -190,6 +211,7 @@ func Test_Path_should_add_path_field_into_AggNested(t *testing.T) {
 }
 
 func Test_AggType_should_have_Size_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggTerms()
 
@@ -198,6 +220,7 @@ func Test_AggType_should_have_Size_method(t *testing.T) {
 }
 
 func Test_Size_should_add_size_field_into_AggType(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggTerms().Size(333)
 
@@ -208,6 +231,7 @@ func Test_Size_should_add_size_field_into_AggType(t *testing.T) {
 }
 
 func Test_AggType_should_have_Order_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggTerms()
 
@@ -216,6 +240,7 @@ func Test_AggType_should_have_Order_method(t *testing.T) {
 }
 
 func Test_Order_should_add_order_field_into_AggType(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggTerms().Order("path", Order.Desc)
 
@@ -226,6 +251,7 @@ func Test_Order_should_add_order_field_into_AggType(t *testing.T) {
 }
 
 func Test_AggType_should_have_Include_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggTerms()
 
@@ -234,6 +260,7 @@ func Test_AggType_should_have_Include_method(t *testing.T) {
 }
 
 func Test_Include_should_add_include_field_into_AggType(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggTerms().Include("*.2024")
 
@@ -244,6 +271,7 @@ func Test_Include_should_add_include_field_into_AggType(t *testing.T) {
 }
 
 func Test_AggType_should_have_Exclude_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggTerms()
 
@@ -252,6 +280,7 @@ func Test_AggType_should_have_Exclude_method(t *testing.T) {
 }
 
 func Test_Exclude_should_add_exclude_field_into_AggType(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggTerms().Exclude("*.2021")
 
@@ -262,6 +291,7 @@ func Test_Exclude_should_add_exclude_field_into_AggType(t *testing.T) {
 }
 
 func Test_AggType_should_have_Terms_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggTerms()
 
@@ -270,11 +300,13 @@ func Test_AggType_should_have_Terms_method(t *testing.T) {
 }
 
 func Test_AggMax_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.AggMax)
 }
 
 func Test_AggMax_method_should_create_aggType(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggMax()
 
@@ -284,6 +316,7 @@ func Test_AggMax_method_should_create_aggType(t *testing.T) {
 }
 
 func Test_AggMax_should_create_json_with_terms_field_inside(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggMax()
 
@@ -296,11 +329,13 @@ func Test_AggMax_should_create_json_with_terms_field_inside(t *testing.T) {
 ////    Agg.Min    ////
 
 func Test_AggMin_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.AggMin)
 }
 
 func Test_AggMin_method_should_create_aggType(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggMin()
 
@@ -310,6 +345,7 @@ func Test_AggMin_method_should_create_aggType(t *testing.T) {
 }
 
 func Test_AggMin_should_create_json_with_terms_field_inside(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggMin()
 
@@ -322,11 +358,13 @@ func Test_AggMin_should_create_json_with_terms_field_inside(t *testing.T) {
 ////    Agg.Avg    ////
 
 func Test_AggAvg_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.AggAvg)
 }
 
 func Test_AggAvg_method_should_create_aggType(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggAvg()
 
@@ -336,6 +374,7 @@ func Test_AggAvg_method_should_create_aggType(t *testing.T) {
 }
 
 func Test_AggAvg_should_create_json_with_terms_field_inside(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggAvg()
 
@@ -346,6 +385,7 @@ func Test_AggAvg_should_create_json_with_terms_field_inside(t *testing.T) {
 }
 
 func Test_Terms_should_add_terms_field_into_AggType(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggMultiTerms().
 		Terms(
@@ -364,6 +404,7 @@ func Test_Terms_should_add_terms_field_into_AggType(t *testing.T) {
 }
 
 func Test_AggType_should_have_Aggs_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggTerms()
 
@@ -372,6 +413,7 @@ func Test_AggType_should_have_Aggs_method(t *testing.T) {
 }
 
 func Test_Aggs_should_add_aggs_field_into_AggType(t *testing.T) {
+	t.Parallel()
 	// Given
 	a := es.AggTerms().
 		Field("path").
@@ -395,6 +437,7 @@ func Test_Aggs_should_add_aggs_field_into_AggType(t *testing.T) {
 }
 
 func Test_Aggs_should_create_json_with_aggs_field_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(nil)
 	query.Aggs("types",
@@ -411,6 +454,7 @@ func Test_Aggs_should_create_json_with_aggs_field_inside_query(t *testing.T) {
 }
 
 func Test_should_create_json_with_multiple_Aggs_inside_single_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(nil).
 		Aggs("types",

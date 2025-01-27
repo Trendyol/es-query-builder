@@ -12,11 +12,13 @@ import (
 ////    Nested    ////
 
 func Test_Nested_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.Nested[any])
 }
 
 func Test_Nested_method_should_create_nestedType(t *testing.T) {
+	t.Parallel()
 	// Given
 	n := es.Nested("path", es.Object{})
 
@@ -26,6 +28,7 @@ func Test_Nested_method_should_create_nestedType(t *testing.T) {
 }
 
 func Test_Nested_should_create_query_json_with_nested_field_inside(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Nested("nested.path",
@@ -40,6 +43,7 @@ func Test_Nested_should_create_query_json_with_nested_field_inside(t *testing.T)
 }
 
 func Test_Nested_should_have_InnerHits_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	n := es.Nested("path", es.Object{})
 
@@ -48,6 +52,7 @@ func Test_Nested_should_have_InnerHits_method(t *testing.T) {
 }
 
 func Test_InnerHits_should_add_inner_hits_field_into_Nested(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Nested("nested.path", es.Object{}).
@@ -65,6 +70,7 @@ func Test_InnerHits_should_add_inner_hits_field_into_Nested(t *testing.T) {
 }
 
 func Test_Nested_should_have_ScoreMode_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	n := es.Nested("path", es.Object{})
 
@@ -73,6 +79,7 @@ func Test_Nested_should_have_ScoreMode_method(t *testing.T) {
 }
 
 func Test_ScoreMod_should_add_score_mode_field_into_Nested(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Nested("nested.path", es.Object{}).ScoreMode(ScoreMode.Sum),
@@ -85,6 +92,7 @@ func Test_ScoreMod_should_add_score_mode_field_into_Nested(t *testing.T) {
 }
 
 func Test_Nested_should_have_Boost_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	n := es.Nested("path", es.Object{})
 
@@ -93,6 +101,7 @@ func Test_Nested_should_have_Boost_method(t *testing.T) {
 }
 
 func Test_Boost_should_add_boost_field_into_Nested(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Nested("nested.path", es.Object{}).Boost(5.56),
@@ -105,6 +114,7 @@ func Test_Boost_should_add_boost_field_into_Nested(t *testing.T) {
 }
 
 func Test_Nested_should_have_IgnoreUnmapped_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	n := es.Nested("path", es.Object{})
 
@@ -113,6 +123,7 @@ func Test_Nested_should_have_IgnoreUnmapped_method(t *testing.T) {
 }
 
 func Test_IgnoreUnmapped_should_add_ignore_unmapped_field_into_Nested(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Nested("nested.path", es.Object{}).IgnoreUnmapped(true),

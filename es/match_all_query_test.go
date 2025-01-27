@@ -10,11 +10,13 @@ import (
 ////    MatchAll    ////
 
 func Test_MatchAll_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.MatchAll)
 }
 
 func Test_MatchAll_method_should_create_matchAllType(t *testing.T) {
+	t.Parallel()
 	// Given
 	matchAll := es.MatchAll()
 
@@ -24,6 +26,7 @@ func Test_MatchAll_method_should_create_matchAllType(t *testing.T) {
 }
 
 func Test_MatchAll_should_create_json_with_match_all_field_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MatchAll().

@@ -12,11 +12,13 @@ import (
 ////   Range   ////
 
 func Test_Range_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.Range)
 }
 
 func Test_Range_should_add_range_field_when_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Bool().
@@ -36,6 +38,7 @@ func Test_Range_should_add_range_field_when_inside_query(t *testing.T) {
 }
 
 func Test_Range_method_should_create_rangeType(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Range("age")
 	query := es.NewQuery(b)
@@ -47,6 +50,7 @@ func Test_Range_method_should_create_rangeType(t *testing.T) {
 }
 
 func Test_Range_should_create_json_with_range_field_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Range("age").
@@ -61,6 +65,7 @@ func Test_Range_should_create_json_with_range_field_inside_query(t *testing.T) {
 }
 
 func Test_Range_should_have_LessThan_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	r := es.Range("age")
 
@@ -70,6 +75,7 @@ func Test_Range_should_have_LessThan_method(t *testing.T) {
 }
 
 func Test_Range_should_have_LessThanOrEqual_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	r := es.Range("age")
 
@@ -79,6 +85,7 @@ func Test_Range_should_have_LessThanOrEqual_method(t *testing.T) {
 }
 
 func Test_Range_should_have_GreaterThan_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	r := es.Range("age")
 
@@ -88,6 +95,7 @@ func Test_Range_should_have_GreaterThan_method(t *testing.T) {
 }
 
 func Test_Range_should_have_GreaterThanOrEqual_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	r := es.Range("age")
 
@@ -97,6 +105,7 @@ func Test_Range_should_have_GreaterThanOrEqual_method(t *testing.T) {
 }
 
 func Test_Range_gte_should_override_gt_and_vise_versa(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Range("age").
@@ -111,6 +120,7 @@ func Test_Range_gte_should_override_gt_and_vise_versa(t *testing.T) {
 }
 
 func Test_Range_lte_should_override_lt_and_vise_versa(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Range("age").
@@ -125,6 +135,7 @@ func Test_Range_lte_should_override_lt_and_vise_versa(t *testing.T) {
 }
 
 func Test_Range_should_have_Format_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	r := es.Range("age")
 
@@ -134,6 +145,7 @@ func Test_Range_should_have_Format_method(t *testing.T) {
 }
 
 func Test_Range_Format_should_create_json_with_range_field_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Range("birth-date").
@@ -150,6 +162,7 @@ func Test_Range_Format_should_create_json_with_range_field_inside_query(t *testi
 }
 
 func Test_Range_should_have_Boost_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	r := es.Range("age")
 
@@ -159,6 +172,7 @@ func Test_Range_should_have_Boost_method(t *testing.T) {
 }
 
 func Test_Range_Boost_should_create_json_with_range_field_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Range("partition").
@@ -175,6 +189,7 @@ func Test_Range_Boost_should_create_json_with_range_field_inside_query(t *testin
 }
 
 func Test_Range_should_have_From_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	r := es.Range("age")
 
@@ -184,6 +199,7 @@ func Test_Range_should_have_From_method(t *testing.T) {
 }
 
 func Test_Range_From_should_create_json_with_range_field_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Range("partition").
@@ -198,6 +214,7 @@ func Test_Range_From_should_create_json_with_range_field_inside_query(t *testing
 }
 
 func Test_Range_should_have_To_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	r := es.Range("age")
 
@@ -207,6 +224,7 @@ func Test_Range_should_have_To_method(t *testing.T) {
 }
 
 func Test_Range_To_should_create_json_with_range_field_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Range("partition").
@@ -221,6 +239,7 @@ func Test_Range_To_should_create_json_with_range_field_inside_query(t *testing.T
 }
 
 func Test_Range_should_have_Relation_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	r := es.Range("age")
 
@@ -230,6 +249,7 @@ func Test_Range_should_have_Relation_method(t *testing.T) {
 }
 
 func Test_Range_Relation_should_create_json_with_range_field_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Range("partition").

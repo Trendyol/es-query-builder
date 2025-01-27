@@ -14,11 +14,13 @@ import (
 ////   Multi Match   ////
 
 func Test_Multi_Match_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.MultiMatch[any])
 }
 
 func Test_Multi_Match_method_should_create_multiMatchType(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.MultiMatch("value")
 
@@ -28,6 +30,7 @@ func Test_Multi_Match_method_should_create_multiMatchType(t *testing.T) {
 }
 
 func Test_Multi_Match_should_have_Boost_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MultiMatch("value")
 
@@ -36,6 +39,7 @@ func Test_Multi_Match_should_have_Boost_method(t *testing.T) {
 }
 
 func Test_Multi_Match_Boost_should_create_json_with_boost_field_inside_multi_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -49,6 +53,7 @@ func Test_Multi_Match_Boost_should_create_json_with_boost_field_inside_multi_mat
 }
 
 func Test_Multi_Match_should_have_Analyzer_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MultiMatch("value")
 
@@ -57,6 +62,7 @@ func Test_Multi_Match_should_have_Analyzer_method(t *testing.T) {
 }
 
 func Test_Multi_Match_Analyzer_should_create_json_with_analyzer_field_inside_multi_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -70,6 +76,7 @@ func Test_Multi_Match_Analyzer_should_create_json_with_analyzer_field_inside_mul
 }
 
 func Test_Multi_Match_should_have_Operator_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MultiMatch("value")
 
@@ -78,6 +85,7 @@ func Test_Multi_Match_should_have_Operator_method(t *testing.T) {
 }
 
 func Test_Multi_Match_Operator_should_create_json_with_operator_field_inside_multi_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -91,6 +99,7 @@ func Test_Multi_Match_Operator_should_create_json_with_operator_field_inside_mul
 }
 
 func Test_Multi_Match_should_have_CutoffFrequency_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MultiMatch("value")
 
@@ -99,6 +108,7 @@ func Test_Multi_Match_should_have_CutoffFrequency_method(t *testing.T) {
 }
 
 func Test_Multi_Match_CutoffFrequency_should_create_json_with_cutoff_frequency_field_inside_multi_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -112,6 +122,7 @@ func Test_Multi_Match_CutoffFrequency_should_create_json_with_cutoff_frequency_f
 }
 
 func Test_Multi_Match_should_have_Fields_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MultiMatch("value")
 
@@ -120,6 +131,7 @@ func Test_Multi_Match_should_have_Fields_method(t *testing.T) {
 }
 
 func Test_Multi_Match_Fields_should_create_json_with_fields_field_inside_multi_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -133,6 +145,7 @@ func Test_Multi_Match_Fields_should_create_json_with_fields_field_inside_multi_m
 }
 
 func Test_Multi_Match_should_have_Fuzziness_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MultiMatch("value")
 
@@ -141,6 +154,7 @@ func Test_Multi_Match_should_have_Fuzziness_method(t *testing.T) {
 }
 
 func Test_Multi_Match_Fuzziness_should_create_json_with_fuzziness_field_inside_multi_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -154,6 +168,7 @@ func Test_Multi_Match_Fuzziness_should_create_json_with_fuzziness_field_inside_m
 }
 
 func Test_Multi_Match_should_have_Slop_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MultiMatch("value")
 
@@ -162,6 +177,7 @@ func Test_Multi_Match_should_have_Slop_method(t *testing.T) {
 }
 
 func Test_Multi_Match_Slop_should_create_json_with_slop_field_inside_multi_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -175,6 +191,7 @@ func Test_Multi_Match_Slop_should_create_json_with_slop_field_inside_multi_match
 }
 
 func Test_Multi_Match_should_have_MinimumShouldMatch_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MultiMatch("value")
 
@@ -183,6 +200,7 @@ func Test_Multi_Match_should_have_MinimumShouldMatch_method(t *testing.T) {
 }
 
 func Test_Multi_Match_MinimumShouldMatch_should_create_json_with_minimum_should_match_field_inside_multi_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -196,6 +214,7 @@ func Test_Multi_Match_MinimumShouldMatch_should_create_json_with_minimum_should_
 }
 
 func Test_Multi_Match_should_have_FuzzyRewrite_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MultiMatch("value")
 
@@ -204,6 +223,7 @@ func Test_Multi_Match_should_have_FuzzyRewrite_method(t *testing.T) {
 }
 
 func Test_Multi_Match_FuzzyRewrite_should_create_json_with_fuzzy_rewrite_field_inside_multi_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -217,6 +237,7 @@ func Test_Multi_Match_FuzzyRewrite_should_create_json_with_fuzzy_rewrite_field_i
 }
 
 func Test_Multi_Match_should_have_FuzzyTranspositions_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MultiMatch("value")
 
@@ -225,6 +246,7 @@ func Test_Multi_Match_should_have_FuzzyTranspositions_method(t *testing.T) {
 }
 
 func Test_Multi_Match_FuzzyTranspositions_should_create_json_with_fuzzy_transpositions_field_inside_multi_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Directory").
@@ -238,6 +260,7 @@ func Test_Multi_Match_FuzzyTranspositions_should_create_json_with_fuzzy_transpos
 }
 
 func Test_Multi_Match_should_have_Lenient_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MultiMatch("value")
 
@@ -246,6 +269,7 @@ func Test_Multi_Match_should_have_Lenient_method(t *testing.T) {
 }
 
 func Test_Multi_Match_Lenient_should_create_json_with_lenient_field_inside_multi_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -259,6 +283,7 @@ func Test_Multi_Match_Lenient_should_create_json_with_lenient_field_inside_multi
 }
 
 func Test_Multi_Match_should_have_MaxExpansions_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MultiMatch("value")
 
@@ -267,6 +292,7 @@ func Test_Multi_Match_should_have_MaxExpansions_method(t *testing.T) {
 }
 
 func Test_Multi_Match_MaxExpansions_should_create_json_with_max_expansions_field_inside_multi_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -280,6 +306,7 @@ func Test_Multi_Match_MaxExpansions_should_create_json_with_max_expansions_field
 }
 
 func Test_Multi_Match_should_have_PrefixLength_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MultiMatch("value")
 
@@ -288,6 +315,7 @@ func Test_Multi_Match_should_have_PrefixLength_method(t *testing.T) {
 }
 
 func Test_Multi_Match_PrefixLength_should_create_json_with_prefix_length_field_inside_multi_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -301,6 +329,7 @@ func Test_Multi_Match_PrefixLength_should_create_json_with_prefix_length_field_i
 }
 
 func Test_Multi_Match_should_have_AutoGenerateSynonymsPhraseQuery_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MultiMatch("value")
 
@@ -310,6 +339,7 @@ func Test_Multi_Match_should_have_AutoGenerateSynonymsPhraseQuery_method(t *test
 
 // nolint:golint,lll
 func Test_Multi_Match_AutoGenerateSynonymsPhraseQuery_should_create_json_auto_generate_synonyms_phrase_query_field_inside_multi_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -323,6 +353,7 @@ func Test_Multi_Match_AutoGenerateSynonymsPhraseQuery_should_create_json_auto_ge
 }
 
 func Test_Multi_Match_should_have_ZeroTermsQuery_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MultiMatch("value")
 
@@ -331,6 +362,7 @@ func Test_Multi_Match_should_have_ZeroTermsQuery_method(t *testing.T) {
 }
 
 func Test_Multi_Match_ZeroTermsQuery_should_create_json_with_zero_terms_query_field_inside_multi_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -344,6 +376,7 @@ func Test_Multi_Match_ZeroTermsQuery_should_create_json_with_zero_terms_query_fi
 }
 
 func Test_Multi_Match_should_have_TieBreaker_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MultiMatch("value")
 
@@ -352,6 +385,7 @@ func Test_Multi_Match_should_have_TieBreaker_method(t *testing.T) {
 }
 
 func Test_Multi_Match_TieBreaker_should_create_json_with_tie_breaker_field_inside_multi_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -365,6 +399,7 @@ func Test_Multi_Match_TieBreaker_should_create_json_with_tie_breaker_field_insid
 }
 
 func Test_Multi_Match_should_have_Type_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MultiMatch("value")
 
@@ -373,6 +408,7 @@ func Test_Multi_Match_should_have_Type_method(t *testing.T) {
 }
 
 func Test_Multi_Match_Type_should_create_json_with_type_field_inside_multi_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -386,6 +422,7 @@ func Test_Multi_Match_Type_should_create_json_with_type_field_inside_multi_match
 }
 
 func Test_Multi_Match_should_create_json_with_match_field_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("this is a test").

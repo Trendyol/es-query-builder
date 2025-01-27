@@ -10,11 +10,13 @@ import (
 ////   Exists   ////
 
 func Test_Exists_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.Exists)
 }
 
 func Test_Exists_should_create_json_with_exists_field_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Exists("key"),
@@ -27,6 +29,7 @@ func Test_Exists_should_create_json_with_exists_field_inside_query(t *testing.T)
 }
 
 func Test_Exists_method_should_create_existsType(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Exists("key")
 
@@ -36,6 +39,7 @@ func Test_Exists_method_should_create_existsType(t *testing.T) {
 }
 
 func Test_Exists_should_have_Boost_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	exists := es.Exists("key")
 
@@ -44,6 +48,7 @@ func Test_Exists_should_have_Boost_method(t *testing.T) {
 }
 
 func Test_Exists_Boost_should_create_json_with_boost_field_inside_exists(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Exists("type").
@@ -59,11 +64,13 @@ func Test_Exists_Boost_should_create_json_with_boost_field_inside_exists(t *test
 ////   ExistsFunc   ////
 
 func Test_ExistsFunc_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.ExistsFunc)
 }
 
 func Test_ExistsFunc_should_create_json_with_exists_field_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.ExistsFunc("key", func(key string) bool {
@@ -78,6 +85,7 @@ func Test_ExistsFunc_should_create_json_with_exists_field_inside_query(t *testin
 }
 
 func Test_ExistsFunc_should_not_add_exists_field_inside_query_when_callback_result_is_false(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.ExistsFunc("key", func(key string) bool {
@@ -92,6 +100,7 @@ func Test_ExistsFunc_should_not_add_exists_field_inside_query_when_callback_resu
 }
 
 func Test_ExistsFunc_should_add_only_exists_fields_inside_the_query_when_callback_result_is_true(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Bool().
@@ -115,6 +124,7 @@ func Test_ExistsFunc_should_add_only_exists_fields_inside_the_query_when_callbac
 }
 
 func Test_ExistsFunc_method_should_create_existsType(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.ExistsFunc("key", func(key string) bool {
 		return true
@@ -128,11 +138,13 @@ func Test_ExistsFunc_method_should_create_existsType(t *testing.T) {
 ////   ExistsIF   ////
 
 func Test_ExistsIf_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.ExistsIf)
 }
 
 func Test_ExistsIf_should_create_json_with_exists_field_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.ExistsIf("key", true),
@@ -145,6 +157,7 @@ func Test_ExistsIf_should_create_json_with_exists_field_inside_query(t *testing.
 }
 
 func Test_ExistsIf_should_not_add_exists_field_inside_query_when_condition_is_false(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.ExistsIf("key", false),
@@ -157,6 +170,7 @@ func Test_ExistsIf_should_not_add_exists_field_inside_query_when_condition_is_fa
 }
 
 func Test_ExistsIf_should_add_only_exists_fields_inside_the_query_when_condition_is_true(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Bool().
@@ -174,6 +188,7 @@ func Test_ExistsIf_should_add_only_exists_fields_inside_the_query_when_condition
 }
 
 func Test_ExistsIf_method_should_create_existsType(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.ExistsFunc("key", func(key string) bool {
 		return true

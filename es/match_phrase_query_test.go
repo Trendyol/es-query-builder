@@ -12,11 +12,13 @@ import (
 ////   Match Phrase   ////
 
 func Test_MatchPhrase_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.MatchPhrase[any])
 }
 
 func Test_MatchPhrase_method_should_create_matchPhraseType(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.MatchPhrase("key", "value")
 
@@ -26,6 +28,7 @@ func Test_MatchPhrase_method_should_create_matchPhraseType(t *testing.T) {
 }
 
 func Test_MatchPhrase_should_have_Analyzer_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MatchPhrase("key", "value")
 
@@ -34,6 +37,7 @@ func Test_MatchPhrase_should_have_Analyzer_method(t *testing.T) {
 }
 
 func Test_MatchPhrase_Analyzer_should_create_json_with_analyzer_field_inside_match_phrase(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MatchPhrase("type", "Folder").
@@ -47,6 +51,7 @@ func Test_MatchPhrase_Analyzer_should_create_json_with_analyzer_field_inside_mat
 }
 
 func Test_MatchPhrase_should_have_Boost_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MatchPhrase("key", "value")
 
@@ -55,6 +60,7 @@ func Test_MatchPhrase_should_have_Boost_method(t *testing.T) {
 }
 
 func Test_MatchPhrase_Boost_should_create_json_with_boost_field_inside_match_phrase(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MatchPhrase("type", "Folder").
@@ -68,6 +74,7 @@ func Test_MatchPhrase_Boost_should_create_json_with_boost_field_inside_match_phr
 }
 
 func Test_MatchPhrase_should_have_Slop_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MatchPhrase("key", "value")
 
@@ -76,6 +83,7 @@ func Test_MatchPhrase_should_have_Slop_method(t *testing.T) {
 }
 
 func Test_MatchPhrase_Slop_should_create_json_with_slop_field_inside_match_phrase(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MatchPhrase("type", "Folder").
@@ -89,6 +97,7 @@ func Test_MatchPhrase_Slop_should_create_json_with_slop_field_inside_match_phras
 }
 
 func Test_MatchPhrase_should_have_ZeroTermsQuery_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MatchPhrase("key", "value")
 
@@ -97,6 +106,7 @@ func Test_MatchPhrase_should_have_ZeroTermsQuery_method(t *testing.T) {
 }
 
 func Test_MatchPhrase_ZeroTermsQuery_should_create_json_with_zero_terms_query_field_inside_match_phrase(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MatchPhrase("type", "Folder").
@@ -110,6 +120,7 @@ func Test_MatchPhrase_ZeroTermsQuery_should_create_json_with_zero_terms_query_fi
 }
 
 func Test_MatchPhrase_should_create_json_with_match_phrase_field_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MatchPhrase("message", "this is a test").

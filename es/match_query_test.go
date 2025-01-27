@@ -13,11 +13,13 @@ import (
 ////   Match   ////
 
 func Test_Match_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.Match[any])
 }
 
 func Test_Match_method_should_create_matchType(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Match("key", "value")
 
@@ -27,6 +29,7 @@ func Test_Match_method_should_create_matchType(t *testing.T) {
 }
 
 func Test_Match_should_have_Boost_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.Match("key", "value")
 
@@ -35,6 +38,7 @@ func Test_Match_should_have_Boost_method(t *testing.T) {
 }
 
 func Test_Match_Boost_should_create_json_with_boost_field_inside_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Match("type", "Folder").
@@ -48,6 +52,7 @@ func Test_Match_Boost_should_create_json_with_boost_field_inside_match(t *testin
 }
 
 func Test_Match_should_have_Operator_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.Match("key", "value")
 
@@ -56,6 +61,7 @@ func Test_Match_should_have_Operator_method(t *testing.T) {
 }
 
 func Test_Match_Operator_should_create_json_with_operator_field_inside_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Match("type", "Folder").
@@ -69,6 +75,7 @@ func Test_Match_Operator_should_create_json_with_operator_field_inside_match(t *
 }
 
 func Test_Match_should_have_CutoffFrequency_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.Match("key", "value")
 
@@ -77,6 +84,7 @@ func Test_Match_should_have_CutoffFrequency_method(t *testing.T) {
 }
 
 func Test_Match_CutoffFrequency_should_create_json_with_cutoff_frequency_field_inside_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Match("type", "Folder").
@@ -90,6 +98,7 @@ func Test_Match_CutoffFrequency_should_create_json_with_cutoff_frequency_field_i
 }
 
 func Test_Match_should_have_Fuzziness_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.Match("key", "value")
 
@@ -98,6 +107,7 @@ func Test_Match_should_have_Fuzziness_method(t *testing.T) {
 }
 
 func Test_Match_Fuzziness_should_create_json_with_fuzziness_field_inside_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Match("type", "Folder").
@@ -111,6 +121,7 @@ func Test_Match_Fuzziness_should_create_json_with_fuzziness_field_inside_match(t
 }
 
 func Test_Match_should_have_FuzzyRewrite_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.Match("key", "value")
 
@@ -119,6 +130,7 @@ func Test_Match_should_have_FuzzyRewrite_method(t *testing.T) {
 }
 
 func Test_Match_FuzzyRewrite_should_create_json_with_fuzzy_rewrite_field_inside_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Match("type", "Folder").
@@ -132,6 +144,7 @@ func Test_Match_FuzzyRewrite_should_create_json_with_fuzzy_rewrite_field_inside_
 }
 
 func Test_Match_should_have_FuzzyTranspositions_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.Match("key", "value")
 
@@ -140,6 +153,7 @@ func Test_Match_should_have_FuzzyTranspositions_method(t *testing.T) {
 }
 
 func Test_Match_FuzzyTranspositions_should_create_json_with_fuzzy_transpositions_field_inside_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Match("type", "Directory").
@@ -153,6 +167,7 @@ func Test_Match_FuzzyTranspositions_should_create_json_with_fuzzy_transpositions
 }
 
 func Test_Match_should_have_Lenient_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.Match("key", "value")
 
@@ -161,6 +176,7 @@ func Test_Match_should_have_Lenient_method(t *testing.T) {
 }
 
 func Test_Match_Lenient_should_create_json_with_lenient_field_inside_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Match("type", "Folder").
@@ -174,6 +190,7 @@ func Test_Match_Lenient_should_create_json_with_lenient_field_inside_match(t *te
 }
 
 func Test_Match_should_have_MaxExpansions_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.Match("key", "value")
 
@@ -182,6 +199,7 @@ func Test_Match_should_have_MaxExpansions_method(t *testing.T) {
 }
 
 func Test_Match_MaxExpansions_should_create_json_with_max_expansions_field_inside_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Match("type", "Folder").
@@ -195,6 +213,7 @@ func Test_Match_MaxExpansions_should_create_json_with_max_expansions_field_insid
 }
 
 func Test_Match_should_have_PrefixLength_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.Match("key", "value")
 
@@ -203,6 +222,7 @@ func Test_Match_should_have_PrefixLength_method(t *testing.T) {
 }
 
 func Test_Match_PrefixLength_should_create_json_with_prefix_length_field_inside_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Match("type", "Folder").
@@ -216,6 +236,7 @@ func Test_Match_PrefixLength_should_create_json_with_prefix_length_field_inside_
 }
 
 func Test_Match_should_have_AutoGenerateSynonymsPhraseQuery_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.Match("key", "value")
 
@@ -224,6 +245,7 @@ func Test_Match_should_have_AutoGenerateSynonymsPhraseQuery_method(t *testing.T)
 }
 
 func Test_Match_AutoGenerateSynonymsPhraseQuery_should_create_json_auto_generate_synonyms_phrase_query_field_inside_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Match("type", "Folder").
@@ -237,6 +259,7 @@ func Test_Match_AutoGenerateSynonymsPhraseQuery_should_create_json_auto_generate
 }
 
 func Test_Match_should_have_ZeroTermsQuery_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.Match("key", "value")
 
@@ -245,6 +268,7 @@ func Test_Match_should_have_ZeroTermsQuery_method(t *testing.T) {
 }
 
 func Test_Match_ZeroTermsQuery_should_create_json_with_zero_terms_query_field_inside_match(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Match("type", "Folder").
@@ -258,6 +282,7 @@ func Test_Match_ZeroTermsQuery_should_create_json_with_zero_terms_query_field_in
 }
 
 func Test_Match_should_create_json_with_match_field_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Match("message", "this is a test").

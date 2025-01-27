@@ -10,11 +10,13 @@ import (
 ////   Bool   ////
 
 func Test_Bool_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.Bool)
 }
 
 func Test_Bool_method_should_create_boolType(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Bool()
 
@@ -24,6 +26,7 @@ func Test_Bool_method_should_create_boolType(t *testing.T) {
 }
 
 func Test_Bool_should_have_MinimumShouldMatch_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Bool()
 
@@ -32,6 +35,7 @@ func Test_Bool_should_have_MinimumShouldMatch_method(t *testing.T) {
 }
 
 func Test_Bool_MinimumShouldMatch_should_create_json_with_int_minimum_should_match_field_inside_bool(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Bool().
@@ -45,6 +49,7 @@ func Test_Bool_MinimumShouldMatch_should_create_json_with_int_minimum_should_mat
 }
 
 func Test_Bool_MinimumShouldMatch_should_create_json_with_string_minimum_should_match_field_inside_bool(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Bool().
@@ -58,6 +63,7 @@ func Test_Bool_MinimumShouldMatch_should_create_json_with_string_minimum_should_
 }
 
 func Test_Bool_should_have_AdjustPureNegative_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Bool()
 
@@ -66,6 +72,7 @@ func Test_Bool_should_have_AdjustPureNegative_method(t *testing.T) {
 }
 
 func Test_Bool_AdjustPureNegative_should_create_json_with_adjust_pure_negative_field_inside_bool(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Bool().
@@ -79,6 +86,7 @@ func Test_Bool_AdjustPureNegative_should_create_json_with_adjust_pure_negative_f
 }
 
 func Test_Bool_should_have_Boost_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Bool()
 
@@ -87,6 +95,7 @@ func Test_Bool_should_have_Boost_method(t *testing.T) {
 }
 
 func Test_Bool_Boost_should_create_json_with_minimum_should_match_field_inside_bool(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Bool().
@@ -100,6 +109,7 @@ func Test_Bool_Boost_should_create_json_with_minimum_should_match_field_inside_b
 }
 
 func Test_Bool_should_have_Filter_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Bool()
 
@@ -108,6 +118,7 @@ func Test_Bool_should_have_Filter_method(t *testing.T) {
 }
 
 func Test_Bool_should_have_Must_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Bool()
 
@@ -116,6 +127,7 @@ func Test_Bool_should_have_Must_method(t *testing.T) {
 }
 
 func Test_Bool_should_have_MustNot_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Bool()
 
@@ -124,6 +136,7 @@ func Test_Bool_should_have_MustNot_method(t *testing.T) {
 }
 
 func Test_Bool_should_have_Should_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Bool()
 
@@ -134,6 +147,7 @@ func Test_Bool_should_have_Should_method(t *testing.T) {
 ////   Bool.Filter   ////
 
 func Test_Filter_method_should_return_boolType(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Bool()
 
@@ -146,6 +160,7 @@ func Test_Filter_method_should_return_boolType(t *testing.T) {
 }
 
 func Test_Filter_method_should_add_filter_if_doesnt_exist_before(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Bool()
 
@@ -161,6 +176,7 @@ func Test_Filter_method_should_add_filter_if_doesnt_exist_before(t *testing.T) {
 }
 
 func Test_Filter_method_should_hold_items(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Bool().
 		Filter(
@@ -181,6 +197,7 @@ func Test_Filter_method_should_hold_items(t *testing.T) {
 ////   Bool.Must   ////
 
 func Test_Must_method_should_return_boolType(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Bool()
 
@@ -193,6 +210,7 @@ func Test_Must_method_should_return_boolType(t *testing.T) {
 }
 
 func Test_Must_method_should_add_must_if_doesnt_exist_before(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Bool()
 
@@ -208,6 +226,7 @@ func Test_Must_method_should_add_must_if_doesnt_exist_before(t *testing.T) {
 }
 
 func Test_Must_method_should_hold_items(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Bool().
 		Must(
@@ -228,6 +247,7 @@ func Test_Must_method_should_hold_items(t *testing.T) {
 ////   Bool.MustNot   ////
 
 func Test_MustNot_method_should_return_boolType(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Bool()
 
@@ -240,6 +260,7 @@ func Test_MustNot_method_should_return_boolType(t *testing.T) {
 }
 
 func Test_MustNot_method_should_add_must_not_if_doesnt_exist_before(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Bool()
 
@@ -255,6 +276,7 @@ func Test_MustNot_method_should_add_must_not_if_doesnt_exist_before(t *testing.T
 }
 
 func Test_MustNot_method_should_hold_items(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Bool().
 		MustNot(
@@ -275,6 +297,7 @@ func Test_MustNot_method_should_hold_items(t *testing.T) {
 ////   Bool.Should   ////
 
 func Test_Should_method_should_return_boolType(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Bool()
 
@@ -287,6 +310,7 @@ func Test_Should_method_should_return_boolType(t *testing.T) {
 }
 
 func Test_Should_method_should_add_should_if_doesnt_exist_before(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Bool()
 
@@ -302,6 +326,7 @@ func Test_Should_method_should_add_should_if_doesnt_exist_before(t *testing.T) {
 }
 
 func Test_Should_method_should_hold_items(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.Bool().
 		Should(

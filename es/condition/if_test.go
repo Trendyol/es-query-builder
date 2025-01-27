@@ -9,6 +9,7 @@ import (
 )
 
 func Test_Condition_If_should_add_Term_When_condition_is_true(t *testing.T) {
+	t.Parallel()
 	// Given
 	cond := true
 
@@ -29,6 +30,7 @@ func Test_Condition_If_should_add_Term_When_condition_is_true(t *testing.T) {
 }
 
 func Test_Condition_If_should_not_add_Term_When_condition_is_not_true(t *testing.T) {
+	t.Parallel()
 	// Given
 	cond := false
 
@@ -48,6 +50,7 @@ func Test_Condition_If_should_not_add_Term_When_condition_is_not_true(t *testing
 }
 
 func Test_Condition_If_should_work_with_slices(t *testing.T) {
+	t.Parallel()
 	// Given
 	cond := true
 

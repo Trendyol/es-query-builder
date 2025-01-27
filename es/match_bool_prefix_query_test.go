@@ -12,11 +12,13 @@ import (
 ////   Match Bool Prefix   ////
 
 func Test_Match_Bool_Prefix_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.MatchBoolPrefix[any])
 }
 
 func Test_Match_Bool_Prefix_method_should_create_matchBoolPrefixType(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.MatchBoolPrefix("key", "value")
 
@@ -26,6 +28,7 @@ func Test_Match_Bool_Prefix_method_should_create_matchBoolPrefixType(t *testing.
 }
 
 func Test_Match_Bool_Prefix_should_have_Boost_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MatchBoolPrefix("key", "value")
 
@@ -34,6 +37,7 @@ func Test_Match_Bool_Prefix_should_have_Boost_method(t *testing.T) {
 }
 
 func Test_Match_Bool_Prefix_Boost_should_create_json_with_boost_field_inside_match_bool_prefix(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MatchBoolPrefix("type", "Folder").
@@ -47,6 +51,7 @@ func Test_Match_Bool_Prefix_Boost_should_create_json_with_boost_field_inside_mat
 }
 
 func Test_Match_Bool_Prefix_should_have_Analyzer_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MatchBoolPrefix("key", "value")
 
@@ -55,6 +60,7 @@ func Test_Match_Bool_Prefix_should_have_Analyzer_method(t *testing.T) {
 }
 
 func Test_Match_Bool_Prefix_Analyzer_should_create_json_with_analyzer_field_inside_match_bool_prefix(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MatchBoolPrefix("type", "Folder").
@@ -68,6 +74,7 @@ func Test_Match_Bool_Prefix_Analyzer_should_create_json_with_analyzer_field_insi
 }
 
 func Test_Match_Bool_Prefix_should_have_MinimumShouldMatch_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MatchBoolPrefix("key", "value")
 
@@ -76,6 +83,7 @@ func Test_Match_Bool_Prefix_should_have_MinimumShouldMatch_method(t *testing.T) 
 }
 
 func Test_Match_Bool_Prefix_MinimumShouldMatch_should_create_json_with_minimum_should_match_field_inside_match_bool_prefix(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MatchBoolPrefix("type", "Folder").
@@ -89,6 +97,7 @@ func Test_Match_Bool_Prefix_MinimumShouldMatch_should_create_json_with_minimum_s
 }
 
 func Test_Match_Bool_Prefix_should_have_Operator_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MatchBoolPrefix("key", "value")
 
@@ -97,6 +106,7 @@ func Test_Match_Bool_Prefix_should_have_Operator_method(t *testing.T) {
 }
 
 func Test_Match_Bool_Prefix_Operator_should_create_json_with_operator_field_inside_match_bool_prefix(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MatchBoolPrefix("type", "Folder").
@@ -110,6 +120,7 @@ func Test_Match_Bool_Prefix_Operator_should_create_json_with_operator_field_insi
 }
 
 func Test_Match_Bool_Prefix_should_have_Fuzziness_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MatchBoolPrefix("key", "value")
 
@@ -118,6 +129,7 @@ func Test_Match_Bool_Prefix_should_have_Fuzziness_method(t *testing.T) {
 }
 
 func Test_Match_Bool_Prefix_Fuzziness_should_create_json_with_fuzziness_field_inside_match_bool_prefix(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MatchBoolPrefix("type", "Folder").
@@ -131,6 +143,7 @@ func Test_Match_Bool_Prefix_Fuzziness_should_create_json_with_fuzziness_field_in
 }
 
 func Test_Match_Bool_Prefix_should_have_FuzzyRewrite_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MatchBoolPrefix("key", "value")
 
@@ -139,6 +152,7 @@ func Test_Match_Bool_Prefix_should_have_FuzzyRewrite_method(t *testing.T) {
 }
 
 func Test_Match_Bool_Prefix_FuzzyRewrite_should_create_json_with_fuzzy_rewrite_field_inside_match_bool_prefix(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MatchBoolPrefix("type", "Folder").
@@ -152,6 +166,7 @@ func Test_Match_Bool_Prefix_FuzzyRewrite_should_create_json_with_fuzzy_rewrite_f
 }
 
 func Test_Match_Bool_Prefix_should_have_FuzzyTranspositions_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MatchBoolPrefix("key", "value")
 
@@ -160,6 +175,7 @@ func Test_Match_Bool_Prefix_should_have_FuzzyTranspositions_method(t *testing.T)
 }
 
 func Test_Match_Bool_Prefix_FuzzyTranspositions_should_create_json_with_fuzzy_transpositions_field_inside_match_bool_prefix(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MatchBoolPrefix("type", "Directory").
@@ -173,6 +189,7 @@ func Test_Match_Bool_Prefix_FuzzyTranspositions_should_create_json_with_fuzzy_tr
 }
 
 func Test_Match_Bool_Prefix_should_have_MaxExpansions_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MatchBoolPrefix("key", "value")
 
@@ -181,6 +198,7 @@ func Test_Match_Bool_Prefix_should_have_MaxExpansions_method(t *testing.T) {
 }
 
 func Test_Match_Bool_Prefix_MaxExpansions_should_create_json_with_max_expansions_field_inside_match_bool_prefix(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MatchBoolPrefix("type", "Folder").
@@ -194,6 +212,7 @@ func Test_Match_Bool_Prefix_MaxExpansions_should_create_json_with_max_expansions
 }
 
 func Test_Match_Bool_Prefix_should_have_PrefixLength_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	match := es.MatchBoolPrefix("key", "value")
 
@@ -202,6 +221,7 @@ func Test_Match_Bool_Prefix_should_have_PrefixLength_method(t *testing.T) {
 }
 
 func Test_Match_Bool_Prefix_PrefixLength_should_create_json_with_prefix_length_field_inside_match_bool_prefix(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MatchBoolPrefix("type", "Folder").
@@ -215,6 +235,7 @@ func Test_Match_Bool_Prefix_PrefixLength_should_create_json_with_prefix_length_f
 }
 
 func Test_Match_Bool_Prefix_should_create_json_with_match_field_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.MatchBoolPrefix("message", "this is a test").
