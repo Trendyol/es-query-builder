@@ -35,7 +35,7 @@ func Test_Multi_Match_should_have_Boost_method(t *testing.T) {
 	assert.NotNil(t, match.Boost)
 }
 
-func Test_Multi_Match_Boost_should_create_json_with_boost_field_inside_match(t *testing.T) {
+func Test_Multi_Match_Boost_should_create_json_with_boost_field_inside_multi_match(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -56,7 +56,7 @@ func Test_Multi_Match_should_have_Analyzer_method(t *testing.T) {
 	assert.NotNil(t, match.Analyzer)
 }
 
-func Test_Multi_Match_Analyzer_should_create_json_with_analyzer_field_inside_match(t *testing.T) {
+func Test_Multi_Match_Analyzer_should_create_json_with_analyzer_field_inside_multi_match(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -77,7 +77,7 @@ func Test_Multi_Match_should_have_Operator_method(t *testing.T) {
 	assert.NotNil(t, match.Operator)
 }
 
-func Test_Multi_Match_Operator_should_create_json_with_operator_field_inside_match(t *testing.T) {
+func Test_Multi_Match_Operator_should_create_json_with_operator_field_inside_multi_match(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -98,7 +98,7 @@ func Test_Multi_Match_should_have_CutoffFrequency_method(t *testing.T) {
 	assert.NotNil(t, match.CutoffFrequency)
 }
 
-func Test_Multi_Match_CutoffFrequency_should_create_json_with_cutoff_frequency_field_inside_match(t *testing.T) {
+func Test_Multi_Match_CutoffFrequency_should_create_json_with_cutoff_frequency_field_inside_multi_match(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -119,7 +119,7 @@ func Test_Multi_Match_should_have_Fields_method(t *testing.T) {
 	assert.NotNil(t, match.Fields)
 }
 
-func Test_Multi_Match_Fields_should_create_json_with_fields_field_inside_match(t *testing.T) {
+func Test_Multi_Match_Fields_should_create_json_with_fields_field_inside_multi_match(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -140,7 +140,7 @@ func Test_Multi_Match_should_have_Fuzziness_method(t *testing.T) {
 	assert.NotNil(t, match.Fuzziness)
 }
 
-func Test_Multi_Match_Fuzziness_should_create_json_with_fuzziness_field_inside_match(t *testing.T) {
+func Test_Multi_Match_Fuzziness_should_create_json_with_fuzziness_field_inside_multi_match(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -161,7 +161,7 @@ func Test_Multi_Match_should_have_Slop_method(t *testing.T) {
 	assert.NotNil(t, match.Slop)
 }
 
-func Test_Multi_Match_Slop_should_create_json_with_slop_field_inside_match(t *testing.T) {
+func Test_Multi_Match_Slop_should_create_json_with_slop_field_inside_multi_match(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -182,7 +182,7 @@ func Test_Multi_Match_should_have_MinimumShouldMatch_method(t *testing.T) {
 	assert.NotNil(t, match.MinimumShouldMatch)
 }
 
-func Test_Multi_Match_MinimumShouldMatch_should_create_json_with_minimum_should_match_field_inside_match(t *testing.T) {
+func Test_Multi_Match_MinimumShouldMatch_should_create_json_with_minimum_should_match_field_inside_multi_match(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -203,7 +203,7 @@ func Test_Multi_Match_should_have_FuzzyRewrite_method(t *testing.T) {
 	assert.NotNil(t, match.FuzzyRewrite)
 }
 
-func Test_Multi_Match_FuzzyRewrite_should_create_json_with_fuzzy_rewrite_field_inside_match(t *testing.T) {
+func Test_Multi_Match_FuzzyRewrite_should_create_json_with_fuzzy_rewrite_field_inside_multi_match(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -224,7 +224,7 @@ func Test_Multi_Match_should_have_FuzzyTranspositions_method(t *testing.T) {
 	assert.NotNil(t, match.FuzzyTranspositions)
 }
 
-func Test_Multi_Match_FuzzyTranspositions_should_create_json_with_fuzzy_transpositions_field_inside_match(t *testing.T) {
+func Test_Multi_Match_FuzzyTranspositions_should_create_json_with_fuzzy_transpositions_field_inside_multi_match(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Directory").
@@ -245,7 +245,7 @@ func Test_Multi_Match_should_have_Lenient_method(t *testing.T) {
 	assert.NotNil(t, match.Lenient)
 }
 
-func Test_Multi_Match_Lenient_should_create_json_with_lenient_field_inside_match(t *testing.T) {
+func Test_Multi_Match_Lenient_should_create_json_with_lenient_field_inside_multi_match(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -266,7 +266,7 @@ func Test_Multi_Match_should_have_MaxExpansions_method(t *testing.T) {
 	assert.NotNil(t, match.MaxExpansions)
 }
 
-func Test_Multi_Match_MaxExpansions_should_create_json_with_max_expansions_field_inside_match(t *testing.T) {
+func Test_Multi_Match_MaxExpansions_should_create_json_with_max_expansions_field_inside_multi_match(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -287,7 +287,7 @@ func Test_Multi_Match_should_have_PrefixLength_method(t *testing.T) {
 	assert.NotNil(t, match.PrefixLength)
 }
 
-func Test_Multi_Match_PrefixLength_should_create_json_with_prefix_length_field_inside_match(t *testing.T) {
+func Test_Multi_Match_PrefixLength_should_create_json_with_prefix_length_field_inside_multi_match(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -309,7 +309,7 @@ func Test_Multi_Match_should_have_AutoGenerateSynonymsPhraseQuery_method(t *test
 }
 
 // nolint:golint,lll
-func Test_Multi_Match_AutoGenerateSynonymsPhraseQuery_should_create_json_auto_generate_synonyms_phrase_query_field_inside_match(t *testing.T) {
+func Test_Multi_Match_AutoGenerateSynonymsPhraseQuery_should_create_json_auto_generate_synonyms_phrase_query_field_inside_multi_match(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -330,7 +330,7 @@ func Test_Multi_Match_should_have_ZeroTermsQuery_method(t *testing.T) {
 	assert.NotNil(t, match.ZeroTermsQuery)
 }
 
-func Test_Multi_Match_ZeroTermsQuery_should_create_json_with_zero_terms_query_field_inside_match(t *testing.T) {
+func Test_Multi_Match_ZeroTermsQuery_should_create_json_with_zero_terms_query_field_inside_multi_match(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -351,7 +351,7 @@ func Test_Multi_Match_should_have_TieBreaker_method(t *testing.T) {
 	assert.NotNil(t, match.TieBreaker)
 }
 
-func Test_Multi_Match_TieBreaker_should_create_json_with_tie_breaker_field_inside_match(t *testing.T) {
+func Test_Multi_Match_TieBreaker_should_create_json_with_tie_breaker_field_inside_multi_match(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
@@ -372,7 +372,7 @@ func Test_Multi_Match_should_have_Type_method(t *testing.T) {
 	assert.NotNil(t, match.Type)
 }
 
-func Test_Multi_Match_Type_should_create_json_with_type_field_inside_match(t *testing.T) {
+func Test_Multi_Match_Type_should_create_json_with_type_field_inside_multi_match(t *testing.T) {
 	// Given
 	query := es.NewQuery(
 		es.MultiMatch("Folder").
