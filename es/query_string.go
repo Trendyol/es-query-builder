@@ -292,7 +292,7 @@ func (q queryStringType) Fuzziness(value string) queryStringType {
 // Returns:
 //
 // The updated es.queryStringType object with the "fuzzy_max_expansions" option set.
-func (q queryStringType) FuzzyMaxExpansions(value int64) queryStringType {
+func (q queryStringType) FuzzyMaxExpansions(value int) queryStringType {
 	return q.putInTheField("fuzzy_max_expansions", value)
 }
 
@@ -317,7 +317,7 @@ func (q queryStringType) FuzzyMaxExpansions(value int64) queryStringType {
 // Returns:
 //
 // The updated es.queryStringType object with the "fuzzy_prefix_length" option set.
-func (q queryStringType) FuzzyPrefixLength(value int64) queryStringType {
+func (q queryStringType) FuzzyPrefixLength(value int) queryStringType {
 	return q.putInTheField("fuzzy_prefix_length", value)
 }
 
@@ -391,7 +391,7 @@ func (q queryStringType) Lenient(value bool) queryStringType {
 // Returns:
 //
 // The updated es.queryStringType object with the "max_determinized_states" option set.
-func (q queryStringType) MaxDeterminizedStates(value int64) queryStringType {
+func (q queryStringType) MaxDeterminizedStates(value int) queryStringType {
 	return q.putInTheField("max_determinized_states", value)
 }
 

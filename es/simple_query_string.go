@@ -134,7 +134,7 @@ func (q simpleQueryStringType) MinimumShouldMatch(value string) simpleQueryStrin
 // Returns:
 //
 // The updated es.simpleQueryStringType object with the "fuzzy_max_expansions" option set.
-func (q simpleQueryStringType) FuzzyMaxExpansions(value int64) simpleQueryStringType {
+func (q simpleQueryStringType) FuzzyMaxExpansions(value int) simpleQueryStringType {
 	return q.putInTheField("fuzzy_max_expansions", value)
 }
 
@@ -156,7 +156,7 @@ func (q simpleQueryStringType) FuzzyMaxExpansions(value int64) simpleQueryString
 // Returns:
 //
 // The updated es.simpleQueryStringType object with the "fuzzy_prefix_length" option set.
-func (q simpleQueryStringType) FuzzyPrefixLength(value int64) simpleQueryStringType {
+func (q simpleQueryStringType) FuzzyPrefixLength(value int) simpleQueryStringType {
 	return q.putInTheField("fuzzy_prefix_length", value)
 }
 
