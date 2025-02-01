@@ -24,4 +24,4 @@ unit-test-pretty:
 	go test ./... -count=1 -v -json | gotestfmt
 
 run-benchmark:
-	go-run-bench -cooldown=disabled -benchmem=true -benchtime=1 -save=csv
+	go-run-bench -cooldown=15 -benchmem=true -save=csv
