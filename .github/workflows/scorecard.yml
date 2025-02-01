@@ -47,17 +47,10 @@ jobs:
           publish_results: true
           log_level: debug  # Daha detaylı log al
 
-      - name: "Check Scorecard output"
-        run: cat results.sarif || echo "SARIF output not generated"
-
-      - name: "Debug: Check if results.sarif exists"
-        run: ls -lah results.sarif || echo "results.sarif NOT FOUND"
-
       - name: "Upload artifact"
         uses: actions/upload-artifact@97a0fba1372883ab732affbe8f94b823f91727db
         with:
           name: es-query-builder-sarif
-
           path: results.sarif
           retention-days: 5
 
