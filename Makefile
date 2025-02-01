@@ -1,6 +1,12 @@
 EXISTING_VERSION := $(shell git describe --abbrev=0 --tags)
 NEW_VERSION := $(shell echo $(EXISTING_VERSION) | awk -F. '{print ""$$1"."$$2"."$$3 + 1}')
 
+init:
+	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.55.2
+	go install golang.org/x/tools/go/analysis/passes/fieldalignment/cmd/fieldalignment@v0.29.0
+	go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
+	go install github.com/GokselKUCUKSAHIN/go-run-bench@v1.0.0
+
 tag_and_push:
 	git tag $(NEW_VERSION)
 	git push origin $(NEW_VERSION)
@@ -18,4 +24,4 @@ unit-test-pretty:
 	go test ./... -count=1 -v -json | gotestfmt
 
 run-benchmark:
-	go run ./benchmarks/run_bench.go -cooldown=15 -save=csv
+	go-run-bench -cooldown=disabled -benchmem=true -benchtime=1 -save=csv
