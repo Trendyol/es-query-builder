@@ -46,11 +46,14 @@ jobs:
           results_format: sarif
           publish_results: true
 
+      - name: Check if SARIF file exists
+        run: ls -lah ./sarif-results/
+
       - name: "Upload artifact"
         uses: actions/upload-artifact@97a0fba1372883ab732affbe8f94b823f91727db
         with:
-          name: SARIF_file
-          path: results.sarif
+          name: sariffile
+          path: ./sarif-results/**/*.sarif
           retention-days: 5
 
       - name: "Upload to code-scanning"
