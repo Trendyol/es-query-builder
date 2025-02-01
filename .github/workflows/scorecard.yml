@@ -1,4 +1,3 @@
-
 name: Scorecard supply-chain security
 
 on:
@@ -6,9 +5,9 @@ on:
   schedule:
     - cron: '29 23 * * 3'
   push:
-    branches: [ "main", "master"]
+    branches: [ "main", "master" ]
   pull_request:
-    branches: ["main", "master"]
+    branches: [ "main", "master" ]
 
 permissions: read-all
 
@@ -50,7 +49,7 @@ jobs:
       - name: "Upload artifact"
         uses: actions/upload-artifact@97a0fba1372883ab732affbe8f94b823f91727db
         with:
-          name: SARIF file
+          name: SARIF_file
           path: results.sarif
           retention-days: 5
 
@@ -58,5 +57,3 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: results.sarif
-
-
