@@ -176,6 +176,7 @@ You can check and run [benchmarks](./benchmarks) on your machine.
 ### ARM64
 
 - **Device**: MacBook Pro 16" 2021
+- **OS**: macOS Sonoma 14.7.3 
 - **CPU**: Apple Silicon M1 Pro 10 Core
 - **Arch**: ARM64
 - **Memory**: 32GB LPDDR5
