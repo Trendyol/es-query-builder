@@ -1,4 +1,4 @@
-# es-query-builder [![GoDoc][doc-img]][doc] [![Release][release-img]][release] [![Build Status][ci-img]][ci] [![Go Report Card][go-report-img]][go-report] [![Coverage Status][cov-img]][cov]
+# es-query-builder [![GoDoc][doc-img]][doc] [![Release][release-img]][release] [![Build Status][ci-img]][ci] [![Go Report Card][go-report-img]][go-report] [![Coverage Status][cov-img]][cov] [![OpenSSF Scorecard][scorecard-img]][scorecard]
 
 A simple, user-friendly, and streamlined library for programmatically building Elasticsearch DSL queries in Go, designed
 for low overhead and minimal memory usage.
@@ -176,130 +176,155 @@ You can check and run [benchmarks](./benchmarks) on your machine.
 ### ARM64
 
 - **Device**: MacBook Pro 16" 2021
+- **OS**: macOS Sonoma 14.7.3 
 - **CPU**: Apple Silicon M1 Pro 10 Core
 - **Arch**: ARM64
 - **Memory**: 32GB LPDDR5
 - **Go Version**: go1.23.5
-- **es-query-builder Version**: v0.4.0
-- **Benchmark Date**: 01/22/2025
+- **es-query-builder Version**: v0.4.2
+- **Benchmark Date**: 02/01/2025
 
-![arm64 combined](https://github.com/user-attachments/assets/3d462d23-b9be-4e6b-82c8-ba8bc40de241)
+![arm64 combined](https://github.com/user-attachments/assets/61a38526-7ec7-47b2-85c8-037f5394acd8)
 
 <details>
   <summary><b>ARM64 Detailed Benchmark Results</b></summary>
 
-![arm64 simple](https://github.com/user-attachments/assets/dcb1303b-d384-424a-9f79-41369d3c2b82)
-
-- **es-query-builder** is 23% less efficient than **vanilla Go**.
-- **[aquasecurity/esquery](https://github.com/aquasecurity/esquery)** is 82% less efficient than **es-query-builder**.
-
-Benchmark test file at [simple query benchmark](./benchmarks/simple_example_test.go)
-
----
-
-![arm64 intermediate](https://github.com/user-attachments/assets/63cc99de-7590-4266-be3d-0b9fc9dce66e)
-
-- **es-query-builder** is 25% less efficient than **vanilla Go**.
-- **[aquasecurity/esquery](https://github.com/aquasecurity/esquery)** is 74% less efficient than **es-query-builder**.
-
-Benchmark test file at [intermediate query benchmark](./benchmarks/intermediate_example_test.go)
-
----
-
-![arm64 complex](https://github.com/user-attachments/assets/94c364c7-d0f8-4fba-ab7c-ecce9f790c4f)
-
-- **es-query-builder** is 30% less efficient than **vanilla Go**.
-- **[aquasecurity/esquery](https://github.com/aquasecurity/esquery)** is 70% less efficient than **es-query-builder**.
-
-Benchmark test file at [complex query benchmark](./benchmarks/complex_example_test.go)
-
----
-
-![arm64 mixed](https://github.com/user-attachments/assets/507d3d9c-dbb3-44c3-b052-ff46a4b11b5e)
-
-- **es-query-builder** is 16% less efficient than **vanilla Go**.
-- **[aquasecurity/esquery](https://github.com/aquasecurity/esquery)** is 82% less efficient than **es-query-builder**.
-
-Benchmark test file at [mixed query benchmark](./benchmarks/mixed_example_test.go)
-
----
-
-![arm64 conditional](https://github.com/user-attachments/assets/4b0bd815-eb01-4bd6-8c3d-4840f5150291)
+![arm64 simple](https://github.com/user-attachments/assets/6f8244fc-702c-4570-bef4-0e44a2514131)
 
 - **es-query-builder** is 32% less efficient than **vanilla Go**.
-- **[aquasecurity/esquery](https://github.com/aquasecurity/esquery)** is 69% less efficient than **es-query-builder**.
+- **[aquasecurity/esquery](https://github.com/aquasecurity/esquery)** is 82% less efficient than **es-query-builder**.
+- **[defensestation/osquery](https://github.com/defensestation/osquery)** is 84% less efficient than **es-query-builder**.
 
-Benchmark test file at [conditional query benchmark](./benchmarks/conditional_example_test.go)
+Benchmark test file at [simple query benchmark](./benchmarks/tests/simple_benchmark_test.go)
 
 ---
 
-![arm64 aggs](https://github.com/user-attachments/assets/1e115a3d-6a38-4796-8d3c-e3b1bd67b3bf)
+![arm64 intermediate](https://github.com/user-attachments/assets/a31b01dc-8c49-4621-8993-303c0df0cf22)
+
+- **es-query-builder** is 25% less efficient than **vanilla Go**.
+- **[aquasecurity/esquery](https://github.com/aquasecurity/esquery)** is 75% less efficient than **es-query-builder**.
+- **[defensestation/osquery](https://github.com/defensestation/osquery)** is 77% less efficient than **es-query-builder**.
+
+Benchmark test file at [intermediate query benchmark](./benchmarks/tests/intermediate_benchmark_test.go)
+
+---
+
+![arm64 complex](https://github.com/user-attachments/assets/c3115f6b-35b5-422a-81e8-6af203c42ebb)
+
+- **es-query-builder** is 31% less efficient than **vanilla Go**.
+- **[aquasecurity/esquery](https://github.com/aquasecurity/esquery)** is 71% less efficient than **es-query-builder**.
+- **[defensestation/osquery](https://github.com/defensestation/osquery)** is 71% less efficient than **es-query-builder**.
+
+Benchmark test file at [complex query benchmark](./benchmarks/tests/complex_benchmark_test.go)
+
+---
+
+![arm64 mixed](https://github.com/user-attachments/assets/6b6a7a98-ff88-4be5-bc4f-2d6970553d8b)
+
+- **es-query-builder** is 16% less efficient than **vanilla Go**.
+- **[aquasecurity/esquery](https://github.com/aquasecurity/esquery)** is 66% less efficient than **es-query-builder**.
+- **[defensestation/osquery](https://github.com/defensestation/osquery)** is 66% less efficient than **es-query-builder**.
+
+Benchmark test file at [mixed query benchmark](./benchmarks/tests/mixed_benchmark_test.go)
+
+---
+
+![arm64 conditional](https://github.com/user-attachments/assets/be44f4f2-1b33-4f05-b049-08bfc78ae283)
+
+- **es-query-builder** is 28% less efficient than **vanilla Go**.
+- **[aquasecurity/esquery](https://github.com/aquasecurity/esquery)** is 71% less efficient than **es-query-builder**.
+- **[defensestation/osquery](https://github.com/defensestation/osquery)** is 72% less efficient than **es-query-builder**.
+
+Benchmark test file at [conditional query benchmark](./benchmarks/tests/conditional_benchmark_test.go)
+
+---
+
+![arm64 multi filter](https://github.com/user-attachments/assets/5956c4f5-4f85-436f-ae83-ec0dfda9c170)
+
+- **es-query-builder** is 24% less efficient than **vanilla Go**.
+- **[aquasecurity/esquery](https://github.com/aquasecurity/esquery)** is 73% less efficient than **es-query-builder**.
+- **[defensestation/osquery](https://github.com/defensestation/osquery)** is 74% less efficient than **es-query-builder**.
+
+Benchmark test file at [multi filter query benchmark](./benchmarks/tests/multi_filter_benchmark_test.go)
+
+---
+
+![arm64 aggs](https://github.com/user-attachments/assets/7c6434ab-fa1e-4fd0-99e1-67429168e8ac)
 
 - **es-query-builder** is 29% less efficient than **vanilla Go**.
-- **[aquasecurity/esquery](https://github.com/aquasecurity/esquery)** is 81% less efficient than **es-query-builder**.
+- **[aquasecurity/esquery](https://github.com/aquasecurity/esquery)** is 67% less efficient than **es-query-builder**.
+- **[defensestation/osquery](https://github.com/defensestation/osquery)** is 68% less efficient than **es-query-builder**.
 
-Benchmark test file at [aggs query benchmark](./benchmarks/aggs_example_test.go)
+Benchmark test file at [aggs query benchmark](./benchmarks/tests/aggs_benchmark_test.go)
 
 ---
 
 ### MacBook M1 Pro 10 Core Benchmark Result Table 
 
-|Benchmark Name     |vanilla go score|vanilla go ns/op|aquasecurity/esquery score|aquasecurity/esquery ns/op|es-query-builder score|es-query-builder ns/op|
-|-------------------|----------------|----------------|--------------------------|--------------------------|----------------------|----------------------|
-|simple             |15997112        |372,4           |1953010                   |3075                      |10861778              |541,4                 |
-|simple             |15932286        |376,7           |1942562                   |3079                      |10861311              |537,7                 |
-|simple             |15981565        |376,8           |1952407                   |3074                      |10896735              |539,2                 |
-|simple             |16174654        |373,9           |1945106                   |3253                      |10965974              |538,5                 |
-|simple             |16186130        |372,6           |1943928                   |3069                      |11010657              |538,7                 |
-|simple avg         |16054349,40     |374,48          |1947402,60                |3110,00                   |10919291,00           |539,10                |
-|simple median      |15997112,00     |373,90          |1945106,00                |3075,00                   |10896735,00           |538,70                |
-|simple stddev      |105178,41       |1,92            |4410,57                   |71,57                     |59506,72              |1,25                  |
-|                   |                |                |                          |                          |                      |                      |
-|complex            |2324410         |2572            |476419                    |12588                     |1612232               |3708                  |
-|complex            |2315541         |2576            |472420                    |12610                     |1612942               |3714                  |
-|complex            |2321216         |2582            |473491                    |12608                     |1603651               |3705                  |
-|complex            |2325516         |2585            |478119                    |12642                     |1616520               |3711                  |
-|complex            |2327028         |2586            |471618                    |12594                     |1615902               |3715                  |
-|complex avg        |2322742,20      |2580,20         |474413,40                 |12608,40                  |1612249,40            |3710,60               |
-|complex median     |2324410,00      |2582,00         |473491,00                 |12608,00                  |1612942,00            |3711,00               |
-|complex stddev     |4075,05         |5,38            |2465,47                   |18,74                     |4604,17               |3,72                  |
-|                   |                |                |                          |                          |                      |                      |
-|conditional        |4023123         |1491            |845757                    |7077                      |2885863               |2076                  |
-|conditional        |4041091         |1488            |853201                    |7091                      |2853171               |2078                  |
-|conditional        |4012322         |1503            |841545                    |7081                      |2866297               |2076                  |
-|conditional        |4013662         |1488            |847909                    |7104                      |2890788               |2082                  |
-|conditional        |4026201         |1496            |840610                    |7090                      |2883222               |2092                  |
-|conditional avg    |4023279,80      |1493,20         |845804,40                 |7088,60                   |2875868,20            |2080,80               |
-|conditional median |4023123,00      |1491,00         |845757,00                 |7090,00                   |2883222,00            |2078,00               |
-|conditional stddev |10376,63        |5,71            |4566,52                   |9,35                      |14023,88              |6,01                  |
-|                   |                |                |                          |                          |                      |                      |
-|intermediate       |4519802         |1323            |867354                    |6914                      |3373606               |1773                  |
-|intermediate       |4488582         |1333            |864675                    |6904                      |3372969               |1771                  |
-|intermediate       |4461734         |1335            |864476                    |6903                      |3391429               |1770                  |
-|intermediate       |4476802         |1335            |865116                    |6901                      |3345444               |1766                  |
-|intermediate       |4487874         |1335            |857962                    |6910                      |3358254               |1777                  |
-|intermediate avg   |4486958,80      |1332,20         |863916,60                 |6906,40                   |3368340,40            |1771,40               |
-|intermediate median|4487874,00      |1335,00         |864675,00                 |6904,00                   |3372969,00            |1771,00               |
-|intermediate stddev|19087,16        |4,66            |3149,59                   |4,84                      |15544,87              |3,61                  |
-|                   |                |                |                          |                          |                      |                      |
-|mixed              |3430264         |1733            |1000000                   |5158                      |2880654               |2074                  |
-|mixed              |3468865         |1737            |1000000                   |5167                      |2927622               |2057                  |
-|mixed              |3445854         |1741            |1000000                   |5182                      |2892280               |2074                  |
-|mixed              |3453601         |1730            |1000000                   |5158                      |2887956               |2064                  |
-|mixed              |3445731         |1733            |1000000                   |5157                      |2901133               |2056                  |
-|mixed avg          |3448863,00      |1734,80         |1000000,00                |5164,40                   |2897929,00            |2065,00               |
-|mixed median       |3445854,00      |1733,00         |1000000,00                |5158,00                   |2892280,00            |2064,00               |
-|mixed stddev       |12548,43        |3,82            |0,00                      |9,52                      |16258,77              |7,85                  |
-|                   |                |                |                          |                          |                      |                      |
-|aggs               |2604656         |2296            |618597                    |9704                      |1856065               |3279                  |
-|aggs               |2616678         |2289            |620818                    |9719                      |1861394               |3228                  |
-|aggs               |2616700         |2300            |618390                    |9711                      |1866285               |3235                  |
-|aggs               |2613950         |2295            |615925                    |9705                      |1855579               |3211                  |
-|aggs               |2611999         |2300            |617900                    |9697                      |1857831               |3216                  |
-|aggs avg           |2612796,60      |2296,00         |618326,00                 |9707,20                   |1859430,80            |3233,80               |
-|aggs median        |2613950,00      |2296,00         |618390,00                 |9705,00                   |1857831,00            |3228,00               |
-|aggs stddev        |4439,32         |4,05            |1564,22                   |7,39                      |3988,95               |24,14                 |
-
+|Benchmark Name     |vanilla go score|vanilla go ns/op|aquasecurity/esquery score|aquasecurity/esquery ns/op|defensestation/osquery score|defensestation/osquery ns/op|es-query-builder score|es-query-builder ns/op|
+|-------------------|----------------|----------------|--------------------------|--------------------------|----------------------------|----------------------------|----------------------|----------------------|
+|simple             |16289468        |368             |1949335                   |3079                      |1747318                     |3425                        |11026227              |533                   |
+|simple             |16274949        |368             |1948286                   |3077                      |1748682                     |3431                        |11158036              |536                   |
+|simple             |16157809        |370             |1944097                   |3082                      |1747022                     |3446                        |10935156              |536                   |
+|simple             |16272403        |370             |1945136                   |3082                      |1742745                     |3439                        |11048505              |538                   |
+|simple             |16122024        |370             |1948617                   |3075                      |1746759                     |3433                        |11024264              |533                   |
+|simple avg         |16223330,60     |369,20          |1947094,20                |3079,00                   |1746505,20                  |3434,80                     |11038437,60           |535,20                |
+|simple median      |16272403,00     |370,00          |1948286,00                |3079,00                   |1747022,00                  |3433,00                     |11026227,00           |536,00                |
+|simple stddev      |69286,11        |0,98            |2077,41                   |2,76                      |1993,47                     |7,17                        |71305,27              |1,94                  |
+|                   |                |                |                          |                          |                            |                            |                      |                      |
+|complex            |2328243         |2575            |471954                    |12725                     |426900                      |14162                       |1609507               |3705                  |
+|complex            |2336179         |2565            |470151                    |12656                     |428108                      |14103                       |1627707               |3705                  |
+|complex            |2343412         |2573            |477055                    |12630                     |426849                      |14037                       |1622174               |3698                  |
+|complex            |2340090         |2563            |474279                    |12627                     |427857                      |14038                       |1619374               |3695                  |
+|complex            |2333827         |2571            |474705                    |12645                     |425506                      |14062                       |1625364               |3702                  |
+|complex avg        |2336350,20      |2569,40         |473628,80                 |12656,60                  |427044,00                   |14080,40                    |1620825,20            |3701,00               |
+|complex median     |2336179,00      |2571,00         |474279,00                 |12645,00                  |426900,00                   |14062,00                    |1622174,00            |3702,00               |
+|complex stddev     |5214,93         |4,63            |2375,70                   |35,77                     |918,40                      |47,31                       |6324,35               |3,95                  |
+|                   |                |                |                          |                          |                            |                            |                      |                      |
+|conditional        |3983532         |1491            |836204                    |7168                      |793478                      |7522                        |2894722               |2087                  |
+|conditional        |3918195         |1534            |845427                    |7106                      |805912                      |7486                        |2884924               |2121                  |
+|conditional        |4044111         |1487            |840529                    |7157                      |794827                      |7545                        |2898068               |2081                  |
+|conditional        |4048710         |1488            |846610                    |7125                      |804211                      |7468                        |2881280               |2082                  |
+|conditional        |4039155         |1484            |840256                    |7105                      |802660                      |7475                        |2891826               |2072                  |
+|conditional avg    |4006740,60      |1496,80         |841805,20                 |7132,20                   |800217,60                   |7499,20                     |2890164,00            |2088,60               |
+|conditional median |4039155,00      |1488,00         |840529,00                 |7125,00                   |802660,00                   |7486,00                     |2891826,00            |2082,00               |
+|conditional stddev |50174,96        |18,73           |3784,33                   |25,98                     |5075,82                     |29,50                       |6203,13               |16,91                 |
+|                   |                |                |                          |                          |                            |                            |                      |                      |
+|intermediate       |4573310         |1312            |867562                    |6954                      |779059                      |7674                        |3395592               |1774                  |
+|intermediate       |4567904         |1316            |861070                    |6973                      |771276                      |7714                        |3413900               |1769                  |
+|intermediate       |4563678         |1319            |862593                    |6924                      |782931                      |7651                        |3408219               |1777                  |
+|intermediate       |4556863         |1317            |867105                    |6904                      |783907                      |7647                        |3398814               |1770                  |
+|intermediate       |4559426         |1320            |863877                    |6945                      |780218                      |7773                        |3416360               |1768                  |
+|intermediate avg   |4564236,20      |1316,80         |864441,40                 |6940,00                   |779478,20                   |7691,80                     |3406577,00            |1771,60               |
+|intermediate median|4563678,00      |1317,00         |863877,00                 |6945,00                   |780218,00                   |7674,00                     |3408219,00            |1770,00               |
+|intermediate stddev|5892,37         |2,79            |2527,23                   |23,92                     |4461,73                     |47,06                       |8160,44               |3,38                  |
+|                   |                |                |                          |                          |                            |                            |                      |                      |
+|mixed              |3452348         |1739            |1000000                   |5576                      |1000000                     |5519                        |2926890               |2057                  |
+|mixed              |3467690         |1734            |1000000                   |5143                      |1000000                     |5525                        |2930038               |2052                  |
+|mixed              |3489582         |1726            |1000000                   |5224                      |1000000                     |5520                        |2920724               |2053                  |
+|mixed              |3465878         |1728            |1000000                   |5154                      |1000000                     |5541                        |2935546               |2053                  |
+|mixed              |3474674         |1734            |1000000                   |5141                      |1000000                     |5513                        |2932101               |2056                  |
+|mixed avg          |3470034,40      |1732,20         |1000000,00                |5247,60                   |1000000,00                  |5523,60                     |2929059,80            |2054,20               |
+|mixed median       |3467690,00      |1734,00         |1000000,00                |5154,00                   |1000000,00                  |5520,00                     |2930038,00            |2053,00               |
+|mixed stddev       |12159,07        |4,66            |0,00                      |167,01                    |0,00                        |9,50                        |5029,32               |1,94                  |
+|                   |                |                |                          |                          |                            |                            |                      |                      |
+|multi filter       |4035531         |1481            |841471                    |7113                      |797647                      |7482                        |3064244               |1964                  |
+|multi filter       |4089892         |1474            |836565                    |7091                      |800364                      |7492                        |3077422               |1961                  |
+|multi filter       |4062204         |1477            |840290                    |7105                      |801840                      |7493                        |3064178               |1957                  |
+|multi filter       |4034770         |1481            |838080                    |7136                      |795669                      |7491                        |3077875               |1967                  |
+|multi filter       |4026196         |1474            |848299                    |7074                      |806515                      |7483                        |3078358               |1962                  |
+|multi filter avg   |4049718,60      |1477,40         |840941,00                 |7103,80                   |800407,00                   |7488,20                     |3072415,40            |1962,20               |
+|multi filter median|4035531,00      |1477,00         |840290,00                 |7105,00                   |800364,00                   |7491,00                     |3077422,00            |1962,00               |
+|multi filter stdev |23442,90        |3,14            |4054,12                   |20,86                     |3726,37                     |4,71                        |6705,44               |3,31                  |
+|                   |                |                |                          |                          |                            |                            |                      |                      |
+|aggs               |2591437         |2314            |619117                    |9737                      |604124                      |10140                       |1859446               |3232                  |
+|aggs               |2625234         |2291            |611305                    |9711                      |586738                      |10074                       |1872366               |3220                  |
+|aggs               |2622649         |2292            |613981                    |9707                      |596095                      |10684                       |1871360               |3216                  |
+|aggs               |2626522         |2284            |605070                    |9692                      |598178                      |10066                       |1857014               |3209                  |
+|aggs               |2623935         |2295            |613622                    |9687                      |593932                      |10063                       |1858818               |3224                  |
+|aggs avg           |2617955,40      |2295,20         |612619,00                 |9706,80                   |595813,40                   |10205,40                    |1863800,80            |3220,20               |
+|aggs median        |2623935,00      |2292,00         |613622,00                 |9707,00                   |596095,00                   |10074,00                    |1859446,00            |3220,00               |
+|aggs stddev        |13321,98        |10,07           |4556,29                   |17,55                     |5668,14                     |240,96                      |6638,64               |7,70                  |
 
 </details>
 
@@ -348,3 +373,7 @@ MIT - Please check the [LICENSE](./LICENSE) file for full text.
 [ci-img]: https://github.com/Trendyol/es-query-builder/actions/workflows/build-test.yml/badge.svg
 
 [ci]: https://github.com/Trendyol/es-query-builder/actions/workflows/build-test.yml
+
+[scorecard]: https://scorecard.dev/viewer/?uri=github.com/Trendyol/es-query-builder
+
+[scorecard-img]: https://api.scorecard.dev/projects/github.com/Trendyol/es-query-builder/badge
