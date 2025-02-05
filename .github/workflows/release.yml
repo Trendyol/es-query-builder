@@ -13,19 +13,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
         with:
           fetch-depth: 0
 
       - run: git tag ${{ github.event.inputs.tag }}
 
       - name: Set up Go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@f111f3307d8850f501ac008e886eec1fd1932a34
         with:
           go-version: 1.18
 
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v4
+        uses: goreleaser/goreleaser-action@5fdedb94abba051217030cc86d4523cf3f02243d
         with:
           version: latest
           args: release
