@@ -45,7 +45,7 @@ jobs:
         run: go test ./es/... -v -race -coverprofile=coverage.txt -covermode=atomic
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4.0.1
+        uses: codecov/codecov-action@13ce06bfc6bbe3ecf90edbbf1bc32fe5978ca1d3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: Trendyol/es-query-builder
