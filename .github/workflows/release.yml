@@ -18,8 +18,9 @@ jobs:
           fetch-depth: 0
 
       - name: Set tag
+        env:
+          TAG: ${{ github.event.inputs.tag }}
         run: |
-          TAG="${{ github.event.inputs.tag }}"
           git tag "$TAG"
 
       - name: Set up Go
