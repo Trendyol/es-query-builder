@@ -52,4 +52,4 @@ jobs:
     permissions:
       actions: read
       contents: read
-      security-events: read
+      security-events: write
