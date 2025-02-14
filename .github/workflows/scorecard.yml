@@ -1,4 +1,4 @@
-name: Scorecard supply-chain security
+name: Scorecard supply-chain security 🛡🔍
 
 on:
   branch_protection_rule:
@@ -45,7 +45,6 @@ jobs:
           results_file: results.sarif
           results_format: sarif
           publish_results: true
-          log_level: debug  # Daha detaylı log al
 
       - name: "Upload artifact"
         uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
