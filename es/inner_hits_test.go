@@ -1,6 +1,7 @@
 package es_test
 
 import (
+	ScriptLanguage "github.com/Trendyol/es-query-builder/es/enums/script-language"
 	"testing"
 
 	Order "github.com/Trendyol/es-query-builder/es/enums/sort/order"
@@ -353,6 +354,77 @@ func Test_InnerHits_DocvalueFields_should_create_json_with_docvalue_fields_field
 	assert.NotNil(t, ih)
 	bodyJSON := assert.MarshalWithoutError(t, ih)
 	assert.Equal(t, "{\"docvalue_fields\":[{\"field\":\"id\"},{\"field\":\"name\"},{\"field\":\"partition\"}]}", bodyJSON)
+}
+
+func Test_InnerHits_should_have_ScriptField_method(t *testing.T) {
+	t.Parallel()
+	// Given
+	ih := es.InnerHits()
+
+	// When Then
+	assert.NotNil(t, ih.ScriptField)
+}
+
+func Test_InnerHits_ScriptField_should_create_json_with_script_fields_field_inside_inner_hits(t *testing.T) {
+	t.Parallel()
+	// Given
+	ih := es.InnerHits().
+		ScriptField("first_script",
+			es.ScriptField(es.ScriptID("key", ScriptLanguage.Painless).
+				Option("retry", "3").
+				Option("timeout", "300s").
+				Parameter("p1", 100).
+				Parameter("p2", "hello"),
+			).IgnoreFailure(false),
+		).
+		ScriptField("second_script",
+			es.ScriptField(es.ScriptID("value", ScriptLanguage.Mustache).
+				Option("retry", "5").
+				Parameter("p1", "world"),
+			).IgnoreFailure(true),
+		)
+	// When Then
+	assert.NotNil(t, ih)
+	bodyJSON := assert.MarshalWithoutError(t, ih)
+	// nolint:golint,lll
+	assert.Equal(t, "{\"script_fields\":{\"first_script\":{\"ignore_failure\":false,\"script\":{\"id\":\"key\",\"lang\":\"painless\",\"options\":{\"retry\":\"3\",\"timeout\":\"300s\"},\"params\":{\"p1\":100,\"p2\":\"hello\"}}},\"second_script\":{\"ignore_failure\":true,\"script\":{\"id\":\"value\",\"lang\":\"mustache\",\"options\":{\"retry\":\"5\"},\"params\":{\"p1\":\"world\"}}}}}", bodyJSON)
+}
+
+////   Script Field   ////
+
+func Test_ScriptField_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
+	// Given When Then
+	assert.NotNil(t, es.ScriptField)
+}
+
+func Test_ScriptField_method_should_create_scriptFieldType(t *testing.T) {
+	t.Parallel()
+	// Given
+	sf := es.ScriptField(es.ScriptID("key", ScriptLanguage.Painless))
+
+	// Then
+	assert.NotNil(t, sf)
+	assert.IsTypeString(t, "es.scriptFieldType", sf)
+}
+
+func Test_ScriptField_should_have_IgnoreFailure_method(t *testing.T) {
+	t.Parallel()
+	// Given
+	sf := es.ScriptField(es.ScriptID("key", ScriptLanguage.Painless))
+
+	// When Then
+	assert.NotNil(t, sf.IgnoreFailure)
+}
+
+func Test_ScriptField_IgnoreFailure_should_create_json_with_collapse_field_inside_field_collapse(t *testing.T) {
+	t.Parallel()
+	// Given
+	sf := es.ScriptField(es.ScriptID("key", ScriptLanguage.Painless)).IgnoreFailure(true)
+	// When Then
+	assert.NotNil(t, sf)
+	bodyJSON := assert.MarshalWithoutError(t, sf)
+	assert.Equal(t, "{\"ignore_failure\":true,\"script\":{\"id\":\"key\",\"lang\":\"painless\"}}", bodyJSON)
 }
 
 ////   Field Collapse   ////
