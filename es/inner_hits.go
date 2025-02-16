@@ -2,6 +2,10 @@ package es
 
 type innerHitsType Object
 
+type scriptFieldType Object
+
+type scriptFieldsType GenericObject[scriptFieldType]
+
 type fieldAndFormatType Object
 
 type fieldCollapseType Object
@@ -184,6 +188,34 @@ func (ih innerHitsType) IgnoreUnmapped(ignoreUnmapped bool) innerHitsType {
 //	The updated es.innerHitsType object with the "name" field set to the specified value.
 func (ih innerHitsType) Name(name string) innerHitsType {
 	ih["name"] = name
+	return ih
+}
+
+// ScriptField adds a script field to the inner_hits configuration.
+//
+// This method allows you to define a dynamically computed field within the inner_hits section
+// of a query. The field is generated using the specified script.
+//
+// Example usage:
+//
+//	script := es.ScriptSource("doc['price'].value * params.factor", es.ScriptLanguage.Painless)
+//	ih := es.InnerHits().ScriptField("discounted_price", es.ScriptField(script))
+//	// ih now contains a script field named "discounted_price" that calculates values dynamically.
+//
+// Parameters:
+//   - name: A string representing the name of the script field.
+//   - scriptField: An es.scriptFieldType object defining the script to be used.
+//
+// Returns:
+//
+//	The updated es.innerHitsType object with the specified script field added.
+func (ih innerHitsType) ScriptField(name string, scriptField scriptFieldType) innerHitsType {
+	scriptFields, ok := ih["script_fields"].(scriptFieldsType)
+	if !ok {
+		scriptFields = scriptFieldsType{}
+	}
+	scriptFields[name] = scriptField
+	ih["script_fields"] = scriptFields
 	return ih
 }
 
@@ -415,6 +447,51 @@ func (ih innerHitsType) TrackScores(trackScores bool) innerHitsType {
 func (ih innerHitsType) Version(version bool) innerHitsType {
 	ih["version"] = version
 	return ih
+}
+
+// ScriptField creates a new es.scriptFieldType object with the specified script.
+//
+// This function initializes an es.scriptFieldType object, which is used to define a script-based field
+// in an Elasticsearch query. The provided script determines the field's value dynamically at query time.
+//
+// Example usage:
+//
+//	script := es.ScriptSource("doc['price'].value * params.factor", es.ScriptLanguage.Painless)
+//	sf := es.ScriptField(script)
+//	// sf now contains an es.scriptFieldType object with the specified script.
+//
+// Parameters:
+//   - script: An es.scriptType object representing the script to be executed.
+//
+// Returns:
+//
+//	An es.scriptFieldType object containing the specified script.
+func ScriptField(script scriptType) scriptFieldType {
+	return scriptFieldType{
+		"script": script,
+	}
+}
+
+// IgnoreFailure sets the "ignore_failure" field in the script field configuration.
+//
+// This method allows the script field to ignore failures during execution. If set to `true`,
+// Elasticsearch will continue processing the query even if the script encounters an error.
+//
+// Example usage:
+//
+//	script := es.ScriptSource("doc['price'].value * params.factor", es.ScriptLanguage.Painless)
+//	sf := es.ScriptField(script).IgnoreFailure(true)
+//	// sf now has an "ignore_failure" field set to true.
+//
+// Parameters:
+//   - ignoreFailure: A boolean indicating whether script execution failures should be ignored.
+//
+// Returns:
+//
+//	The updated es.scriptFieldType object with the "ignore_failure" field set.
+func (sf scriptFieldType) IgnoreFailure(ignoreFailure bool) scriptFieldType {
+	sf["ignore_failure"] = ignoreFailure
+	return sf
 }
 
 // FieldCollapse creates a field collapse configuration for sorting or grouping inner hits.
