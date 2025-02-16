@@ -38,19 +38,41 @@ func createMultiFilterQueryVanilla() map[string]any {
 		},
 		"size": 20,
 		"sort": []map[string]interface{}{
-			{"price": map[string]interface{}{"order": "desc"}},
+			{
+				"price": map[string]interface{}{
+					"order": "desc",
+				},
+			},
 		},
 		"query": map[string]interface{}{
 			"bool": map[string]interface{}{
 				"must": []map[string]interface{}{
-					{"term": map[string]interface{}{"status": "active"}},
-					{"range": map[string]interface{}{
-						"price": map[string]interface{}{"gte": 100, "lte": 1000},
-					}},
+					{
+						"term": map[string]interface{}{
+							"status": map[string]interface{}{
+								"value": "active",
+							},
+						},
+					},
+					{
+						"range": map[string]interface{}{
+							"price": map[string]interface{}{
+								"gte": 100,
+								"lte": 1000,
+							},
+						},
+					},
 				},
 				"filter": []map[string]interface{}{
-					{"terms": map[string]interface{}{"category": []string{"Electronics", "Home"}}},
-					{"exists": map[string]interface{}{"field": "stock"}},
+					{
+						"terms": map[string]interface{}{
+							"category": []string{"Electronics", "Home"},
+						},
+					},
+					{
+						"exists": map[string]interface{}{
+							"field": "stock"},
+					},
 				},
 			},
 		},
