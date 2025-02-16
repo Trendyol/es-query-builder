@@ -71,7 +71,8 @@ func createMultiFilterQueryVanilla() map[string]any {
 					},
 					{
 						"exists": map[string]interface{}{
-							"field": "stock"},
+							"field": "stock",
+						},
 					},
 				},
 			},
