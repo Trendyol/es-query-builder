@@ -1,8 +1,9 @@
 package es_test
 
 import (
-	ScriptLanguage "github.com/Trendyol/es-query-builder/es/enums/script-language"
 	"testing"
+
+	ScriptLanguage "github.com/Trendyol/es-query-builder/es/enums/script-language"
 
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"
@@ -82,6 +83,7 @@ func Test_TermsSet_MinimumShouldMatchField_should_create_json_with_minimum_shoul
 	// When Then
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
+	// nolint:golint,lll
 	assert.Equal(t, "{\"query\":{\"terms_set\":{\"sector.name\":{\"minimum_should_match_field\":\"match_threshold\",\"terms\":[\"a1\",\"b2\",\"c3\"]}}}}", bodyJSON)
 }
 

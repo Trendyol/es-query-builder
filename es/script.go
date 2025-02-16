@@ -30,14 +30,14 @@ func ScriptSource(source string, scriptLanguage ScriptLanguage.ScriptLanguage) s
 	}
 }
 
-// ScriptId creates a new es.scriptType object with the specified script Id and language.
+// ScriptID creates a new es.scriptType object with the specified script ID and language.
 //
-// This function initializes an es.scriptType object that references a stored script by its Id,
+// This function initializes an es.scriptType object that references a stored script by its ID,
 // along with the specified script language. It is used when executing pre-defined scripts in Elasticsearch.
 //
 // Example usage:
 //
-//	script := es.ScriptId("calculate-discount", es.ScriptLanguage.Painless)
+//	script := es.ScriptID("calculate-discount", es.ScriptLanguage.Painless)
 //	// script now contains an es.scriptType object referencing the "calculate-discount" script written in Painless.
 //
 // Parameters:
@@ -47,7 +47,7 @@ func ScriptSource(source string, scriptLanguage ScriptLanguage.ScriptLanguage) s
 // Returns:
 //
 //	An es.scriptType object referencing the stored script.
-func ScriptId(id string, scriptLanguage ScriptLanguage.ScriptLanguage) scriptType {
+func ScriptID(id string, scriptLanguage ScriptLanguage.ScriptLanguage) scriptType {
 	return scriptType{
 		"id":   id,
 		"lang": scriptLanguage,
@@ -61,7 +61,7 @@ func ScriptId(id string, scriptLanguage ScriptLanguage.ScriptLanguage) scriptTyp
 //
 // Example usage:
 //
-//	script := es.ScriptId("calculate-discount", es.ScriptLanguage.Painless).Option("cache", "true")
+//	script := es.ScriptID("calculate-discount", es.ScriptLanguage.Painless).Option("cache", "true")
 //	// script now has an "options" field with {"cache": "true"}.
 //
 // Parameters:
@@ -88,7 +88,7 @@ func (s scriptType) Option(option, value string) scriptType {
 //
 // Example usage:
 //
-//	script := es.ScriptId("calculate-discount", es.ScriptLanguage.Painless).
+//	script := es.ScriptID("calculate-discount", es.ScriptLanguage.Painless).
 //		Parameter("factor", 0.9)
 //	// script now has a "params" field with {"factor": 0.9}.
 //
