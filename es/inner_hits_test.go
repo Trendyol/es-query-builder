@@ -1,9 +1,9 @@
 package es_test
 
 import (
-	ScriptLanguage "github.com/Trendyol/es-query-builder/es/enums/script-language"
 	"testing"
 
+	ScriptLanguage "github.com/Trendyol/es-query-builder/es/enums/script-language"
 	Order "github.com/Trendyol/es-query-builder/es/enums/sort/order"
 
 	"github.com/Trendyol/es-query-builder/es"
