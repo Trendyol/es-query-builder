@@ -1,8 +1,9 @@
-package benchmarks_test
+package tests_test
 
 import (
 	"testing"
 
+	"github.com/Trendyol/es-query-builder/benchmarks/tests/marshal"
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/es/enums/sort/order"
 	"github.com/Trendyol/es-query-builder/test/assert"
@@ -14,7 +15,7 @@ func createComplexQuery(id int) map[string]any {
 			Must(
 				es.Range("partition").
 					GreaterThan(25).
-					LesserThanOrEqual(30),
+					LessThanOrEqual(30),
 				es.Bool().
 					Should(
 						es.Term("doc.id", id),
@@ -159,7 +160,7 @@ func Benchmark_Complex_Vanilla(b *testing.B) {
 
 func Test_Complex_Queries_are_equal(t *testing.T) {
 	id := 76
-	build := marshalString(t, createComplexQuery(id))
-	vanilla := marshalString(t, createComplexQueryVanilla(id))
+	build := marshal.String(t, createComplexQuery(id))
+	vanilla := marshal.String(t, createComplexQueryVanilla(id))
 	assert.Equal(t, vanilla, build)
 }

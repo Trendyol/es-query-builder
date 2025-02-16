@@ -38,9 +38,9 @@ func (s *testSuite) Test_it_should_return_documents_that_filtered_by_simple_quer
 
 	// Then
 	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), 2, len(result))
-	assert.Equal(s.T(), "bar", result[0].Foo)
-	assert.Equal(s.T(), "george orwell", result[1].Foo)
+	assert.Equal(s.T(), len(result), 2)
+	assert.Equal(s.T(), result[0].Foo, "bar")
+	assert.Equal(s.T(), result[1].Foo, "george orwell")
 
 	s.ElasticsearchRepository.BulkDelete([]string{foo.Id, bar.Id, george.Id})
 }

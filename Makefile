@@ -11,8 +11,11 @@ run-test:
 linter:
 	golangci-lint run -c .golangci.yml --timeout=5m -v --fix
 
+fixfieldalignment:
+	fieldalignment --fix ./...
+
 unit-test-pretty:
 	go test ./... -count=1 -v -json | gotestfmt
 
 run-benchmark:
-	./benchmarks/.runbench.sh
+	go run ./benchmarks/run_bench.go -cooldown=15 -save=csv

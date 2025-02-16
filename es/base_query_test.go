@@ -4,21 +4,23 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/Trendyol/es-query-builder/es"
-	"github.com/Trendyol/es-query-builder/test/assert"
-
 	Mode "github.com/Trendyol/es-query-builder/es/enums/sort/mode"
 	Order "github.com/Trendyol/es-query-builder/es/enums/sort/order"
+
+	"github.com/Trendyol/es-query-builder/es"
+	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
 ////   NewQuery   ////
 
 func Test_NewQuery_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.NewQuery)
 }
 
 func Test_NewQuery_should_create_a_new_Object(t *testing.T) {
+	t.Parallel()
 	// Given When
 	bodyA := es.NewQuery(nil)
 	bodyB := es.NewQuery(nil)
@@ -33,6 +35,7 @@ func Test_NewQuery_should_create_a_new_Object(t *testing.T) {
 }
 
 func Test_NewQuery_should_return_type_of_Object(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(nil)
 
@@ -46,6 +49,7 @@ func Test_NewQuery_should_return_type_of_Object(t *testing.T) {
 }
 
 func Test_NewQuery_should_add_query_field_into_Object(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(nil)
 
@@ -58,6 +62,7 @@ func Test_NewQuery_should_add_query_field_into_Object(t *testing.T) {
 }
 
 func Test_NewQuery_should_create_json_with_query_field(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(nil)
 
@@ -68,6 +73,7 @@ func Test_NewQuery_should_create_json_with_query_field(t *testing.T) {
 }
 
 func Test_NewQuery_Bool_should_create_json_with_bool_field_inside_query(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(
 		es.Bool(),
@@ -82,6 +88,7 @@ func Test_NewQuery_Bool_should_create_json_with_bool_field_inside_query(t *testi
 ////   TrackTotalHits   ////
 
 func Test_Object_should_have_TrackTotalHits_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.NewQuery(nil)
 
@@ -90,6 +97,7 @@ func Test_Object_should_have_TrackTotalHits_method(t *testing.T) {
 }
 
 func Test_TrackTotalHits_should_add_track_total_hits_field_into_Object(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(nil)
 
@@ -108,6 +116,7 @@ func Test_TrackTotalHits_should_add_track_total_hits_field_into_Object(t *testin
 ////   Size   ////
 
 func Test_Object_should_have_Size_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.NewQuery(nil)
 
@@ -116,6 +125,7 @@ func Test_Object_should_have_Size_method(t *testing.T) {
 }
 
 func Test_Size_should_add_size_field_into_Object(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(nil)
 
@@ -134,6 +144,7 @@ func Test_Size_should_add_size_field_into_Object(t *testing.T) {
 ////   From   ////
 
 func Test_Object_should_have_From_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.NewQuery(nil)
 
@@ -142,6 +153,7 @@ func Test_Object_should_have_From_method(t *testing.T) {
 }
 
 func Test_From_should_add_from_field_into_Object(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(nil)
 
@@ -160,6 +172,7 @@ func Test_From_should_add_from_field_into_Object(t *testing.T) {
 ////   Sort   ////
 
 func Test_Object_should_have_Sort_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.NewQuery(nil)
 
@@ -168,11 +181,13 @@ func Test_Object_should_have_Sort_method(t *testing.T) {
 }
 
 func Test_Sort_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When Then
 	assert.NotNil(t, es.Sort)
 }
 
 func Test_Sort_should_return_sortType_with_order(t *testing.T) {
+	t.Parallel()
 	// Given
 	sort := es.Sort("name").Order(Order.Asc)
 
@@ -187,6 +202,7 @@ func Test_Sort_should_return_sortType_with_order(t *testing.T) {
 }
 
 func Test_Sort_should_return_sortType_with_mode(t *testing.T) {
+	t.Parallel()
 	// Given
 	sort := es.Sort("age").Mode(Mode.Median)
 
@@ -201,6 +217,7 @@ func Test_Sort_should_return_sortType_with_mode(t *testing.T) {
 }
 
 func Test_Sort_should_return_sortType_with_order_and_mode(t *testing.T) {
+	t.Parallel()
 	// Given
 	sort := es.Sort("salary").Order(Order.Desc).Mode(Mode.Sum)
 
@@ -215,6 +232,7 @@ func Test_Sort_should_return_sortType_with_order_and_mode(t *testing.T) {
 }
 
 func Test_Sort_should_add_sort_field_into_Object(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(nil)
 
@@ -235,6 +253,7 @@ func Test_Sort_should_add_sort_field_into_Object(t *testing.T) {
 ////   Source   ////
 
 func Test_Object_should_have_SourceIncludes_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.NewQuery(nil)
 
@@ -243,6 +262,7 @@ func Test_Object_should_have_SourceIncludes_method(t *testing.T) {
 }
 
 func Test_SourceIncludes_should_add_source_field_with_includes_to_Object(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(nil)
 
@@ -261,6 +281,7 @@ func Test_SourceIncludes_should_add_source_field_with_includes_to_Object(t *test
 }
 
 func Test_SourceIncludes_should_apped_includes_when_it_already_exists_in_the_source(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(nil).SourceIncludes("first", "second")
 
@@ -282,6 +303,7 @@ func Test_SourceIncludes_should_apped_includes_when_it_already_exists_in_the_sou
 }
 
 func Test_SourceIncludes_should_not_add_includes_to_Object_when_fields_are_empty(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(nil)
 
@@ -299,6 +321,7 @@ func Test_SourceIncludes_should_not_add_includes_to_Object_when_fields_are_empty
 }
 
 func Test_Object_should_have_SourceExcludes_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.NewQuery(nil)
 
@@ -307,6 +330,7 @@ func Test_Object_should_have_SourceExcludes_method(t *testing.T) {
 }
 
 func Test_SourceExcludes_should_add_source_field_with_excludes_to_Object(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(nil)
 
@@ -325,6 +349,7 @@ func Test_SourceExcludes_should_add_source_field_with_excludes_to_Object(t *test
 }
 
 func Test_SourceExcludes_should_apped_excludes_when_it_already_exists_in_the_source(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(nil).SourceExcludes("first", "second")
 
@@ -346,6 +371,7 @@ func Test_SourceExcludes_should_apped_excludes_when_it_already_exists_in_the_sou
 }
 
 func Test_SourceExcludes_should_not_add_excludes_to_Object_when_fields_are_empty(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(nil)
 
@@ -363,6 +389,7 @@ func Test_SourceExcludes_should_not_add_excludes_to_Object_when_fields_are_empty
 }
 
 func Test_Object_should_have_SourceFalse_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.NewQuery(nil)
 
@@ -371,6 +398,7 @@ func Test_Object_should_have_SourceFalse_method(t *testing.T) {
 }
 
 func Test_SourceFalse_should_set_source_field_as_false(t *testing.T) {
+	t.Parallel()
 	// Given
 	query := es.NewQuery(nil)
 
@@ -391,6 +419,7 @@ func Test_SourceFalse_should_set_source_field_as_false(t *testing.T) {
 ////   Aggs   ////
 
 func Test_Object_should_have_Aggs_method(t *testing.T) {
+	t.Parallel()
 	// Given
 	b := es.NewQuery(nil)
 

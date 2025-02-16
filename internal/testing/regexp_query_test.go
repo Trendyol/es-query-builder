@@ -2,7 +2,7 @@ package testing
 
 import (
 	"encoding/json"
-	"fmt"
+
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/bayraktugrul/go-await"
 	"github.com/stretchr/testify/assert"
@@ -44,19 +44,9 @@ func (s *testSuite) Test_it_should_return_documents_that_filtered_by_regexp_quer
 
 	// Then
 	assert.Nil(s.T(), err)
-	assert.Equal(s.T(), 2, len(result))
-	assert.Equal(s.T(), "george orwell", result[0].Foo)
-	assert.Equal(s.T(), "george best", result[1].Foo)
+	assert.Equal(s.T(), len(result), 2)
+	assert.Equal(s.T(), result[0].Foo, "george orwell")
+	assert.Equal(s.T(), result[1].Foo, "george best")
 
-	err = s.ElasticsearchRepository.BulkDelete([]string{foo.Id, bar.Id, georgeOrwell.Id, georgeBest.Id})
-	assert.NoError(s.T(), err)
-
-	query = es.NewQuery(
-		es.MatchAll(),
-	)
-	bodyJSON, _ = json.Marshal(query)
-
-	// When
-	result, err = s.ElasticsearchRepository.Search(string(bodyJSON))
-	fmt.Println(result)
+	s.ElasticsearchRepository.BulkDelete([]string{foo.Id, bar.Id, georgeOrwell.Id, georgeBest.Id})
 }

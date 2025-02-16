@@ -1,8 +1,9 @@
-package benchmarks_test
+package tests_test
 
 import (
 	"testing"
 
+	"github.com/Trendyol/es-query-builder/benchmarks/tests/marshal"
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/es/enums/sort/order"
 	"github.com/Trendyol/es-query-builder/test/assert"
@@ -14,7 +15,7 @@ func createConditionalQuery(items []int) map[string]any {
 			Filter(
 				es.Range("indexedAt").
 					GreaterThan("2021-01-01").
-					LesserThanOrEqual("now"),
+					LessThanOrEqual("now"),
 				es.Term("type", "File"),
 				es.Terms("sector", 1, 2, 3),
 				es.TermsFunc("id", items, func(key string, values []int) bool {
@@ -128,7 +129,7 @@ func Benchmark_Conditional_Vanilla(b *testing.B) {
 
 func Test_Conditional_Queries_are_equal(t *testing.T) {
 	items := []int{1, 1, 2, 3, 5, 8, 13, 21, 34, 55}
-	build := marshalString(t, createConditionalQuery(items))
-	vanilla := marshalString(t, createConditionalQueryVanilla(items))
+	build := marshal.String(t, createConditionalQuery(items))
+	vanilla := marshal.String(t, createConditionalQueryVanilla(items))
 	assert.Equal(t, vanilla, build)
 }

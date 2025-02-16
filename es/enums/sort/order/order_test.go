@@ -3,9 +3,9 @@ package order_test
 import (
 	"testing"
 
-	"github.com/Trendyol/es-query-builder/test/assert"
-
 	Order "github.com/Trendyol/es-query-builder/es/enums/sort/order"
+
+	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
 func TestOrderString(t *testing.T) {

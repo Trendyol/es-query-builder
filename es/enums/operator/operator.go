@@ -7,8 +7,8 @@ package operator
 //
 // Example usage:
 //
-//	match := Match("field", "value").Operator(Operator.And)
-//	// match now has the "operator" field set to "and" in the matchType object.
+//	match := es.Match("field", "value").Operator(Operator.And)
+//	// match now has the "operator" field set to "and" in the es.matchType object.
 //
 // Parameters:
 //   - operator: An Operator value representing the logical operator to use for combining match conditions.
@@ -16,7 +16,7 @@ package operator
 //
 // Returns:
 //
-//	The updated matchType object with the "operator" field set to the specified operator.
+//	The updated es.matchType object with the "operator" field set to the specified operator.
 type Operator string
 
 const (

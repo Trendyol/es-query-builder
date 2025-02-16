@@ -3,16 +3,22 @@ package es_test
 import (
 	"testing"
 
+	TextQueryType "github.com/Trendyol/es-query-builder/es/enums/text-query-type"
+
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
 
+////   Query String   ////
+
 func Test_QueryString_should_exist_on_es_package(t *testing.T) {
+	t.Parallel()
 	// Given When
 	assert.NotNil(t, es.QueryString[any])
 }
 
 func Test_QueryString_method_should_create_queryStringType(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.QueryString("value")
 
@@ -22,6 +28,7 @@ func Test_QueryString_method_should_create_queryStringType(t *testing.T) {
 }
 
 func Test_QueryString_method_should_create_query_string_with_required_query(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value"),
@@ -34,6 +41,7 @@ func Test_QueryString_method_should_create_query_string_with_required_query(t *t
 }
 
 func Test_QueryString_method_should_create_query_string_with_default_field(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").DefaultField("defaultField"),
@@ -46,6 +54,7 @@ func Test_QueryString_method_should_create_query_string_with_default_field(t *te
 }
 
 func Test_QueryString_method_should_create_query_string_with_allow_leading_wildcard(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").AllowLeadingWildcard(false),
@@ -58,6 +67,7 @@ func Test_QueryString_method_should_create_query_string_with_allow_leading_wildc
 }
 
 func Test_QueryString_method_should_create_query_string_with_analyze_wildcard(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").AnalyzeWildcard(true),
@@ -70,6 +80,7 @@ func Test_QueryString_method_should_create_query_string_with_analyze_wildcard(t 
 }
 
 func Test_QueryString_method_should_create_query_string_with_analyzer(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").Analyzer("value"),
@@ -82,6 +93,7 @@ func Test_QueryString_method_should_create_query_string_with_analyzer(t *testing
 }
 
 func Test_QueryString_method_should_create_query_string_with_auto_generate_synonyms_phrase_query(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").AutoGenerateSynonymsPhraseQuery(false),
@@ -94,6 +106,7 @@ func Test_QueryString_method_should_create_query_string_with_auto_generate_synon
 }
 
 func Test_QueryString_method_should_create_query_string_with_boost(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").Boost(2.5),
@@ -106,6 +119,7 @@ func Test_QueryString_method_should_create_query_string_with_boost(t *testing.T)
 }
 
 func Test_QueryString_method_should_create_query_string_with_default_operator(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").DefaultOperator("value"),
@@ -118,6 +132,7 @@ func Test_QueryString_method_should_create_query_string_with_default_operator(t 
 }
 
 func Test_QueryString_method_should_create_query_string_with_enable_position_increments(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").EnablePositionIncrements(false),
@@ -130,6 +145,7 @@ func Test_QueryString_method_should_create_query_string_with_enable_position_inc
 }
 
 func Test_QueryString_method_should_create_query_string_with_fields(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").Fields([]string{"field1", "field2"}),
@@ -142,6 +158,7 @@ func Test_QueryString_method_should_create_query_string_with_fields(t *testing.T
 }
 
 func Test_QueryString_method_should_create_query_string_with_fuzziness(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").Fuzziness("value"),
@@ -154,6 +171,7 @@ func Test_QueryString_method_should_create_query_string_with_fuzziness(t *testin
 }
 
 func Test_QueryString_method_should_create_query_string_with_fuzzy_max_expansions(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").FuzzyMaxExpansions(50),
@@ -166,6 +184,7 @@ func Test_QueryString_method_should_create_query_string_with_fuzzy_max_expansion
 }
 
 func Test_QueryString_method_should_create_query_string_with_fuzzy_prefix_length(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").FuzzyPrefixLength(1),
@@ -178,6 +197,7 @@ func Test_QueryString_method_should_create_query_string_with_fuzzy_prefix_length
 }
 
 func Test_QueryString_method_should_create_query_string_with_fuzzy_transpositions(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").FuzzyTranspositions(false),
@@ -190,6 +210,7 @@ func Test_QueryString_method_should_create_query_string_with_fuzzy_transposition
 }
 
 func Test_QueryString_method_should_create_query_string_with_lenient(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").Lenient(true),
@@ -202,6 +223,7 @@ func Test_QueryString_method_should_create_query_string_with_lenient(t *testing.
 }
 
 func Test_QueryString_method_should_create_query_string_with_max_determinized_states(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").MaxDeterminizedStates(5000),
@@ -214,6 +236,7 @@ func Test_QueryString_method_should_create_query_string_with_max_determinized_st
 }
 
 func Test_QueryString_method_should_create_query_string_with_minimum_should_match(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").MinimumShouldMatch("1"),
@@ -226,6 +249,7 @@ func Test_QueryString_method_should_create_query_string_with_minimum_should_matc
 }
 
 func Test_QueryString_method_should_create_query_string_with_quote_analyzer(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").QuoteAnalyzer("value"),
@@ -238,6 +262,7 @@ func Test_QueryString_method_should_create_query_string_with_quote_analyzer(t *t
 }
 
 func Test_QueryString_method_should_create_query_string_with_phrase_slop(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").PhraseSlop(0),
@@ -250,6 +275,7 @@ func Test_QueryString_method_should_create_query_string_with_phrase_slop(t *test
 }
 
 func Test_QueryString_method_should_create_query_string_with_quote_field_suffix(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").QuoteFieldSuffix("value"),
@@ -262,6 +288,7 @@ func Test_QueryString_method_should_create_query_string_with_quote_field_suffix(
 }
 
 func Test_QueryString_method_should_create_query_string_with_rewrite(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").Rewrite("value"),
@@ -274,6 +301,7 @@ func Test_QueryString_method_should_create_query_string_with_rewrite(t *testing.
 }
 
 func Test_QueryString_method_should_create_query_string_with_time_zone(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").TimeZone("value"),
@@ -285,7 +313,60 @@ func Test_QueryString_method_should_create_query_string_with_time_zone(t *testin
 	assert.Equal(t, "{\"query\":{\"query_string\":{\"query\":\"value\",\"time_zone\":\"value\"}}}", bodyJSON)
 }
 
+func Test_QueryString_method_should_create_query_string_with_escape(t *testing.T) {
+	t.Parallel()
+	// Given When
+	b := es.NewQuery(
+		es.QueryString("value").Escape(true),
+	)
+
+	// Then
+	assert.NotNil(t, b)
+	bodyJSON := assert.MarshalWithoutError(t, b)
+	assert.Equal(t, "{\"query\":{\"query_string\":{\"escape\":true,\"query\":\"value\"}}}", bodyJSON)
+}
+
+func Test_QueryString_method_should_create_query_string_with_type(t *testing.T) {
+	t.Parallel()
+	// Given When
+	b := es.NewQuery(
+		es.QueryString("value").Type(TextQueryType.Mostfields),
+	)
+
+	// Then
+	assert.NotNil(t, b)
+	bodyJSON := assert.MarshalWithoutError(t, b)
+	assert.Equal(t, "{\"query\":{\"query_string\":{\"query\":\"value\",\"type\":\"most_fields\"}}}", bodyJSON)
+}
+
+func Test_QueryString_method_should_create_query_string_with_tie_breaker(t *testing.T) {
+	t.Parallel()
+	// Given When
+	b := es.NewQuery(
+		es.QueryString("value").TieBreaker(5.291),
+	)
+
+	// Then
+	assert.NotNil(t, b)
+	bodyJSON := assert.MarshalWithoutError(t, b)
+	assert.Equal(t, "{\"query\":{\"query_string\":{\"query\":\"value\",\"tie_breaker\":5.291}}}", bodyJSON)
+}
+
+func Test_QueryString_method_should_create_query_string_with_fuzzy_rewrite(t *testing.T) {
+	t.Parallel()
+	// Given When
+	b := es.NewQuery(
+		es.QueryString("value").FuzzyRewrite("reWrite"),
+	)
+
+	// Then
+	assert.NotNil(t, b)
+	bodyJSON := assert.MarshalWithoutError(t, b)
+	assert.Equal(t, "{\"query\":{\"query_string\":{\"fuzzy_rewrite\":\"reWrite\",\"query\":\"value\"}}}", bodyJSON)
+}
+
 func Test_QueryString_method_should_create_query_string_with_all_parameters(t *testing.T) {
+	t.Parallel()
 	// Given When
 	b := es.NewQuery(
 		es.QueryString("value").
@@ -303,23 +384,28 @@ func Test_QueryString_method_should_create_query_string_with_all_parameters(t *t
 			FuzzyPrefixLength(1.0).
 			FuzzyTranspositions(true).
 			Lenient(true).
-			MaxDeterminizedStates(2).MinimumShouldMatch("value").
+			MaxDeterminizedStates(2).
+			MinimumShouldMatch("value").
 			QuoteAnalyzer("value").
 			PhraseSlop(2).
 			QuoteFieldSuffix("value").
 			Rewrite("value").
-			TimeZone("value"),
+			TimeZone("value").
+			TieBreaker(3.29).
+			Escape(false).
+			FuzzyRewrite("constant_score").
+			Type(TextQueryType.Crossfields),
 	)
 
 	// Then
 	assert.NotNil(t, b)
 	bodyJSON := assert.MarshalWithoutError(t, b)
 	assert.Equal(t, "{\"query\":{\"query_string\":{\"allow_leading_wildcard\":false,\"analyze_wildcard\":true,"+
-		"\"analyzer\":\"value\",\"auto_generate_synonyms_phrase_query\":true,"+
-		"\"boost\":2.5,\"default_field\":\"value\",\"default_operator\":\"value\","+
-		"\"enable_position_increments\":true,\"fields\":[\"field1\",\"field2\"],"+
-		"\"fuzziness\":\"value\",\"fuzzy_max_expansions\":2,\"fuzzy_prefix_length\":1,"+
-		"\"fuzzy_transpositions\":true,\"lenient\":true,\"max_determinized_states\":2,"+
-		"\"minimum_should_match\":\"value\",\"phrase_slop\":2,\"query\":\"value\",\"quote_analyzer\":\"value\","+
-		"\"quote_field_suffix\":\"value\",\"rewrite\":\"value\",\"time_zone\":\"value\"}}}", bodyJSON)
+		"\"analyzer\":\"value\",\"auto_generate_synonyms_phrase_query\":true,\"boost\":2.5,\"default_field\":\"value\","+
+		"\"default_operator\":\"value\",\"enable_position_increments\":true,\"escape\":false,\"fields\":[\"field1\","+
+		"\"field2\"],\"fuzziness\":\"value\",\"fuzzy_max_expansions\":2,\"fuzzy_prefix_length\":1,"+
+		"\"fuzzy_rewrite\":\"constant_score\",\"fuzzy_transpositions\":true,\"lenient\":true,"+
+		"\"max_determinized_states\":2,\"minimum_should_match\":\"value\",\"phrase_slop\":2,\"query\":\"value\","+
+		"\"quote_analyzer\":\"value\",\"quote_field_suffix\":\"value\",\"rewrite\":\"value\",\"tie_breaker\":3.29,"+
+		"\"time_zone\":\"value\",\"type\":\"cross_fields\"}}}", bodyJSON)
 }
