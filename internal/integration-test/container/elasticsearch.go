@@ -16,14 +16,15 @@ const (
 )
 
 type ElasticsearchContainer struct {
+	containerContext context.Context
+	containerRequest testcontainers.ContainerRequest
+	container        testcontainers.Container
 	address          string
 	ip               string
 	port             nat.Port
-	container        testcontainers.Container
-	containerRequest testcontainers.ContainerRequest
 }
 
-func NewContainer(image string) *ElasticsearchContainer {
+func NewContainer(ctx context.Context, image string) *ElasticsearchContainer {
 	req := testcontainers.ContainerRequest{
 		Image:        image,
 		ExposedPorts: []string{fmt.Sprintf("%s:%s", defaultPort, defaultPort)},
@@ -38,12 +39,13 @@ func NewContainer(image string) *ElasticsearchContainer {
 		WaitingFor: wait.ForLog("up and running"),
 	}
 	return &ElasticsearchContainer{
+		containerContext: ctx,
 		containerRequest: req,
 	}
 }
 
 func (c *ElasticsearchContainer) Run() (err error) {
-	c.container, err = testcontainers.GenericContainer(context.Background(), testcontainers.GenericContainerRequest{
+	c.container, err = testcontainers.GenericContainer(c.containerContext, testcontainers.GenericContainerRequest{
 		ContainerRequest: c.containerRequest,
 		Started:          true,
 	})
@@ -51,11 +53,11 @@ func (c *ElasticsearchContainer) Run() (err error) {
 		return err
 	}
 
-	c.ip, err = c.container.Host(context.Background())
+	c.ip, err = c.container.Host(c.containerContext)
 	if err != nil {
 		return err
 	}
-	c.port, err = c.container.MappedPort(context.Background(), defaultPort)
+	c.port, err = c.container.MappedPort(c.containerContext, defaultPort)
 	if err != nil {
 		return err
 	}
@@ -69,7 +71,7 @@ func (c *ElasticsearchContainer) Run() (err error) {
 
 func (c *ElasticsearchContainer) TerminateContainer() (err error) {
 	if c.container != nil {
-		return c.container.Terminate(context.Background())
+		return c.container.Terminate(c.containerContext)
 	}
 
 	return nil

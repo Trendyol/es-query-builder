@@ -1,4 +1,4 @@
-package testing
+package tests_test
 
 import (
 	"context"
@@ -7,6 +7,7 @@ import (
 	"strings"
 	"testing"
 
+	"integration-tests"
 	"integration-tests/constants"
 	"integration-tests/container"
 
@@ -22,13 +23,15 @@ func TestSuite(t *testing.T) {
 
 type testSuite struct {
 	suite.Suite
+	TestContext             context.Context
 	ElasticContainer        *container.ElasticsearchContainer
 	ESClient                *elasticsearch.Client
-	ElasticsearchRepository ElasticsearchRepository
+	ElasticsearchRepository integrationtest.ElasticsearchRepository
 }
 
 func (s *testSuite) SetupSuite() {
-	s.ElasticContainer = container.NewContainer(container.ElasticsearchImage)
+	s.TestContext = context.Background()
+	s.ElasticContainer = container.NewContainer(s.TestContext, container.ElasticsearchImage)
 	err := s.ElasticContainer.Run()
 	if err != nil {
 		fmt.Println(fmt.Printf("error starting elasticsearch container. err %v", err))
@@ -43,23 +46,21 @@ func (s *testSuite) SetupSuite() {
 		DiscoverNodesOnStart: false,
 	}
 	s.ESClient, err = elasticsearch.NewClient(cfg)
-	s.ElasticsearchRepository = NewElasticsearchRepository(s.ESClient)
+	s.ElasticsearchRepository = integrationtest.NewElasticsearchRepository(s.ESClient)
 
 	indicesRequest := esapi.IndicesCreateRequest{
 		Index: constants.TestIndex,
 		Body:  strings.NewReader(testIndexBody()),
 	}
 
-	_, err = indicesRequest.Do(context.Background(), s.ESClient)
-	if err != nil {
-		fmt.Println(fmt.Printf("error creating index. err %v", err))
+	if _, err = indicesRequest.Do(s.TestContext, s.ESClient); err != nil {
+		fmt.Printf("error creating index. err %v\n", err)
 		s.T().FailNow()
 	}
 }
 
 func (s *testSuite) TearDownSuite() {
-	err := s.ElasticContainer.TerminateContainer()
-	if err != nil {
+	if err := s.ElasticContainer.TerminateContainer(); err != nil {
 		s.T().FailNow()
 	}
 }
