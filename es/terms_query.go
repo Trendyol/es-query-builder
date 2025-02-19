@@ -21,7 +21,7 @@ type termsType Object
 // Returns:
 //
 //	An es.termsType object containing the specified terms query.
-func Terms(key string, values ...any) termsType {
+func Terms[T primitive](key string, values ...T) termsType {
 	return termsType{
 		"terms": Object{
 			key: values,

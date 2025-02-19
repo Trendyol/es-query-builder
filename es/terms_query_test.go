@@ -12,7 +12,7 @@ import (
 func Test_Terms_should_exist_on_es_package(t *testing.T) {
 	t.Parallel()
 	// Given When Then
-	assert.NotNil(t, es.Terms)
+	assert.NotNil(t, es.Terms[string])
 }
 
 func Test_Terms_should_create_json_with_terms_field_inside_query(t *testing.T) {
