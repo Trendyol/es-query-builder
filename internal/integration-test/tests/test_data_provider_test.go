@@ -24,5 +24,6 @@ func Test_TestDataProvider_Should_Provide_Pokemon_Data(t *testing.T) {
 	assert.NotNil(t, pokedata2)
 	assert.NotEmpty(t, pokedata2)
 	assert.EqualValues(t, pokedata, pokedata2)
+	assert.False(t, &pokedata == &pokedata2)
 	assert.False(t, unsafe.Pointer(&pokedata) == unsafe.Pointer(&pokedata2))
 }
