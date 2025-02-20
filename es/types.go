@@ -6,6 +6,8 @@ type Object map[string]any
 
 type Array []any
 
+type GenericObject[T any] map[string]T
+
 type signed interface {
 	~int | ~int8 | ~int16 | ~int32 | ~int64
 }
