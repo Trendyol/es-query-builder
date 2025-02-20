@@ -28,8 +28,8 @@ type ShardFailure struct {
 
 ////    SEARCH    ////
 
-type SearchResponse[T any] struct {
-	Hits         *SearchHits[T]      `json:"hits,omitempty"`
+type SearchResponse struct {
+	Hits         *SearchHits         `json:"hits,omitempty"`
 	Shards       *ShardsInfo         `json:"_shards,omitempty"`
 	Aggregations AggregateDictionary `json:"aggregations,omitempty"`
 	ScrollId     string              `json:"_scroll_id,omitempty"`
@@ -37,19 +37,19 @@ type SearchResponse[T any] struct {
 	TimedOut     bool                `json:"timed_out,omitempty"`
 }
 
-type SearchHits[T any] struct {
-	Hits     []SearchHit[T] `json:"hits"`
-	Total    *Total         `json:"total,omitempty"`
-	MaxScore *float64       `json:"max_score,omitempty"`
+type SearchHits struct {
+	Hits     []SearchHit `json:"hits"`
+	Total    *Total      `json:"total,omitempty"`
+	MaxScore *float64    `json:"max_score,omitempty"`
 }
 
-type SearchHit[T any] struct {
-	Version *uint   `json:"_version,omitempty"`
-	Id      string  `json:"_id"`
-	Routing string  `json:"_routing"`
-	Source  T       `json:"_source"`
-	Score   float32 `json:"_score"`
-	Found   bool    `json:"found"`
+type SearchHit struct {
+	Version *uint           `json:"_version,omitempty"`
+	Id      string          `json:"_id"`
+	Routing string          `json:"_routing"`
+	Source  json.RawMessage `json:"_source"`
+	Score   float32         `json:"_score"`
+	Found   bool            `json:"found"`
 }
 
 type Total struct {

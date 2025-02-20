@@ -1,5 +1,10 @@
 package model
 
+import (
+	"fmt"
+	"github.com/Trendyol/es-query-builder/es"
+)
+
 type Pokemons []Pokemon
 
 func (pokes Pokemons) Copy() Pokemons {
@@ -22,6 +27,10 @@ type Pokemon struct {
 	BaseExperience uint16        `json:"baseExperience"`
 	Order          uint16        `json:"order"`
 	IsDefault      bool          `json:"isDefault"`
+}
+
+func (poke *Pokemon) GetDocumentID() string {
+	return fmt.Sprintf("%d_%d", poke.Id, poke.Order)
 }
 
 func (poke *Pokemon) Copy() Pokemon {
@@ -75,6 +84,142 @@ func (poke *Pokemon) Copy() Pokemon {
 		Types:          types,
 		Stats:          stats,
 		Moves:          moves,
+	}
+}
+
+func (poke *Pokemon) GetMappings() string {
+	return `{
+  "mappings": {
+    "properties": {
+      "name": {
+        "type": "text",
+        "analyzer": "pokemon_name_analyzer",
+        "search_analyzer": "standard",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "abilities": {
+        "type": "nested",
+        "properties": {
+          "name": {
+            "type": "keyword"
+          },
+          "slot": {
+            "type": "short"
+          },
+          "isHidden": {
+            "type": "boolean"
+          }
+        }
+      },
+      "moves": {
+        "type": "nested",
+        "properties": {
+          "name": {
+            "type": "keyword"
+          },
+          "versionGroupDetails": {
+            "type": "nested",
+            "properties": {
+              "moveLearnMethodName": {
+                "type": "keyword"
+              },
+              "versionGroupName": {
+                "type": "keyword"
+              },
+              "levelLearnedAt": {
+                "type": "short"
+              }
+            }
+          }
+        }
+      },
+      "types": {
+        "type": "nested",
+        "properties": {
+          "name": {
+            "type": "keyword"
+          },
+          "slot": {
+            "type": "short"
+          }
+        }
+      },
+      "stats": {
+        "type": "nested",
+        "properties": {
+          "name": {
+            "type": "keyword"
+          },
+          "baseStat": {
+            "type": "short"
+          },
+          "effort": {
+            "type": "short"
+          }
+        }
+      },
+      "id": {
+        "type": "short"
+      },
+      "height": {
+        "type": "short"
+      },
+      "weight": {
+        "type": "short"
+      },
+      "baseExperience": {
+        "type": "short"
+      },
+      "order": {
+        "type": "short"
+      },
+      "isDefault": {
+        "type": "boolean"
+      }
+    }
+  }
+}`
+}
+
+func (poke *Pokemon) GetSettings() es.Object {
+	return es.Object{
+		"settings": es.Object{
+			"index": es.Object{
+				"refresh_interval":   "1s",
+				"number_of_shards":   1,
+				"number_of_replicas": 1,
+				"max_result_window":  10_000,
+				"max_terms_count":    1024,
+			},
+			"analysis": es.Object{
+				"analyzer": es.Object{
+					"pokemon_name_analyzer": es.Object{
+						"type":      "custom",
+						"tokenizer": "pokemon_name_tokenizer",
+						"filter": es.Array{
+							"lowercase",
+							"asciifolding",
+						},
+					},
+				},
+				"tokenizer": es.Object{
+					"pokemon_name_tokenizer": es.Object{
+						"type":     "edge_ngram",
+						"min_gram": 2,
+						"max_gram": 20,
+						"token_chars": es.Array{
+							"letter",
+							"digit",
+						},
+					},
+				},
+			},
+		},
 	}
 }
 
