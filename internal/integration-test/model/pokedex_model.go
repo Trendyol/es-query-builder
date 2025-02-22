@@ -8,7 +8,7 @@ import (
 type Pokemons []Pokemon
 
 func (pokes Pokemons) Copy() Pokemons {
-	copiedPokemons := make(Pokemons, len(pokes), len(pokes))
+	copiedPokemons := make(Pokemons, len(pokes))
 	for i := 0; i < len(pokes); i++ {
 		copiedPokemons[i] = pokes[i].Copy()
 	}
@@ -34,44 +34,23 @@ func (poke *Pokemon) GetDocumentID() string {
 }
 
 func (poke *Pokemon) Copy() Pokemon {
-	abilities := make([]Ability, len(poke.Abilities), len(poke.Abilities))
-	for i := 0; i < len(poke.Abilities); i++ {
-		abilities[i] = Ability{
-			Name:     poke.Abilities[i].Name,
-			Slot:     poke.Abilities[i].Slot,
-			IsHidden: poke.Abilities[i].IsHidden,
-		}
-	}
-	types := make([]PokemonType, len(poke.Types), len(poke.Types))
-	for i := 0; i < len(poke.Types); i++ {
-		types[i] = PokemonType{
-			Name: poke.Types[i].Name,
-			Slot: poke.Types[i].Slot,
-		}
-	}
-	stats := make([]Stat, len(poke.Stats), len(poke.Stats))
-	for i := 0; i < len(poke.Stats); i++ {
-		stats[i] = Stat{
-			Name:     poke.Stats[i].Name,
-			BaseStat: poke.Stats[i].BaseStat,
-			Effort:   poke.Stats[i].Effort,
-		}
-	}
-	moves := make([]Move, len(poke.Moves), len(poke.Moves))
-	for i := 0; i < len(poke.Moves); i++ {
-		versionGroupDetails := make([]VersionGroupDetail, len(poke.Moves[i].VersionGroupDetails), len(poke.Moves[i].VersionGroupDetails))
-		for j := 0; j < len(poke.Moves[i].VersionGroupDetails); j++ {
-			versionGroupDetails[j] = VersionGroupDetail{
-				MoveLearnMethodName: poke.Moves[i].VersionGroupDetails[j].MoveLearnMethodName,
-				VersionGroupName:    poke.Moves[i].VersionGroupDetails[j].VersionGroupName,
-				LevelLearnedAt:      poke.Moves[i].VersionGroupDetails[j].LevelLearnedAt,
-			}
-		}
+	abilities := make([]Ability, len(poke.Abilities))
+	copy(abilities, poke.Abilities)
+	types := make([]PokemonType, len(poke.Types))
+	copy(types, poke.Types)
+	stats := make([]Stat, len(poke.Stats))
+	copy(stats, poke.Stats)
+	moves := make([]Move, len(poke.Moves))
+
+	for i := range poke.Moves {
+		versionGroupDetails := make([]VersionGroupDetail, len(poke.Moves[i].VersionGroupDetails))
+		copy(versionGroupDetails, poke.Moves[i].VersionGroupDetails)
 		moves[i] = Move{
 			Name:                poke.Moves[i].Name,
 			VersionGroupDetails: versionGroupDetails,
 		}
 	}
+
 	return Pokemon{
 		Id:             poke.Id,
 		Name:           poke.Name,
