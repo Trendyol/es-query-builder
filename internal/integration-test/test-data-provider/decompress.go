@@ -8,6 +8,8 @@ import (
 	"sync"
 )
 
+const maxBytes = 10 * 1024 * 1024 // 10 MB limit
+
 func DecompressGz(inputPath string) ([]byte, error) {
 	file, err := os.Open(inputPath)
 	if err != nil {
@@ -41,8 +43,6 @@ func DecompressGz(inputPath string) ([]byte, error) {
 		}
 		wg.Done()
 	}()
-
-	const maxBytes = 10 * 1024 * 1024 // 10 MB limit
 
 	var outBuf bytes.Buffer
 	if _, err := io.CopyN(&outBuf, pr, maxBytes); err != nil && err != io.EOF {
