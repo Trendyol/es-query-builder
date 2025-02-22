@@ -2,9 +2,9 @@ package tests_test
 
 import (
 	"integration-tests/model"
+	"integration-tests/tests"
 
 	"github.com/Trendyol/es-query-builder/es"
-	"github.com/bayraktugrul/go-await"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -19,19 +19,19 @@ func (s *testSuite) Test_it_should_return_documents_that_filtered_by_term_query(
 		Foo: "bar",
 	}
 
-	s.ElasticsearchRepository.BulkInsert(s.TestContext, foo, bar)
-	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(s.TestContext, foo.ID) })
-	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(s.TestContext, bar.ID) })
+	s.FooElasticsearchRepository.BulkInsert(s.TestContext, foo, bar)
+	tests.WaitExists(s.TestContext, s.FooElasticsearchRepository, foo.ID)
+	tests.WaitExists(s.TestContext, s.FooElasticsearchRepository, bar.ID)
 
 	query := es.NewQuery(es.Term("foo", "foo"))
 
 	// When
-	result, err := s.ElasticsearchRepository.Search(query)
+	result, err := s.FooElasticsearchRepository.GetSearchHits(s.TestContext, query)
 
 	// Then
 	assert.Nil(s.T(), err)
 	assert.Equal(s.T(), 1, len(result))
-	assert.Equal(s.T(), "foo", result[0].Foo)
+	assert.Equal(s.T(), "foo", result["10"].Foo)
 
-	s.ElasticsearchRepository.BulkDelete(s.TestContext, foo.ID, bar.ID)
+	s.FooElasticsearchRepository.BulkDelete(s.TestContext, foo.ID, bar.ID)
 }

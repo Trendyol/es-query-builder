@@ -7,8 +7,8 @@ import (
 )
 
 type Error struct {
-	Status  int    // HTTP status code
-	Details string // Error details
+	Details string
+	Status  int
 }
 
 func (e Error) Error() string {

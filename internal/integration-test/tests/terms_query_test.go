@@ -1,11 +1,10 @@
 package tests_test
 
 import (
-	"integration-tests/model"
-
 	"github.com/Trendyol/es-query-builder/es"
-	"github.com/bayraktugrul/go-await"
 	"github.com/stretchr/testify/assert"
+	"integration-tests/model"
+	"integration-tests/tests"
 )
 
 func (s *testSuite) Test_it_should_return_documents_that_filtered_by_terms_query() {
@@ -23,21 +22,22 @@ func (s *testSuite) Test_it_should_return_documents_that_filtered_by_terms_query
 		Foo: "earth",
 	}
 
-	s.ElasticsearchRepository.BulkInsert(s.TestContext, doc1, doc2, doc3)
-	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(s.TestContext, doc1.ID) })
-	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(s.TestContext, doc2.ID) })
-	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(s.TestContext, doc3.ID) })
+	s.FooElasticsearchRepository.BulkInsert(s.TestContext, doc1, doc2, doc3)
+	tests.WaitExists(s.TestContext, s.FooElasticsearchRepository, doc1.ID)
+	tests.WaitExists(s.TestContext, s.FooElasticsearchRepository, doc2.ID)
+	tests.WaitExists(s.TestContext, s.FooElasticsearchRepository, doc3.ID)
 
 	query := es.NewQuery(es.Terms("foo", "earth", "mars"))
 
 	// When
-	result, err := s.ElasticsearchRepository.Search(query)
+	result, err := s.FooElasticsearchRepository.GetSearchHits(s.TestContext, query)
 
 	// Then
 	assert.Nil(s.T(), err)
 	assert.Equal(s.T(), 2, len(result))
-	assert.Contains(s.T(), result, doc2)
-	assert.Contains(s.T(), result, doc3)
+	values := tests.MapValues(result)
+	assert.Contains(s.T(), values, doc2)
+	assert.Contains(s.T(), values, doc3)
 
-	s.ElasticsearchRepository.BulkDelete(s.TestContext, doc1.ID, doc2.ID, doc3.ID)
+	s.FooElasticsearchRepository.BulkDelete(s.TestContext, doc1.ID, doc2.ID, doc3.ID)
 }

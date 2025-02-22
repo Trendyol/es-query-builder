@@ -87,135 +87,131 @@ func (poke *Pokemon) Copy() Pokemon {
 	}
 }
 
-func (poke *Pokemon) GetMappings() string {
-	return `{
-  "mappings": {
-    "properties": {
-      "name": {
-        "type": "text",
-        "analyzer": "pokemon_name_analyzer",
-        "search_analyzer": "standard",
-        "fields": {
-          "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
-          }
-        }
-      },
-      "abilities": {
-        "type": "nested",
-        "properties": {
-          "name": {
-            "type": "keyword"
-          },
-          "slot": {
-            "type": "short"
-          },
-          "isHidden": {
-            "type": "boolean"
-          }
-        }
-      },
-      "moves": {
-        "type": "nested",
-        "properties": {
-          "name": {
-            "type": "keyword"
-          },
-          "versionGroupDetails": {
-            "type": "nested",
-            "properties": {
-              "moveLearnMethodName": {
-                "type": "keyword"
-              },
-              "versionGroupName": {
-                "type": "keyword"
-              },
-              "levelLearnedAt": {
-                "type": "short"
-              }
-            }
-          }
-        }
-      },
-      "types": {
-        "type": "nested",
-        "properties": {
-          "name": {
-            "type": "keyword"
-          },
-          "slot": {
-            "type": "short"
-          }
-        }
-      },
-      "stats": {
-        "type": "nested",
-        "properties": {
-          "name": {
-            "type": "keyword"
-          },
-          "baseStat": {
-            "type": "short"
-          },
-          "effort": {
-            "type": "short"
-          }
-        }
-      },
-      "id": {
-        "type": "short"
-      },
-      "height": {
-        "type": "short"
-      },
-      "weight": {
-        "type": "short"
-      },
-      "baseExperience": {
-        "type": "short"
-      },
-      "order": {
-        "type": "short"
-      },
-      "isDefault": {
-        "type": "boolean"
-      }
-    }
-  }
-}`
+func (poke *Pokemon) GetMappings() es.Object {
+	return es.Object{
+		"properties": es.Object{
+			"name": es.Object{
+				"type":            "text",
+				"analyzer":        "pokemon_name_analyzer",
+				"search_analyzer": "standard",
+				"fields": es.Object{
+					"keyword": es.Object{
+						"type":         "keyword",
+						"ignore_above": 256,
+					},
+				},
+			},
+			"abilities": es.Object{
+				"type": "nested",
+				"properties": es.Object{
+					"name": es.Object{
+						"type": "keyword",
+					},
+					"slot": es.Object{
+						"type": "short",
+					},
+					"isHidden": es.Object{
+						"type": "boolean",
+					},
+				},
+			},
+			"moves": es.Object{
+				"type": "nested",
+				"properties": es.Object{
+					"name": es.Object{
+						"type": "keyword",
+					},
+					"versionGroupDetails": es.Object{
+						"type": "nested",
+						"properties": es.Object{
+							"moveLearnMethodName": es.Object{
+								"type": "keyword",
+							},
+							"versionGroupName": es.Object{
+								"type": "keyword",
+							},
+							"levelLearnedAt": es.Object{
+								"type": "short",
+							},
+						},
+					},
+				},
+			},
+			"types": es.Object{
+				"type": "nested",
+				"properties": es.Object{
+					"name": es.Object{
+						"type": "keyword",
+					},
+					"slot": es.Object{
+						"type": "short",
+					},
+				},
+			},
+			"stats": es.Object{
+				"type": "nested",
+				"properties": es.Object{
+					"name": es.Object{
+						"type": "keyword",
+					},
+					"baseStat": es.Object{
+						"type": "short",
+					},
+					"effort": es.Object{
+						"type": "short",
+					},
+				},
+			},
+			"id": es.Object{
+				"type": "short",
+			},
+			"height": es.Object{
+				"type": "short",
+			},
+			"weight": es.Object{
+				"type": "short",
+			},
+			"baseExperience": es.Object{
+				"type": "short",
+			},
+			"order": es.Object{
+				"type": "short",
+			},
+			"isDefault": es.Object{
+				"type": "boolean",
+			},
+		},
+	}
 }
 
 func (poke *Pokemon) GetSettings() es.Object {
 	return es.Object{
-		"settings": es.Object{
-			"index": es.Object{
-				"refresh_interval":   "1s",
-				"number_of_shards":   1,
-				"number_of_replicas": 1,
-				"max_result_window":  10_000,
-				"max_terms_count":    1024,
-			},
-			"analysis": es.Object{
-				"analyzer": es.Object{
-					"pokemon_name_analyzer": es.Object{
-						"type":      "custom",
-						"tokenizer": "pokemon_name_tokenizer",
-						"filter": es.Array{
-							"lowercase",
-							"asciifolding",
-						},
+		"index": es.Object{
+			"refresh_interval":   "1s",
+			"number_of_shards":   1,
+			"number_of_replicas": 1,
+			"max_result_window":  10_000,
+			"max_terms_count":    1024,
+		},
+		"analysis": es.Object{
+			"analyzer": es.Object{
+				"pokemon_name_analyzer": es.Object{
+					"type":      "custom",
+					"tokenizer": "pokemon_name_tokenizer",
+					"filter": es.Array{
+						"lowercase",
+						"asciifolding",
 					},
 				},
-				"tokenizer": es.Object{
-					"pokemon_name_tokenizer": es.Object{
-						"type":     "edge_ngram",
-						"min_gram": 2,
-						"max_gram": 20,
-						"token_chars": es.Array{
-							"letter",
-							"digit",
-						},
+			},
+			"tokenizer": es.Object{
+				"pokemon_name_tokenizer": es.Object{
+					"type":     "edge_ngram",
+					"min_gram": 2,
+					"max_gram": 20,
+					"token_chars": es.Array{
+						"letter",
+						"digit",
 					},
 				},
 			},

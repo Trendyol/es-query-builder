@@ -38,9 +38,9 @@ type SearchResponse struct {
 }
 
 type SearchHits struct {
-	Hits     []SearchHit `json:"hits"`
 	Total    *Total      `json:"total,omitempty"`
 	MaxScore *float64    `json:"max_score,omitempty"`
+	Hits     []SearchHit `json:"hits"`
 }
 
 type SearchHit struct {
@@ -64,4 +64,8 @@ type AggregateDictionary map[string]json.RawMessage
 type ExistsDocument struct {
 	Id      string `json:"id"`
 	Routing string `json:"routing"`
+}
+
+func MapToId(searchHit SearchHit) (string, error) {
+	return searchHit.Id, nil
 }

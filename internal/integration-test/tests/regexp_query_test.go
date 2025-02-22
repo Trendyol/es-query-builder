@@ -2,9 +2,9 @@ package tests_test
 
 import (
 	"integration-tests/model"
+	"integration-tests/tests"
 
 	"github.com/Trendyol/es-query-builder/es"
-	"github.com/bayraktugrul/go-await"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -27,23 +27,23 @@ func (s *testSuite) Test_it_should_return_documents_that_filtered_by_regexp_quer
 		Foo: "george best",
 	}
 
-	s.ElasticsearchRepository.BulkInsert(s.TestContext, foo, bar, georgeOrwell, georgeBest)
-	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(s.TestContext, foo.ID) })
-	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(s.TestContext, bar.ID) })
-	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(s.TestContext, georgeOrwell.ID) })
-	await.New().Await(func() bool { return s.ElasticsearchRepository.Exists(s.TestContext, georgeBest.ID) })
+	s.FooElasticsearchRepository.BulkInsert(s.TestContext, foo, bar, georgeOrwell, georgeBest)
+	tests.WaitExists(s.TestContext, s.FooElasticsearchRepository, foo.ID)
+	tests.WaitExists(s.TestContext, s.FooElasticsearchRepository, bar.ID)
+	tests.WaitExists(s.TestContext, s.FooElasticsearchRepository, georgeOrwell.ID)
+	tests.WaitExists(s.TestContext, s.FooElasticsearchRepository, georgeBest.ID)
 
 	//f* OR bar
 	query := es.NewQuery(es.Regexp("foo", "george.*"))
 
 	// When
-	result, err := s.ElasticsearchRepository.Search(query)
+	result, err := s.FooElasticsearchRepository.GetSearchHits(s.TestContext, query)
 
 	// Then
 	assert.Nil(s.T(), err)
 	assert.Equal(s.T(), len(result), 2)
-	assert.Equal(s.T(), result[0].Foo, "george orwell")
-	assert.Equal(s.T(), result[1].Foo, "george best")
+	assert.Equal(s.T(), result["30"].Foo, "george orwell")
+	assert.Equal(s.T(), result["40"].Foo, "george best")
 
-	s.ElasticsearchRepository.BulkDelete(s.TestContext, foo.ID, bar.ID, georgeOrwell.ID, georgeBest.ID)
+	s.FooElasticsearchRepository.BulkDelete(s.TestContext, foo.ID, bar.ID, georgeOrwell.ID, georgeBest.ID)
 }
