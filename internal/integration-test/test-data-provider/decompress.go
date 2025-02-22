@@ -42,8 +42,10 @@ func DecompressGz(inputPath string) ([]byte, error) {
 		wg.Done()
 	}()
 
+	const maxBytes = 10 * 1024 * 1024 // 10 MB limit
+
 	var outBuf bytes.Buffer
-	if _, err := io.Copy(&outBuf, pr); err != nil {
+	if _, err := io.CopyN(&outBuf, pr, maxBytes); err != nil && err != io.EOF {
 		return nil, err
 	}
 	wg.Wait()
