@@ -1,10 +1,11 @@
 package tests_test
 
 import (
-	"github.com/Trendyol/es-query-builder/es"
-	"github.com/stretchr/testify/assert"
 	"integration-tests/model"
 	"integration-tests/tests"
+
+	"github.com/Trendyol/es-query-builder/es"
+	"github.com/stretchr/testify/assert"
 )
 
 func (s *testSuite) Test_it_should_return_documents_that_filtered_by_terms_query() {

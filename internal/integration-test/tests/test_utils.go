@@ -3,8 +3,10 @@ package tests
 import (
 	"context"
 	"fmt"
-	"github.com/bayraktugrul/go-await"
+
 	"integration-tests/repository"
+
+	"github.com/bayraktugrul/go-await"
 )
 
 func OmitError[T any](value T, err error) T {

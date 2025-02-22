@@ -1,10 +1,12 @@
 package tests_test
 
 import (
-	"github.com/stretchr/testify/assert"
-	testdataprovider "integration-tests/test-data-provider"
 	"testing"
 	"unsafe"
+
+	testdataprovider "integration-tests/test-data-provider"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_TestDataProvider_Should_Provide_Pokemon_Data(t *testing.T) {

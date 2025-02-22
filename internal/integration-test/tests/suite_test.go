@@ -3,18 +3,18 @@ package tests_test
 import (
 	"context"
 	"fmt"
-	"github.com/elastic/go-elasticsearch/v8/esapi"
-	"integration-tests/constants"
-	"integration-tests/model"
-	"integration-tests/repository"
-	testdataprovider "integration-tests/test-data-provider"
 	"os"
 	"testing"
 
+	"integration-tests/constants"
 	"integration-tests/container"
+	"integration-tests/model"
+	"integration-tests/repository"
+	testdataprovider "integration-tests/test-data-provider"
 
 	"github.com/elastic/elastic-transport-go/v8/elastictransport"
 	"github.com/elastic/go-elasticsearch/v8"
+	"github.com/elastic/go-elasticsearch/v8/esapi"
 	"github.com/stretchr/testify/suite"
 )
 
