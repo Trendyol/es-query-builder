@@ -40,17 +40,20 @@ func mapToReader[T any](object T) io.Reader {
 }
 
 type baseRepository struct {
-	Client    *elasticsearch.Client
-	IndexName string
+	Client         *elasticsearch.Client
+	IndexName      string
+	RepositoryName string
 }
 
 func newBaseRepository(
 	client *elasticsearch.Client,
 	indexName string,
+	repositoryName string,
 ) *baseRepository {
 	return &baseRepository{
-		Client:    client,
-		IndexName: indexName,
+		Client:         client,
+		IndexName:      indexName,
+		RepositoryName: repositoryName,
 	}
 }
 
@@ -63,7 +66,8 @@ type baseGenericRepository[ID comparable, T any] struct {
 
 func NewBaseGenericRepository[ID comparable, T any](
 	client *elasticsearch.Client,
-	IndexName string,
+	indexName string,
+	repositoryName string,
 	mapFunc func(ID, model_repository.SearchHit) (ID, T, error),
 	mapDocIDFunc func(model_repository.SearchHit) (ID, error),
 	mapModelIdFunc func(T) string,
@@ -72,7 +76,7 @@ func NewBaseGenericRepository[ID comparable, T any](
 		mapFunc:        mapFunc,
 		mapDocIDFunc:   mapDocIDFunc,
 		mapModelIdFunc: mapModelIdFunc,
-		baseRepository: newBaseRepository(client, IndexName),
+		baseRepository: newBaseRepository(client, indexName, repositoryName),
 	}
 }
 
@@ -88,15 +92,15 @@ func (repository *baseGenericRepository[ID, T]) Search(ctx context.Context, quer
 		}
 	}()
 	if err != nil {
-		return nil, fmt.Errorf("#baseGenericRepository/Search - failed to execute search request: %w", err)
+		return nil, fmt.Errorf("#%s/Search - failed to execute search request: %w", repository.RepositoryName, err)
 	}
 	if res.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("#baseGenericRepository/Search - unexpected status code %d: %s", res.StatusCode, res.String())
+		return nil, fmt.Errorf("#%s/Search - unexpected status code %d: %s", repository.RepositoryName, res.StatusCode, res.String())
 	}
 
 	var searchResponse model_repository.SearchResponse
 	if err = json.NewDecoder(res.Body).Decode(&searchResponse); err != nil {
-		return nil, fmt.Errorf("#baseGenericRepository/NewDecoder_Decode - failed to decode search response: %w", err)
+		return nil, fmt.Errorf("#%s/NewDecoder_Decode - failed to decode search response: %w", repository.RepositoryName, err)
 	}
 	return &searchResponse, nil
 }
@@ -151,10 +155,10 @@ func (repository *baseGenericRepository[ID, T]) Insert(ctx context.Context, docu
 		}
 	}()
 	if err != nil {
-		return fmt.Errorf("#pokedexElasticsearchRepository - failed to execute insert request: %w", err)
+		return fmt.Errorf("#%s - failed to execute insert request: %w", repository.RepositoryName, err)
 	}
 	if res.IsError() {
-		return fmt.Errorf("#pokedexElasticsearchRepository - insert request returned error: %s", res.String())
+		return fmt.Errorf("#%s - insert request returned error: %s", repository.RepositoryName, res.String())
 	}
 	return err
 }
@@ -175,7 +179,7 @@ func (repository *baseGenericRepository[ID, T]) BulkInsert(ctx context.Context, 
 
 		docJson, err := json.Marshal(documents[i])
 		if err != nil {
-			return fmt.Errorf("#pokedexElasticsearchRepository - failed to marshal document with Id %s: %w", repository.mapModelIdFunc(documents[i]), err)
+			return fmt.Errorf("#%s - failed to marshal document with Id %s: %w", repository.RepositoryName, repository.mapModelIdFunc(documents[i]), err)
 		}
 
 		if bulkRequestBody.Cap() < bulkRequestBody.Len()+len(docJson)+1 {
@@ -197,10 +201,10 @@ func (repository *baseGenericRepository[ID, T]) BulkInsert(ctx context.Context, 
 		}
 	}()
 	if err != nil {
-		return fmt.Errorf("#pokedexElasticsearchRepository - failed to execute bulk insert request: %w", err)
+		return fmt.Errorf("#%s - failed to execute bulk insert request: %w", repository.RepositoryName, err)
 	}
 	if res.IsError() {
-		return fmt.Errorf("#pokedexElasticsearchRepository - bulk insert request returned error: %s", res.String())
+		return fmt.Errorf("#%s - bulk insert request returned error: %s", repository.RepositoryName, res.String())
 	}
 	return nil
 }
@@ -217,10 +221,10 @@ func (repository *baseGenericRepository[ID, T]) Delete(ctx context.Context, docI
 		}
 	}()
 	if err != nil {
-		return fmt.Errorf("#pokedexElasticsearchRepository - failed to execute delete request: %w", err)
+		return fmt.Errorf("#%s - failed to execute delete request: %w", repository.RepositoryName, err)
 	}
 	if res.IsError() {
-		return fmt.Errorf("pokedexElasticsearchRepository - delete request returned error: %s", res.String())
+		return fmt.Errorf("#%s - delete request returned error: %s", repository.RepositoryName, res.String())
 	}
 	return err
 }
@@ -237,10 +241,10 @@ func (repository *baseGenericRepository[ID, T]) DeleteByQuery(ctx context.Contex
 		}
 	}()
 	if err != nil {
-		return fmt.Errorf("#pokedexElasticsearchRepository - failed to execute delete by query request: %w", err)
+		return fmt.Errorf("#%s - failed to execute delete by query request: %w", repository.RepositoryName, err)
 	}
 	if res.IsError() {
-		return fmt.Errorf("#pokedexElasticsearchRepository - delete by query request returned error: %s", res.String())
+		return fmt.Errorf("#%s - delete by query request returned error: %s", repository.RepositoryName, res.String())
 	}
 	return err
 }
@@ -271,10 +275,10 @@ func (repository *baseGenericRepository[ID, T]) BulkDelete(ctx context.Context, 
 		}
 	}()
 	if err != nil {
-		return fmt.Errorf("#pokedexElasticsearchRepository - failed to execute bulk delete request: %w", err)
+		return fmt.Errorf("#%s - failed to execute bulk delete request: %w", repository.RepositoryName, err)
 	}
 	if res.IsError() {
-		return fmt.Errorf("#pokedexElasticsearchRepository - bulk delete request returned error: %s", res.String())
+		return fmt.Errorf("#%s - bulk delete request returned error: %s", repository.RepositoryName, res.String())
 	}
 	return nil
 }

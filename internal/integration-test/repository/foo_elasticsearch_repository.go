@@ -16,7 +16,7 @@ type fooElasticsearchRepository struct {
 
 func NewFooElasticsearchRepository(client *elasticsearch.Client) BaseGenericRepository[string, model.FooDocument] {
 	return &fooElasticsearchRepository{
-		NewBaseGenericRepository(client, constants.TestIndex, mapToFoo, model_repository.MapToId, mapToFooId),
+		NewBaseGenericRepository(client, constants.TestIndex, "fooRepository", mapToFoo, model_repository.MapToId, mapToFooId),
 	}
 }
 

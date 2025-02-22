@@ -16,7 +16,7 @@ type pokedexElasticsearchRepository struct {
 
 func NewPokedexElasticsearchRepository(client *elasticsearch.Client) BaseGenericRepository[string, model.Pokemon] {
 	return &pokedexElasticsearchRepository{
-		NewBaseGenericRepository(client, constants.PokemonIndex, mapToPokemon, model_repository.MapToId, mapToPokemonId),
+		NewBaseGenericRepository(client, constants.PokemonIndex, "pokedexRepository", mapToPokemon, model_repository.MapToId, mapToPokemonId),
 	}
 }
 
