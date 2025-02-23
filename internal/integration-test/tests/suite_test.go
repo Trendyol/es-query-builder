@@ -33,6 +33,7 @@ type testSuite struct {
 
 func (s *testSuite) SetupSuite() {
 	s.TestContext = context.Background()
+
 	s.ElasticContainer = container.NewContainer(s.TestContext, container.ElasticsearchImage)
 	err := s.ElasticContainer.Run()
 	if err != nil {
@@ -48,6 +49,8 @@ func (s *testSuite) SetupSuite() {
 		DiscoverNodesOnStart: false,
 	}
 	s.ESClient, err = elasticsearch.NewClient(cfg)
+
+	// create repositories
 	s.FooElasticsearchRepository = repository.NewFooElasticsearchRepository(s.ESClient)
 	s.PokedexElasticsearchRepository = repository.NewPokedexElasticsearchRepository(s.ESClient)
 
@@ -72,7 +75,7 @@ func (s *testSuite) TearDownSuite() {
 func (s *testSuite) createIndexRequest(indexName string, index repository.ElasticsearchIndex) {
 	indexBody, err := repository.CreateIndexBody(index)
 	if err != nil {
-		fmt.Printf("#createIndexRequest - error generation index body. err %s\n", err.Error())
+		fmt.Printf("#createIndexRequest - error generating index body. err %s\n", err.Error())
 		s.T().FailNow()
 	}
 	indicesRequest := esapi.IndicesCreateRequest{
