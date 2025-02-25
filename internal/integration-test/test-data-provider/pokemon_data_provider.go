@@ -1,7 +1,7 @@
 package testdataprovider
 
 import (
-	"integration-tests/jsonx"
+	"github.com/GokselKUCUKSAHIN/jsonx"
 	"integration-tests/model"
 )
 
