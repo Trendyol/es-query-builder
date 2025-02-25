@@ -1,12 +1,5 @@
 package es
 
-import (
-	Mode "github.com/Trendyol/es-query-builder/es/enums/sort/mode"
-	Order "github.com/Trendyol/es-query-builder/es/enums/sort/order"
-)
-
-type sortType Object
-
 // NewQuery creates a new query es.Object with the provided query clause.
 //
 // This function takes any query clause as input and attempts to convert it into the correct internal type using the `correctType` function.
@@ -200,71 +193,6 @@ func (o Object) SourceExcludes(fields ...string) Object {
 	return o
 }
 
-// Sort creates a new es.sortType object with the specified field.
-//
-// This function initializes an es.sortType object with a given field name. The
-// field is used to specify the sorting criteria in the search query. The
-// resulting es.sortType can be further configured with sorting order and mode.
-//
-// Example usage:
-//
-//	s := es.Sort("age")
-//	// s now includes an es.sortType with an "age" field that can be further configured.
-//
-// Parameters:
-//   - field: A string representing the field to sort by.
-//
-// Returns:
-//
-//	An es.sortType object with the specified field.
-func Sort(field string) sortType {
-	return sortType{
-		field: Object{},
-	}
-}
-
-// Order sets the "order" parameter in an es.sortType object.
-//
-// This method specifies the order in which the results should be sorted.
-// It configures the es.sortType object to sort the results in ascending or
-// descending order.
-//
-// Example usage:
-//
-//	s := es.Sort("age").Order(Order.Desc)
-//	// s now includes an "order" parameter with the value "desc".
-//
-// Parameters:
-//   - order: An Order.Order value indicating the sorting order (e.g., ascending or descending).
-//
-// Returns:
-//
-//	The updated es.sortType object with the "order" parameter set.
-func (s sortType) Order(order Order.Order) sortType {
-	return s.putInTheField("order", order)
-}
-
-// Mode sets the "mode" parameter in an es.sortType object.
-//
-// This method specifies the mode used for sorting the results. The mode
-// determines how sorting should be handled, such as by specifying different
-// tie-breaking strategies.
-//
-// Example usage:
-//
-//	s := es.Sort("age").Mode(Mode.Avg)
-//	// s now includes a "mode" parameter with the value "avg".
-//
-// Parameters:
-//   - mode: A Mode.Mode value indicating the sorting mode (e.g., average, minimum, maximum).
-//
-// Returns:
-//
-//	The updated es.sortType object with the "mode" parameter set.
-func (s sortType) Mode(mode Mode.Mode) sortType {
-	return s.putInTheField("mode", mode)
-}
-
 // Sort adds one or more es.sortType objects to an es.Object.
 //
 // This method allows you to specify multiple sorting criteria for the search query.
@@ -284,14 +212,4 @@ func (s sortType) Mode(mode Mode.Mode) sortType {
 func (o Object) Sort(sorts ...sortType) Object {
 	o["sort"] = sorts
 	return o
-}
-
-func (s sortType) putInTheField(key string, value any) sortType {
-	for _, fieldObj := range s {
-		if fieldObject, ok := fieldObj.(Object); ok {
-			fieldObject[key] = value
-			break
-		}
-	}
-	return s
 }
