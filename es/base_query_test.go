@@ -4,9 +4,6 @@ import (
 	"reflect"
 	"testing"
 
-	Mode "github.com/Trendyol/es-query-builder/es/enums/sort/mode"
-	Order "github.com/Trendyol/es-query-builder/es/enums/sort/order"
-
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
@@ -178,76 +175,6 @@ func Test_Object_should_have_Sort_method(t *testing.T) {
 
 	// When Then
 	assert.NotNil(t, b.Sort)
-}
-
-func Test_Sort_should_exist_on_es_package(t *testing.T) {
-	t.Parallel()
-	// Given When Then
-	assert.NotNil(t, es.Sort)
-}
-
-func Test_Sort_should_return_sortType_with_order(t *testing.T) {
-	t.Parallel()
-	// Given
-	sort := es.Sort("name").Order(Order.Asc)
-
-	// When
-	bodyType := reflect.TypeOf(sort).String()
-
-	// Then
-	assert.NotNil(t, sort)
-	assert.Equal(t, "es.sortType", bodyType)
-	bodyJSON := assert.MarshalWithoutError(t, sort)
-	assert.Equal(t, "{\"name\":{\"order\":\"asc\"}}", bodyJSON)
-}
-
-func Test_Sort_should_return_sortType_with_mode(t *testing.T) {
-	t.Parallel()
-	// Given
-	sort := es.Sort("age").Mode(Mode.Median)
-
-	// When
-	bodyType := reflect.TypeOf(sort).String()
-
-	// Then
-	assert.NotNil(t, sort)
-	assert.Equal(t, "es.sortType", bodyType)
-	bodyJSON := assert.MarshalWithoutError(t, sort)
-	assert.Equal(t, "{\"age\":{\"mode\":\"median\"}}", bodyJSON)
-}
-
-func Test_Sort_should_return_sortType_with_order_and_mode(t *testing.T) {
-	t.Parallel()
-	// Given
-	sort := es.Sort("salary").Order(Order.Desc).Mode(Mode.Sum)
-
-	// When
-	bodyType := reflect.TypeOf(sort).String()
-
-	// Then
-	assert.NotNil(t, sort)
-	assert.Equal(t, "es.sortType", bodyType)
-	bodyJSON := assert.MarshalWithoutError(t, sort)
-	assert.Equal(t, "{\"salary\":{\"mode\":\"sum\",\"order\":\"desc\"}}", bodyJSON)
-}
-
-func Test_Sort_should_add_sort_field_into_Object(t *testing.T) {
-	t.Parallel()
-	// Given
-	query := es.NewQuery(nil)
-
-	// When
-	_, beforeExists := query["sort"]
-	query.Sort(es.Sort("name").Order(Order.Desc))
-	sort, afterExists := query["sort"]
-
-	// Then
-	assert.NotNil(t, sort)
-	assert.False(t, beforeExists)
-	assert.True(t, afterExists)
-	assert.IsTypeString(t, "[]es.sortType", sort)
-	bodyJSON := assert.MarshalWithoutError(t, query)
-	assert.Equal(t, "{\"query\":{},\"sort\":[{\"name\":{\"order\":\"desc\"}}]}", bodyJSON)
 }
 
 ////   Source   ////
