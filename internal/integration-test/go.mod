@@ -5,7 +5,7 @@ go 1.23.0
 replace github.com/Trendyol/es-query-builder => ./../..
 
 require (
-	github.com/GokselKUCUKSAHIN/jsonx v1.0.6
+	github.com/GokselKUCUKSAHIN/jsonx v1.0.7
 	github.com/Trendyol/es-query-builder v0.4.2
 	github.com/bayraktugrul/go-await v1.1.1
 	github.com/docker/go-connections v0.5.0
@@ -20,8 +20,8 @@ require (
 	github.com/AdaLogics/go-fuzz-headers v0.0.0-20240806141605-e8a1dd7889d6 // indirect
 	github.com/Azure/go-ansiterm v0.0.0-20250102033503-faa5f7b0171c // indirect
 	github.com/Microsoft/go-winio v0.6.2 // indirect
-	github.com/bytedance/sonic v1.12.10 // indirect
-	github.com/bytedance/sonic/loader v0.2.3 // indirect
+	github.com/bytedance/sonic v1.13.1 // indirect
+	github.com/bytedance/sonic/loader v0.2.4 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cloudwego/base64x v0.1.5 // indirect
 	github.com/containerd/log v0.1.0 // indirect
