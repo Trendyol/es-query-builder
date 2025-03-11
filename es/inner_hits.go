@@ -333,7 +333,7 @@ func (ih innerHitsType) SourceIncludes(fields ...string) innerHitsType {
 	}
 	includes, ok := source["includes"].(Array)
 	if !ok {
-		includes = Array{}
+		includes = make(Array, 0, len(fields))
 	}
 	for i := 0; i < len(fields); i++ {
 		includes = append(includes, fields[i])
@@ -369,7 +369,7 @@ func (ih innerHitsType) SourceExcludes(fields ...string) innerHitsType {
 	}
 	excludes, exists := source["excludes"].(Array)
 	if !exists {
-		excludes = Array{}
+		excludes = make(Array, 0, len(fields))
 	}
 	for i := 0; i < len(fields); i++ {
 		excludes = append(excludes, fields[i])

@@ -124,7 +124,7 @@ func (b BoolType) Boost(boost float64) BoolType {
 func (b BoolType) Filter(items ...any) BoolType {
 	filter, ok := b["filter"].(FilterType)
 	if !ok {
-		filter = FilterType{}
+		filter = make(FilterType, 0, len(items))
 	}
 	for i := 0; i < len(items); i++ {
 		if field, fOk := correctType(items[i]); fOk {
@@ -159,7 +159,7 @@ func (b BoolType) Filter(items ...any) BoolType {
 func (b BoolType) Must(items ...any) BoolType {
 	must, ok := b["must"].(MustType)
 	if !ok {
-		must = MustType{}
+		must = make(MustType, 0, len(items))
 	}
 	for i := 0; i < len(items); i++ {
 		if field, fOk := correctType(items[i]); fOk {
@@ -194,7 +194,7 @@ func (b BoolType) Must(items ...any) BoolType {
 func (b BoolType) MustNot(items ...any) BoolType {
 	mustNot, ok := b["must_not"].(MustNotType)
 	if !ok {
-		mustNot = MustNotType{}
+		mustNot = make(MustNotType, 0, len(items))
 	}
 	for i := 0; i < len(items); i++ {
 		if field, fOk := correctType(items[i]); fOk {
@@ -229,7 +229,7 @@ func (b BoolType) MustNot(items ...any) BoolType {
 func (b BoolType) Should(items ...any) BoolType {
 	should, ok := b["should"].(ShouldType)
 	if !ok {
-		should = ShouldType{}
+		should = make(ShouldType, 0, len(items))
 	}
 	for i := 0; i < len(items); i++ {
 		if field, fOk := correctType(items[i]); fOk {

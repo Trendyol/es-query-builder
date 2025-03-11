@@ -36,12 +36,8 @@ type primitive interface {
 	number | ~string | ~bool | ~rune
 }
 
-func unsafeIsNil(x any) bool {
-	return (*[2]uintptr)(unsafe.Pointer(&x))[1] == 0
-}
-
 func correctType(b any) (any, bool) {
-	if b == nil || unsafeIsNil(b) {
+	if b == nil || (*[2]uintptr)(unsafe.Pointer(&b))[1] == 0 {
 		return Object{}, false
 	}
 	if _, ok := b.(BoolType); ok {

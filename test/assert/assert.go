@@ -8,7 +8,7 @@ import (
 )
 
 type TestingT interface {
-	Errorf(format string, args ...interface{})
+	Errorf(format string, args ...any)
 }
 
 func MarshalWithoutError(t TestingT, body any) string {

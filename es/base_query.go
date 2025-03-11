@@ -146,7 +146,7 @@ func (o Object) SourceIncludes(fields ...string) Object {
 	}
 	includes, ok := source["includes"].(Array)
 	if !ok {
-		includes = Array{}
+		includes = make(Array, 0, len(fields))
 	}
 	for i := 0; i < len(fields); i++ {
 		includes = append(includes, fields[i])
@@ -183,7 +183,7 @@ func (o Object) SourceExcludes(fields ...string) Object {
 	}
 	excludes, exists := source["excludes"].(Array)
 	if !exists {
-		excludes = Array{}
+		excludes = make(Array, 0, len(fields))
 	}
 	for i := 0; i < len(fields); i++ {
 		excludes = append(excludes, fields[i])
