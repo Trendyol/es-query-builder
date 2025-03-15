@@ -49,6 +49,28 @@ func (aggTerm aggTermType) Missing(missing string) aggTermType {
 	return aggTerm
 }
 
+// MinDocCount sets the "min_doc_count" value for an aggregation term.
+//
+// This method specifies the minimum number of documents that must match a term
+// for it to be included in the aggregation results. It updates the es.aggTermType
+// object to enforce this constraint.
+//
+// Example usage:
+//
+//	termAgg := AggTerm("fieldName").MinDocCount(2)
+//	// termAgg now has the "min_doc_count" field set to 2.
+//
+// Parameters:
+//   - minDocCount: The minimum number of documents required for a term to be included.
+//
+// Returns:
+//
+//	The updated es.aggTermType object with the "min_doc_count" field set to the specified value.
+func (aggTerm aggTermType) MinDocCount(minDocCount int) aggTermType {
+	aggTerm["min_doc_count"] = minDocCount
+	return aggTerm
+}
+
 // AggTerms creates a new "terms" aggregation.
 //
 // This function initializes an aggregation for terms. It can be used to perform
