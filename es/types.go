@@ -38,7 +38,7 @@ type primitive interface {
 
 func correctType(b any) (any, bool) {
 	if b == nil || (*[2]uintptr)(unsafe.Pointer(&b))[1] == 0 {
-		return Object{}, false
+		return nil, false
 	}
 	if _, ok := b.(BoolType); ok {
 		return Object{"bool": b}, true
