@@ -27,7 +27,7 @@ unit-test-pretty:
 run-benchmark:
 	go-run-bench -cooldown=15 -benchmem=true -save=csv
 
-converage:
+coverage:
 	go-carpet ./es -nocolor | awk '/Coverage:/ {print "\033[32mCoverage: " $$2 "\033[0m"}'
 
 show-uncovered:
