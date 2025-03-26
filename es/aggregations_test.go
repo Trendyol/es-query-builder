@@ -58,6 +58,26 @@ func Test_Missing_should_add_missing_field_into_AggTerm(t *testing.T) {
 	assert.Equal(t, "{\"field\":\"path\",\"missing\":\"missing_name\"}", bodyJSON)
 }
 
+func Test_AggTerm_should_have_MinDocCount_method(t *testing.T) {
+	t.Parallel()
+	// Given
+	a := es.AggTerm("path")
+
+	// When Then
+	assert.NotNil(t, a.MinDocCount)
+}
+
+func Test_MinDocCount_should_add_min_doc_count_field_into_AggTerm(t *testing.T) {
+	t.Parallel()
+	// Given
+	a := es.AggTerm("path").MinDocCount(5)
+
+	// When Then
+	assert.NotNil(t, a)
+	bodyJSON := assert.MarshalWithoutError(t, a)
+	assert.Equal(t, "{\"field\":\"path\",\"min_doc_count\":5}", bodyJSON)
+}
+
 func Test_AggTerms_should_exist_on_es_package(t *testing.T) {
 	t.Parallel()
 	// Given When Then
