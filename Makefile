@@ -2,7 +2,7 @@ EXISTING_VERSION := $(shell git describe --abbrev=0 --tags)
 NEW_VERSION := $(shell echo $(EXISTING_VERSION) | awk -F. '{print ""$$1"."$$2"."$$3 + 1}')
 
 init:
-	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.55.2
+	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.64.8
 	go install golang.org/x/tools/go/analysis/passes/fieldalignment/cmd/fieldalignment@v0.29.0
 	go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@v2.5.0
 	go install github.com/GokselKUCUKSAHIN/go-run-bench@v1.0.1
