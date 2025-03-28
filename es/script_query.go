@@ -11,10 +11,10 @@ type scriptQueryType Object
 //
 // Example usage:
 //
-//	s := es.Script(es.NewScript("doc['price'].value > params.threshold", map[string]interface{}{
-//		"threshold": 100,
-//	}))
-//	// s now contains an es.scriptQueryType object that executes the provided script.
+//	 s := es.ScriptQuery(
+//	     es.ScriptSource("doc['price'].value > params.threshold", ScriptLanguage.Painless).Parameter("threshold", 100),
+//	 )
+//		// s now contains an es.scriptQueryType object that executes the provided script.
 //
 // Parameters:
 //   - script: A scriptType object representing the script to be executed in the query.
