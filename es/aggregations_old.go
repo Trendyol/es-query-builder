@@ -2,18 +2,18 @@ package es
 
 import Order "github.com/Trendyol/es-query-builder/es/enums/sort/order"
 
-type aggsType Object
+type aggsTypeOld Object
 
-type aggTermType Object
+type aggTermTypeOld Object
 
-// AggTerm creates a new aggregation term with the specified field.
+// AggTermOld creates a new aggregation term with the specified field.
 //
 // This function initializes an aggregation term with the given field name.
 // It can be used to specify a field for aggregation operations in queries.
 //
 // Example usage:
 //
-//	termAgg := AggTerm("fieldName")
+//	termAgg := AggTermOld("fieldName")
 //	// termAgg now has the "field" set to "fieldName".
 //
 // Parameters:
@@ -21,9 +21,9 @@ type aggTermType Object
 //
 // Returns:
 //
-//	An es.aggTermType object with the "field" set to the provided value.
-func AggTerm(field string) aggTermType {
-	return aggTermType{
+//	An es.aggTermTypeOld object with the "field" set to the provided value.
+func AggTermOld(field string) aggTermTypeOld {
+	return aggTermTypeOld{
 		"field": field,
 	}
 }
@@ -31,11 +31,11 @@ func AggTerm(field string) aggTermType {
 // Missing sets the "missing" value for an aggregation term.
 //
 // This method specifies a value to be used when the field is missing in documents.
-// It updates the es.aggTermType object to handle missing values in the aggregation.
+// It updates the es.aggTermTypeOld object to handle missing values in the aggregation.
 //
 // Example usage:
 //
-//	termAgg := AggTerm("fieldName").Missing("N/A")
+//	termAgg := AggTermOld("fieldName").Missing("N/A")
 //	// termAgg now has the "missing" field set to "N/A".
 //
 // Parameters:
@@ -43,8 +43,8 @@ func AggTerm(field string) aggTermType {
 //
 // Returns:
 //
-//	The updated es.aggTermType object with the "missing" field set to the specified value.
-func (aggTerm aggTermType) Missing(missing string) aggTermType {
+//	The updated es.aggTermTypeOld object with the "missing" field set to the specified value.
+func (aggTerm aggTermTypeOld) Missing(missing string) aggTermTypeOld {
 	aggTerm["missing"] = missing
 	return aggTerm
 }
@@ -52,12 +52,12 @@ func (aggTerm aggTermType) Missing(missing string) aggTermType {
 // MinDocCount sets the "min_doc_count" value for an aggregation term.
 //
 // This method specifies the minimum number of documents that must match a term
-// for it to be included in the aggregation results. It updates the es.aggTermType
+// for it to be included in the aggregation results. It updates the es.aggTermTypeOld
 // object to enforce this constraint.
 //
 // Example usage:
 //
-//	termAgg := AggTerm("fieldName").MinDocCount(2)
+//	termAgg := AggTermOld("fieldName").MinDocCount(2)
 //	// termAgg now has the "min_doc_count" field set to 2.
 //
 // Parameters:
@@ -65,130 +65,130 @@ func (aggTerm aggTermType) Missing(missing string) aggTermType {
 //
 // Returns:
 //
-//	The updated es.aggTermType object with the "min_doc_count" field set to the specified value.
-func (aggTerm aggTermType) MinDocCount(minDocCount int) aggTermType {
+//	The updated es.aggTermTypeOld object with the "min_doc_count" field set to the specified value.
+func (aggTerm aggTermTypeOld) MinDocCount(minDocCount int) aggTermTypeOld {
 	aggTerm["min_doc_count"] = minDocCount
 	return aggTerm
 }
 
-// AggTerms creates a new "terms" aggregation.
+// AggTermsOld creates a new "terms" aggregation.
 //
 // This function initializes an aggregation for terms. It can be used to perform
 // aggregation based on the unique terms of a field.
 //
 // Example usage:
 //
-//	termsAgg := AggTerms()
+//	termsAgg := AggTermsOld()
 //	// termsAgg now has the "terms" field initialized.
 //
 // Returns:
 //
-//	An es.aggsType object with the "terms" field initialized.
-func AggTerms() aggsType {
-	return aggsType{
+//	An es.aggsTypeOld object with the "terms" field initialized.
+func AggTermsOld() aggsTypeOld {
+	return aggsTypeOld{
 		"terms": Object{},
 	}
 }
 
-// AggMultiTerms creates a new "multi_terms" aggregation.
+// AggMultiTermsOld creates a new "multi_terms" aggregation.
 //
 // This function initializes an aggregation for multiple terms. It can be used
 // to perform aggregation based on multiple fields or term combinations.
 //
 // Example usage:
 //
-//	multiTermsAgg := AggMultiTerms()
+//	multiTermsAgg := AggMultiTermsOld()
 //	// multiTermsAgg now has the "multi_terms" field initialized.
 //
 // Returns:
 //
-//	An es.aggsType object with the "multi_terms" field initialized.
-func AggMultiTerms() aggsType {
-	return aggsType{
+//	An es.aggsTypeOld object with the "multi_terms" field initialized.
+func AggMultiTermsOld() aggsTypeOld {
+	return aggsTypeOld{
 		"multi_terms": Object{},
 	}
 }
 
-// AggNested creates a new "nested" aggregation.
+// AggNestedOld creates a new "nested" aggregation.
 //
 // This function initializes an aggregation for nested fields. It can be used to
 // perform aggregations on fields that are within a nested object.
 //
 // Example usage:
 //
-//	nestedAgg := AggNested()
+//	nestedAgg := AggNestedOld()
 //	// nestedAgg now has the "nested" field initialized.
 //
 // Returns:
 //
-//	An es.aggsType object with the "nested" field initialized.
-func AggNested() aggsType {
-	return aggsType{
+//	An es.aggsTypeOld object with the "nested" field initialized.
+func AggNestedOld() aggsTypeOld {
+	return aggsTypeOld{
 		"nested": Object{},
 	}
 }
 
-// AggMax creates a new "max" aggregation.
+// AggMaxOld creates a new "max" aggregation.
 //
 // This function initializes an aggregation to calculate the maximum value of a field.
 //
 // Example usage:
 //
-//	maxAgg := AggMax()
+//	maxAgg := AggMaxOld()
 //	// maxAgg now has the "max" field initialized.
 //
 // Returns:
 //
-//	An es.aggsType object with the "max" field initialized.
-func AggMax() aggsType {
-	return aggsType{
+//	An es.aggsTypeOld object with the "max" field initialized.
+func AggMaxOld() aggsTypeOld {
+	return aggsTypeOld{
 		"max": Object{},
 	}
 }
 
-// AggMin creates a new "min" aggregation.
+// AggMinOld creates a new "min" aggregation.
 //
 // This function initializes an aggregation to calculate the minimum value of a field.
 //
 // Example usage:
 //
-//	minAgg := AggMin()
+//	minAgg := AggMinOld()
 //	// minAgg now has the "min" field initialized.
 //
 // Returns:
 //
-//	An es.aggsType object with the "min" field initialized.
-func AggMin() aggsType {
-	return aggsType{
+//	An es.aggsTypeOld object with the "min" field initialized.
+func AggMinOld() aggsTypeOld {
+	return aggsTypeOld{
 		"min": Object{},
 	}
 }
 
-// AggAvg creates a new "avg" aggregation.
+// AggAvgOld creates a new "avg" aggregation.
 //
 // This function initializes an aggregation to calculate the average value of a field.
 //
 // Example usage:
 //
-//	avgAgg := AggAvg()
+//	avgAgg := AggAvgOld()
 //	// avgAgg now has the "avg" field initialized.
 //
 // Returns:
 //
-//	An es.aggsType object with the "avg" field initialized.
-func AggAvg() aggsType {
-	return aggsType{
+//	An es.aggsTypeOld object with the "avg" field initialized.
+func AggAvgOld() aggsTypeOld {
+	return aggsTypeOld{
 		"avg": Object{},
 	}
 }
 
-// AggCustom creates a custom aggregation with the provided aggregation object.
+// AggCustomOld creates a custom aggregation with the provided aggregation object.
 //
 // This function initializes an aggregation based on the given custom aggregation definition.
 //
 // Example usage:
 //
-//	customAgg := AggCustom(Object{"custom": "value"})
+//	customAgg := AggCustomOld(Object{"custom": "value"})
 //	// customAgg now has the custom aggregation specified.
 //
 // Parameters:
@@ -196,19 +196,19 @@ func AggAvg() aggsType {
 //
 // Returns:
 //
-//	An es.aggsType object initialized with the provided custom aggregation.
-func AggCustom(agg Object) aggsType {
-	return aggsType(agg)
+//	An es.aggsTypeOld object initialized with the provided custom aggregation.
+func AggCustomOld(agg Object) aggsTypeOld {
+	return aggsTypeOld(agg)
 }
 
-// Aggs adds a nested aggregation to the es.aggsType object.
+// Aggs adds a nested aggregation to the es.aggsTypeOld object.
 //
 // This method adds a nested aggregation under the "aggs" field with the given name.
 //
 // Example usage:
 //
-//	nestedAgg := AggTerms().Size(5)
-//	agg := AggTerms().Aggs("nested", nestedAgg)
+//	nestedAgg := AggTermsOld().Size(5)
+//	agg := AggTermsOld().Aggs("nested", nestedAgg)
 //	// agg now has a nested aggregation named "nested" with the specified aggregation.
 //
 // Parameters:
@@ -217,8 +217,8 @@ func AggCustom(agg Object) aggsType {
 //
 // Returns:
 //
-//	The updated es.aggsType object with the nested aggregation added.
-func (agg aggsType) Aggs(name string, nestedAgg aggsType) aggsType {
+//	The updated es.aggsTypeOld object with the nested aggregation added.
+func (agg aggsTypeOld) Aggs(name string, nestedAgg aggsTypeOld) aggsTypeOld {
 	aggs, ok := agg["aggs"].(Object)
 	if !ok {
 		aggs = Object{}
@@ -228,13 +228,13 @@ func (agg aggsType) Aggs(name string, nestedAgg aggsType) aggsType {
 	return agg
 }
 
-// Field sets the "field" value in the es.aggsType object.
+// Field sets the "field" value in the es.aggsTypeOld object.
 //
-// This method specifies the field to aggregate on in the es.aggsType object.
+// This method specifies the field to aggregate on in the es.aggsTypeOld object.
 //
 // Example usage:
 //
-//	agg := AggTerms().Field("fieldName")
+//	agg := AggTermsOld().Field("fieldName")
 //	// agg now has the "field" set to "fieldName".
 //
 // Parameters:
@@ -242,18 +242,18 @@ func (agg aggsType) Aggs(name string, nestedAgg aggsType) aggsType {
 //
 // Returns:
 //
-//	The updated es.aggsType object with the "field" set to the specified value.
-func (agg aggsType) Field(field string) aggsType {
+//	The updated es.aggsTypeOld object with the "field" set to the specified value.
+func (agg aggsTypeOld) Field(field string) aggsTypeOld {
 	return agg.putInTheField("field", field)
 }
 
-// Path sets the "path" value in the es.aggsType object.
+// Path sets the "path" value in the es.aggsTypeOld object.
 //
-// This method specifies the nested path for the aggregation in the es.aggsType object.
+// This method specifies the nested path for the aggregation in the es.aggsTypeOld object.
 //
 // Example usage:
 //
-//	agg := AggNested().Path("nestedField.path")
+//	agg := AggNestedOld().Path("nestedField.path")
 //	// agg now has the "path" set to "nestedField.path".
 //
 // Parameters:
@@ -261,18 +261,18 @@ func (agg aggsType) Field(field string) aggsType {
 //
 // Returns:
 //
-//	The updated es.aggsType object with the "path" set to the specified value.
-func (agg aggsType) Path(path string) aggsType {
+//	The updated es.aggsTypeOld object with the "path" set to the specified value.
+func (agg aggsTypeOld) Path(path string) aggsTypeOld {
 	return agg.putInTheField("path", path)
 }
 
-// Size sets the "size" value in the es.aggsType object.
+// Size sets the "size" value in the es.aggsTypeOld object.
 //
 // This method specifies the number of terms to return in the aggregation result.
 //
 // Example usage:
 //
-//	agg := AggTerms().Size(10)
+//	agg := AggTermsOld().Size(10)
 //	// agg now has the "size" field set to 10.
 //
 // Parameters:
@@ -280,18 +280,18 @@ func (agg aggsType) Path(path string) aggsType {
 //
 // Returns:
 //
-//	The updated es.aggsType object with the "size" field set to the specified value.
-func (agg aggsType) Size(size int) aggsType {
+//	The updated es.aggsTypeOld object with the "size" field set to the specified value.
+func (agg aggsTypeOld) Size(size int) aggsTypeOld {
 	return agg.putInTheField("size", size)
 }
 
-// Order sets the "order" field in the es.aggsType object.
+// Order sets the "order" field in the es.aggsTypeOld object.
 //
 // This method specifies the sorting order for the aggregation results.
 //
 // Example usage:
 //
-//	agg := AggTerms().Order("fieldName", Order.Desc)
+//	agg := AggTermsOld().Order("fieldName", Order.Desc)
 //	// agg now has the "order" field set to "desc" for "fieldName".
 //
 // Parameters:
@@ -300,8 +300,8 @@ func (agg aggsType) Size(size int) aggsType {
 //
 // Returns:
 //
-//	The updated es.aggsType object with the "order" field set to the specified value.
-func (agg aggsType) Order(field string, order Order.Order) aggsType {
+//	The updated es.aggsTypeOld object with the "order" field set to the specified value.
+func (agg aggsTypeOld) Order(field string, order Order.Order) aggsTypeOld {
 	return agg.putInTheField("order",
 		Object{
 			field: order,
@@ -309,13 +309,13 @@ func (agg aggsType) Order(field string, order Order.Order) aggsType {
 	)
 }
 
-// Include sets the "include" field in the es.aggsType object.
+// Include sets the "include" field in the es.aggsTypeOld object.
 //
 // This method specifies a pattern to include in the aggregation results.
 //
 // Example usage:
 //
-//	agg := AggTerms().Include("pattern*")
+//	agg := AggTermsOld().Include("pattern*")
 //	// agg now has the "include" field set to "pattern*".
 //
 // Parameters:
@@ -323,18 +323,18 @@ func (agg aggsType) Order(field string, order Order.Order) aggsType {
 //
 // Returns:
 //
-//	The updated es.aggsType object with the "include" field set to the specified value.
-func (agg aggsType) Include(include string) aggsType {
+//	The updated es.aggsTypeOld object with the "include" field set to the specified value.
+func (agg aggsTypeOld) Include(include string) aggsTypeOld {
 	return agg.putInTheField("include", include)
 }
 
-// Exclude sets the "exclude" field in the es.aggsType object.
+// Exclude sets the "exclude" field in the es.aggsTypeOld object.
 //
 // This method specifies a pattern to exclude from the aggregation results.
 //
 // Example usage:
 //
-//	agg := AggTerms().Exclude("pattern*")
+//	agg := AggTermsOld().Exclude("pattern*")
 //	// agg now has the "exclude" field set to "pattern*".
 //
 // Parameters:
@@ -342,32 +342,32 @@ func (agg aggsType) Include(include string) aggsType {
 //
 // Returns:
 //
-//	The updated es.aggsType object with the "exclude" field set to the specified value.
-func (agg aggsType) Exclude(exclude string) aggsType {
+//	The updated es.aggsTypeOld object with the "exclude" field set to the specified value.
+func (agg aggsTypeOld) Exclude(exclude string) aggsTypeOld {
 	return agg.putInTheField("exclude", exclude)
 }
 
-// Terms sets the "terms" field in the aggsType object.
+// Terms sets the "terms" field in the aggsTypeOld object.
 //
-// This method adds a list of aggregation terms to the "terms" field of the es.aggsType object.
+// This method adds a list of aggregation terms to the "terms" field of the es.aggsTypeOld object.
 // It allows specifying multiple term aggregations for the aggregation query.
 //
 // Example usage:
 //
-//	agg := AggTerms().
+//	agg := AggTermsOld().
 //		Terms(
-//			AggTerm("field1"),
-//			AggTerm("field2"),
+//			AggTermOld("field1"),
+//			AggTermOld("field2"),
 //		)
 //	// agg now has the "terms" field containing the provided term aggregations.
 //
 // Parameters:
-//   - terms: A variadic list of es.aggTermType objects representing the term aggregations.
+//   - terms: A variadic list of es.aggTermTypeOld objects representing the term aggregations.
 //
 // Returns:
 //
-//	The updated es.aggsType object with the "terms" field set to the provided term aggregations.
-func (agg aggsType) Terms(terms ...aggTermType) aggsType {
+//	The updated es.aggsTypeOld object with the "terms" field set to the provided term aggregations.
+func (agg aggsTypeOld) Terms(terms ...aggTermTypeOld) aggsTypeOld {
 	return agg.putInTheField("terms", terms)
 }
 
@@ -378,18 +378,18 @@ func (agg aggsType) Terms(terms ...aggTermType) aggsType {
 //
 // Example usage:
 //
-//	termAgg := AggTerms().Field("fieldName")
+//	termAgg := AggTermsOld().Field("fieldName")
 //	query := es.NewQuery().Aggs("myAgg", termAgg)
 //	// query now has an "aggs" field with a nested aggregation named "myAgg".
 //
 // Parameters:
 //   - name: The name to associate with the nested aggregation.
-//   - agg: The es.aggsType object representing the nested aggregation.
+//   - agg: The es.aggsTypeOld object representing the nested aggregation.
 //
 // Returns:
 //
 //	The updated Object with the "aggs" field containing the new named aggregation.
-func (o Object) Aggs(name string, agg aggsType) Object {
+func (o Object) Aggs(name string, agg aggsTypeOld) Object {
 	aggs, ok := o["aggs"].(Object)
 	if !ok {
 		aggs = Object{}
@@ -399,7 +399,7 @@ func (o Object) Aggs(name string, agg aggsType) Object {
 	return o
 }
 
-func (agg aggsType) putInTheField(key string, value any) aggsType {
+func (agg aggsTypeOld) putInTheField(key string, value any) aggsTypeOld {
 	for _, fieldObj := range agg {
 		if fieldObject, ok := fieldObj.(Object); ok {
 			fieldObject[key] = value
