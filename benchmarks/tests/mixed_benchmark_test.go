@@ -22,13 +22,13 @@ func createMixedQuery() map[string]any {
 				es.Terms("title", "1984", "Animal Farm"),
 			),
 	).Aggs("genres_count",
-		es.AggTerms().
+		es.AggTermsOld().
 			Field("genre"),
 	).Aggs("authors_and_genres",
-		es.AggTerms().
+		es.AggTermsOld().
 			Field("author").
 			Aggs("genres",
-				es.AggTerms().
+				es.AggTermsOld().
 					Field("genre"),
 			),
 	)

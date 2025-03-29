@@ -14,23 +14,23 @@ import (
 func Test_AggTerm_should_exist_on_es_package(t *testing.T) {
 	t.Parallel()
 	// Given When Then
-	assert.NotNil(t, es.AggTerm)
+	assert.NotNil(t, es.AggTermOld)
 }
 
 func Test_AggTerm_method_should_create_aggTermType(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggTerm("path")
+	a := es.AggTermOld("path")
 
 	// Then
 	assert.NotNil(t, a)
-	assert.IsTypeString(t, "es.aggTermType", a)
+	assert.IsTypeString(t, "es.aggTermTypeOld", a)
 }
 
 func Test_AggTerm_should_create_json_with_field_field_inside(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggTerm("path")
+	a := es.AggTermOld("path")
 
 	// When Then
 	assert.NotNil(t, a)
@@ -41,7 +41,7 @@ func Test_AggTerm_should_create_json_with_field_field_inside(t *testing.T) {
 func Test_AggTerm_should_have_Missing_method(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggTerm("path")
+	a := es.AggTermOld("path")
 
 	// When Then
 	assert.NotNil(t, a.Missing)
@@ -50,7 +50,7 @@ func Test_AggTerm_should_have_Missing_method(t *testing.T) {
 func Test_Missing_should_add_missing_field_into_AggTerm(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggTerm("path").Missing("missing_name")
+	a := es.AggTermOld("path").Missing("missing_name")
 
 	// When Then
 	assert.NotNil(t, a)
@@ -61,7 +61,7 @@ func Test_Missing_should_add_missing_field_into_AggTerm(t *testing.T) {
 func Test_AggTerm_should_have_MinDocCount_method(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggTerm("path")
+	a := es.AggTermOld("path")
 
 	// When Then
 	assert.NotNil(t, a.MinDocCount)
@@ -70,7 +70,7 @@ func Test_AggTerm_should_have_MinDocCount_method(t *testing.T) {
 func Test_MinDocCount_should_add_min_doc_count_field_into_AggTerm(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggTerm("path").MinDocCount(5)
+	a := es.AggTermOld("path").MinDocCount(5)
 
 	// When Then
 	assert.NotNil(t, a)
@@ -81,23 +81,23 @@ func Test_MinDocCount_should_add_min_doc_count_field_into_AggTerm(t *testing.T) 
 func Test_AggTerms_should_exist_on_es_package(t *testing.T) {
 	t.Parallel()
 	// Given When Then
-	assert.NotNil(t, es.AggTerms)
+	assert.NotNil(t, es.AggTermsOld)
 }
 
 func Test_AggTerms_method_should_create_aggType(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggTerms()
+	a := es.AggTermsOld()
 
 	// Then
 	assert.NotNil(t, a)
-	assert.IsTypeString(t, "es.aggsType", a)
+	assert.IsTypeString(t, "es.aggsTypeOld", a)
 }
 
 func Test_AggTerms_should_create_json_with_terms_field_inside(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggTerms()
+	a := es.AggTermsOld()
 
 	// When Then
 	assert.NotNil(t, a)
@@ -108,23 +108,23 @@ func Test_AggTerms_should_create_json_with_terms_field_inside(t *testing.T) {
 func Test_AggMultiTerms_should_exist_on_es_package(t *testing.T) {
 	t.Parallel()
 	// Given When Then
-	assert.NotNil(t, es.AggMultiTerms)
+	assert.NotNil(t, es.AggMultiTermsOld)
 }
 
 func Test_AggMultiTerms_method_should_create_aggType(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggMultiTerms()
+	a := es.AggMultiTermsOld()
 
 	// Then
 	assert.NotNil(t, a)
-	assert.IsTypeString(t, "es.aggsType", a)
+	assert.IsTypeString(t, "es.aggsTypeOld", a)
 }
 
 func Test_AggMultiTerms_should_create_json_with_multi_terms_field_inside(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggMultiTerms()
+	a := es.AggMultiTermsOld()
 
 	// When Then
 	assert.NotNil(t, a)
@@ -135,23 +135,23 @@ func Test_AggMultiTerms_should_create_json_with_multi_terms_field_inside(t *test
 func Test_AggNested_should_exist_on_es_package(t *testing.T) {
 	t.Parallel()
 	// Given When Then
-	assert.NotNil(t, es.AggNested)
+	assert.NotNil(t, es.AggNestedOld)
 }
 
 func Test_AggNested_method_should_create_aggType(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggNested()
+	a := es.AggNestedOld()
 
 	// Then
 	assert.NotNil(t, a)
-	assert.IsTypeString(t, "es.aggsType", a)
+	assert.IsTypeString(t, "es.aggsTypeOld", a)
 }
 
 func Test_AggNested_should_create_json_with_nested_field_inside(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggNested()
+	a := es.AggNestedOld()
 
 	// When Then
 	assert.NotNil(t, a)
@@ -162,23 +162,23 @@ func Test_AggNested_should_create_json_with_nested_field_inside(t *testing.T) {
 func Test_AggCustom_should_exist_on_es_package(t *testing.T) {
 	t.Parallel()
 	// Given When Then
-	assert.NotNil(t, es.AggCustom)
+	assert.NotNil(t, es.AggCustomOld)
 }
 
 func Test_AggCustom_method_should_create_aggType(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggCustom(nil)
+	a := es.AggCustomOld(nil)
 
 	// Then
 	assert.NotNil(t, a)
-	assert.IsTypeString(t, "es.aggsType", a)
+	assert.IsTypeString(t, "es.aggsTypeOld", a)
 }
 
 func Test_AggCustom_should_create_json(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggCustom(es.Object{
+	a := es.AggCustomOld(es.Object{
 		"custom": es.Object{
 			"my_field": es.Array{1, 2, 3},
 		},
@@ -193,7 +193,7 @@ func Test_AggCustom_should_create_json(t *testing.T) {
 func Test_AggType_should_have_Field_method(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggTerms()
+	a := es.AggTermsOld()
 
 	// When Then
 	assert.NotNil(t, a.Field)
@@ -202,7 +202,7 @@ func Test_AggType_should_have_Field_method(t *testing.T) {
 func Test_Field_should_add_field_field_into_AggTerm(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggTerms().Field("path")
+	a := es.AggTermsOld().Field("path")
 
 	// When Then
 	assert.NotNil(t, a)
@@ -213,7 +213,7 @@ func Test_Field_should_add_field_field_into_AggTerm(t *testing.T) {
 func Test_AggType_should_have_Path_method(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggTerms()
+	a := es.AggTermsOld()
 
 	// When Then
 	assert.NotNil(t, a.Path)
@@ -222,7 +222,7 @@ func Test_AggType_should_have_Path_method(t *testing.T) {
 func Test_Path_should_add_path_field_into_AggNested(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggNested().Path("review")
+	a := es.AggNestedOld().Path("review")
 
 	// When Then
 	assert.NotNil(t, a)
@@ -233,7 +233,7 @@ func Test_Path_should_add_path_field_into_AggNested(t *testing.T) {
 func Test_AggType_should_have_Size_method(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggTerms()
+	a := es.AggTermsOld()
 
 	// When Then
 	assert.NotNil(t, a.Size)
@@ -242,7 +242,7 @@ func Test_AggType_should_have_Size_method(t *testing.T) {
 func Test_Size_should_add_size_field_into_AggType(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggTerms().Size(333)
+	a := es.AggTermsOld().Size(333)
 
 	// When Then
 	assert.NotNil(t, a)
@@ -253,7 +253,7 @@ func Test_Size_should_add_size_field_into_AggType(t *testing.T) {
 func Test_AggType_should_have_Order_method(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggTerms()
+	a := es.AggTermsOld()
 
 	// When Then
 	assert.NotNil(t, a.Field)
@@ -262,7 +262,7 @@ func Test_AggType_should_have_Order_method(t *testing.T) {
 func Test_Order_should_add_order_field_into_AggType(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggTerms().Order("path", Order.Desc)
+	a := es.AggTermsOld().Order("path", Order.Desc)
 
 	// When Then
 	assert.NotNil(t, a)
@@ -273,7 +273,7 @@ func Test_Order_should_add_order_field_into_AggType(t *testing.T) {
 func Test_AggType_should_have_Include_method(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggTerms()
+	a := es.AggTermsOld()
 
 	// When Then
 	assert.NotNil(t, a.Include)
@@ -282,7 +282,7 @@ func Test_AggType_should_have_Include_method(t *testing.T) {
 func Test_Include_should_add_include_field_into_AggType(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggTerms().Include("*.2024")
+	a := es.AggTermsOld().Include("*.2024")
 
 	// When Then
 	assert.NotNil(t, a)
@@ -293,7 +293,7 @@ func Test_Include_should_add_include_field_into_AggType(t *testing.T) {
 func Test_AggType_should_have_Exclude_method(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggTerms()
+	a := es.AggTermsOld()
 
 	// When Then
 	assert.NotNil(t, a.Exclude)
@@ -302,7 +302,7 @@ func Test_AggType_should_have_Exclude_method(t *testing.T) {
 func Test_Exclude_should_add_exclude_field_into_AggType(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggTerms().Exclude("*.2021")
+	a := es.AggTermsOld().Exclude("*.2021")
 
 	// When Then
 	assert.NotNil(t, a)
@@ -313,7 +313,7 @@ func Test_Exclude_should_add_exclude_field_into_AggType(t *testing.T) {
 func Test_AggType_should_have_Terms_method(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggTerms()
+	a := es.AggTermsOld()
 
 	// When Then
 	assert.NotNil(t, a.Terms)
@@ -322,23 +322,23 @@ func Test_AggType_should_have_Terms_method(t *testing.T) {
 func Test_AggMax_should_exist_on_es_package(t *testing.T) {
 	t.Parallel()
 	// Given When Then
-	assert.NotNil(t, es.AggMax)
+	assert.NotNil(t, es.AggMaxOld)
 }
 
 func Test_AggMax_method_should_create_aggType(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggMax()
+	a := es.AggMaxOld()
 
 	// Then
 	assert.NotNil(t, a)
-	assert.IsTypeString(t, "es.aggsType", a)
+	assert.IsTypeString(t, "es.aggsTypeOld", a)
 }
 
 func Test_AggMax_should_create_json_with_terms_field_inside(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggMax()
+	a := es.AggMaxOld()
 
 	// When Then
 	assert.NotNil(t, a)
@@ -351,23 +351,23 @@ func Test_AggMax_should_create_json_with_terms_field_inside(t *testing.T) {
 func Test_AggMin_should_exist_on_es_package(t *testing.T) {
 	t.Parallel()
 	// Given When Then
-	assert.NotNil(t, es.AggMin)
+	assert.NotNil(t, es.AggMinOld)
 }
 
 func Test_AggMin_method_should_create_aggType(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggMin()
+	a := es.AggMinOld()
 
 	// Then
 	assert.NotNil(t, a)
-	assert.IsTypeString(t, "es.aggsType", a)
+	assert.IsTypeString(t, "es.aggsTypeOld", a)
 }
 
 func Test_AggMin_should_create_json_with_terms_field_inside(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggMin()
+	a := es.AggMinOld()
 
 	// When Then
 	assert.NotNil(t, a)
@@ -380,23 +380,23 @@ func Test_AggMin_should_create_json_with_terms_field_inside(t *testing.T) {
 func Test_AggAvg_should_exist_on_es_package(t *testing.T) {
 	t.Parallel()
 	// Given When Then
-	assert.NotNil(t, es.AggAvg)
+	assert.NotNil(t, es.AggAvgOld)
 }
 
 func Test_AggAvg_method_should_create_aggType(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggAvg()
+	a := es.AggAvgOld()
 
 	// Then
 	assert.NotNil(t, a)
-	assert.IsTypeString(t, "es.aggsType", a)
+	assert.IsTypeString(t, "es.aggsTypeOld", a)
 }
 
 func Test_AggAvg_should_create_json_with_terms_field_inside(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggAvg()
+	a := es.AggAvgOld()
 
 	// When Then
 	assert.NotNil(t, a)
@@ -407,13 +407,13 @@ func Test_AggAvg_should_create_json_with_terms_field_inside(t *testing.T) {
 func Test_Terms_should_add_terms_field_into_AggType(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggMultiTerms().
+	a := es.AggMultiTermsOld().
 		Terms(
-			es.AggTerm("A1"),
-			es.AggTerm("B2").
+			es.AggTermOld("A1"),
+			es.AggTermOld("B2").
 				Missing("Hell Divers"),
-			es.AggTerm("C3"),
-			es.AggTerm("D4"),
+			es.AggTermOld("C3"),
+			es.AggTermOld("D4"),
 		)
 
 	// When Then
@@ -426,7 +426,7 @@ func Test_Terms_should_add_terms_field_into_AggType(t *testing.T) {
 func Test_AggType_should_have_Aggs_method(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggTerms()
+	a := es.AggTermsOld()
 
 	// When Then
 	assert.NotNil(t, a.Aggs)
@@ -435,17 +435,17 @@ func Test_AggType_should_have_Aggs_method(t *testing.T) {
 func Test_Aggs_should_add_aggs_field_into_AggType(t *testing.T) {
 	t.Parallel()
 	// Given
-	a := es.AggTerms().
+	a := es.AggTermsOld().
 		Field("path").
 		Size(1_000).
 		Order("_key", Order.Asc).
 		Include("reduces").
 		Aggs("test",
-			es.AggMultiTerms().
+			es.AggMultiTermsOld().
 				Terms(
-					es.AggTerm("A1").
+					es.AggTermOld("A1").
 						Missing("a1"),
-					es.AggTerm("B2"),
+					es.AggTermOld("B2"),
 				),
 		)
 
@@ -461,7 +461,7 @@ func Test_Aggs_should_create_json_with_aggs_field_inside_query(t *testing.T) {
 	// Given
 	query := es.NewQuery(nil)
 	query.Aggs("types",
-		es.AggTerms().
+		es.AggTermsOld().
 			Field("type").
 			Size(100),
 	)
@@ -478,12 +478,12 @@ func Test_should_create_json_with_multiple_Aggs_inside_single_query(t *testing.T
 	// Given
 	query := es.NewQuery(nil).
 		Aggs("types",
-			es.AggTerms().
+			es.AggTermsOld().
 				Field("type").
 				Size(100),
 		).
 		Aggs("average_review_score",
-			es.AggAvg().
+			es.AggAvgOld().
 				Field("reviews.score"),
 		)
 

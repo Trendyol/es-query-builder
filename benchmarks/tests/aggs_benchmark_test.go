@@ -26,17 +26,17 @@ func createAggsQuery() map[string]any {
 			es.Sort("modifiedDate").Order(order.Desc),
 			es.Sort("indexedAt").Order(order.Asc),
 		).
-		Aggs("by_category", es.AggTerms().
+		Aggs("by_category", es.AggTermsOld().
 			Field("category.keyword").
 			Size(250).
-			Aggs("nested_reviews", es.AggNested().
+			Aggs("nested_reviews", es.AggNestedOld().
 				Path("reviews").
-				Aggs("average_rating", es.AggAvg().
+				Aggs("average_rating", es.AggAvgOld().
 					Field("reviews.rating"),
 				).
-				Aggs("by_reviewer", es.AggTerms().
+				Aggs("by_reviewer", es.AggTermsOld().
 					Field("reviews.reviewer.keyword").
-					Aggs("max_reviewer_rating", es.AggMax().
+					Aggs("max_reviewer_rating", es.AggMaxOld().
 						Field("reviews.rating"),
 					),
 				),
