@@ -20,18 +20,13 @@ func createMixedQuery() map[string]any {
 			).
 			Should(
 				es.Terms("title", "1984", "Animal Farm"),
+			)).
+		Aggs(
+			es.Agg("genres_count", es.TermsAgg("genre")),
+			es.Agg("authors_and_genres", es.TermsAgg("author").
+				Aggs(es.Agg("genres", es.TermsAgg("genre"))),
 			),
-	).Aggs("genres_count",
-		es.AggTermsOld().
-			Field("genre"),
-	).Aggs("authors_and_genres",
-		es.AggTermsOld().
-			Field("author").
-			Aggs("genres",
-				es.AggTermsOld().
-					Field("genre"),
-			),
-	)
+		)
 
 	return query
 }
