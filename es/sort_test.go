@@ -1,7 +1,6 @@
 package es_test
 
 import (
-	"reflect"
 	"testing"
 
 	Mode "github.com/Trendyol/es-query-builder/es/enums/sort/mode"
@@ -92,12 +91,9 @@ func Test_Sort_should_return_sortType_with_order(t *testing.T) {
 	// Given
 	sort := es.Sort("name").Order(Order.Asc)
 
-	// When
-	bodyType := reflect.TypeOf(sort).String()
-
-	// Then
+	// When Then
 	assert.NotNil(t, sort)
-	assert.Equal(t, "es.sortType", bodyType)
+	assert.IsTypeString(t, "es.sortType", sort)
 	bodyJSON := assert.MarshalWithoutError(t, sort)
 	assert.Equal(t, "{\"name\":{\"order\":\"asc\"}}", bodyJSON)
 }
@@ -107,12 +103,9 @@ func Test_Sort_should_return_sortType_with_mode(t *testing.T) {
 	// Given
 	sort := es.Sort("age").Mode(Mode.Median)
 
-	// When
-	bodyType := reflect.TypeOf(sort).String()
-
-	// Then
+	// When Then
 	assert.NotNil(t, sort)
-	assert.Equal(t, "es.sortType", bodyType)
+	assert.IsTypeString(t, "es.sortType", sort)
 	bodyJSON := assert.MarshalWithoutError(t, sort)
 	assert.Equal(t, "{\"age\":{\"mode\":\"median\"}}", bodyJSON)
 }
@@ -122,12 +115,9 @@ func Test_Sort_should_return_sortType_with_order_and_mode(t *testing.T) {
 	// Given
 	sort := es.Sort("salary").Order(Order.Desc).Mode(Mode.Sum)
 
-	// When
-	bodyType := reflect.TypeOf(sort).String()
-
-	// Then
+	// When Then
 	assert.NotNil(t, sort)
-	assert.Equal(t, "es.sortType", bodyType)
+	assert.IsTypeString(t, "es.sortType", sort)
 	bodyJSON := assert.MarshalWithoutError(t, sort)
 	assert.Equal(t, "{\"salary\":{\"mode\":\"sum\",\"order\":\"desc\"}}", bodyJSON)
 }

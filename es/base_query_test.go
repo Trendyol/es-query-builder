@@ -1,7 +1,6 @@
 package es_test
 
 import (
-	"reflect"
 	"testing"
 
 	"github.com/Trendyol/es-query-builder/es"
@@ -36,12 +35,9 @@ func Test_NewQuery_should_return_type_of_Object(t *testing.T) {
 	// Given
 	query := es.NewQuery(nil)
 
-	// When
-	bodyType := reflect.TypeOf(query).String()
-
-	// Then
+	// When Then
 	assert.NotNil(t, query)
-	assert.Equal(t, "es.Object", bodyType)
+	assert.IsTypeString(t, "es.Object", query)
 	assert.MarshalWithoutError(t, query)
 }
 
