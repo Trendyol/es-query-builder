@@ -94,7 +94,7 @@ func (sum sumAggType) Format(format string) sumAggType {
 //
 //	A modified sumAggType with the meta field set.
 func (sum sumAggType) Meta(key string, value any) sumAggType {
-	meta, exists := getFieldFromAggs(sum, "sum", "meta")
+	meta, exists := getObjectFromAggs(sum, "sum", "meta")
 	if !exists {
 		meta = Object{}
 	}

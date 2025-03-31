@@ -101,7 +101,7 @@ func (min minAggType) Format(format string) minAggType {
 //
 //	An es.minAggType object with the "meta" field set.
 func (min minAggType) Meta(key string, value any) minAggType {
-	meta, exists := getFieldFromAggs(min, "min", "meta")
+	meta, exists := getObjectFromAggs(min, "min", "meta")
 	if !exists {
 		meta = Object{}
 	}

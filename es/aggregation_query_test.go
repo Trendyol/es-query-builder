@@ -1,7 +1,6 @@
 package es_test
 
 import (
-	"reflect"
 	"testing"
 
 	"github.com/Trendyol/es-query-builder/es"
@@ -19,12 +18,9 @@ func Test_NewAggs_should_return_type_of_Object(t *testing.T) {
 	// Given
 	aggsQuery := es.NewAggs()
 
-	// When
-	bodyType := reflect.TypeOf(aggsQuery).String()
-
-	// Then
+	// When Then
 	assert.NotNil(t, aggsQuery)
-	assert.Equal(t, "es.Object", bodyType)
+	assert.IsTypeString(t, "es.Object", aggsQuery)
 	assert.MarshalWithoutError(t, aggsQuery)
 }
 
@@ -52,12 +48,9 @@ func Test_Agg_should_return_type_of_aggsType(t *testing.T) {
 	// Given
 	agg := es.Agg("agg_name", es.Object{})
 
-	// When
-	bodyType := reflect.TypeOf(agg).String()
-
-	// Then
+	// When Then
 	assert.NotNil(t, agg)
-	assert.Equal(t, "es.aggsType", bodyType)
+	assert.IsTypeString(t, "es.aggsType", agg)
 	assert.MarshalWithoutError(t, agg)
 }
 

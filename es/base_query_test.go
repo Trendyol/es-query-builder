@@ -349,3 +349,14 @@ func Test_Object_should_have_Aggs_method(t *testing.T) {
 	// When Then
 	assert.NotNil(t, b.Aggs)
 }
+
+func Test_Aggs_should_add_aggs_field_into_Object(t *testing.T) {
+	t.Parallel()
+	// Given
+	query := es.NewQuery(nil).Aggs(es.Agg("categories", es.TermsAgg("category.id")))
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"aggs\":{\"categories\":{\"terms\":{\"field\":\"category.id\"}}},\"query\":{}}", bodyJSON)
+}

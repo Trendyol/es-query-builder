@@ -107,7 +107,7 @@ func (cardinality cardinalityAggType) Script(script scriptType) cardinalityAggTy
 //
 //	An es.cardinalityAggType object with the "meta" field set to the provided metadata.
 func (cardinality cardinalityAggType) Meta(key string, value any) cardinalityAggType {
-	meta, exists := getFieldFromAggs(cardinality, "cardinality", "meta")
+	meta, exists := getObjectFromAggs(cardinality, "cardinality", "meta")
 	if !exists {
 		meta = Object{}
 	}

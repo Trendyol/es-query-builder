@@ -107,7 +107,7 @@ func (avg avgAggType) Format(format string) avgAggType {
 //
 //	An es.avgAggType object with the "meta" field set to the provided metadata.
 func (avg avgAggType) Meta(key string, value any) avgAggType {
-	meta, exists := getFieldFromAggs(avg, "avg", "meta")
+	meta, exists := getObjectFromAggs(avg, "avg", "meta")
 	if !exists {
 		meta = Object{}
 	}

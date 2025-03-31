@@ -102,7 +102,7 @@ func (extendedStats extendedStatsAggType) Format(format string) extendedStatsAgg
 //
 //	An es.extendedStatsAggType object with the "meta" field set.
 func (extendedStats extendedStatsAggType) Meta(key string, value any) extendedStatsAggType {
-	meta, exists := getFieldFromAggs(extendedStats, "extended_stats", "meta")
+	meta, exists := getObjectFromAggs(extendedStats, "extended_stats", "meta")
 	if !exists {
 		meta = Object{}
 	}

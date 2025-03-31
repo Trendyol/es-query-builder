@@ -93,7 +93,7 @@ func (stats statsAggType) Format(format string) statsAggType {
 //
 //	A modified es.statsAggType with the meta field set.
 func (stats statsAggType) Meta(key string, value any) statsAggType {
-	meta, exists := getFieldFromAggs(stats, "stats", "meta")
+	meta, exists := getObjectFromAggs(stats, "stats", "meta")
 	if !exists {
 		meta = Object{}
 	}

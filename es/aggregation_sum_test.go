@@ -1,8 +1,9 @@
 package es_test
 
 import (
-	ScriptLanguage "github.com/Trendyol/es-query-builder/es/enums/script-language"
 	"testing"
+
+	ScriptLanguage "github.com/Trendyol/es-query-builder/es/enums/script-language"
 
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"

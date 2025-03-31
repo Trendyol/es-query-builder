@@ -101,7 +101,7 @@ func (max maxAggType) Format(format string) maxAggType {
 //
 //	An es.maxAggType object with the "meta" field set.
 func (max maxAggType) Meta(key string, value any) maxAggType {
-	meta, exists := getFieldFromAggs(max, "max", "meta")
+	meta, exists := getObjectFromAggs(max, "max", "meta")
 	if !exists {
 		meta = Object{}
 	}
