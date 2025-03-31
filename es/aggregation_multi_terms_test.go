@@ -95,6 +95,7 @@ func Test_Script_should_add_script_field_into_MultiTermsAgg(t *testing.T) {
 	// When Then
 	assert.NotNil(t, a)
 	bodyJSON := assert.MarshalWithoutError(t, a)
+	// nolint:golint,lll
 	assert.Equal(t, "{\"multi_terms\":{\"script\":{\"id\":\"id_12345\",\"lang\":\"painless\"},\"terms\":[{\"field\":\"price\"},{\"field\":\"stock\"}]}}", bodyJSON)
 }
 
@@ -332,6 +333,7 @@ func Test_Order_should_add_order_field_into_MultiTermsAgg_when_not_empty(t *test
 	// When Then
 	assert.NotNil(t, a)
 	bodyJSON := assert.MarshalWithoutError(t, a)
+	// nolint:golint,lll
 	assert.Equal(t, "{\"multi_terms\":{\"order\":[{\"price\":\"desc\"},{\"stock\":\"asc\"}],\"terms\":[{\"field\":\"price\"},{\"field\":\"stock\"}]}}", bodyJSON)
 }
 
@@ -376,6 +378,7 @@ func Test_Aggs_should_add_aggs_field_into_MultiTermsAgg_when_not_empty(t *testin
 	// When Then
 	assert.NotNil(t, a)
 	bodyJSON := assert.MarshalWithoutError(t, a)
+	// nolint:golint,lll
 	assert.Equal(t, "{\"aggs\":{\"multi_terms_stock\":{\"multi_terms\":{\"terms\":[{\"field\":\"listing\"}]}}},\"multi_terms\":{\"terms\":[{\"field\":\"price\"},{\"field\":\"stock\"}]}}", bodyJSON)
 }
 

@@ -136,6 +136,7 @@ func Test_Aggs_should_add_aggs_field_into_CardinalityAgg_when_not_empty(t *testi
 	// When Then
 	assert.NotNil(t, a)
 	bodyJSON := assert.MarshalWithoutError(t, a)
+	// nolint:golint,lll
 	assert.Equal(t, "{\"aggs\":{\"cardinality_stock\":{\"cardinality\":{\"field\":\"stock\"}}},\"cardinality\":{\"field\":\"price\"}}", bodyJSON)
 }
 

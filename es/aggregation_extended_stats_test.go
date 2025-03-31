@@ -136,6 +136,7 @@ func Test_Aggs_should_add_aggs_field_into_ExtendedStatsAgg_when_not_empty(t *tes
 	// When Then
 	assert.NotNil(t, a)
 	bodyJSON := assert.MarshalWithoutError(t, a)
+	// nolint:golint,lll
 	assert.Equal(t, "{\"aggs\":{\"extended_stats_stock\":{\"extended_stats\":{\"field\":\"stock\"}}},\"extended_stats\":{\"field\":\"price\"}}", bodyJSON)
 }
 
