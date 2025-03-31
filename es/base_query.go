@@ -213,3 +213,26 @@ func (o Object) Sort(sorts ...sortType) Object {
 	o["sort"] = sorts
 	return o
 }
+
+// Aggs adds one or more es.aggsType objects to an es.Object.
+//
+// This method allows you to specify multiple aggregation criteria for the search query.
+// Each es.aggsType object defines how the results should be aggregated based on different fields.
+//
+// Example usage:
+//
+//	query := es.NewQuery(...).Aggs(
+//		es.Agg("by_category", es.TermsAgg("category.keyword").Size(100)),
+//	)
+//	// query now includes an "aggs" parameter with nested aggregation objects.
+//
+// Parameters:
+//   - aggs: A variadic list of es.aggsType objects, each specifying aggregation criteria.
+//
+// Returns:
+//
+//	The updated Object with the "aggs" parameter set, containing the provided es.aggsType objects.
+func (o Object) Aggs(aggs ...aggsType) Object {
+	o["aggs"] = reduceAggs(aggs...)
+	return o
+}

@@ -1,7 +1,6 @@
 package es_test
 
 import (
-	"reflect"
 	"testing"
 
 	"github.com/Trendyol/es-query-builder/es"
@@ -36,12 +35,9 @@ func Test_NewQuery_should_return_type_of_Object(t *testing.T) {
 	// Given
 	query := es.NewQuery(nil)
 
-	// When
-	bodyType := reflect.TypeOf(query).String()
-
-	// Then
+	// When Then
 	assert.NotNil(t, query)
-	assert.Equal(t, "es.Object", bodyType)
+	assert.IsTypeString(t, "es.Object", query)
 	assert.MarshalWithoutError(t, query)
 }
 
@@ -352,4 +348,15 @@ func Test_Object_should_have_Aggs_method(t *testing.T) {
 
 	// When Then
 	assert.NotNil(t, b.Aggs)
+}
+
+func Test_Aggs_should_add_aggs_field_into_Object(t *testing.T) {
+	t.Parallel()
+	// Given
+	query := es.NewQuery(nil).Aggs(es.Agg("categories", es.TermsAgg("category.id")))
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"aggs\":{\"categories\":{\"terms\":{\"field\":\"category.id\"}}},\"query\":{}}", bodyJSON)
 }
