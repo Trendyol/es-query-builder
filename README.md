@@ -93,11 +93,11 @@ query := es.NewQuery(
             es.Terms("title", "1984", "Animal Farm"),
         )).
 	Aggs(
-        es.Agg("genres_count", es.TermsAgg("genre")),
-        es.Agg("authors_and_genres", es.TermsAgg("author").
-            Aggs(es.Agg("genres", es.TermsAgg("genre"))),
-        ),
-    )
+            es.Agg("genres_count", es.TermsAgg("genre")), 
+            es.Agg("authors_and_genres", es.TermsAgg("author").
+                Aggs(es.Agg("genres", es.TermsAgg("genre"))),
+            ),
+        )
 ```
 
 ### With vanilla Go
