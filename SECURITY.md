@@ -6,8 +6,8 @@ The following versions of `es-query-builder` are currently supported with securi
 
 | Version  | Supported          |
 | -------- | ------------------ |
-| ≥ 0.3.6  | ✅ Supported       |
-| < 0.3.6  | ❌ Not Supported   |
+| ≥ 0.6.0  | ✅ Supported       |
+| < 0.6.0  | ❌ Not Supported   |
 
 ## Reporting a Vulnerability
 
