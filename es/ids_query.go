@@ -2,7 +2,7 @@ package es
 
 type idsType Object
 
-// Ids creates a new es.idsType object representing an Elasticsearch "ids" query.
+// IDs creates a new es.idsType object representing an Elasticsearch "ids" query.
 //
 // This function initializes an es.idsType object for an "ids" query, which allows
 // you to match documents by their unique document IDs. It accepts a variadic list
@@ -10,7 +10,7 @@ type idsType Object
 //
 // Example usage:
 //
-//	q := es.Ids("1", "2", "3")
+//	q := es.IDs("1", "2", "3")
 //	// q now contains an es.idsType object with an "ids" query
 //	// matching documents with IDs "1", "2", or "3".
 //
@@ -20,7 +20,7 @@ type idsType Object
 // Returns:
 //
 //	An es.idsType object containing the specified "ids" query.
-func Ids[T ~string](values ...T) idsType {
+func IDs[T ~string](values ...T) idsType {
 	return idsType{
 		"ids": Object{
 			"values": values,
@@ -28,16 +28,16 @@ func Ids[T ~string](values ...T) idsType {
 	}
 }
 
-// IdsArray creates a new es.idsType object representing an Elasticsearch "ids" query,
+// IDsArray creates a new es.idsType object representing an Elasticsearch "ids" query,
 // using a slice of strings as input.
 //
-// This function is an alternative to Ids and is useful when the document IDs are
+// This function is an alternative to IDs and is useful when the document IDs are
 // already available in a slice. It avoids the need to unpack the slice manually.
 //
 // Example usage:
 //
 //	ids := []string{"doc1", "doc2", "doc3"}
-//	q := es.IdsArray(ids)
+//	q := es.IDsArray(ids)
 //	// q now contains an es.idsType object with an "ids" query
 //	// matching documents with IDs "doc1", "doc2", or "doc3".
 //
@@ -47,7 +47,7 @@ func Ids[T ~string](values ...T) idsType {
 // Returns:
 //
 //	An es.idsType object containing the specified "ids" query.
-func IdsArray[T ~string](values []T) idsType {
+func IDsArray[T ~string](values []T) idsType {
 	return idsType{
 		"ids": Object{
 			"values": values,
@@ -63,7 +63,7 @@ func IdsArray[T ~string](values []T) idsType {
 //
 // Example usage:
 //
-//	q := es.Ids("a", "b").Boost(1.5)
+//	q := es.IDs("a", "b").Boost(1.5)
 //	// q now includes a "boost" parameter set to 1.5.
 //
 // Parameters:
@@ -84,7 +84,7 @@ func (i idsType) Boost(boost float64) idsType {
 //
 // Example usage:
 //
-//	q := es.Ids("1", "2").Name("important-ids")
+//	q := es.IDs("1", "2").Name("important-ids")
 //	// q now includes a "_name" parameter set to "important-ids".
 //
 // Parameters:
