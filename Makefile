@@ -32,3 +32,8 @@ coverage:
 
 show-uncovered:
 	go-carpet ./es -nocolor | grep -E '\.go - [0-9]+\.[0-9]+%' | grep -v '100\.0%' || true
+
+coverage-html:
+	go test -v -coverprofile=cover.out -covermode=atomic ./...
+	go tool cover -html=cover.out -o cover.html
+	open cover.html
