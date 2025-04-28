@@ -9,6 +9,7 @@ import (
 )
 
 const maxBytes = 10 * 1024 * 1024 // 10 MB limit
+const bufferSize = 64 * 1024      // 64 KB
 
 func DecompressGz(inputPath string) ([]byte, error) {
 	file, err := os.Open(inputPath)
@@ -29,7 +30,7 @@ func DecompressGz(inputPath string) ([]byte, error) {
 
 	go func() {
 		defer pw.Close()
-		buf := make([]byte, 64*1024) // 64KB
+		buf := make([]byte, bufferSize)
 		for {
 			n, err := gzReader.Read(buf)
 			if n > 0 {
