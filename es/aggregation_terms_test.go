@@ -70,7 +70,7 @@ func Test_TermsAgg_should_have_Script_method(t *testing.T) {
 	assert.NotNil(t, a.Script)
 }
 
-func Test_Script_should_add_script_field_into_ermsAgg(t *testing.T) {
+func Test_Script_should_add_script_field_into_TermsAgg(t *testing.T) {
 	t.Parallel()
 	// Given
 	a := es.TermsAgg("price").
