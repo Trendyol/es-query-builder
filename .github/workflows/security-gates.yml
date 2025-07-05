@@ -5,13 +5,14 @@ on:
     branches: [main, master]
   pull_request:
     branches: [main, master]
+  workflow_call:
 
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
       - name: Validate Workflow
-        run: echo "Validation successful"
+        run: echo "✅ Validation successful"
 
   security-gates:
     uses: Trendyol/security-actions/.github/workflows/security-gates.yml@master
