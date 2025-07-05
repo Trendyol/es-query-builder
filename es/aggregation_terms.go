@@ -29,6 +29,39 @@ func TermsAgg(field string) termsAggType {
 	}
 }
 
+// Missing sets a default value to use for documents that do not contain the field.
+//
+// Example usage:
+//
+//	agg := es.TermsAgg("category").Missing("unknown")
+//	// Documents without "category" will be assigned "unknown".
+//
+// Parameters:
+//   - missing: The value to use when a document lacks the field.
+//
+// Returns:
+//
+//	An es.termsAggType object with the "missing" field set.
+func (terms termsAggType) Missing(missing any) termsAggType {
+	return terms.putInTheField("missing", missing)
+}
+
+// Script sets a script to compute dynamic bucket values instead of using a field.
+//
+// Example usage:
+//
+//	agg := es.TermsAgg("category").Script(es.ScriptSource("doc['category'].value + '_modified'", ScriptLanguage.Painless))
+//
+// Parameters:
+//   - script: A script for computing dynamic term values.
+//
+// Returns:
+//
+//	An es.termsAggType object with the "script" field set.
+func (terms termsAggType) Script(script scriptType) termsAggType {
+	return terms.putInTheField("script", script)
+}
+
 // Size sets the number of term buckets to return.
 //
 // Example usage:

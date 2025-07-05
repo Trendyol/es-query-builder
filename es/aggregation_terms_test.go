@@ -6,6 +6,7 @@ import (
 	CollectMode "github.com/Trendyol/es-query-builder/es/enums/collect-mode"
 	ExecutionHint "github.com/Trendyol/es-query-builder/es/enums/execution-hint"
 	Order "github.com/Trendyol/es-query-builder/es/enums/sort/order"
+	ScriptLanguage "github.com/Trendyol/es-query-builder/es/enums/script-language"
 
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"
@@ -37,6 +38,49 @@ func Test_TermsAgg_should_create_json_with_terms_field_inside(t *testing.T) {
 	assert.NotNil(t, a)
 	bodyJSON := assert.MarshalWithoutError(t, a)
 	assert.Equal(t, "{\"terms\":{\"field\":\"price\"}}", bodyJSON)
+}
+
+func Test_TermsAgg_should_have_Missing_method(t *testing.T) {
+	t.Parallel()
+	// Given
+	a := es.TermsAgg("price")
+
+	// When Then
+	assert.NotNil(t, a.Missing)
+}
+
+func Test_Missing_should_add_missing_field_into_TermsAgg(t *testing.T) {
+	t.Parallel()
+	// Given
+	a := es.TermsAgg("price").
+		Missing("missing_name")
+
+	// When Then
+	assert.NotNil(t, a)
+	bodyJSON := assert.MarshalWithoutError(t, a)
+	assert.Equal(t, "{\"terms\":{\"field\":\"price\",\"missing\":\"missing_name\"}}", bodyJSON)
+}
+
+func Test_TermsAgg_should_have_Script_method(t *testing.T) {
+	t.Parallel()
+	// Given
+	a := es.TermsAgg("price")
+
+	// When Then
+	assert.NotNil(t, a.Script)
+}
+
+func Test_Script_should_add_script_field_into_TermsAgg(t *testing.T) {
+	t.Parallel()
+	// Given
+	a := es.TermsAgg("price").
+		Script(es.ScriptID("id_12345", ScriptLanguage.Painless))
+
+	// When Then
+	assert.NotNil(t, a)
+	bodyJSON := assert.MarshalWithoutError(t, a)
+	// nolint:golint,lll
+	assert.Equal(t, "{\"terms\":{\"field\":\"price\",\"script\":{\"id\":\"id_12345\",\"lang\":\"painless\"}}}", bodyJSON)
 }
 
 func Test_TermsAgg_should_have_ShowTermDocCountError_method(t *testing.T) {
