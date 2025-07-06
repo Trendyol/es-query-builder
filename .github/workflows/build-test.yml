@@ -52,7 +52,7 @@ jobs:
 
   security-gates:
     if: false  # temporary disabled
-    uses: Trendyol/security-actions/.github/workflows/security-gates.yml@master
+    uses: ./.github/workflows/security-gates.yml
     needs: build
     permissions:
       actions: read
