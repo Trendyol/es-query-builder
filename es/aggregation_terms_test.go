@@ -5,8 +5,8 @@ import (
 
 	CollectMode "github.com/Trendyol/es-query-builder/es/enums/collect-mode"
 	ExecutionHint "github.com/Trendyol/es-query-builder/es/enums/execution-hint"
-	Order "github.com/Trendyol/es-query-builder/es/enums/sort/order"
 	ScriptLanguage "github.com/Trendyol/es-query-builder/es/enums/script-language"
+	Order "github.com/Trendyol/es-query-builder/es/enums/sort/order"
 
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"
