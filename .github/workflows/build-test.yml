@@ -37,7 +37,6 @@ jobs:
         with:
           version: v1.57.2
           args: -c .golangci.yml --timeout=2m -v
-          skip-cache: true
 
       - name: Build
         run: go build -v ./...
