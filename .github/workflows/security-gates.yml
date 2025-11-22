@@ -1,4 +1,4 @@
-name: Security Gates
+name: Security Gates 🛡️
 
 on:
   push:
@@ -14,7 +14,7 @@ jobs:
         run: echo "Validation successful"
 
   security-gates:
-    uses: Trendyol/security-actions/.github/workflows/security-gates.yml@master
+    uses: Trendyol/security-actions/.github/workflows/security-gates.yml@2f517c21295381d58281a8ff36dd9e2fe7fbc016
     permissions:
       actions: read
       contents: read
