@@ -14,7 +14,7 @@ jobs:
         run: echo "Validation successful"
 
   security-gates:
-    uses: Trendyol/security-actions/.github/workflows/security-gates.yml@f7564b9a78ffe187f2085d6454ae3d8dd4569dc0
+    uses: Trendyol/security-actions/.github/workflows/security-gates.yml@2f517c21295381d58281a8ff36dd9e2fe7fbc016
     permissions:
       actions: read
       contents: read
