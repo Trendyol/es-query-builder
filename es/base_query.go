@@ -210,7 +210,11 @@ func (o Object) SourceExcludes(fields ...string) Object {
 //
 //	The updated Object with the "sort" parameter set, containing the provided sortType objects.
 func (o Object) Sort(sorts ...sortType) Object {
-	o["sort"] = sorts
+	sort, ok := o["sort"].([]sortType)
+	if !ok {
+		sort = make([]sortType, 0, len(sorts))
+	}
+	o["sort"] = append(sort, sorts...)
 	return o
 }
 

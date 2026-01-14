@@ -140,3 +140,24 @@ func Test_Sort_should_add_sort_field_into_Object(t *testing.T) {
 	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"query\":{},\"sort\":[{\"name\":{\"order\":\"desc\"}}]}", bodyJSON)
 }
+
+func Test_Sort_should_append_sort_field_into_existing_Sort_field(t *testing.T) {
+	t.Parallel()
+	// Given
+	query := es.NewQuery(nil)
+
+	// When
+	_, beforeExists := query["sort"]
+	query.
+		Sort(es.Sort("name").Order(Order.Desc)).
+		Sort(es.Sort("surname").Order(Order.Asc))
+	sort, afterExists := query["sort"]
+
+	// Then
+	assert.NotNil(t, sort)
+	assert.False(t, beforeExists)
+	assert.True(t, afterExists)
+	assert.IsTypeString(t, "[]es.sortType", sort)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{},\"sort\":[{\"name\":{\"order\":\"desc\"}},{\"surname\":{\"order\":\"asc\"}}]}", bodyJSON)
+}
