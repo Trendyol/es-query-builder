@@ -4,10 +4,10 @@
 
 The following versions of `es-query-builder` are currently supported with security updates:
 
-| Version  | Supported          |
-| -------- | ------------------ |
-| ≥ 0.6.0  | ✅ Supported       |
-| < 0.6.0  | ❌ Not Supported   |
+| Version | Supported          |
+|---------| ------------------ |
+| ≥ 1.0.0 | ✅ Supported       |
+| < 0.6.2 | ❌ Not Supported   |
 
 ## Reporting a Vulnerability
 
