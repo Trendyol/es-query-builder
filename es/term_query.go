@@ -130,12 +130,6 @@ func TermIf[T any](key string, value T, condition bool) termType {
 }
 
 func (t termType) putInTheField(key string, value any) termType {
-	if term, ok := t["term"].(Object); ok {
-		for field := range term {
-			if fieldObject, foOk := term[field].(Object); foOk {
-				fieldObject[key] = value
-			}
-		}
-	}
+	putInTheNestedField(Object(t), "term", key, value)
 	return t
 }

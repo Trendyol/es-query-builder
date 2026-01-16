@@ -209,6 +209,31 @@ func (terms termsAggType) Order(orders ...aggOrder) termsAggType {
 	return terms.putInTheField("order", orders)
 }
 
+// Meta adds metadata to the terms aggregation.
+//
+// This can store additional information that does not affect the aggregation execution.
+//
+// Example usage:
+//
+//	termsAgg := es.TermsAgg("category").Meta("description", "Category terms")
+//
+// Parameters:
+//   - key: Metadata key.
+//   - value: Metadata value.
+//
+// Returns:
+//
+//	A modified es.termsAggType with the meta field set.
+func (terms termsAggType) Meta(key string, value any) termsAggType {
+	meta, ok := terms["meta"].(Object)
+	if !ok {
+		meta = Object{}
+	}
+	meta[key] = value
+	terms["meta"] = meta
+	return terms
+}
+
 // Aggs adds sub-aggregations to the terms' aggregation.
 //
 // Example usage:
@@ -232,8 +257,6 @@ func (terms termsAggType) Aggs(aggs ...aggsType) termsAggType {
 }
 
 func (terms termsAggType) putInTheField(key string, value any) termsAggType {
-	if termsAgg, ok := terms["terms"].(Object); ok {
-		termsAgg[key] = value
-	}
+	putInTheField(Object(terms), "terms", key, value)
 	return terms
 }

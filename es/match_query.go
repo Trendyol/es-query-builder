@@ -269,13 +269,6 @@ func (m matchType) ZeroTermsQuery(zeroTermsQuery ZeroTermsQuery.ZeroTermsQuery) 
 }
 
 func (m matchType) putInTheField(key string, value any) matchType {
-	if match, ok := m["match"].(Object); ok {
-		for _, fieldObj := range match {
-			if fieldObject, foOk := fieldObj.(Object); foOk {
-				fieldObject[key] = value
-				break
-			}
-		}
-	}
+	putInTheNestedField(Object(m), "match", key, value)
 	return m
 }

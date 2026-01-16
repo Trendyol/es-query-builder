@@ -224,13 +224,6 @@ func (m matchBoolPrefixType) PrefixLength(prefixLength int) matchBoolPrefixType 
 }
 
 func (m matchBoolPrefixType) putInTheField(key string, value any) matchBoolPrefixType {
-	if match, ok := m["match_bool_prefix"].(Object); ok {
-		for _, fieldObj := range match {
-			if fieldObject, foOk := fieldObj.(Object); foOk {
-				fieldObject[key] = value
-				break
-			}
-		}
-	}
+	putInTheNestedField(Object(m), "match_bool_prefix", key, value)
 	return m
 }

@@ -93,12 +93,13 @@ func (stats statsAggType) Format(format string) statsAggType {
 //
 //	A modified es.statsAggType with the meta field set.
 func (stats statsAggType) Meta(key string, value any) statsAggType {
-	meta, exists := getObjectFromAggs(stats, "stats", "meta")
-	if !exists {
+	meta, ok := stats["meta"].(Object)
+	if !ok {
 		meta = Object{}
 	}
 	meta[key] = value
-	return stats.putInTheField("meta", meta)
+	stats["meta"] = meta
+	return stats
 }
 
 // Aggs adds sub-aggregations to the stats' aggregation.

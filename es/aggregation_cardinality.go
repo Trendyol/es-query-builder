@@ -107,12 +107,13 @@ func (cardinality cardinalityAggType) Script(script scriptType) cardinalityAggTy
 //
 //	An es.cardinalityAggType object with the "meta" field set to the provided metadata.
 func (cardinality cardinalityAggType) Meta(key string, value any) cardinalityAggType {
-	meta, exists := getObjectFromAggs(cardinality, "cardinality", "meta")
-	if !exists {
+	meta, ok := cardinality["meta"].(Object)
+	if !ok {
 		meta = Object{}
 	}
 	meta[key] = value
-	return cardinality.putInTheField("meta", meta)
+	cardinality["meta"] = meta
+	return cardinality
 }
 
 // Aggs adds sub-aggregations to the cardinality aggregation. This method allows you to perform further
