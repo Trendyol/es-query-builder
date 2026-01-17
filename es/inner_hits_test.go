@@ -314,6 +314,20 @@ func Test_InnerHits_Sort_should_create_json_with_sort_field_inside_inner_hits(t 
 	assert.Equal(t, "{\"sort\":[{\"indexedAt\":{\"order\":\"desc\"}}]}", bodyJSON)
 }
 
+func Test_InnerHits_should_append_sort_field_into_existing_Sort_field_inside_inner_hits(t *testing.T) {
+	t.Parallel()
+
+	// Given
+	ih := es.InnerHits().
+		Sort(es.Sort("indexedAt").Order(Order.Desc)).
+		Sort(es.Sort("userName").Order(Order.Asc))
+
+	// When Then
+	assert.NotNil(t, ih)
+	bodyJSON := assert.MarshalWithoutError(t, ih)
+	assert.Equal(t, "{\"sort\":[{\"indexedAt\":{\"order\":\"desc\"}},{\"userName\":{\"order\":\"asc\"}}]}", bodyJSON)
+}
+
 func Test_InnerHits_should_have_Collapse_method(t *testing.T) {
 	t.Parallel()
 	// Given

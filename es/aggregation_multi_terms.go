@@ -236,6 +236,31 @@ func (multiTerms multiTermsAggType) Order(orders ...aggOrder) multiTermsAggType 
 	return multiTerms.putInTheField("order", orders)
 }
 
+// Meta adds metadata to the multi-terms aggregation.
+//
+// This can store additional information that does not affect the aggregation execution.
+//
+// Example usage:
+//
+//	agg := es.MultiTermsAgg(es.TermAgg("category")).Meta("description", "Multi-terms aggregation")
+//
+// Parameters:
+//   - key: Metadata key.
+//   - value: Metadata value.
+//
+// Returns:
+//
+//	A modified es.multiTermsAggType with the meta field set.
+func (multiTerms multiTermsAggType) Meta(key string, value any) multiTermsAggType {
+	meta, ok := multiTerms["meta"].(Object)
+	if !ok {
+		meta = Object{}
+	}
+	meta[key] = value
+	multiTerms["meta"] = meta
+	return multiTerms
+}
+
 // Aggs adds sub-aggregations to the multi-terms aggregation.
 //
 // Example usage:

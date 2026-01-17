@@ -284,7 +284,11 @@ func (ih innerHitsType) Size(size int) innerHitsType {
 //
 //	The updated es.innerHitsType object with the "sort" field set to the specified values.
 func (ih innerHitsType) Sort(sorts ...sortType) innerHitsType {
-	ih["sort"] = sorts
+	sort, ok := ih["sort"].([]sortType)
+	if !ok {
+		sort = make([]sortType, 0, len(sorts))
+	}
+	ih["sort"] = append(sort, sorts...)
 	return ih
 }
 
