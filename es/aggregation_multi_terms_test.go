@@ -84,6 +84,34 @@ func Test_MultiTermsAgg_should_have_Script_method(t *testing.T) {
 	assert.NotNil(t, a.Script)
 }
 
+func Test_MultiTermsAgg_should_have_Meta_method(t *testing.T) {
+	t.Parallel()
+	// Given
+	a := es.MultiTermsAgg(
+		es.TermAgg("price"),
+		es.TermAgg("stock"),
+	)
+
+	// When Then
+	assert.NotNil(t, a.Meta)
+}
+
+func Test_MultiTermsAgg_add_meta_field_into_MultiTermAgg(t *testing.T) {
+	t.Parallel()
+	// Given
+	a := es.MultiTermsAgg(
+		es.TermAgg("price"),
+		es.TermAgg("stock"),
+	).
+		Meta("k1", "v1").
+		Meta("k2", "v2")
+
+	// When Then
+	assert.NotNil(t, a)
+	bodyJSON := assert.MarshalWithoutError(t, a)
+	assert.Equal(t, "{\"meta\":{\"k1\":\"v1\",\"k2\":\"v2\"},\"multi_terms\":{\"terms\":[{\"field\":\"price\"},{\"field\":\"stock\"}]}}", bodyJSON)
+}
+
 func Test_Script_should_add_script_field_into_MultiTermsAgg(t *testing.T) {
 	t.Parallel()
 	// Given

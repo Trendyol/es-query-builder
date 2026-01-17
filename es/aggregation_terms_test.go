@@ -286,6 +286,28 @@ func Test_TermsAgg_should_have_Aggs_method(t *testing.T) {
 	assert.NotNil(t, a.Aggs)
 }
 
+func Test_TermsAgg_should_have_Meta_method(t *testing.T) {
+	t.Parallel()
+	// Given
+	a := es.TermsAgg("price")
+
+	// When Then
+	assert.NotNil(t, a.Meta)
+}
+
+func Test_TermsAgg_add_meta_field_into_TermsAgg(t *testing.T) {
+	t.Parallel()
+	// Given
+	a := es.TermsAgg("price").
+		Meta("k1", "v1").
+		Meta("k2", "v2")
+
+	// When Then
+	assert.NotNil(t, a)
+	bodyJSON := assert.MarshalWithoutError(t, a)
+	assert.Equal(t, "{\"meta\":{\"k1\":\"v1\",\"k2\":\"v2\"},\"terms\":{\"field\":\"price\"}}", bodyJSON)
+}
+
 func Test_Aggs_should_add_aggs_field_into_TermsAgg_when_not_empty(t *testing.T) {
 	t.Parallel()
 	// Given
