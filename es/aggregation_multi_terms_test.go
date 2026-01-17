@@ -109,6 +109,7 @@ func Test_MultiTermsAgg_add_meta_field_into_MultiTermAgg(t *testing.T) {
 	// When Then
 	assert.NotNil(t, a)
 	bodyJSON := assert.MarshalWithoutError(t, a)
+	// nolint:golint,lll
 	assert.Equal(t, "{\"meta\":{\"k1\":\"v1\",\"k2\":\"v2\"},\"multi_terms\":{\"terms\":[{\"field\":\"price\"},{\"field\":\"stock\"}]}}", bodyJSON)
 }
 
