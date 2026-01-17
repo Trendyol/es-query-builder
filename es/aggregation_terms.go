@@ -257,6 +257,5 @@ func (terms termsAggType) Aggs(aggs ...aggsType) termsAggType {
 }
 
 func (terms termsAggType) putInTheField(key string, value any) termsAggType {
-	putInTheField(Object(terms), "terms", key, value)
-	return terms
+	return genericPutInTheField(terms, "terms", key, value)
 }

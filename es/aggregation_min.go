@@ -134,8 +134,5 @@ func (min minAggType) Aggs(aggs ...aggsType) minAggType {
 }
 
 func (min minAggType) putInTheField(key string, value any) minAggType {
-	if minAgg, ok := min["min"].(Object); ok {
-		minAgg[key] = value
-	}
-	return min
+	return genericPutInTheField(min, "min", key, value)
 }

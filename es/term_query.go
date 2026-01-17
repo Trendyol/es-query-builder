@@ -130,6 +130,5 @@ func TermIf[T any](key string, value T, condition bool) termType {
 }
 
 func (t termType) putInTheField(key string, value any) termType {
-	putInTheNestedField(Object(t), "term", key, value)
-	return t
+	return genericPutInTheFieldOfFirstChild(t, "term", key, value)
 }

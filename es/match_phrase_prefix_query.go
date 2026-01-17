@@ -138,13 +138,5 @@ func (m matchPhrasePrefixType) Slop(slop int) matchPhrasePrefixType {
 }
 
 func (m matchPhrasePrefixType) putInTheField(key string, value any) matchPhrasePrefixType {
-	if matchPhrasePrefix, ok := m["match_phrase_prefix"].(Object); ok {
-		for _, fieldObj := range matchPhrasePrefix {
-			if fieldObject, foOk := fieldObj.(Object); foOk {
-				fieldObject[key] = value
-				break
-			}
-		}
-	}
-	return m
+	return genericPutInTheFieldOfFirstChild(m, "match_phrase_prefix", key, value)
 }

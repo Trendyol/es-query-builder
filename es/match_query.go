@@ -269,6 +269,5 @@ func (m matchType) ZeroTermsQuery(zeroTermsQuery ZeroTermsQuery.ZeroTermsQuery) 
 }
 
 func (m matchType) putInTheField(key string, value any) matchType {
-	putInTheNestedField(Object(m), "match", key, value)
-	return m
+	return genericPutInTheFieldOfFirstChild(m, "match", key, value)
 }

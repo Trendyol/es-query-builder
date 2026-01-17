@@ -117,13 +117,5 @@ func (m matchPhraseType) Slop(slop int) matchPhraseType {
 }
 
 func (m matchPhraseType) putInTheField(key string, value any) matchPhraseType {
-	if matchPhrase, ok := m["match_phrase"].(Object); ok {
-		for _, fieldObj := range matchPhrase {
-			if fieldObject, foOk := fieldObj.(Object); foOk {
-				fieldObject[key] = value
-				break
-			}
-		}
-	}
-	return m
+	return genericPutInTheFieldOfFirstChild(m, "match_phrase", key, value)
 }

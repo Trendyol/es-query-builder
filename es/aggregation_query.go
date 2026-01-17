@@ -68,3 +68,14 @@ func (o Object) Query(queryClause any) Object {
 	}
 	return o
 }
+
+func reduceAggs(aggs ...aggsType) Object {
+	aggregates := Object{}
+	for _, agg := range aggs {
+		for key, value := range agg {
+			aggregates[key] = value
+			break
+		}
+	}
+	return aggregates
+}

@@ -639,6 +639,5 @@ func (q queryStringType) Type(textQueryType TextQueryType.TextQueryType) querySt
 }
 
 func (q queryStringType) putInTheField(key string, value any) queryStringType {
-	putInTheField(Object(q), "query_string", key, value)
-	return q
+	return genericPutInTheFieldOfFirstObject(q, key, value)
 }

@@ -224,6 +224,5 @@ func (m matchBoolPrefixType) PrefixLength(prefixLength int) matchBoolPrefixType 
 }
 
 func (m matchBoolPrefixType) putInTheField(key string, value any) matchBoolPrefixType {
-	putInTheNestedField(Object(m), "match_bool_prefix", key, value)
-	return m
+	return genericPutInTheFieldOfFirstChild(m, "match_bool_prefix", key, value)
 }

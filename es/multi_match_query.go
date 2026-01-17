@@ -397,8 +397,5 @@ func (m multiMatchType) ZeroTermsQuery(zeroTermsQuery ZeroTermsQuery.ZeroTermsQu
 }
 
 func (m multiMatchType) putInTheField(key string, value any) multiMatchType {
-	if multiMatch, ok := m["multi_match"].(Object); ok {
-		multiMatch[key] = value
-	}
-	return m
+	return genericPutInTheField(m, "multi_match", key, value)
 }

@@ -98,8 +98,5 @@ func (i idsType) Name(name string) idsType {
 }
 
 func (i idsType) putInTheField(key string, value any) idsType {
-	if ids, ok := i["ids"].(Object); ok {
-		ids[key] = value
-	}
-	return i
+	return genericPutInTheField(i, "ids", key, value)
 }

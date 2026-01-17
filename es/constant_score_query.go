@@ -78,8 +78,5 @@ func (cs constantScoreType) Boost(boost float64) constantScoreType {
 }
 
 func (cs constantScoreType) putInTheField(key string, value any) constantScoreType {
-	if constantScore, ok := cs["constant_score"].(Object); ok {
-		constantScore[key] = value
-	}
-	return cs
+	return genericPutInTheField(cs, "constant_score", key, value)
 }

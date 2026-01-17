@@ -223,11 +223,16 @@ func (r rangeType) Relation(relation RangeRelation.RangeRelation) rangeType {
 }
 
 func (r rangeType) putInTheField(key string, value any) rangeType {
-	putInTheNestedField(Object(r), "range", key, value)
-	return r
+	return genericPutInTheFieldOfFirstChild(r, "range", key, value)
 }
 
 func (r rangeType) delete(key string) rangeType {
-	deleteFromNestedField(Object(r), "range", key)
+	if rang, ok := r["range"].(Object); ok {
+		for field := range rang {
+			if fieldObject, foOk := rang[field].(Object); foOk {
+				delete(fieldObject, key)
+			}
+		}
+	}
 	return r
 }

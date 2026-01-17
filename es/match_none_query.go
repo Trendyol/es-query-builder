@@ -52,13 +52,5 @@ func (m matchNoneType) Boost(boost float64) matchNoneType {
 }
 
 func (m matchNoneType) putInTheField(key string, value any) matchNoneType {
-	if matchNone, ok := m["match_none"].(Object); ok {
-		for _, fieldObj := range matchNone {
-			if fieldObject, foOk := fieldObj.(Object); foOk {
-				fieldObject[key] = value
-				break
-			}
-		}
-	}
-	return m
+	return genericPutInTheFieldOfFirstChild(m, "match_none", key, value)
 }

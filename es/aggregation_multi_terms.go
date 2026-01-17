@@ -282,6 +282,5 @@ func (multiTerms multiTermsAggType) Aggs(aggs ...aggsType) multiTermsAggType {
 }
 
 func (multiTerms multiTermsAggType) putInTheField(key string, value any) multiTermsAggType {
-	putInTheField(Object(multiTerms), "multi_terms", key, value)
-	return multiTerms
+	return genericPutInTheField(multiTerms, "multi_terms", key, value)
 }
