@@ -116,7 +116,7 @@ func Test_Meta_should_add_meta_field_into_SumAgg(t *testing.T) {
 	// When Then
 	assert.NotNil(t, a)
 	bodyJSON := assert.MarshalWithoutError(t, a)
-	assert.Equal(t, "{\"sum\":{\"field\":\"price\",\"meta\":{\"k1\":\"v1\",\"k2\":\"v2\"}}}", bodyJSON)
+	assert.Equal(t, "{\"meta\":{\"k1\":\"v1\",\"k2\":\"v2\"},\"sum\":{\"field\":\"price\"}}", bodyJSON)
 }
 
 func Test_SumAgg_should_have_Aggs_method(t *testing.T) {

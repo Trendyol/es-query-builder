@@ -101,12 +101,13 @@ func (min minAggType) Format(format string) minAggType {
 //
 //	An es.minAggType object with the "meta" field set.
 func (min minAggType) Meta(key string, value any) minAggType {
-	meta, exists := getObjectFromAggs(min, "min", "meta")
-	if !exists {
+	meta, ok := min["meta"].(Object)
+	if !ok {
 		meta = Object{}
 	}
 	meta[key] = value
-	return min.putInTheField("meta", meta)
+	min["meta"] = meta
+	return min
 }
 
 // Aggs adds sub-aggregations to the min aggregation.

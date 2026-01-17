@@ -94,12 +94,13 @@ func (sum sumAggType) Format(format string) sumAggType {
 //
 //	A modified sumAggType with the meta field set.
 func (sum sumAggType) Meta(key string, value any) sumAggType {
-	meta, exists := getObjectFromAggs(sum, "sum", "meta")
-	if !exists {
+	meta, ok := sum["meta"].(Object)
+	if !ok {
 		meta = Object{}
 	}
 	meta[key] = value
-	return sum.putInTheField("meta", meta)
+	sum["meta"] = meta
+	return sum
 }
 
 // Aggs adds sub-aggregations to the sum aggregation.

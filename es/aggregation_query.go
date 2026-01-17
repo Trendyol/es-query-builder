@@ -79,16 +79,3 @@ func reduceAggs(aggs ...aggsType) Object {
 	}
 	return aggregates
 }
-
-func getObjectFromAggs[T ~map[string]any](agg T, aggName, key string) (Object, bool) {
-	aggObject, ok := agg[aggName].(Object)
-	if !ok {
-		return nil, false
-	}
-	field, exists := aggObject[key]
-	if !exists {
-		return nil, false
-	}
-	fieldObject, ok := field.(Object)
-	return fieldObject, ok
-}

@@ -116,7 +116,7 @@ func Test_Meta_should_add_meta_field_into_MaxAgg(t *testing.T) {
 	// When Then
 	assert.NotNil(t, a)
 	bodyJSON := assert.MarshalWithoutError(t, a)
-	assert.Equal(t, "{\"max\":{\"field\":\"price\",\"meta\":{\"k1\":\"v1\",\"k2\":\"v2\"}}}", bodyJSON)
+	assert.Equal(t, "{\"max\":{\"field\":\"price\"},\"meta\":{\"k1\":\"v1\",\"k2\":\"v2\"}}", bodyJSON)
 }
 
 func Test_MaxAgg_should_have_Aggs_method(t *testing.T) {
