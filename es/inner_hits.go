@@ -347,6 +347,22 @@ func (ih innerHitsType) SourceIncludes(fields ...string) innerHitsType {
 	return ih
 }
 
+// SourceExcludes sets the "excludes" field for the _source configuration in the inner hits.
+//
+// This method specifies a list of fields to exclude from the inner hits results. The excluded
+// fields will not be included in the _source field, allowing you to limit the data returned.
+//
+// Example usage:
+//
+//	innerHits := es.InnerHits().SourceExcludes("description", "timestamp")
+//	// The inner hits object now excludes the "description" and "timestamp" fields from the "_source".
+//
+// Parameters:
+//   - fields: A variadic list of field names to exclude from the _source field.
+//
+// Returns:
+//
+//	The updated es.innerHitsType object with the "excludes" field in _source set to the specified values.
 func (ih innerHitsType) SourceExcludes(fields ...string) innerHitsType {
 	if len(fields) == 0 {
 		return ih
@@ -355,8 +371,8 @@ func (ih innerHitsType) SourceExcludes(fields ...string) innerHitsType {
 	if !ok {
 		source = Object{}
 	}
-	excludes, ok := source["excludes"].(Array)
-	if !ok {
+	excludes, exists := source["excludes"].(Array)
+	if !exists {
 		excludes = make(Array, 0, len(fields))
 	}
 	for i := 0; i < len(fields); i++ {
