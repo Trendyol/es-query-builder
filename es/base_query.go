@@ -237,7 +237,5 @@ func (o Object) Sort(sorts ...sortType) Object {
 //
 //	The updated Object with the "aggs" parameter set, containing the provided es.aggsType objects.
 func (o Object) Aggs(aggs ...aggsType) Object {
-	// o["aggs"] = reduceAggs(aggs...)
-	// return o
 	return genericPutAggsInRoot(o, aggs) //?
 }
