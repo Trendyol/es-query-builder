@@ -139,8 +139,5 @@ func (avg avgAggType) Aggs(aggs ...aggsType) avgAggType {
 }
 
 func (avg avgAggType) putInTheField(key string, value any) avgAggType {
-	if avgAgg, ok := avg["avg"].(Object); ok {
-		avgAgg[key] = value
-	}
-	return avg
+	return genericPutInTheField(avg, "avg", key, value)
 }

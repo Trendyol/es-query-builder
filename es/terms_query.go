@@ -136,8 +136,5 @@ func TermsIf[T any](key string, values []T, condition bool) termsType {
 }
 
 func (t termsType) putInTheField(key string, value any) termsType {
-	if terms, ok := t["terms"].(Object); ok {
-		terms[key] = value
-	}
-	return t
+	return genericPutInTheField(t, "terms", key, value)
 }

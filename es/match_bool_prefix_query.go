@@ -224,13 +224,5 @@ func (m matchBoolPrefixType) PrefixLength(prefixLength int) matchBoolPrefixType 
 }
 
 func (m matchBoolPrefixType) putInTheField(key string, value any) matchBoolPrefixType {
-	if match, ok := m["match_bool_prefix"].(Object); ok {
-		for _, fieldObj := range match {
-			if fieldObject, foOk := fieldObj.(Object); foOk {
-				fieldObject[key] = value
-				break
-			}
-		}
-	}
-	return m
+	return genericPutInTheFieldOfFirstChild(m, "match_bool_prefix", key, value)
 }

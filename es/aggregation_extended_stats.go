@@ -135,8 +135,5 @@ func (extendedStats extendedStatsAggType) Aggs(aggs ...aggsType) extendedStatsAg
 }
 
 func (extendedStats extendedStatsAggType) putInTheField(key string, value any) extendedStatsAggType {
-	if extendedStatsAgg, ok := extendedStats["extended_stats"].(Object); ok {
-		extendedStatsAgg[key] = value
-	}
-	return extendedStats
+	return genericPutInTheField(extendedStats, "extended_stats", key, value)
 }

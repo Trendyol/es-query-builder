@@ -103,8 +103,5 @@ func ExistsIf(key string, condition bool) existsType {
 }
 
 func (e existsType) putInTheField(key string, value any) existsType {
-	if exists, ok := e["exists"].(Object); ok {
-		exists[key] = value
-	}
-	return e
+	return genericPutInTheField(e, "exists", key, value)
 }

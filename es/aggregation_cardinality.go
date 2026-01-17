@@ -139,8 +139,5 @@ func (cardinality cardinalityAggType) Aggs(aggs ...aggsType) cardinalityAggType 
 }
 
 func (cardinality cardinalityAggType) putInTheField(key string, value any) cardinalityAggType {
-	if cardinalityAgg, ok := cardinality["cardinality"].(Object); ok {
-		cardinalityAgg[key] = value
-	}
-	return cardinality
+	return genericPutInTheField(cardinality, "cardinality", key, value)
 }

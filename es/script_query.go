@@ -73,8 +73,5 @@ func (sq scriptQueryType) Name(name string) scriptQueryType {
 }
 
 func (sq scriptQueryType) putInTheField(key string, value any) scriptQueryType {
-	if scriptQuery, ok := sq["script"].(Object); ok {
-		scriptQuery[key] = value
-	}
-	return sq
+	return genericPutInTheField(sq, "script", key, value)
 }

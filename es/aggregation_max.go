@@ -134,8 +134,5 @@ func (max maxAggType) Aggs(aggs ...aggsType) maxAggType {
 }
 
 func (max maxAggType) putInTheField(key string, value any) maxAggType {
-	if maxAgg, ok := max["max"].(Object); ok {
-		maxAgg[key] = value
-	}
-	return max
+	return genericPutInTheField(max, "max", key, value)
 }

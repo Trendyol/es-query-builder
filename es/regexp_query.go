@@ -119,13 +119,5 @@ func (r regexpType) Boost(boost float64) regexpType {
 }
 
 func (r regexpType) putInTheField(key string, value any) regexpType {
-	if regexp, ok := r["regexp"].(Object); ok {
-		for _, fieldObj := range regexp {
-			if fieldObject, foOk := fieldObj.(Object); foOk {
-				fieldObject[key] = value
-				break
-			}
-		}
-	}
-	return r
+	return genericPutInTheFieldOfFirstChild(r, "regexp", key, value)
 }
