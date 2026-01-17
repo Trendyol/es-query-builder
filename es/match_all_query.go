@@ -43,8 +43,5 @@ func (m matchAllType) Boost(boost float64) matchAllType {
 }
 
 func (m matchAllType) putInTheField(key string, value any) matchAllType {
-	if matchAll, ok := m["match_all"].(Object); ok {
-		matchAll[key] = value
-	}
-	return m
+	return genericPutInTheField(m, "match_all", key, value)
 }

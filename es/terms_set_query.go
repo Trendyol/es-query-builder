@@ -91,12 +91,5 @@ func (t termsSetType) MinimumShouldMatchScript(minimumShouldMatchScript scriptTy
 }
 
 func (t termsSetType) putInTheField(key string, value any) termsSetType {
-	if termsSet, ok := t["terms_set"].(Object); ok {
-		for field := range termsSet {
-			if fieldObject, foOk := termsSet[field].(Object); foOk {
-				fieldObject[key] = value
-			}
-		}
-	}
-	return t
+	return genericPutInTheFieldOfFirstChild(t, "terms_set", key, value)
 }

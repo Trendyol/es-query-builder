@@ -126,8 +126,5 @@ func (sum sumAggType) Aggs(aggs ...aggsType) sumAggType {
 }
 
 func (sum sumAggType) putInTheField(key string, value any) sumAggType {
-	if sumAgg, ok := sum["sum"].(Object); ok {
-		sumAgg[key] = value
-	}
-	return sum
+	return genericPutInTheField(sum, "sum", key, value)
 }

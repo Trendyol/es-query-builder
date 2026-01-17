@@ -311,11 +311,5 @@ func (q simpleQueryStringType) Boost(boost float64) simpleQueryStringType {
 }
 
 func (q simpleQueryStringType) putInTheField(key string, value any) simpleQueryStringType {
-	for _, fieldObj := range q {
-		if fieldObject, ok := fieldObj.(Object); ok {
-			fieldObject[key] = value
-			break
-		}
-	}
-	return q
+	return genericPutInTheFieldOfFirstObject(q, key, value)
 }
