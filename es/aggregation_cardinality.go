@@ -131,11 +131,7 @@ func (cardinality cardinalityAggType) Meta(key string, value any) cardinalityAgg
 //
 //	An es.cardinalityAggType object with the specified sub-aggregations added.
 func (cardinality cardinalityAggType) Aggs(aggs ...aggsType) cardinalityAggType {
-	if len(aggs) == 1 && aggs[0] == nil {
-		return cardinality
-	}
-	cardinality["aggs"] = reduceAggs(aggs...)
-	return cardinality
+	return genericPutAggsInRoot(cardinality, aggs)
 }
 
 func (cardinality cardinalityAggType) putInTheField(key string, value any) cardinalityAggType {

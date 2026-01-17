@@ -131,11 +131,7 @@ func (avg avgAggType) Meta(key string, value any) avgAggType {
 //
 //	An es.avgAggType object with the specified sub-aggregations added.
 func (avg avgAggType) Aggs(aggs ...aggsType) avgAggType {
-	if len(aggs) == 1 && aggs[0] == nil {
-		return avg
-	}
-	avg["aggs"] = reduceAggs(aggs...)
-	return avg
+	return genericPutAggsInRoot(avg, aggs)
 }
 
 func (avg avgAggType) putInTheField(key string, value any) avgAggType {

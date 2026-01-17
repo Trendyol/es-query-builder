@@ -118,11 +118,7 @@ func (sum sumAggType) Meta(key string, value any) sumAggType {
 //
 //	A modified sumAggType containing the nested aggregations.
 func (sum sumAggType) Aggs(aggs ...aggsType) sumAggType {
-	if len(aggs) == 1 && aggs[0] == nil {
-		return sum
-	}
-	sum["aggs"] = reduceAggs(aggs...)
-	return sum
+	return genericPutAggsInRoot(sum, aggs)
 }
 
 func (sum sumAggType) putInTheField(key string, value any) sumAggType {

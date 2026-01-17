@@ -126,11 +126,7 @@ func (min minAggType) Meta(key string, value any) minAggType {
 //
 //	An es.minAggType object with the specified sub-aggregations added.
 func (min minAggType) Aggs(aggs ...aggsType) minAggType {
-	if len(aggs) == 1 && aggs[0] == nil {
-		return min
-	}
-	min["aggs"] = reduceAggs(aggs...)
-	return min
+	return genericPutAggsInRoot(min, aggs)
 }
 
 func (min minAggType) putInTheField(key string, value any) minAggType {

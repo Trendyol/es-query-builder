@@ -127,11 +127,7 @@ func (extendedStats extendedStatsAggType) Meta(key string, value any) extendedSt
 //
 //	An es.extendedStatsAggType object with the specified sub-aggregations added.
 func (extendedStats extendedStatsAggType) Aggs(aggs ...aggsType) extendedStatsAggType {
-	if len(aggs) == 1 && aggs[0] == nil {
-		return extendedStats
-	}
-	extendedStats["aggs"] = reduceAggs(aggs...)
-	return extendedStats
+	return genericPutAggsInRoot(extendedStats, aggs)
 }
 
 func (extendedStats extendedStatsAggType) putInTheField(key string, value any) extendedStatsAggType {

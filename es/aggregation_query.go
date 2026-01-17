@@ -21,7 +21,7 @@ type aggsType Object
 //	An Object containing the "aggs" field with the merged aggregation definitions.
 func NewAggs(aggs ...aggsType) Object {
 	return Object{
-		"aggs": reduceAggs(aggs...),
+		"aggs": reduceAggs(aggs),
 	}
 }
 
@@ -69,7 +69,7 @@ func (o Object) Query(queryClause any) Object {
 	return o
 }
 
-func reduceAggs(aggs ...aggsType) Object {
+func reduceAggs(aggs []aggsType) Object {
 	aggregates := Object{}
 	for _, agg := range aggs {
 		for key, value := range agg {
@@ -78,4 +78,12 @@ func reduceAggs(aggs ...aggsType) Object {
 		}
 	}
 	return aggregates
+}
+
+func genericPutAggsInRoot[T ~map[string]any](root T, aggs []aggsType) T {
+	if len(aggs) == 1 && aggs[0] == nil {
+		return root
+	}
+	root["aggs"] = reduceAggs(aggs)
+	return root
 }

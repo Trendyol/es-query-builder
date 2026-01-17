@@ -117,11 +117,7 @@ func (stats statsAggType) Meta(key string, value any) statsAggType {
 //
 //	An emodified es.statsAggType containing the nested aggregations.
 func (stats statsAggType) Aggs(aggs ...aggsType) statsAggType {
-	if len(aggs) == 1 && aggs[0] == nil {
-		return stats
-	}
-	stats["aggs"] = reduceAggs(aggs...)
-	return stats
+	return genericPutAggsInRoot(stats, aggs)
 }
 
 func (stats statsAggType) putInTheField(key string, value any) statsAggType {

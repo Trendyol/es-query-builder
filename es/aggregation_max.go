@@ -126,11 +126,7 @@ func (max maxAggType) Meta(key string, value any) maxAggType {
 //
 //	An es.maxAggType object with the specified sub-aggregations added.
 func (max maxAggType) Aggs(aggs ...aggsType) maxAggType {
-	if len(aggs) == 1 && aggs[0] == nil {
-		return max
-	}
-	max["aggs"] = reduceAggs(aggs...)
-	return max
+	return genericPutAggsInRoot(max, aggs)
 }
 
 func (max maxAggType) putInTheField(key string, value any) maxAggType {

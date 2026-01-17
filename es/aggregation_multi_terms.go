@@ -274,11 +274,7 @@ func (multiTerms multiTermsAggType) Meta(key string, value any) multiTermsAggTyp
 //
 //	An es.multiTermsAggType object with the specified sub-aggregations added.
 func (multiTerms multiTermsAggType) Aggs(aggs ...aggsType) multiTermsAggType {
-	if len(aggs) == 1 && aggs[0] == nil {
-		return multiTerms
-	}
-	multiTerms["aggs"] = reduceAggs(aggs...)
-	return multiTerms
+	return genericPutAggsInRoot(multiTerms, aggs)
 }
 
 func (multiTerms multiTermsAggType) putInTheField(key string, value any) multiTermsAggType {

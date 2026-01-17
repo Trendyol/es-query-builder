@@ -43,9 +43,5 @@ func NestedAgg(path string) nestedAggType {
 //
 //	An es.nestedAggType object with the specified sub-aggregations added.
 func (nested nestedAggType) Aggs(aggs ...aggsType) nestedAggType {
-	if len(aggs) == 1 && aggs[0] == nil {
-		return nested
-	}
-	nested["aggs"] = reduceAggs(aggs...)
-	return nested
+	return genericPutAggsInRoot(nested, aggs)
 }

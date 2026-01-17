@@ -249,11 +249,7 @@ func (terms termsAggType) Meta(key string, value any) termsAggType {
 //
 //	A modified es.termsAggType containing the nested aggregations.
 func (terms termsAggType) Aggs(aggs ...aggsType) termsAggType {
-	if len(aggs) == 1 && aggs[0] == nil {
-		return terms
-	}
-	terms["aggs"] = reduceAggs(aggs...)
-	return terms
+	return genericPutAggsInRoot(terms, aggs)
 }
 
 func (terms termsAggType) putInTheField(key string, value any) termsAggType {
