@@ -116,7 +116,7 @@ func Test_Meta_should_add_meta_field_into_AvgAgg(t *testing.T) {
 	// When Then
 	assert.NotNil(t, a)
 	bodyJSON := assert.MarshalWithoutError(t, a)
-	assert.Equal(t, "{\"avg\":{\"field\":\"price\",\"meta\":{\"k1\":\"v1\",\"k2\":\"v2\"}}}", bodyJSON)
+	assert.Equal(t, "{\"avg\":{\"field\":\"price\"},\"meta\":{\"k1\":\"v1\",\"k2\":\"v2\"}}", bodyJSON)
 }
 
 func Test_AvgAgg_should_have_Aggs_method(t *testing.T) {

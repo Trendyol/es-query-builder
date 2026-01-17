@@ -68,27 +68,3 @@ func (o Object) Query(queryClause any) Object {
 	}
 	return o
 }
-
-func reduceAggs(aggs ...aggsType) Object {
-	aggregates := Object{}
-	for _, agg := range aggs {
-		for key, value := range agg {
-			aggregates[key] = value
-			break
-		}
-	}
-	return aggregates
-}
-
-func getObjectFromAggs[T ~map[string]any](agg T, aggName, key string) (Object, bool) {
-	aggObject, ok := agg[aggName].(Object)
-	if !ok {
-		return nil, false
-	}
-	field, exists := aggObject[key]
-	if !exists {
-		return nil, false
-	}
-	fieldObject, ok := field.(Object)
-	return fieldObject, ok
-}

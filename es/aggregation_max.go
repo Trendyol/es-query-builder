@@ -101,12 +101,13 @@ func (max maxAggType) Format(format string) maxAggType {
 //
 //	An es.maxAggType object with the "meta" field set.
 func (max maxAggType) Meta(key string, value any) maxAggType {
-	meta, exists := getObjectFromAggs(max, "max", "meta")
-	if !exists {
+	meta, ok := max["meta"].(Object)
+	if !ok {
 		meta = Object{}
 	}
 	meta[key] = value
-	return max.putInTheField("meta", meta)
+	max["meta"] = meta
+	return max
 }
 
 // Aggs adds sub-aggregations to the max aggregation.

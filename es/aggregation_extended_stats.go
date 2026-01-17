@@ -102,12 +102,13 @@ func (extendedStats extendedStatsAggType) Format(format string) extendedStatsAgg
 //
 //	An es.extendedStatsAggType object with the "meta" field set.
 func (extendedStats extendedStatsAggType) Meta(key string, value any) extendedStatsAggType {
-	meta, exists := getObjectFromAggs(extendedStats, "extended_stats", "meta")
-	if !exists {
+	meta, ok := extendedStats["meta"].(Object)
+	if !ok {
 		meta = Object{}
 	}
 	meta[key] = value
-	return extendedStats.putInTheField("meta", meta)
+	extendedStats["meta"] = meta
+	return extendedStats
 }
 
 // Aggs adds sub-aggregations to the extended stats aggregation.
