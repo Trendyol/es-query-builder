@@ -37,7 +37,7 @@ type primitive interface {
 }
 
 // correctType normalizes query values for Elasticsearch DSL. It returns (nil, false)
-// for nil or typed-nil values, wraps BoolType in {"bool": ...} structure, and returns
+// for nil or typed-nil values, wraps es.BoolType in {"bool": ...} structure, and returns
 // other types unchanged. Uses unsafe pointer inspection to detect typed-nil cases.
 func correctType(b any) (any, bool) {
 	if b == nil || (*[2]uintptr)(unsafe.Pointer(&b))[1] == 0 {
