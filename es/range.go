@@ -49,6 +49,32 @@ func (r rangeType) LessThan(lt any) rangeType {
 	return r.putInTheField("lt", lt).delete("lte")
 }
 
+// LessThanIf conditionally sets the "lt" (less than) field for the range query.
+//
+// This method sets the "lt" field on the range query only if the provided condition
+// is true. If the condition is false, the range query is returned unchanged.
+// When applied, it also removes any existing "lte" (less than or equal to) field
+// to ensure that only one type of range condition is active.
+//
+// Example usage:
+//
+//	r := es.Range("age").LessThanIf(20, includeUpperBound)
+//	// r has an "lt" field set to 20 only if includeUpperBound is true.
+//
+// Parameters:
+//   - lt: The value that the field should be less than.
+//   - condition: A boolean value that determines whether the "lt" field should be set.
+//
+// Returns:
+//
+//	The updated es.rangeType object if the condition is true; otherwise, the original object.
+func (r rangeType) LessThanIf(lt any, condition bool) rangeType {
+	if !condition {
+		return r
+	}
+	return r.LessThan(lt)
+}
+
 // LessThanOrEqual sets the "lte" (less than or equal to) field for the range query.
 //
 // This method specifies that the range query should match values that are less than or equal
@@ -68,6 +94,32 @@ func (r rangeType) LessThan(lt any) rangeType {
 //	The updated es.rangeType object with the "lte" field set to the specified value.
 func (r rangeType) LessThanOrEqual(lte any) rangeType {
 	return r.putInTheField("lte", lte).delete("lt")
+}
+
+// LessThanOrEqualIf conditionally sets the "lte" (less than or equal to) field for the range query.
+//
+// This method sets the "lte" field on the range query only if the provided condition
+// is true. If the condition is false, the range query is returned unchanged.
+// When applied, it also removes any existing "lt" (less than) field to ensure that only
+// one type of range condition is active.
+//
+// Example usage:
+//
+//	r := es.Range("age").LessThanOrEqualIf(20, includeUpperBound)
+//	// r has an "lte" field set to 20 only if includeUpperBound is true.
+//
+// Parameters:
+//   - lte: The value that the field should be less than or equal to.
+//   - condition: A boolean value that determines whether the "lte" field should be set.
+//
+// Returns:
+//
+//	The updated es.rangeType object if the condition is true; otherwise, the original object.
+func (r rangeType) LessThanOrEqualIf(lte any, condition bool) rangeType {
+	if !condition {
+		return r
+	}
+	return r.LessThanOrEqual(lte)
 }
 
 // GreaterThan sets the "gt" (greater than) field for the range query.
@@ -91,6 +143,32 @@ func (r rangeType) GreaterThan(gt any) rangeType {
 	return r.putInTheField("gt", gt).delete("gte")
 }
 
+// GreaterThanIf conditionally sets the "gt" (greater than) field for the range query.
+//
+// This method sets the "gt" field on the range query only if the provided condition
+// is true. If the condition is false, the range query is returned unchanged.
+// When applied, it also removes any existing "gte" (greater than or equal to) field
+// to ensure that only one type of range condition is active.
+//
+// Example usage:
+//
+//	r := es.Range("age").GreaterThanIf(50, includeLowerBound)
+//	// r has a "gt" field set to 50 only if includeLowerBound is true.
+//
+// Parameters:
+//   - gt: The value that the field should be greater than.
+//   - condition: A boolean value that determines whether the "gt" field should be set.
+//
+// Returns:
+//
+//	The updated es.rangeType object if the condition is true; otherwise, the original object.
+func (r rangeType) GreaterThanIf(gt any, condition bool) rangeType {
+	if !condition {
+		return r
+	}
+	return r.GreaterThan(gt)
+}
+
 // GreaterThanOrEqual sets the "gte" (greater than or equal to) field for the range query.
 //
 // This method specifies that the range query should match values that are greater than or equal
@@ -110,6 +188,32 @@ func (r rangeType) GreaterThan(gt any) rangeType {
 //	The updated es.rangeType object with the "gte" field set to the specified value.
 func (r rangeType) GreaterThanOrEqual(gte any) rangeType {
 	return r.putInTheField("gte", gte).delete("gt")
+}
+
+// GreaterThanOrEqualIf conditionally sets the "gte" (greater than or equal to) field for the range query.
+//
+// This method sets the "gte" field on the range query only if the provided condition
+// is true. If the condition is false, the range query is returned unchanged.
+// When applied, it also removes any existing "gt" (greater than) field to ensure that only
+// one type of range condition is active.
+//
+// Example usage:
+//
+//	r := es.Range("age").GreaterThanOrEqualIf(50, includeLowerBound)
+//	// r has a "gte" field set to 50 only if includeLowerBound is true.
+//
+// Parameters:
+//   - gte: The value that the field should be greater than or equal to.
+//   - condition: A boolean value that determines whether the "gte" field should be set.
+//
+// Returns:
+//
+//	The updated es.rangeType object if the condition is true; otherwise, the original object.
+func (r rangeType) GreaterThanOrEqualIf(gte any, condition bool) rangeType {
+	if !condition {
+		return r
+	}
+	return r.GreaterThanOrEqual(gte)
 }
 
 // Format sets the "format" field for the range query.
@@ -175,6 +279,33 @@ func (r rangeType) From(from any) rangeType {
 	return r.putInTheField("from", from)
 }
 
+// FromIf conditionally sets the "from" field for the range query.
+//
+// This method sets the "from" field on the range query only if the provided condition
+// is true. If the condition is false, the range query is returned unchanged.
+// The "from" field defines the lower bound of the range, and matching documents
+// must have values greater than or equal to this value.
+//
+// Example usage:
+//
+//	r := es.Range("age").FromIf(18, includeLowerBound)
+//	// r has a "from" field set to 18 only if includeLowerBound is true.
+//
+// Parameters:
+//   - from: The value representing the lower bound of the range. It can be of any type
+//     that is valid for the field (e.g., integer, string, date).
+//   - condition: A boolean value that determines whether the "from" field should be set.
+//
+// Returns:
+//
+//	The updated es.rangeType object if the condition is true; otherwise, the original object.
+func (r rangeType) FromIf(from any, condition bool) rangeType {
+	if !condition {
+		return r
+	}
+	return r.From(from)
+}
+
 // To sets the "to" field for the range query.
 //
 // This method specifies the upper bound for the range query. The "to" field defines
@@ -195,6 +326,33 @@ func (r rangeType) From(from any) rangeType {
 //	The updated es.rangeType object with the "to" field set to the specified value.
 func (r rangeType) To(to any) rangeType {
 	return r.putInTheField("to", to)
+}
+
+// ToIf conditionally sets the "to" field for the range query.
+//
+// This method sets the "to" field on the range query only if the provided condition
+// is true. If the condition is false, the range query is returned unchanged.
+// The "to" field defines the upper bound of the range, and matching documents
+// must have values less than or equal to this value.
+//
+// Example usage:
+//
+//	r := es.Range("age").ToIf(65, includeUpperBound)
+//	// r has a "to" field set to 65 only if includeUpperBound is true.
+//
+// Parameters:
+//   - to: The value representing the upper bound of the range. It can be of any type
+//     that is valid for the field (e.g., integer, string, date).
+//   - condition: A boolean value that determines whether the "to" field should be set.
+//
+// Returns:
+//
+//	The updated es.rangeType object if the condition is true; otherwise, the original object.
+func (r rangeType) ToIf(to any, condition bool) rangeType {
+	if !condition {
+		return r
+	}
+	return r.To(to)
 }
 
 // Relation sets the "relation" field for the range query.
