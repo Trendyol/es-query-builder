@@ -74,6 +74,50 @@ func Test_Range_should_have_LessThan_method(t *testing.T) {
 	assert.NotNil(t, r.LessThan)
 }
 
+func Test_Range_should_have_LessThanIf_method(t *testing.T) {
+	t.Parallel()
+	// Given
+	r := es.Range("age")
+
+	// When Then
+	assert.NotNil(t, r)
+	assert.NotNil(t, r.LessThanIf)
+}
+
+func Test_Range_should_create_json_with_lt_field_inside_query_when_condition_is_true(t *testing.T) {
+	t.Parallel()
+
+	// Given
+	variable := 20
+	query := es.NewQuery(
+		es.Range("age").
+			GreaterThanOrEqual(10).
+			LessThanIf(variable, variable > 15),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"range\":{\"age\":{\"gte\":10,\"lt\":20}}}}", bodyJSON)
+}
+
+func Test_Range_should_not_create_json_with_lt_field_inside_query_when_condition_is_false(t *testing.T) {
+	t.Parallel()
+
+	// Given
+	variable := 20
+	query := es.NewQuery(
+		es.Range("age").
+			GreaterThanOrEqual(10).
+			LessThanIf(variable, variable < 15),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"range\":{\"age\":{\"gte\":10}}}}", bodyJSON)
+}
+
 func Test_Range_should_have_LessThanOrEqual_method(t *testing.T) {
 	t.Parallel()
 	// Given
@@ -82,6 +126,50 @@ func Test_Range_should_have_LessThanOrEqual_method(t *testing.T) {
 	// When Then
 	assert.NotNil(t, r)
 	assert.NotNil(t, r.LessThanOrEqual)
+}
+
+func Test_Range_should_have_LessThanOrEqualIf_method(t *testing.T) {
+	t.Parallel()
+	// Given
+	r := es.Range("age")
+
+	// When Then
+	assert.NotNil(t, r)
+	assert.NotNil(t, r.LessThanOrEqualIf)
+}
+
+func Test_Range_should_create_json_with_lte_field_inside_query_when_condition_is_true(t *testing.T) {
+	t.Parallel()
+
+	// Given
+	variable := 20
+	query := es.NewQuery(
+		es.Range("age").
+			GreaterThanOrEqual(10).
+			LessThanOrEqualIf(variable, variable > 15),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"range\":{\"age\":{\"gte\":10,\"lte\":20}}}}", bodyJSON)
+}
+
+func Test_Range_should_not_create_json_with_lte_field_inside_query_when_condition_is_false(t *testing.T) {
+	t.Parallel()
+
+	// Given
+	variable := 20
+	query := es.NewQuery(
+		es.Range("age").
+			GreaterThanOrEqual(10).
+			LessThanOrEqualIf(variable, variable < 15),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"range\":{\"age\":{\"gte\":10}}}}", bodyJSON)
 }
 
 func Test_Range_should_have_GreaterThan_method(t *testing.T) {
@@ -94,6 +182,50 @@ func Test_Range_should_have_GreaterThan_method(t *testing.T) {
 	assert.NotNil(t, r.GreaterThan)
 }
 
+func Test_Range_should_have_GreaterThanIf_method(t *testing.T) {
+	t.Parallel()
+	// Given
+	r := es.Range("age")
+
+	// When Then
+	assert.NotNil(t, r)
+	assert.NotNil(t, r.GreaterThanIf)
+}
+
+func Test_Range_should_create_json_with_gt_field_inside_query_when_condition_is_true(t *testing.T) {
+	t.Parallel()
+
+	// Given
+	variable := 10
+	query := es.NewQuery(
+		es.Range("age").
+			GreaterThanIf(variable, variable < 15).
+			LessThanOrEqual(20),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"range\":{\"age\":{\"gt\":10,\"lte\":20}}}}", bodyJSON)
+}
+
+func Test_Range_should_not_create_json_with_gt_field_inside_query_when_condition_is_false(t *testing.T) {
+	t.Parallel()
+
+	// Given
+	variable := 10
+	query := es.NewQuery(
+		es.Range("age").
+			GreaterThanIf(variable, variable > 15).
+			LessThanOrEqual(20),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"range\":{\"age\":{\"lte\":20}}}}", bodyJSON)
+}
+
 func Test_Range_should_have_GreaterThanOrEqual_method(t *testing.T) {
 	t.Parallel()
 	// Given
@@ -102,6 +234,50 @@ func Test_Range_should_have_GreaterThanOrEqual_method(t *testing.T) {
 	// When Then
 	assert.NotNil(t, r)
 	assert.NotNil(t, r.GreaterThanOrEqual)
+}
+
+func Test_Range_should_have_GreaterThanOrEqualIf_method(t *testing.T) {
+	t.Parallel()
+	// Given
+	r := es.Range("age")
+
+	// When Then
+	assert.NotNil(t, r)
+	assert.NotNil(t, r.GreaterThanOrEqualIf)
+}
+
+func Test_Range_should_create_json_with_gte_field_inside_query_when_condition_is_true(t *testing.T) {
+	t.Parallel()
+
+	// Given
+	variable := 10
+	query := es.NewQuery(
+		es.Range("age").
+			GreaterThanOrEqualIf(variable, variable < 15).
+			LessThanOrEqual(20),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"range\":{\"age\":{\"gte\":10,\"lte\":20}}}}", bodyJSON)
+}
+
+func Test_Range_should_not_create_json_with_gte_field_inside_query_when_condition_is_false(t *testing.T) {
+	t.Parallel()
+
+	// Given
+	variable := 10
+	query := es.NewQuery(
+		es.Range("age").
+			GreaterThanOrEqualIf(variable, variable > 15).
+			LessThanOrEqual(20),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"range\":{\"age\":{\"lte\":20}}}}", bodyJSON)
 }
 
 func Test_Range_gte_should_override_gt_and_vise_versa(t *testing.T) {
@@ -213,6 +389,53 @@ func Test_Range_From_should_create_json_with_range_field_inside_query(t *testing
 	assert.Equal(t, "{\"query\":{\"range\":{\"partition\":{\"from\":512}}}}", bodyJSON)
 }
 
+func Test_Range_should_have_FromIf_method(t *testing.T) {
+	t.Parallel()
+
+	// Given
+	r := es.Range("age")
+
+	// When Then
+	assert.NotNil(t, r)
+	assert.NotNil(t, r.FromIf)
+}
+
+func Test_Range_FromIf_should_create_json_with_range_field_inside_query_when_condition_is_true(t *testing.T) {
+	t.Parallel()
+
+	// Given
+	variable := 512
+	query := es.NewQuery(
+		es.Range("partition").
+			FromIf(variable, variable > 128).
+			To(1024),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	// nolint:golint,lll
+	assert.Equal(t, "{\"query\":{\"range\":{\"partition\":{\"from\":512,\"to\":1024}}}}", bodyJSON)
+}
+
+func Test_Range_FromIf_should_not_create_json_with_range_field_inside_query_when_condition_is_false(t *testing.T) {
+	t.Parallel()
+
+	// Given
+	variable := 512
+	query := es.NewQuery(
+		es.Range("partition").
+			FromIf(variable, variable < 128).
+			To(1024),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	// nolint:golint,lll
+	assert.Equal(t, "{\"query\":{\"range\":{\"partition\":{\"to\":1024}}}}", bodyJSON)
+}
+
 func Test_Range_should_have_To_method(t *testing.T) {
 	t.Parallel()
 	// Given
@@ -236,6 +459,52 @@ func Test_Range_To_should_create_json_with_range_field_inside_query(t *testing.T
 	bodyJSON := assert.MarshalWithoutError(t, query)
 	// nolint:golint,lll
 	assert.Equal(t, "{\"query\":{\"range\":{\"partition\":{\"to\":1024}}}}", bodyJSON)
+}
+
+func Test_Range_should_have_ToIf_method(t *testing.T) {
+	t.Parallel()
+	// Given
+	r := es.Range("age")
+
+	// When Then
+	assert.NotNil(t, r)
+	assert.NotNil(t, r.ToIf)
+}
+
+func Test_Range_ToIf_should_create_json_with_range_field_inside_query_when_condition_is_true(t *testing.T) {
+	t.Parallel()
+
+	// Given
+	variable := 1024
+	query := es.NewQuery(
+		es.Range("partition").
+			From(128).
+			ToIf(variable, variable > 512),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	// nolint:golint,lll
+	assert.Equal(t, "{\"query\":{\"range\":{\"partition\":{\"from\":128,\"to\":1024}}}}", bodyJSON)
+}
+
+func Test_Range_ToIf_should_not_create_json_with_range_field_inside_query_when_condition_is_false(t *testing.T) {
+	t.Parallel()
+
+	// Given
+	variable := 1024
+	query := es.NewQuery(
+		es.Range("partition").
+			From(128).
+			ToIf(variable, variable < 512),
+	)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	// nolint:golint,lll
+	assert.Equal(t, "{\"query\":{\"range\":{\"partition\":{\"from\":128}}}}", bodyJSON)
 }
 
 func Test_Range_should_have_Relation_method(t *testing.T) {
