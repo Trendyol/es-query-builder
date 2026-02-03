@@ -1,4 +1,4 @@
-# es-query-builder [![GoDoc][doc-img]][doc] [![Release][release-img]][release] [![Build Status][ci-img]][ci] [![Go Report Card][go-report-img]][go-report] [![Coverage Status][cov-img]][cov] [![OpenSSF Scorecard][scorecard-img]][scorecard]
+# es-query-builder [![GoDoc][doc-img]][doc] [![Release][release-img]][release] [![Build Status][ci-img]][ci] [![Go Report Card][go-report-img]][go-report] [![Coverage Status][cov-img]][cov] [![OpenSSF Scorecard][scorecard-img]][scorecard] [![OpenSSF Best Practices][opensff-badge-img]][opensff-badge]
 
 A simple, user-friendly, and streamlined library for programmatically building Elasticsearch DSL queries in Go, designed
 for low overhead and minimal memory usage.
@@ -511,3 +511,7 @@ MIT - Please check the [LICENSE](./LICENSE) file for full text.
 [scorecard]: https://scorecard.dev/viewer/?uri=github.com/Trendyol/es-query-builder
 
 [scorecard-img]: https://api.scorecard.dev/projects/github.com/Trendyol/es-query-builder/badge
+
+[opensff-badge]: https://www.bestpractices.dev/projects/11879
+
+[opensff-badge-img]: https://www.bestpractices.dev/projects/11879/badge
