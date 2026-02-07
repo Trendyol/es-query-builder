@@ -3,6 +3,8 @@ package es_test
 import (
 	"testing"
 
+	Order "github.com/Trendyol/es-query-builder/es/enums/sort/order"
+
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
@@ -290,6 +292,18 @@ func Test_DateHistogramAgg_Order_should_handle_nil_order(t *testing.T) {
 	bodyJSON := assert.MarshalWithoutError(t, agg)
 	// nolint:golint,lll
 	assert.Equal(t, "{\"date_histogram\":{\"calendar_interval\":\"month\",\"field\":\"timestamp\"}}", bodyJSON)
+}
+
+func Test_DateHistogramAgg_Order_should_create_json_with_order_field(t *testing.T) {
+	t.Parallel()
+	// Given
+	agg := es.DateHistogramAgg("timestamp").CalendarInterval("month").Order(es.AggOrder("_count", Order.Desc))
+
+	// When Then
+	assert.NotNil(t, agg)
+	bodyJSON := assert.MarshalWithoutError(t, agg)
+	// nolint:golint,lll
+	assert.Equal(t, "{\"date_histogram\":{\"calendar_interval\":\"month\",\"field\":\"timestamp\",\"order\":[{\"_count\":\"desc\"}]}}", bodyJSON)
 }
 
 ////   DateHistogramAgg Aggs   ////

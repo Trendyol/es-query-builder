@@ -3,6 +3,8 @@ package es_test
 import (
 	"testing"
 
+	Order "github.com/Trendyol/es-query-builder/es/enums/sort/order"
+
 	"github.com/Trendyol/es-query-builder/es"
 	"github.com/Trendyol/es-query-builder/test/assert"
 )
@@ -189,6 +191,17 @@ func Test_HistogramAgg_Order_should_handle_nil_order(t *testing.T) {
 	assert.NotNil(t, agg)
 	bodyJSON := assert.MarshalWithoutError(t, agg)
 	assert.Equal(t, "{\"histogram\":{\"field\":\"price\",\"interval\":50}}", bodyJSON)
+}
+
+func Test_HistogramAgg_Order_should_create_json_with_order_field(t *testing.T) {
+	t.Parallel()
+	// Given
+	agg := es.HistogramAgg("price", 50).Order(es.AggOrder("_count", Order.Desc))
+
+	// When Then
+	assert.NotNil(t, agg)
+	bodyJSON := assert.MarshalWithoutError(t, agg)
+	assert.Equal(t, "{\"histogram\":{\"field\":\"price\",\"interval\":50,\"order\":[{\"_count\":\"desc\"}]}}", bodyJSON)
 }
 
 ////   HistogramAgg Aggs   ////
