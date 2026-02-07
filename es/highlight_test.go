@@ -775,6 +775,17 @@ func Test_HighlightField_should_have_HighlightQuery_method(t *testing.T) {
 	assert.NotNil(t, hf.HighlightQuery)
 }
 
+func Test_HighlightField_HighlightQuery_should_not_set_highlight_query_when_query_is_nil(t *testing.T) {
+	t.Parallel()
+	// Given
+	hf := es.HighlightField("content").HighlightQuery(nil)
+
+	// When Then
+	assert.NotNil(t, hf)
+	bodyJSON := assert.MarshalWithoutError(t, hf)
+	assert.Equal(t, "{\"content\":{}}", bodyJSON)
+}
+
 func Test_HighlightField_HighlightQuery_should_create_json_with_highlight_query_field(t *testing.T) {
 	t.Parallel()
 	// Given
