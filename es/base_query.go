@@ -218,6 +218,34 @@ func (o Object) Sort(sorts ...sortType) Object {
 	return o
 }
 
+// Highlight sets the "highlight" parameter in an es.Object.
+//
+// This method allows you to specify highlighting configuration for the search query.
+// Highlighting enables you to get highlighted snippets from one or more fields in your
+// search results so you can show users where the query matches are.
+//
+// Example usage:
+//
+//	query := es.NewQuery(es.MatchAll()).
+//		Highlight(
+//			es.Highlight().
+//				PreTags("<em>").
+//				PostTags("</em>").
+//				Field(es.HighlightField("title")),
+//		)
+//	// query now includes a "highlight" parameter with the specified configuration.
+//
+// Parameters:
+//   - highlight: An es.highlightType object representing the highlight configuration.
+//
+// Returns:
+//
+//	The updated es.Object with the "highlight" parameter set.
+func (o Object) Highlight(highlight highlightType) Object {
+	o["highlight"] = highlight
+	return o
+}
+
 // Aggs adds one or more es.aggsType objects to an es.Object.
 //
 // This method allows you to specify multiple aggregation criteria for the search query.
