@@ -25,6 +25,7 @@ func Test_IfElse_should_return_item_when_condition_is_true(t *testing.T) {
 	// Then
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
+	// nolint:golint,lll
 	assert.Equal(t, "{\"query\":{\"bool\":{\"filter\":[{\"term\":{\"foo\":{\"value\":\"bar\"}}},{\"exists\":{\"field\":\"brandId\"}}]}}}", bodyJSON)
 }
 
