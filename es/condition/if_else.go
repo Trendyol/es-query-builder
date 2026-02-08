@@ -3,8 +3,8 @@ package condition
 // Branch represents a conditional branch used in IfElse chains.
 // Create branches using ElseIf or Else functions.
 type Branch struct {
-	condition bool
 	item      any
+	condition bool
 	isElse    bool
 }
 
