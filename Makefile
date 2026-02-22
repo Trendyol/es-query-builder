@@ -1,3 +1,5 @@
+.PHONY: init tag_and_push run-test linter fixfieldalignment unit-test-pretty run-benchmark coverage show-uncovered coverage-html show-cog
+
 EXISTING_VERSION := $(shell git describe --abbrev=0 --tags)
 NEW_VERSION := $(shell echo $(EXISTING_VERSION) | awk -F. '{print ""$$1"."$$2"."$$3 + 1}')
 
@@ -7,33 +9,37 @@ init:
 	go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@v2.5.0
 	go install github.com/GokselKUCUKSAHIN/go-run-bench@v1.0.1
 	go install github.com/msoap/go-carpet@v1.9.0
+	go install github.com/uudashr/gocognit/cmd/gocognit@v1.2.0
 
 tag_and_push:
 	git tag $(NEW_VERSION)
 	git push origin $(NEW_VERSION)
 
 run-test:
-	go test ./es/... -v -race -coverprofile=coverage.txt -covermode=atomic
+	@go test ./es/... -v -race -coverprofile=coverage.txt -covermode=atomic
 
 linter:
-	golangci-lint run -c .golangci.yml --timeout=5m -v --fix
+	@golangci-lint run -c .golangci.yml --timeout=5m -v --fix
 
 fixfieldalignment:
-	fieldalignment --fix ./...
+	@fieldalignment --fix ./...
 
 unit-test-pretty:
-	go test ./... -count=1 -v -json | gotestfmt
+	@go test ./... -count=1 -v -json | gotestfmt
 
 run-benchmark:
-	go-run-bench -cooldown=15 -benchmem=true -save=csv
+	@go-run-bench -cooldown=15 -benchmem=true -save=csv
 
 coverage:
-	go-carpet ./es -nocolor | awk '/Coverage:/ {print "\033[32mCoverage: " $$2 "\033[0m"}'
+	@go-carpet ./es -nocolor | awk '/Coverage:/ {print "\033[32mCoverage: " $$2 "\033[0m"}'
 
 show-uncovered:
-	go-carpet ./es -nocolor | grep -E '\.go - [0-9]+\.[0-9]+%' | grep -v '100\.0%' || true
+	@go-carpet ./es -nocolor | grep -E '\.go - [0-9]+\.[0-9]+%' | grep -v '100\.0%' || true
 
 coverage-html:
-	go test -v -coverprofile=cover.out -covermode=atomic ./...
-	go tool cover -html=cover.out -o cover.html
-	open cover.html
+	@go test -v -coverprofile=cover.out -covermode=atomic ./...
+	@go tool cover -html=cover.out -o cover.html
+	@open cover.html
+
+show-cog:
+	@gocognit -over 10 es/

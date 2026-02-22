@@ -36,3 +36,9 @@ cte/
 
 # Article files
 articles
+
+# Test and Coverage artifacts
+coverage.txt
+cover.html
+cover.out
+coverage.html
