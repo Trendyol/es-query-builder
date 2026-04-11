@@ -6,7 +6,7 @@ replace github.com/Trendyol/es-query-builder => ./../..
 
 require (
 	github.com/GokselKUCUKSAHIN/jsonx v1.1.0
-	github.com/Trendyol/es-query-builder v1.0.3
+	github.com/Trendyol/es-query-builder v1.2.2
 	github.com/bayraktugrul/go-await v1.1.1
 	github.com/docker/go-connections v0.6.0
 	github.com/elastic/elastic-transport-go/v8 v8.10.0
