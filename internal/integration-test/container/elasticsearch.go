@@ -5,14 +5,14 @@ import (
 	"fmt"
 	"runtime"
 
-	"github.com/docker/go-connections/nat"
+	"github.com/moby/moby/api/types/network"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/wait"
 )
 
 const (
 	ElasticsearchImage = "docker.elastic.co/elasticsearch/elasticsearch:8.15.0"
-	defaultPort        = "9200"
+	defaultPort        = "9200/tcp"
 )
 
 type ElasticsearchContainer struct {
@@ -21,13 +21,13 @@ type ElasticsearchContainer struct {
 	container        testcontainers.Container
 	address          string
 	ip               string
-	port             nat.Port
+	port             network.Port
 }
 
 func NewContainer(ctx context.Context, image string) *ElasticsearchContainer {
 	req := testcontainers.ContainerRequest{
 		Image:        image,
-		ExposedPorts: []string{fmt.Sprintf("%s:%s", defaultPort, defaultPort)},
+		ExposedPorts: []string{defaultPort},
 		Env: map[string]string{
 			"cluster.name":                    "testcontainers-go",
 			"discovery.type":                  "single-node",
