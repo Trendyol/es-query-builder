@@ -138,7 +138,6 @@ class ESQueryParser {
 
             return code;
         } catch (error) {
-            console.error('Parsing error:', error);
             throw new Error(`Query parsing failed: ${error.message}`);
         }
     }
@@ -170,6 +169,14 @@ class ESQueryParser {
             return String(value);
         }
         return JSON.stringify(value);
+    }
+
+    // Go methods that take string but ES JSON may send number (e.g. minimum_should_match: 2)
+    formatStringParam(value) {
+        if (typeof value === 'string') {
+            return this.formatValue(value);
+        }
+        return `"${String(value)}"`;
     }
 
     parseGeoPoint(point) {
@@ -739,6 +746,41 @@ class ESQueryParser {
             const sortParts = innerHits.sort.map(sortItem => this.parseSortItem(sortItem));
             code += `.Sort(${sortParts.join(', ')})`;
         }
+        if (innerHits.explain !== undefined) {
+            code += `.Explain(${innerHits.explain})`;
+        }
+        if (innerHits.version !== undefined) {
+            code += `.Version(${innerHits.version})`;
+        }
+        if (innerHits.seq_no_primary_term !== undefined) {
+            code += `.SeqNoPrimaryTerm(${innerHits.seq_no_primary_term})`;
+        }
+        if (innerHits.track_scores !== undefined) {
+            code += `.TrackScores(${innerHits.track_scores})`;
+        }
+        if (innerHits.ignore_unmapped !== undefined) {
+            code += `.IgnoreUnmapped(${innerHits.ignore_unmapped})`;
+        }
+        if (innerHits.fields) {
+            code += `.Fields(${innerHits.fields.map(f => `"${f}"`).join(', ')})`;
+        }
+        if (innerHits.stored_fields) {
+            code += `.StoredFields(${innerHits.stored_fields.map(f => `"${f}"`).join(', ')})`;
+        }
+        if (innerHits._source !== undefined) {
+            if (innerHits._source === false) {
+                code += `.SourceFalse()`;
+            } else if (Array.isArray(innerHits._source)) {
+                code += `.SourceIncludes(${innerHits._source.map(f => `"${f}"`).join(', ')})`;
+            } else if (typeof innerHits._source === 'object') {
+                if (innerHits._source.includes) {
+                    code += `.SourceIncludes(${innerHits._source.includes.map(f => `"${f}"`).join(', ')})`;
+                }
+                if (innerHits._source.excludes) {
+                    code += `.SourceExcludes(${innerHits._source.excludes.map(f => `"${f}"`).join(', ')})`;
+                }
+            }
+        }
 
         return code;
     }
@@ -762,14 +804,26 @@ class ESQueryParser {
         if (qs.default_operator) {
             code += `.DefaultOperator(${this.formatEnum('Operator', qs.default_operator)})`;
         }
+        if (qs.analyzer) {
+            code += `.Analyzer("${qs.analyzer}")`;
+        }
+        if (qs.quote_analyzer) {
+            code += `.QuoteAnalyzer("${qs.quote_analyzer}")`;
+        }
         if (qs.allow_leading_wildcard !== undefined) {
             code += `.AllowLeadingWildcard(${qs.allow_leading_wildcard})`;
+        }
+        if (qs.enable_position_increments !== undefined) {
+            code += `.EnablePositionIncrements(${qs.enable_position_increments})`;
         }
         if (qs.fuzzy_max_expansions !== undefined) {
             code += `.FuzzyMaxExpansions(${qs.fuzzy_max_expansions})`;
         }
+        if (qs.fuzzy_prefix_length !== undefined) {
+            code += `.FuzzyPrefixLength(${qs.fuzzy_prefix_length})`;
+        }
         if (qs.fuzziness !== undefined) {
-            code += `.Fuzziness(${this.formatValue(qs.fuzziness)})`;
+            code += `.Fuzziness(${this.formatStringParam(qs.fuzziness)})`;
         }
         if (qs.fuzzy_transpositions !== undefined) {
             code += `.FuzzyTranspositions(${qs.fuzzy_transpositions})`;
@@ -781,7 +835,7 @@ class ESQueryParser {
             code += `.MaxDeterminizedStates(${qs.max_determinized_states})`;
         }
         if (qs.minimum_should_match !== undefined) {
-            code += `.MinimumShouldMatch(${this.formatValue(qs.minimum_should_match)})`;
+            code += `.MinimumShouldMatch(${this.formatStringParam(qs.minimum_should_match)})`;
         }
         if (qs.quote_field_suffix) {
             code += `.QuoteFieldSuffix("${qs.quote_field_suffix}")`;
@@ -797,6 +851,12 @@ class ESQueryParser {
         }
         if (qs.analyze_wildcard !== undefined) {
             code += `.AnalyzeWildcard(${qs.analyze_wildcard})`;
+        }
+        if (qs.time_zone) {
+            code += `.TimeZone("${qs.time_zone}")`;
+        }
+        if (qs.escape !== undefined) {
+            code += `.Escape(${qs.escape})`;
         }
         if (qs.rewrite) {
             code += `.Rewrite("${qs.rewrite}")`;
@@ -837,7 +897,7 @@ class ESQueryParser {
             code += `.Lenient(${sqs.lenient})`;
         }
         if (sqs.minimum_should_match !== undefined) {
-            code += `.MinimumShouldMatch(${this.formatValue(sqs.minimum_should_match)})`;
+            code += `.MinimumShouldMatch(${this.formatStringParam(sqs.minimum_should_match)})`;
         }
         if (sqs.quote_field_suffix) {
             code += `.QuoteFieldSuffix("${sqs.quote_field_suffix}")`;
@@ -847,6 +907,9 @@ class ESQueryParser {
         }
         if (sqs.auto_generate_synonyms_phrase_query !== undefined) {
             code += `.AutoGenerateSynonymsPhraseQuery(${sqs.auto_generate_synonyms_phrase_query})`;
+        }
+        if (sqs.boost !== undefined) {
+            code += `.Boost(${sqs.boost})`;
         }
 
         return code;
