@@ -19,4 +19,3 @@ jobs:
       actions: read
       contents: read
       security-events: write
-    secrets: inherit
