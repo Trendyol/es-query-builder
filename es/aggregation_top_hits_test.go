@@ -97,6 +97,19 @@ func Test_Sort_should_add_sort_field_into_TopHitsAgg(t *testing.T) {
 	assert.Equal(t, "{\"top_hits\":{\"sort\":[{\"date\":{\"order\":\"desc\"}}]}}", bodyJSON)
 }
 
+func Test_TopHitsAgg_Sort_should_append_to_existing_sort_field(t *testing.T) {
+	t.Parallel()
+	// Given
+	a := es.TopHitsAgg().
+		Sort(es.Sort("date").Order(Order.Desc)).
+		Sort(es.Sort("name").Order(Order.Asc))
+
+	// When Then
+	assert.NotNil(t, a)
+	bodyJSON := assert.MarshalWithoutError(t, a)
+	assert.Equal(t, "{\"top_hits\":{\"sort\":[{\"date\":{\"order\":\"desc\"}},{\"name\":{\"order\":\"asc\"}}]}}", bodyJSON)
+}
+
 func Test_TopHitsAgg_should_have_SourceFalse_method(t *testing.T) {
 	t.Parallel()
 	// Given
@@ -137,6 +150,30 @@ func Test_SourceIncludes_should_add_source_includes_into_TopHitsAgg(t *testing.T
 	assert.Equal(t, "{\"top_hits\":{\"_source\":{\"includes\":[\"title\",\"price\"]}}}", bodyJSON)
 }
 
+func Test_TopHitsAgg_SourceIncludes_should_not_add_source_when_fields_empty(t *testing.T) {
+	t.Parallel()
+	// Given
+	a := es.TopHitsAgg().SourceIncludes()
+
+	// When Then
+	assert.NotNil(t, a)
+	bodyJSON := assert.MarshalWithoutError(t, a)
+	assert.Equal(t, "{\"top_hits\":{}}", bodyJSON)
+}
+
+func Test_TopHitsAgg_SourceIncludes_should_append_to_existing_includes(t *testing.T) {
+	t.Parallel()
+	// Given
+	a := es.TopHitsAgg().
+		SourceIncludes("title").
+		SourceIncludes("price")
+
+	// When Then
+	assert.NotNil(t, a)
+	bodyJSON := assert.MarshalWithoutError(t, a)
+	assert.Equal(t, "{\"top_hits\":{\"_source\":{\"includes\":[\"title\",\"price\"]}}}", bodyJSON)
+}
+
 func Test_TopHitsAgg_should_have_SourceExcludes_method(t *testing.T) {
 	t.Parallel()
 	// Given
@@ -155,6 +192,30 @@ func Test_SourceExcludes_should_add_source_excludes_into_TopHitsAgg(t *testing.T
 	assert.NotNil(t, a)
 	bodyJSON := assert.MarshalWithoutError(t, a)
 	assert.Equal(t, "{\"top_hits\":{\"_source\":{\"excludes\":[\"description\"]}}}", bodyJSON)
+}
+
+func Test_TopHitsAgg_SourceExcludes_should_not_add_source_when_fields_empty(t *testing.T) {
+	t.Parallel()
+	// Given
+	a := es.TopHitsAgg().SourceExcludes()
+
+	// When Then
+	assert.NotNil(t, a)
+	bodyJSON := assert.MarshalWithoutError(t, a)
+	assert.Equal(t, "{\"top_hits\":{}}", bodyJSON)
+}
+
+func Test_TopHitsAgg_SourceExcludes_should_append_to_existing_excludes(t *testing.T) {
+	t.Parallel()
+	// Given
+	a := es.TopHitsAgg().
+		SourceExcludes("description").
+		SourceExcludes("internal")
+
+	// When Then
+	assert.NotNil(t, a)
+	bodyJSON := assert.MarshalWithoutError(t, a)
+	assert.Equal(t, "{\"top_hits\":{\"_source\":{\"excludes\":[\"description\",\"internal\"]}}}", bodyJSON)
 }
 
 func Test_TopHitsAgg_should_have_Highlight_method(t *testing.T) {
