@@ -360,3 +360,97 @@ func Test_Aggs_should_add_aggs_field_into_Object(t *testing.T) {
 	bodyJSON := assert.MarshalWithoutError(t, query)
 	assert.Equal(t, "{\"aggs\":{\"categories\":{\"terms\":{\"field\":\"category.id\"}}},\"query\":{}}", bodyJSON)
 }
+
+////   PostFilter   ////
+
+func Test_Object_should_have_PostFilter_method(t *testing.T) {
+	t.Parallel()
+	// Given
+	b := es.NewQuery(nil)
+
+	// When Then
+	assert.NotNil(t, b.PostFilter)
+}
+
+func Test_PostFilter_should_add_post_filter_field_into_Object(t *testing.T) {
+	t.Parallel()
+	// Given
+	query := es.NewQuery(es.MatchAll()).
+		PostFilter(es.Term("color", "red"))
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"post_filter\":{\"term\":{\"color\":{\"value\":\"red\"}}},\"query\":{\"match_all\":{}}}", bodyJSON)
+}
+
+func Test_PostFilter_should_not_add_post_filter_when_filter_is_nil(t *testing.T) {
+	t.Parallel()
+	// Given
+	query := es.NewQuery(es.MatchAll()).PostFilter(nil)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"match_all\":{}}}", bodyJSON)
+}
+
+func Test_PostFilter_should_wrap_Bool_correctly(t *testing.T) {
+	t.Parallel()
+	// Given
+	query := es.NewQuery(es.MatchAll()).
+		PostFilter(es.Bool().Filter(es.Term("color", "red")))
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	// nolint:golint,lll
+	assert.Equal(t, "{\"post_filter\":{\"bool\":{\"filter\":[{\"term\":{\"color\":{\"value\":\"red\"}}}]}},\"query\":{\"match_all\":{}}}", bodyJSON)
+}
+
+////   SearchAfter   ////
+
+func Test_Object_should_have_SearchAfter_method(t *testing.T) {
+	t.Parallel()
+	// Given
+	b := es.NewQuery(nil)
+
+	// When Then
+	assert.NotNil(t, b.SearchAfter)
+}
+
+func Test_SearchAfter_should_add_search_after_field_into_Object(t *testing.T) {
+	t.Parallel()
+	// Given
+	query := es.NewQuery(es.MatchAll()).
+		SearchAfter("2024-01-01", 12345)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"match_all\":{}},\"search_after\":[\"2024-01-01\",12345]}", bodyJSON)
+}
+
+func Test_SearchAfter_should_not_add_search_after_when_values_empty(t *testing.T) {
+	t.Parallel()
+	// Given
+	query := es.NewQuery(es.MatchAll()).SearchAfter()
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"match_all\":{}}}", bodyJSON)
+}
+
+func Test_SearchAfter_with_Sort_should_create_correct_json(t *testing.T) {
+	t.Parallel()
+	// Given
+	query := es.NewQuery(es.MatchAll()).
+		Size(10).
+		SearchAfter(100, "abc")
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"match_all\":{}},\"search_after\":[100,\"abc\"],\"size\":10}", bodyJSON)
+}
