@@ -267,3 +267,51 @@ func (o Object) Highlight(highlight highlightType) Object {
 func (o Object) Aggs(aggs ...aggsType) Object {
 	return genericPutAggsInRoot(o, aggs)
 }
+
+// PostFilter sets the "post_filter" parameter in an es.Object.
+//
+// A post filter is applied after the query and aggregations have been calculated,
+// affecting only the search hits (not aggregation results). Useful for faceted navigation.
+//
+// Example usage:
+//
+//	query := es.NewQuery(es.MatchAll()).
+//		PostFilter(es.Term("color", "red"))
+//
+// Parameters:
+//   - filter: The query clause to use as a post filter.
+//
+// Returns:
+//
+//	The updated es.Object with the "post_filter" parameter set.
+func (o Object) PostFilter(filter any) Object {
+	if field, ok := correctType(filter); ok {
+		o["post_filter"] = field
+	}
+	return o
+}
+
+// SearchAfter sets the "search_after" parameter in an es.Object.
+//
+// search_after provides a live cursor for deep pagination, using sort values
+// from the last hit of the previous page.
+//
+// Example usage:
+//
+//	query := es.NewQuery(es.MatchAll()).
+//		Sort(es.Sort("date").Order(Order.Desc)).
+//		SearchAfter("2024-01-01", 12345)
+//
+// Parameters:
+//   - values: Sort values from the last document of the previous result page.
+//
+// Returns:
+//
+//	The updated es.Object with the "search_after" parameter set.
+func (o Object) SearchAfter(values ...any) Object {
+	if len(values) == 0 {
+		return o
+	}
+	o["search_after"] = values
+	return o
+}
