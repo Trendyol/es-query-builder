@@ -120,6 +120,7 @@ func Test_Wildcard_should_create_json_with_all_fields(t *testing.T) {
 	// When Then
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
+	// nolint:golint,lll
 	assert.Equal(t, "{\"query\":{\"wildcard\":{\"user.id\":{\"boost\":2,\"case_insensitive\":true,\"rewrite\":\"constant_score\",\"value\":\"ki*y\"}}}}", bodyJSON)
 }
 

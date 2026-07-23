@@ -61,6 +61,7 @@ func Test_GeoDistance_DistanceType_should_create_json_with_distance_type_field(t
 	// When Then
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
+	// nolint:golint,lll
 	assert.Equal(t, "{\"query\":{\"geo_distance\":{\"distance\":\"12km\",\"distance_type\":\"arc\",\"pin.location\":{\"lat\":40,\"lon\":-70}}}}", bodyJSON)
 }
 
@@ -155,6 +156,7 @@ func Test_GeoDistance_Name_should_create_json_with_name_field(t *testing.T) {
 	// When Then
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
+	// nolint:golint,lll
 	assert.Equal(t, "{\"query\":{\"geo_distance\":{\"_name\":\"nearby\",\"distance\":\"12km\",\"pin.location\":{\"lat\":40,\"lon\":-70}}}}", bodyJSON)
 }
 
@@ -188,5 +190,6 @@ func Test_GeoDistance_Plane_distance_type_should_create_correct_json(t *testing.
 	// When Then
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
+	// nolint:golint,lll
 	assert.Equal(t, "{\"query\":{\"geo_distance\":{\"distance\":\"5km\",\"distance_type\":\"plane\",\"location\":{\"lat\":41,\"lon\":29}}}}", bodyJSON)
 }

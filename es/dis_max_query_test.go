@@ -125,6 +125,7 @@ func Test_DisMax_Name_should_create_json_with_name_field(t *testing.T) {
 	// When Then
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
+	// nolint:golint,lll
 	assert.Equal(t, "{\"query\":{\"dis_max\":{\"_name\":\"best_fields\",\"queries\":[{\"term\":{\"title\":{\"value\":\"quick\"}}}]}}}", bodyJSON)
 }
 
