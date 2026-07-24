@@ -110,18 +110,16 @@ body::before {
 
 .brand-mark {
     flex-shrink: 0;
-    display: grid;
-    place-items: center;
+    display: block;
     width: 42px;
     height: 42px;
-    border-radius: 10px;
-    background: var(--brand-mark-bg);
-    color: var(--brand-mark-fg);
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 0.95rem;
-    font-weight: 500;
-    letter-spacing: -0.04em;
-    box-shadow: var(--shadow);
+    line-height: 0;
+}
+
+.brand-mark svg {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
 .brand-text {
