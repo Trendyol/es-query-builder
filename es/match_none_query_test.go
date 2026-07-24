@@ -12,13 +12,13 @@ import (
 func Test_MatchNone_should_exist_on_es_package(t *testing.T) {
 	t.Parallel()
 	// Given When Then
-	assert.NotNil(t, es.MatchNone[any])
+	assert.NotNil(t, es.MatchNone)
 }
 
 func Test_MatchNone_method_should_create_matchNoneType(t *testing.T) {
 	t.Parallel()
 	// Given
-	b := es.MatchNone("key", "value")
+	b := es.MatchNone()
 
 	// Then
 	assert.NotNil(t, b)
@@ -28,14 +28,21 @@ func Test_MatchNone_method_should_create_matchNoneType(t *testing.T) {
 func Test_MatchNone_should_create_json_with_match_none_field_inside_query(t *testing.T) {
 	t.Parallel()
 	// Given
-	query := es.NewQuery(
-		es.MatchNone("fooBar", "lorem ipsum").
-			Boost(6.19),
-	)
+	query := es.NewQuery(es.MatchNone())
 
 	// When Then
 	assert.NotNil(t, query)
 	bodyJSON := assert.MarshalWithoutError(t, query)
-	// nolint:golint,lll
-	assert.Equal(t, "{\"query\":{\"match_none\":{\"fooBar\":{\"boost\":6.19,\"query\":\"lorem ipsum\"}}}}", bodyJSON)
+	assert.Equal(t, "{\"query\":{\"match_none\":{}}}", bodyJSON)
+}
+
+func Test_MatchNone_should_create_json_with_boost_inside_query(t *testing.T) {
+	t.Parallel()
+	// Given
+	query := es.NewQuery(es.MatchNone().Boost(6.19))
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"match_none\":{\"boost\":6.19}}}", bodyJSON)
 }
