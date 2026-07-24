@@ -924,18 +924,11 @@ class ESQueryParser {
     }
 
     parseMatchNone(matchNone) {
-        if (!matchNone || Object.keys(matchNone).length === 0) {
-            throw new Error('Empty match_none is not supported by Go API (MatchNone requires field and query)');
+        let code = `${this.getIndent()}es.MatchNone()`;
+        if (matchNone && matchNone.boost !== undefined) {
+            code += `.Boost(${matchNone.boost})`;
         }
-
-        const field = Object.keys(matchNone)[0];
-        const value = matchNone[field];
-
-        if (value && typeof value === 'object' && value.query !== undefined) {
-            return `${this.getIndent()}es.MatchNone("${field}", ${this.formatValue(value.query)})`;
-        }
-
-        return `${this.getIndent()}es.MatchNone("${field}", ${this.formatValue(value)})`;
+        return code;
     }
 
     parseConstantScore(constantScore) {

@@ -125,12 +125,14 @@ function q(body) {
 }
 
 {
-    const code = q({ match_none: { title: { query: 'x' } } });
-    assertIncludes(code, 'es.MatchNone("title", "x")', 'match_none with field');
+    const code = q({ match_none: {} });
+    assertIncludes(code, 'es.MatchNone()', 'empty match_none');
 }
 
 {
-    assertThrows(() => q({ match_none: {} }), 'Empty match_none', 'empty match_none');
+    const code = q({ match_none: { boost: 2.5 } });
+    assertIncludes(code, 'es.MatchNone()', 'match_none');
+    assertIncludes(code, '.Boost(2.5)', 'match_none boost');
 }
 
 {
