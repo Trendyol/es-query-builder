@@ -44,13 +44,15 @@ type SearchHits struct {
 }
 
 type SearchHit struct {
-	Version *uint           `json:"_version,omitempty"`
-	Id      string          `json:"_id"`
-	Routing string          `json:"_routing"`
-	Source  json.RawMessage `json:"_source"`
-	Sort    []any           `json:"sort,omitempty"`
-	Score   float32         `json:"_score"`
-	Found   bool            `json:"found"`
+	Version   *uint                      `json:"_version,omitempty"`
+	Highlight map[string][]string        `json:"highlight,omitempty"`
+	InnerHits map[string]json.RawMessage `json:"inner_hits,omitempty"`
+	Id        string                     `json:"_id"`
+	Routing   string                     `json:"_routing"`
+	Source    json.RawMessage            `json:"_source"`
+	Sort      []any                      `json:"sort,omitempty"`
+	Score     float32                    `json:"_score"`
+	Found     bool                       `json:"found"`
 }
 
 type Total struct {
