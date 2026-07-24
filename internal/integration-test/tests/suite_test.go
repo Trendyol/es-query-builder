@@ -18,8 +18,12 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
-func TestSuite(t *testing.T) {
-	suite.Run(t, new(testSuite))
+func TestSuiteES7(t *testing.T) {
+	suite.Run(t, &testSuite{esImage: container.ElasticsearchImageV7})
+}
+
+func TestSuiteES8(t *testing.T) {
+	suite.Run(t, &testSuite{esImage: container.ElasticsearchImageV8})
 }
 
 type testSuite struct {
@@ -29,12 +33,13 @@ type testSuite struct {
 	ESClient                       *elasticsearch.Client
 	FooElasticsearchRepository     repository.BaseGenericRepository[string, model.FooDocument]
 	PokedexElasticsearchRepository repository.BaseGenericRepository[string, model.Pokemon]
+	esImage                        string
 }
 
 func (s *testSuite) SetupSuite() {
 	s.TestContext = context.Background()
 
-	s.ElasticContainer = container.NewContainer(s.TestContext, container.ElasticsearchImage)
+	s.ElasticContainer = container.NewContainer(s.TestContext, s.esImage)
 	err := s.ElasticContainer.Run()
 	if err != nil {
 		fmt.Printf("error starting elasticsearch container. err %s", err.Error())
