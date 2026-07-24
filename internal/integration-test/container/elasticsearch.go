@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"runtime"
+	"time"
 
 	"github.com/moby/moby/api/types/network"
 	"github.com/testcontainers/testcontainers-go"
@@ -11,8 +12,9 @@ import (
 )
 
 const (
-	ElasticsearchImage = "docker.elastic.co/elasticsearch/elasticsearch:8.15.0"
-	defaultPort        = "9200/tcp"
+	ElasticsearchImageV7 = "docker.elastic.co/elasticsearch/elasticsearch:7.15.0"
+	ElasticsearchImageV8 = "docker.elastic.co/elasticsearch/elasticsearch:8.15.0"
+	defaultPort          = "9200/tcp"
 )
 
 type ElasticsearchContainer struct {
@@ -36,7 +38,9 @@ func NewContainer(ctx context.Context, image string) *ElasticsearchContainer {
 			"xpack.security.http.ssl.enabled": "false", // Disable HTTPS for the HTTP API
 			"ES_JAVA_OPTS":                    "-Xms1g -Xmx1g",
 		},
-		WaitingFor: wait.ForLog("up and running"),
+		WaitingFor: wait.ForHTTP("/").
+			WithPort(defaultPort).
+			WithStartupTimeout(2 * time.Minute),
 	}
 	return &ElasticsearchContainer{
 		containerContext: ctx,
