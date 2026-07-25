@@ -14,7 +14,8 @@ Thank you for your interest in contributing to es-query-builder! This document p
 
 ## Code of Conduct
 
-By participating in this project, you agree to maintain a respectful and inclusive environment. Please be considerate of others and focus on constructive collaboration.
+This project adheres to the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md).
+By participating, you are expected to uphold this code.
 
 ## Getting Started
 
@@ -67,9 +68,11 @@ make coverage-html
 
 ## Coding Standards
 
+Follow the patterns already used under [`es/`](es/). When in doubt, copy an existing similar query or aggregation file.
+
 ### Go Version
 
-This project uses **Go 1.18** as the minimum version to ensure broad compatibility. Do not use features from newer Go versions.
+This project uses **Go 1.18** as the minimum version to ensure broad compatibility. Do not use features from newer Go versions. Generics (introduced in Go 1.18) are used throughout the API.
 
 ### Zero External Dependencies
 
@@ -113,6 +116,28 @@ make linter
 | `unused` | Checks for unused code |
 | `whitespace` | Checks for unnecessary whitespace |
 
+### Package Layout
+
+| Path | Package | Role |
+|------|---------|------|
+| `es/` | `es` | Main DSL: queries, aggregations, sort, highlight, etc. (flat package) |
+| `es/condition/` | `condition` | Conditional helpers (`If`, `IfElse`, `ElseIf`, `Else`) |
+| `es/enums/<kebab-case>/` | combined lowercase (e.g. `operator`, `validationmethod`) | Elasticsearch string constants |
+
+Do not introduce new top-level packages under `es/` unless they match these existing roles.
+
+### File Naming
+
+| Kind | Pattern | Example |
+|------|---------|---------|
+| Query | `{snake}_query.go` + `_test.go` | `match_none_query.go` |
+| Aggregation | `aggregation_{name}.go` + `_test.go` | `aggregation_avg.go` |
+| Shared helpers | descriptive snake_case | `types.go`, `base_query.go`, `generic_put_in_the_field.go` |
+| Enum | `es/enums/{kebab-case}/{snake}.go` | `es/enums/operator/operator.go` |
+| White-box tests | `*_private_test.go` | `generic_put_in_the_field_private_test.go` |
+
+Some non-query builders omit `_query` in the filename when that matches existing style (`range.go`, `sort.go`, `script.go`, `highlight.go`, `inner_hits.go`). Prefer `{name}_query.go` for new query types.
+
 ### Code Style Guidelines
 
 #### Line Length
@@ -123,26 +148,54 @@ make linter
 - Maximum **100 lines** per function
 - If a function exceeds this, consider refactoring into smaller functions
 
+#### Type Model
+
+Query and aggregation types are **aliases of `Object`**, not structs:
+
+```go
+type Object map[string]any
+type Array []any
+
+type termType Object      // unexported query type
+type matchNoneType Object // unexported query type
+```
+
+Do not introduce new struct types for query builders.
+
 #### Naming Conventions
 
 **Types:**
 ```go
-// Use PascalCase for exported types
+// Most query/aggregation types are unexported: camelCase + Type suffix
+type termType Object
+type matchNoneType Object
+type avgAggType Object
+
+// Exported exceptions used by the public API
+type Object map[string]any
+type Array []any
 type BoolType Object
 type FilterType Array
+type MustType Array
+type MustNotType Array
+type ShouldType Array
 
-// Use descriptive names that indicate purpose
-type TermQueryType Object  // Good
-type TQ Object              // Bad
+// Good: descriptive, matches Elasticsearch concept
+type termType Object
+// Bad: abbreviations or fake exported query types
+type TQ Object
+type TermQueryType Object
 ```
 
 **Functions:**
 ```go
-// Constructor functions should be named after what they create
+// Constructors are exported PascalCase; return the unexported (or Bool) type
 func Bool() BoolType { ... }
-func Term(field string, value any) TermType { ... }
+func Term[T any](key string, value T) termType { ... }
+func MatchNone() matchNoneType { ... }
 
-// Method names should be verbs or descriptive actions
+// Option methods are verbs / Elasticsearch parameter names; return the same type
+func (t termType) Boost(boost float64) termType { ... }
 func (b BoolType) Filter(items ...any) BoolType { ... }
 func (b BoolType) MinimumShouldMatch(value any) BoolType { ... }
 ```
@@ -159,32 +212,35 @@ for i := 0; i < len(items); i++ { ... }
 
 #### Documentation
 
-All exported functions and types must have documentation comments:
+All exported functions and types must have documentation comments with **Example usage**, **Parameters** (when useful), and **Returns**. Refer to types by their real names (`es.termType`, `es.BoolType`):
 
 ```go
-// Bool creates and returns an empty BoolType object.
-//
-// This function is typically used to initialize an es.BoolType, which can be
-// populated later with the appropriate boolean query conditions.
+// Term creates a new es.termType object with the specified key-value pair.
 //
 // Example usage:
 //
-//	b := es.Bool()
-//	// b is now an empty es.BoolType object that can be used in a query.
+//	t := es.Term("category", "books")
+//	// t now contains an es.termType object with a term query for the "category" field.
+//
+// Parameters:
+//   - key: A string representing the field name for the term query.
+//   - value: The value to be searched for in the specified field. The type is generic.
 //
 // Returns:
 //
-//	An empty es.BoolType object.
-func Bool() BoolType {
-    return BoolType{}
+//	An es.termType object containing the specified term query.
+func Term[T any](key string, value T) termType {
+	return termType{
+		"term": Object{
+			key: Object{
+				"value": value,
+			},
+		},
+	}
 }
 ```
 
-Documentation should include:
-- A brief description of what the function does
-- Example usage (when helpful)
-- Parameter descriptions (for complex functions)
-- Return value description
+Unexported helpers may use a short comment or none (follow neighboring code).
 
 #### Fluent API Pattern
 
@@ -195,15 +251,114 @@ This library uses a fluent/builder pattern. Methods should:
 ```go
 // Good: Returns the modified type for chaining
 func (b BoolType) Filter(items ...any) BoolType {
-    // ... implementation
-    return b
+	// ... implementation
+	return b
 }
 
 // Usage: Allows method chaining
 query := es.Bool().
-    Must(es.Term("field", "value")).
-    Filter(es.Exists("field"))
+	Must(es.Term("field", "value")).
+	Filter(es.Exists("field"))
 ```
+
+#### Option Fields (`putInTheField`)
+
+Option methods write into the nested Elasticsearch object via a private `putInTheField` helper that delegates to generics in `generic_put_in_the_field.go`:
+
+- `genericPutInTheField` — key under a named parent (e.g. `"match_none"`)
+- `genericPutInTheFieldOfFirstChild` — key on the first child object (e.g. term field object)
+- `genericPutInTheFieldOfFirstObject` — key on the first object in the root (e.g. sort, query_string)
+
+```go
+func (m matchNoneType) Boost(boost float64) matchNoneType {
+	return m.putInTheField("boost", boost)
+}
+
+func (m matchNoneType) putInTheField(key string, value any) matchNoneType {
+	return genericPutInTheField(m, "match_none", key, value)
+}
+```
+
+#### Conditional Constructors (`XFunc` / `XIf`)
+
+Many queries expose `{Name}Func` and `{Name}If` constructors that return `nil` when the condition is false. Nil / typed-nil clauses are filtered by `correctType` (no errors):
+
+```go
+func TermIf[T any](key string, value T, condition bool) termType {
+	if !condition {
+		return nil
+	}
+	return Term(key, value)
+}
+
+func TermFunc[T any](key string, value T, f func(key string, value T) bool) termType {
+	if !f(key, value) {
+		return nil
+	}
+	return Term(key, value)
+}
+```
+
+When adding a new field-based query, include `Func` / `If` variants if sibling queries already have them.
+
+#### Error Handling
+
+Query builders in `es/` **do not return `error` and must not panic**. Invalid or nil clauses are skipped (via `correctType`) or result in an empty/partial query object. Contract correctness is enforced by tests that assert exact JSON output.
+
+#### Enums
+
+Place Elasticsearch string constants under `es/enums/<kebab-case>/`:
+
+```go
+package operator
+
+type Operator string
+
+const (
+	Or  Operator = "or"
+	And Operator = "and"
+)
+
+func (operator Operator) String() string {
+	return string(operator)
+}
+```
+
+Import with an alias equal to the exported type name:
+
+```go
+import (
+	Operator "github.com/Trendyol/es-query-builder/es/enums/operator"
+)
+
+// usage: Operator.And
+```
+
+#### Condition Package
+
+Use `es/condition` for conditional clause selection without branching in call sites:
+
+- `condition.If(item, condition)`
+- `condition.IfElse(condition, item, branches...)`
+- `condition.ElseIf(condition, item)` / `condition.Else(item)`
+
+#### Adding a New Query
+
+Use existing files as templates:
+
+| Complexity | Template |
+|------------|----------|
+| Simple (no field) | `es/match_none_query.go` + `_test.go` |
+| Field + options | `es/term_query.go` + `_test.go` |
+| Variadic children | `es/dis_max_query.go` + `_test.go` |
+
+Checklist:
+
+1. Add `es/{name}_query.go` with `package es`, `type {name}Type Object`, exported constructor, option methods, and `putInTheField`.
+2. Add `{Name}Func` / `{Name}If` when appropriate.
+3. Add `es/{name}_query_test.go` (`package es_test`): exist, create type, JSON asserts, method coverage.
+4. Add enums under `es/enums/...` if new string constants are needed; import with a type-name alias.
+5. Do not add external dependencies.
 
 ### Struct Field Alignment
 
@@ -223,45 +378,55 @@ make fixfieldalignment
 
 ### Test File Organization
 
-- Test files must be in the same package with `_test` suffix
-- Use the `es_test` package name for black-box testing
+- Black-box API tests: same directory, `_test.go` suffix, **`package es_test`**
+- White-box tests for unexported helpers: `*_private_test.go`, **`package es`**
 
 ```go
 package es_test
 
 import (
-    "testing"
-    
-    "github.com/Trendyol/es-query-builder/es"
-    "github.com/Trendyol/es-query-builder/test/assert"
+	"testing"
+
+	"github.com/Trendyol/es-query-builder/es"
+	"github.com/Trendyol/es-query-builder/test/assert"
 )
+```
+
+Group related tests with a section header comment:
+
+```go
+////   Term   ////
 ```
 
 ### Test Naming Convention
 
-Use descriptive test names with underscores:
+Use descriptive names with underscores:
 
 ```go
-// Pattern: Test_<Type>_<Method>_should_<expected_behavior>
+// Patterns used in es/:
+//   Test_<Symbol>_should_<behavior>
+//   Test_<Symbol>_<Method>_should_<behavior>
+//   Test_<Symbol>_method_should_create_<typeName>
 
-func Test_Bool_should_exist_on_es_package(t *testing.T) { ... }
-func Test_Bool_method_should_create_boolType(t *testing.T) { ... }
-func Test_Bool_MinimumShouldMatch_should_create_json_with_int_minimum_should_match_field_inside_bool(t *testing.T) { ... }
+func Test_Term_should_exist_on_es_package(t *testing.T) { ... }
+func Test_Term_method_should_create_termType(t *testing.T) { ... }
+func Test_Term_CaseInsensitive_should_create_json_with_case_insensitive_field_inside_term(t *testing.T) { ... }
+func Test_MatchNone_method_should_create_matchNoneType(t *testing.T) { ... }
 ```
 
 ### Test Structure
 
-Use the Given-When-Then pattern:
+Use the Given-When-Then pattern. Assert real type names (`es.termType`, `es.BoolType`, `es.matchNoneType`):
 
 ```go
-func Test_Bool_method_should_create_boolType(t *testing.T) {
-    t.Parallel()
-    // Given
-    b := es.Bool()
+func Test_Term_method_should_create_termType(t *testing.T) {
+	t.Parallel()
+	// Given
+	b := es.Term("key", "value")
 
-    // Then
-    assert.NotNil(t, b)
-    assert.IsTypeString(t, "es.BoolType", b)
+	// Then
+	assert.NotNil(t, b)
+	assert.IsTypeString(t, "es.termType", b)
 }
 ```
 
@@ -271,8 +436,8 @@ All tests should run in parallel when possible:
 
 ```go
 func Test_Example(t *testing.T) {
-    t.Parallel()
-    // test code
+	t.Parallel()
+	// test code
 }
 ```
 
@@ -296,21 +461,20 @@ assert.MarshalWithoutError(t, body)
 
 ### JSON Output Verification
 
-Always verify JSON serialization for query builders:
+Always verify JSON serialization for query builders with an exact string:
 
 ```go
-func Test_Bool_Filter_should_create_correct_json(t *testing.T) {
-    t.Parallel()
-    // Given
-    query := es.NewQuery(
-        es.Bool().
-            Filter(es.Term("id", 12345)),
-    )
+func Test_Term_should_create_json_with_term_field_inside_query(t *testing.T) {
+	t.Parallel()
+	// Given
+	query := es.NewQuery(
+		es.Term("key", "value"),
+	)
 
-    // When Then
-    assert.NotNil(t, query)
-    bodyJSON := assert.MarshalWithoutError(t, query)
-    assert.Equal(t, "{\"query\":{\"bool\":{\"filter\":[{\"term\":{\"id\":{\"value\":12345}}}]}}}", bodyJSON)
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"query\":{\"term\":{\"key\":{\"value\":\"value\"}}}}", bodyJSON)
 }
 ```
 
