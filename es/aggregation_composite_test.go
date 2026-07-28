@@ -75,6 +75,7 @@ func Test_After_should_add_after_field_into_CompositeAgg(t *testing.T) {
 	// When Then
 	assert.NotNil(t, a)
 	bodyJSON := assert.MarshalWithoutError(t, a)
+	// nolint:golint,lll
 	assert.Equal(t, "{\"composite\":{\"after\":{\"brand\":\"nike\"},\"sources\":[{\"brand\":{\"terms\":{\"field\":\"brand.keyword\"}}}]}}", bodyJSON)
 }
 
