@@ -8,15 +8,26 @@ type GeoPoint struct {
 }
 
 type FooDocument struct {
-	ID       string    `json:"id"`
-	Foo      string    `json:"foo"`
-	Location *GeoPoint `json:"location,omitempty"`
+	ID       string             `json:"id"`
+	Foo      string             `json:"foo"`
+	Suggest  *CompletionSuggest `json:"suggest,omitempty"`
+	Location *GeoPoint          `json:"location,omitempty"`
+}
+
+type CompletionSuggest struct {
+	Input  []string `json:"input"`
+	Weight int      `json:"weight,omitempty"`
 }
 
 func (foo *FooDocument) Copy() FooDocument {
 	copied := FooDocument{
 		ID:  foo.ID,
 		Foo: foo.Foo,
+	}
+	if foo.Suggest != nil {
+		suggest := *foo.Suggest
+		suggest.Input = append([]string(nil), foo.Suggest.Input...)
+		copied.Suggest = &suggest
 	}
 	if foo.Location != nil {
 		location := *foo.Location
@@ -30,6 +41,9 @@ func (foo *FooDocument) GetMappings() es.Object {
 		"properties": es.Object{
 			"foo": es.Object{
 				"type": "keyword",
+			},
+			"suggest": es.Object{
+				"type": "completion",
 			},
 			"location": es.Object{
 				"type": "geo_point",
