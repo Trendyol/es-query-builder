@@ -246,6 +246,33 @@ func (o Object) Highlight(highlight highlightType) Object {
 	return o
 }
 
+// Collapse sets the "collapse" parameter in an es.Object.
+//
+// Field collapsing groups search hits by a field value so that only the top
+// document per group is returned. Use InnerHits on the field collapse to
+// retrieve additional documents per group.
+//
+// Example usage:
+//
+//	query := es.NewQuery(es.MatchAll()).
+//		Collapse(
+//			es.FieldCollapse("product_group_id").
+//				InnerHits(es.InnerHits().Size(3)).
+//				MaxConcurrentGroupSearches(4),
+//		)
+//	// query now includes a "collapse" parameter for product_group_id.
+//
+// Parameters:
+//   - fieldCollapse: An es.fieldCollapseType object representing the collapse configuration.
+//
+// Returns:
+//
+//	The updated es.Object with the "collapse" parameter set.
+func (o Object) Collapse(fieldCollapse fieldCollapseType) Object {
+	o["collapse"] = fieldCollapse
+	return o
+}
+
 // Aggs adds one or more es.aggsType objects to an es.Object.
 //
 // This method allows you to specify multiple aggregation criteria for the search query.
@@ -313,5 +340,32 @@ func (o Object) SearchAfter(values ...any) Object {
 		return o
 	}
 	o["search_after"] = values
+	return o
+}
+
+// Suggest sets the "suggest" parameter in an es.Object.
+//
+// The suggest API provides term, phrase, and completion suggestions based
+// on the configured suggesters.
+//
+// Example usage:
+//
+//	query := es.NewQuery(es.MatchAll()).
+//		Suggest(
+//			es.Suggest().
+//				Text("nike shos").
+//				Suggester("product_suggest",
+//					es.CompletionSuggester("name.suggest").Size(5).SkipDuplicates(true),
+//				),
+//		)
+//
+// Parameters:
+//   - suggest: An es.suggestType object representing the suggest configuration.
+//
+// Returns:
+//
+//	The updated es.Object with the "suggest" parameter set.
+func (o Object) Suggest(suggest suggestType) Object {
+	o["suggest"] = suggest
 	return o
 }

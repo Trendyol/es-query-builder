@@ -32,10 +32,13 @@ type SearchResponse struct {
 	Hits         *SearchHits         `json:"hits,omitempty"`
 	Shards       *ShardsInfo         `json:"_shards,omitempty"`
 	Aggregations AggregateDictionary `json:"aggregations,omitempty"`
+	Suggest      SuggestDictionary   `json:"suggest,omitempty"`
 	ScrollId     string              `json:"_scroll_id,omitempty"`
 	TookInMillis uint64              `json:"took,omitempty"`
 	TimedOut     bool                `json:"timed_out,omitempty"`
 }
+
+type SuggestDictionary map[string]json.RawMessage
 
 type SearchHits struct {
 	Total    *Total      `json:"total,omitempty"`

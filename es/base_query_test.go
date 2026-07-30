@@ -339,6 +339,45 @@ func Test_SourceFalse_should_set_source_field_as_false(t *testing.T) {
 	assert.Equal(t, "{\"_source\":false,\"query\":{}}", bodyJSON)
 }
 
+////   Collapse   ////
+
+func Test_Object_should_have_Collapse_method(t *testing.T) {
+	t.Parallel()
+	// Given
+	b := es.NewQuery(nil)
+
+	// When Then
+	assert.NotNil(t, b.Collapse)
+}
+
+func Test_Collapse_should_add_collapse_field_into_Object(t *testing.T) {
+	t.Parallel()
+	// Given
+	query := es.NewQuery(nil).Collapse(es.FieldCollapse("product_id"))
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	assert.Equal(t, "{\"collapse\":{\"field\":\"product_id\"},\"query\":{}}", bodyJSON)
+}
+
+func Test_Collapse_with_InnerHits_and_MaxConcurrentGroupSearches_should_create_correct_json(t *testing.T) {
+	t.Parallel()
+	// Given
+	query := es.NewQuery(es.MatchAll()).
+		Collapse(
+			es.FieldCollapse("product_group_id").
+				InnerHits(es.InnerHits().Size(3)).
+				MaxConcurrentGroupSearches(4),
+		)
+
+	// When Then
+	assert.NotNil(t, query)
+	bodyJSON := assert.MarshalWithoutError(t, query)
+	// nolint:golint,lll
+	assert.Equal(t, "{\"collapse\":{\"field\":\"product_group_id\",\"inner_hits\":[{\"size\":3}],\"max_concurrent_group_searches\":4},\"query\":{\"match_all\":{}}}", bodyJSON)
+}
+
 ////   Aggs   ////
 
 func Test_Object_should_have_Aggs_method(t *testing.T) {
