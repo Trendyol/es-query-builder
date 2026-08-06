@@ -14,6 +14,9 @@ type termAggType Object
 // Multi-terms aggregation is similar to a terms aggregation but allows specifying multiple fields
 // for bucketing documents.
 //
+// Requires Elasticsearch 7.12+. ES 7.10.x returns
+// "Unknown aggregation type [multi_terms]" on search.
+//
 // Example usage:
 //
 //	agg := es.MultiTermsAgg(es.TermAgg("category"), es.TermAgg("brand"))
