@@ -3,6 +3,7 @@ package tests_test
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"os"
 	"testing"
 
@@ -18,16 +19,40 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
-func TestSuiteES7(t *testing.T) {
-	suite.Run(t, &testSuite{esImage: container.ElasticsearchImageV7})
+func TestSuiteES_v7_10_2(t *testing.T) {
+	suite.Run(t, &testSuite{esImage: container.ElasticsearchImage_v7_10_2})
 }
 
-func TestSuiteES8(t *testing.T) {
-	suite.Run(t, &testSuite{esImage: container.ElasticsearchImageV8})
+func TestSuiteES_v7_14_2(t *testing.T) {
+	suite.Run(t, &testSuite{esImage: container.ElasticsearchImage_v7_14_2})
 }
 
-func TestSuiteES9(t *testing.T) {
-	suite.Run(t, &testSuite{esImage: container.ElasticsearchImageV9})
+func TestSuiteES_v7_15_0(t *testing.T) {
+	suite.Run(t, &testSuite{esImage: container.ElasticsearchImage_v7_15_0})
+}
+
+func TestSuiteES_v7_17_28(t *testing.T) {
+	suite.Run(t, &testSuite{esImage: container.ElasticsearchImage_v7_17_28})
+}
+
+func TestSuiteES_v8_11_4(t *testing.T) {
+	suite.Run(t, &testSuite{esImage: container.ElasticsearchImage_v8_11_4})
+}
+
+func TestSuiteES_v8_13_4(t *testing.T) {
+	suite.Run(t, &testSuite{esImage: container.ElasticsearchImage_v8_13_4})
+}
+
+func TestSuiteES_v8_15_0(t *testing.T) {
+	suite.Run(t, &testSuite{esImage: container.ElasticsearchImage_v8_15_0})
+}
+
+func TestSuiteES_v8_17_18(t *testing.T) {
+	suite.Run(t, &testSuite{esImage: container.ElasticsearchImage_v8_17_18})
+}
+
+func TestSuiteES_v9_0_0(t *testing.T) {
+	suite.Run(t, &testSuite{esImage: container.ElasticsearchImage_v9_0_0})
 }
 
 type testSuite struct {
@@ -56,6 +81,19 @@ func (s *testSuite) SetupSuite() {
 			Output: os.Stdout,
 		},
 		DiscoverNodesOnStart: false,
+		Interceptors: []elastictransport.InterceptorFunc{
+			func(next elastictransport.RoundTripFunc) elastictransport.RoundTripFunc {
+				return func(req *http.Request) (*http.Response, error) {
+					res, err := next(req)
+					if err == nil && res != nil {
+						if res.Header.Get("X-Elastic-Product") == "" {
+							res.Header.Set("X-Elastic-Product", "Elasticsearch")
+						}
+					}
+					return res, err
+				}
+			},
+		},
 	}
 	s.ESClient, err = elasticsearch.NewClient(cfg)
 

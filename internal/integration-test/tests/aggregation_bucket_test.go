@@ -2,6 +2,7 @@ package tests_test
 
 import (
 	"encoding/json"
+	"strings"
 
 	Order "github.com/Trendyol/es-query-builder/es/enums/sort/order"
 
@@ -160,6 +161,10 @@ func (s *testSuite) Test_it_should_return_filters_aggregation() {
 }
 
 func (s *testSuite) Test_it_should_return_multi_terms_aggregation() {
+	// multi_terms aggregation ES 7.12+ gerekli. 7.10.x desteklemez.
+	if strings.Contains(s.esImage, ":7.10.") {
+		s.T().Skipf("multi_terms aggregation not supported on %s", s.esImage)
+	}
 	// Given
 	query := es.NewQuery(es.MatchAll()).
 		Size(0).

@@ -12,10 +12,24 @@ import (
 )
 
 const (
-	ElasticsearchImageV7 = "docker.elastic.co/elasticsearch/elasticsearch:7.15.0"
-	ElasticsearchImageV8 = "docker.elastic.co/elasticsearch/elasticsearch:8.15.0"
-	ElasticsearchImageV9 = "docker.elastic.co/elasticsearch/elasticsearch:9.0.0"
-	defaultPort          = "9200/tcp"
+	// Current major representatives
+
+	// v7 minor/patch set
+	ElasticsearchImage_v7_10_2  = "docker.elastic.co/elasticsearch/elasticsearch:7.10.2"
+	ElasticsearchImage_v7_14_2  = "docker.elastic.co/elasticsearch/elasticsearch:7.14.2"
+	ElasticsearchImage_v7_15_0  = "docker.elastic.co/elasticsearch/elasticsearch:7.15.0"
+	ElasticsearchImage_v7_17_28 = "docker.elastic.co/elasticsearch/elasticsearch:7.17.28"
+
+	// v8 minor/patch set
+	ElasticsearchImage_v8_11_4  = "docker.elastic.co/elasticsearch/elasticsearch:8.11.4"
+	ElasticsearchImage_v8_13_4  = "docker.elastic.co/elasticsearch/elasticsearch:8.13.4"
+	ElasticsearchImage_v8_15_0  = "docker.elastic.co/elasticsearch/elasticsearch:8.15.0"
+	ElasticsearchImage_v8_17_18 = "docker.elastic.co/elasticsearch/elasticsearch:8.17.10"
+
+	// v9
+	ElasticsearchImage_v9_0_0 = "docker.elastic.co/elasticsearch/elasticsearch:9.0.0"
+
+	defaultPort = "9200/tcp"
 )
 
 type ElasticsearchContainer struct {
