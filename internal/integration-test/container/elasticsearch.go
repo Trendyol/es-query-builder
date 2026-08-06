@@ -14,6 +14,7 @@ import (
 const (
 	ElasticsearchImageV7 = "docker.elastic.co/elasticsearch/elasticsearch:7.15.0"
 	ElasticsearchImageV8 = "docker.elastic.co/elasticsearch/elasticsearch:8.15.0"
+	ElasticsearchImageV9 = "docker.elastic.co/elasticsearch/elasticsearch:9.0.0"
 	defaultPort          = "9200/tcp"
 )
 

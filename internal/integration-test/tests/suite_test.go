@@ -26,6 +26,10 @@ func TestSuiteES8(t *testing.T) {
 	suite.Run(t, &testSuite{esImage: container.ElasticsearchImageV8})
 }
 
+func TestSuiteES9(t *testing.T) {
+	suite.Run(t, &testSuite{esImage: container.ElasticsearchImageV9})
+}
+
 type testSuite struct {
 	suite.Suite
 	TestContext                    context.Context
