@@ -15,6 +15,10 @@ tag_and_push:
 	git tag $(NEW_VERSION)
 	git push origin $(NEW_VERSION)
 
+run-all-tests:
+	@go test ./... -v -race -coverprofile=coverage.txt -covermode=atomic
+	@cd ./internal/integration-test && go test ./... -v -json
+
 run-test:
 	@go test ./es/... -v -race -coverprofile=coverage.txt -covermode=atomic
 
