@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"strings"
 
 	Order "github.com/Trendyol/es-query-builder/es/enums/sort/order"
 
@@ -12,7 +13,9 @@ import (
 )
 
 func mockGetDocumentsEs(query string) (string, error) {
-	return fmt.Sprintf("query result for '%v'", query), nil
+	escapedQuery := strings.ReplaceAll(query, `\`, `\\`)
+	escapedQuery = strings.ReplaceAll(escapedQuery, "'", `\'`)
+	return fmt.Sprintf("query result for '%s'", escapedQuery), nil
 }
 
 func main() {
