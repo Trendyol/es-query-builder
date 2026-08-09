@@ -7,7 +7,7 @@ The following versions of `es-query-builder` are currently supported with securi
 | Version | Supported          |
 |---------| ------------------ |
 | ≥ 1.3.0 | ✅ Supported       |
-| ≥ 1.0.0, < 1.3.0 *(Until Jan 1, 2027)* | ⚠️ Supported until Jan 1, 2027 |
+| ≥ 1.0.0, < 1.3.0 | ⚠️ Supported until Jan 1, 2027 |
 | < 0.6.2 | ❌ Not Supported   |
 
 > **Note:** Versions between `1.0.0` and `1.2.5` (inclusive) will reach End-of-Life (EOL) and will no longer receive security updates starting **January 1, 2027**. We strongly recommend upgrading to version `1.3.0` or higher.
