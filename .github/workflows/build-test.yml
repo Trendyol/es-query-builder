@@ -50,7 +50,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: Trendyol/es-query-builder
   security-gates:
-    uses: Trendyol/security-actions/.github/workflows/security-gates.yml@15972db641cd5aaefc7f6227dbc686ad87fffcbb
+    uses: Trendyol/security-actions/.github/workflows/security-gates.yml@df29aceaed00e6de333c30943cd9f52cfe9dd914
     needs: build
     permissions:
       actions: read
