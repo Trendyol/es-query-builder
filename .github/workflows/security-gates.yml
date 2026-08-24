@@ -1,4 +1,4 @@
-name: Security Gates 🛡️
+name: Security Gates
 
 on:
   push:
@@ -6,18 +6,19 @@ on:
   pull_request:
     branches: [main, master]
 
+permissions: {}
+
 jobs:
   validate:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     steps:
       - name: Validate Workflow
         run: echo "Validation successful"
 
   security-gates:
-    uses: Trendyol/security-actions/.github/workflows/security-gates.yml@df29aceaed00e6de333c30943cd9f52cfe9dd914
+    uses: Trendyol/security-actions/.github/workflows/security-gates.yml@master
     permissions:
       actions: read
       contents: read
       security-events: write
+    secrets: inherit
